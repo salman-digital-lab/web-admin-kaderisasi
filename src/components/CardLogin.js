@@ -61,9 +61,8 @@ export const CardLogin = () => {
       password: password
     })
     .then((res) => {
-      let data = res.data
-      let token = data.token
-      localStorage.setItem("token", token)
+      let token = res.data.token
+      document.cookie = `token=${token}; max-age=7200; path=/`;
       setValues({username:'',password: '',showPassword: false,})
       setDisplayEror(false)
       setLoading(false)
@@ -75,9 +74,9 @@ export const CardLogin = () => {
       setValues({username:'',password: '',showPassword: false,})
     })
   }
-  
+
   const Alert = (props) => {
-    return <MuiAlert style={{minWidth:"100%"}} elevation={1} variant="filled" {...props} />;
+    return <MuiAlert className={"pop-up-error"} elevation={1} variant="filled" {...props} />;
   }
 
   return (
@@ -85,7 +84,7 @@ export const CardLogin = () => {
       <CardContent className={"container-input"}>
         {displayEror ? (<><Alert severity="error">Username atau Password anda salah, coba lagi!</Alert></>) : false}
         <FormControl className="input-field" variant="outlined">
-          <InputLabel style={{color: "#aaa", marginLeft: "-1px"}}>Username</InputLabel>
+          <InputLabel className="input-label" >Username</InputLabel>
           <OutlinedInput
             required
             type={'text'}
@@ -96,7 +95,7 @@ export const CardLogin = () => {
           />
         </FormControl>
         <FormControl className="input-field" variant="outlined">
-          <InputLabel style={{color: "#aaa"}} htmlFor="outlined-adornment-password">Password</InputLabel>
+          <InputLabel className="input-label" htmlFor="outlined-adornment-password">Password</InputLabel>
           <OutlinedInput
             required
             id="outlined-adornment-password"
@@ -121,15 +120,11 @@ export const CardLogin = () => {
         </FormControl>
         <br/>
         <Button variant="contained"
-          onClick={handleLogin} 
-          style={{
-            backgroundColor:"#5E91F8",
-            color:"#ffffff",
-            minWidth: "100%",
-            minHeight: 50,
-          }} disableElevation>
+          onClick={handleLogin}
+          className="button-login" 
+          disableElevation>
           Login 
-          {loading ?  <CircularProgress size={10} color="inherit" style={{marginLeft:"10px"}}/> : false}
+          {loading ?  <CircularProgress size={10} color="inherit" className="circular-Progress" /> : false}
         </Button>
       </CardContent>
     </Card>

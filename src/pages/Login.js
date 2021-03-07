@@ -23,7 +23,7 @@ export const Login = () => {
             <CardLogin/>
             <div className="bottom-login">
                 <p>Platfrom Aktivis Salman [BMKA] v1.0
-                    2020-2021 © Aktivis Mahasiswa
+                    2021-2022 © Aktivis Mahasiswa
                     Bidang Mahasiswa, Kaderisasi dan Alumni (BMKA)
                 </p>
             </div>

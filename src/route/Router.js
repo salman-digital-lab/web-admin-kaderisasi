@@ -6,7 +6,7 @@ import {Login} from '../pages/Login'
 export const Router = () => {
 
   const LoginRoute = ({...props}) =>{
-    if ( localStorage.token !== undefined){
+    if ( document.cookie !== ""){
       return <Redirect to="/" />
     }else
     {
@@ -15,7 +15,7 @@ export const Router = () => {
   }
   
   const Routes = ({...props}) => {
-    if(localStorage.token === undefined){
+    if(document.cookie === ""){
       return <Redirect to="/login" />
     }else{
       return <Route {...props} />
