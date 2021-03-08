@@ -1,13 +1,36 @@
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import { Home } from '../pages/Home'
-
+import React from "react"
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
+import {Home}  from '../pages/Home'
+import {Login} from '../pages/Login'
 
 export const Router = () => {
-    return (
-        <BrowserRouter>
-            <Switch>
-                <Route path='/' component={Home} />
-            </Switch>
-        </BrowserRouter>
-    )
+
+  const LoginRoute = ({...props}) =>{
+    if ( document.cookie !== ""){
+      return <Redirect to="/" />
+    }else
+    {
+      return <Route {...props} />
+    }
+  }
+  
+  const Routes = ({...props}) => {
+    if(document.cookie === ""){
+      return <Redirect to="/login" />
+    }else{
+      return <Route {...props} />
+    }
+  }
+
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Routes exact path="/">
+          <Home />
+        </Routes>
+
+        <LoginRoute exact path="/login" component={Login}/>
+      </Switch>
+    </BrowserRouter>
+  )
 }
