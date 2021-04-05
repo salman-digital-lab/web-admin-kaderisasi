@@ -29,18 +29,8 @@ export function stableSort(array, comparator) {
     return stabilizedThis.map((el) => el[0]);
 }
 
-const headCells = [
-    { id: 'no', numeric: true, label: 'No.' },
-    { id: 'name', numeric: false, label: 'Nama Jamaah' },
-    { id: 'email', numeric: false, label: 'Email' },
-    { id: 'phone', numeric: false, label: 'Phone/WA' },
-    { id: 'univ', numeric: false, label: 'Perguruan Tinggi/Univ' },
-    { id: 'jengjang', numeric: false, label: 'Jenjang' },
-    { id: 'activity', numeric: false, label: 'SSC, LMD & SPC' },
-];
-
 export function EnhancedTableHead(props) {
-    const { classes, order, orderBy, onRequestSort } = props;
+    const { classes, order, orderBy, onRequestSort, headCells } = props;
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
@@ -83,6 +73,7 @@ EnhancedTableHead.propTypes = {
     order: PropTypes.oneOf(['asc', 'desc']).isRequired,
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
+    headCells: PropTypes.array.isRequired
 };
 
 const useToolbarStyles = makeStyles((theme) => ({

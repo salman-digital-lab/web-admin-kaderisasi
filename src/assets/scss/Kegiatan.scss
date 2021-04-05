@@ -1,7 +1,14 @@
-.userlist {
+.kegiatan-list {
     padding: 20px 0 0 0;
 }
-
+.MuiButton-contained.btn-tambah-kegiatan{
+    width: 100%;
+    height: 45px;
+    // background-color: #28a745;
+    // &:hover{
+    //     background-color: #218838;
+    // }
+}
 .MuiFormControl-root.radio-button{
     margin-top: 15px;
     &.jenkel{
@@ -19,12 +26,14 @@
 .flex-container {
     display: flex;
     flex-direction: row;
-    .tableuser {
-        max-width: 950px;
+    .tableactivity {
         margin: auto;
+        width: 91%;
         .table-cell{
-            text-align: center;
             word-wrap: break-word;
+            &.middle-cell{
+                text-align: center;
+            }
         }
     }
 }
@@ -46,13 +55,15 @@
         display: flex;
         flex-direction: column-reverse;
         text-align: center;
-        .tableuser {
+        .tableactivity {
             margin: auto;
+            width: 100%;
         }
         .flex-right {
             width: 100%;
         }
         .flex-left {
+            margin-top: 15px;
             width: 100%;
         }
     }

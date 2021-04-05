@@ -2,7 +2,7 @@ import React from "react"
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import {Login} from '../pages/Login'
 import { AdminNavigation } from '../components/AdminNavigation'
-import { KegiatanDanAktivis } from '../pages/KegiatanDanAktivis/'
+import KegiatanDanAktivis from '../pages/KegiatanDanAktivis/'
 import { Dashboard } from '../pages/Dashboard/'
 import { DataAdministrasiRegional } from '../pages/DataAdministrasiRegional/'
 import KaderSalman from '../pages/KaderSalman/'
@@ -41,7 +41,7 @@ export const Router = () => {
           <AdminNavigation>
               <Routes exact path='/' component={Dashboard} />
               <Routes exact path='/Dashboard' component={Dashboard} />
-              <Routes exact path='/deta' component={KegiatanDanAktivis} />
+              <Routes exact path='/KegiatanDanAktivis' component={KegiatanDanAktivis} />
               <Routes exact path='/aktivis' component={KaderSalman} />
               <Routes exact path='/detail-aktivis/:name' component={KaderSalmanDetail} />
               <Routes exact path='/PerguruanTinggi' component={PerguruanTinggi} />

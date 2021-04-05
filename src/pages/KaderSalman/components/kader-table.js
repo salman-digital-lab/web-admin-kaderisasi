@@ -21,6 +21,16 @@ const rows = [
     createData('Shofiyah Rahmah Muthmainnah', 'shofiyahrm@gmail.com','08123456789', 'Universitas Telkom', 'Kader', 'SSC'),
 ];
 
+const headCells = [
+    { id: 'no', numeric: true, label: 'No.' },
+    { id: 'name', numeric: false, label: 'Nama Jamaah' },
+    { id: 'email', numeric: false, label: 'Email' },
+    { id: 'phone', numeric: false, label: 'Phone/WA' },
+    { id: 'univ', numeric: false, label: 'Perguruan Tinggi/Univ' },
+    { id: 'jengjang', numeric: false, label: 'Jenjang' },
+    { id: 'activity', numeric: false, label: 'SSC, LMD & SPC' },
+];
+
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
@@ -68,8 +78,9 @@ const KaderTable = () => {
     };
 
     return (
-        <div>
-        <Paper className="tableuser">
+        <div className="tableuser">
+        <h1 className="headline" style={{ color: '#999999' }}>Aktivis dan Jamaah</h1>
+        <Paper>
             <TableContainer>
             <Table
                 aria-labelledby="tableTitle"
@@ -82,10 +93,11 @@ const KaderTable = () => {
                 orderBy={orderBy}
                 onRequestSort={handleRequestSort}
                 rowCount={rows.length}
+                headCells={headCells}
                 />
                 <TableBody>
                 {stableSort(rows, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .slice(page * rowsPerPage, (page * rowsPerPage) + rowsPerPage)
                     .map((row, index) => {
 
                     return (
@@ -123,4 +135,4 @@ const KaderTable = () => {
     );
 }
 
-export default KaderTable
+export default KaderTable;

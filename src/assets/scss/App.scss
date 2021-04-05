@@ -1,0 +1,17 @@
+.NotFound {
+    padding-top: 250px; 
+    font-size: 20px; 
+    text-align: center;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    .flex-right {
+        width: 25%;
+        margin-top: 40px;
+    }
+    .flex-left {
+        width: 75%;
+    }
+}
