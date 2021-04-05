@@ -1,7 +1,22 @@
-export const KegiatanDanAktivis = () => {
+import React from 'react'
+import '../../assets/scss/Kegiatan.scss';
+import KegiatanFilter from './components/kegiatan-filter';
+import KegiatanTable from './components/kegiatan-table'
+
+const KegiatanDanAktivis = () => {
     return (
-        <>
-            <h1 style={{ color: '#999999' }}>Kegiatan dan Aktivis</h1>
-        </>
-    )
+    <>
+        <div className="kegiatan-list">
+            <div className="flex-container">
+                <div className="flex-left">
+                    <KegiatanTable/>
+                </div>
+                <div className="flex-right">
+                    <KegiatanFilter/>
+                </div>
+            </div>
+        </div>
+    </>
+    );
 }
+export default KegiatanDanAktivis;
