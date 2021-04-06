@@ -1,6 +1,6 @@
 import React from "react"
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
-import {Login} from '../pages/Login'
+import { Login } from '../pages/Login'
 import { AdminNavigation } from '../components/AdminNavigation'
 import KegiatanDanAktivis from '../pages/KegiatanDanAktivis/'
 import Dashboard  from '../pages/Dashboard/'
@@ -13,22 +13,23 @@ import { RuangCurhat } from '../pages/RuangCurhat/'
 import { Setting } from '../pages/Setting/'
 import { NotFound } from '../pages/Error/NotFound/'
 import { AdminProvider } from '../context/AdminContext'
+import { Questionnaire } from "../pages/Questionnaire"
+import { QuestionnaireForm } from "../pages/Questionnaire/Form"
 
 export const Router = () => {
 
-  const LoginRoute = ({...props}) =>{
-    if ( document.cookie !== ""){
+  const LoginRoute = ({ ...props }) => {
+    if (document.cookie !== "") {
       return <Redirect to="/" />
-    }else
-    {
+    } else {
       return <Route {...props} />
     }
   }
-  
-  const Routes = ({...props}) => {
-    if(document.cookie === ""){
+
+  const Routes = ({ ...props }) => {
+    if (document.cookie === "") {
       return <Redirect to="/login" />
-    }else{
+    } else {
       return <Route {...props} />
     }
   }
@@ -36,22 +37,24 @@ export const Router = () => {
   return (
     <BrowserRouter>
       <Switch>
-      <LoginRoute exact path="/login" component={Login}/>
-      <AdminProvider>
+        <LoginRoute exact path="/login" component={Login} />
+        <AdminProvider>
           <AdminNavigation>
-              <Routes exact path='/' component={Dashboard} />
-              <Routes exact path='/Dashboard' component={Dashboard} />
-              <Routes exact path='/KegiatanDanAktivis' component={KegiatanDanAktivis} />
-              <Routes exact path='/aktivis' component={KaderSalman} />
-              <Routes exact path='/detail-aktivis/:name' component={KaderSalmanDetail} />
-              <Routes exact path='/PerguruanTinggi' component={PerguruanTinggi} />
-              <Routes exact path='/RuangCurhat' component={RuangCurhat} />
-              <Routes exact path='/DataAdministrasiRegional' component={DataAdministrasiRegional} />
-              <Routes exact path='/PublicContentManagement' component={PublicContentManagement} />
+            <Routes exact path='/' component={Dashboard} />
+            <Routes exact path='/Dashboard' component={Dashboard} />
+            <Routes exact path='/questionnaire' component={Questionnaire} />
+            <Routes exact path='/new-questionnaire' component={QuestionnaireForm} />
+            <Routes exact path='/KegiatanDanAktivis' component={KegiatanDanAktivis} />
+            <Routes exact path='/aktivis' component={KaderSalman} />
+            <Routes exact path='/detail-aktivis/:name' component={KaderSalmanDetail} />
+            <Routes exact path='/PerguruanTinggi' component={PerguruanTinggi} />
+            <Routes exact path='/RuangCurhat' component={RuangCurhat} />
+            <Routes exact path='/DataAdministrasiRegional' component={DataAdministrasiRegional} />
+            <Routes exact path='/PublicContentManagement' component={PublicContentManagement} />
               <Routes exact path='/Setting' component={Setting} />
           </AdminNavigation>
-      </AdminProvider>
-      <Routes component={NotFound} />
+        </AdminProvider>
+        <Routes component={NotFound} />
       </Switch>
     </BrowserRouter>
   )

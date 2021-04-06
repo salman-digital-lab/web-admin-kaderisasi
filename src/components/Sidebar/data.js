@@ -6,6 +6,7 @@ import SchoolIcon from '@material-ui/icons/School';
 import AccountBalanceIcon from '@material-ui/icons/AccountBalance';
 import PublicIcon from '@material-ui/icons/Public';
 import SettingsIcon from '@material-ui/icons/Settings';
+import LibraryAddCheckIcon from '@material-ui/icons/LibraryAddCheck';
 
 
 export const data =
@@ -34,18 +35,24 @@ export const data =
         },
         {
             id: 4,
+            name: 'Questionnaire',
+            icon: <LibraryAddCheckIcon />,
+            url: '/questionnaire'
+        },
+        {
+            id: 5,
             name: 'Perguruan Tinggi',
             icon: <SchoolIcon />,
             url: '/PerguruanTinggi'
         },
         {
-            id: 5,
+            id: 6,
             name: 'Ruang Curhat',
             icon: <QuestionAnswerIcon />,
             url: '/RuangCurhat'
         },
         {
-            id: 6,
+            id: 7,
             name: 'Data Administrasi Regional',
             icon: <AccountBalanceIcon />,
             children: [
@@ -55,7 +62,7 @@ export const data =
             ]
         },
         {
-            id: 7,
+            id: 8,
             name: 'Public Content Management',
             icon: <PublicIcon />,
             children: [
@@ -65,7 +72,7 @@ export const data =
             ]
         },
         {
-            id: 8,
+            id: 9,
             name: 'Setting',
             icon: <SettingsIcon />,
             children: [
