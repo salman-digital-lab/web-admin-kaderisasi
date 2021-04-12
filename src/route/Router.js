@@ -13,6 +13,9 @@ import { RuangCurhat } from '../pages/RuangCurhat/'
 import { Setting } from '../pages/Setting/'
 import { NotFound } from '../pages/Error/NotFound/'
 import { AdminProvider } from '../context/AdminContext'
+import ListAkunAdmin from "../pages/ListAkunAdmin"
+import RegisterAkunAdmin from "../pages/RegisterAkunAdmin"
+import ListDetailAdmin from "../pages/ListDetailAdmin"
 import { Questionnaire } from "../pages/Questionnaire"
 import { QuestionnaireForm } from "../pages/Questionnaire/Form"
 
@@ -52,6 +55,9 @@ export const Router = () => {
             <Routes exact path='/DataAdministrasiRegional' component={DataAdministrasiRegional} />
             <Routes exact path='/PublicContentManagement' component={PublicContentManagement} />
               <Routes exact path='/Setting' component={Setting} />
+              <Routes exact path='/ListAkunAdmin' component={ListAkunAdmin} />
+              <Routes exact path='/ListAkunAdmin/:name' component={ListDetailAdmin} />
+              <Routes exact path='/RegisterAkunAdmin' component={RegisterAkunAdmin} />
           </AdminNavigation>
         </AdminProvider>
         <Routes component={NotFound} />
