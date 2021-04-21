@@ -5,6 +5,7 @@ import Card from "./component/index-card"
 
 //Function Pemanggilan Component Card Statistic dan Table Statistic
 const Dashboard = () => {
+    console.log(process.env.REACT_APP_BASE_URL)
     return (
         <>
             <h1 style={{ color: '#999999' }}>Dashboard</h1>
