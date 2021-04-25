@@ -47,7 +47,7 @@ const JoinChart = () => {
     });
     return(
         <>
-            <div>
+            <div className="container-chart">
             <Line
                 data={barData}
                 id="chart"
@@ -63,7 +63,7 @@ const JoinChart = () => {
                     },
                     title: {
                         display: true,
-                        text: 'Trend Persebaran Data Jumlah Bergabung,',
+                        text: 'Trend Persebaran Data Jumlah Bergabung',
                         fontSize: 25,
                         padding: 20,
                     }, 

@@ -30,7 +30,7 @@ const GenderChart = () => {
     });
     return(
         <>
-            <div>
+            <div className="container-chart">
             <Bar
                 data={barData}
                 id="chart"
@@ -46,7 +46,7 @@ const GenderChart = () => {
                     },
                     title: {
                         display: true,
-                        text: 'Trend Persebaran Data Gender Aktivis,',
+                        text: 'Trend Persebaran Data Gender Aktivis',
                         fontSize: 25,
                         padding: 20,
                     }, 

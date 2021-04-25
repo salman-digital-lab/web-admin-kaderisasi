@@ -1,26 +1,10 @@
-import React from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, Paper } from '@material-ui/core';
+import { Table, TableBody, TableCell, TableContainer, TablePagination, TableRow, Paper, CircularProgress } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { EnhancedTableHead, stableSort, getComparator } from '../../../components/TableDesign'
 import {PublishStatus, RegisterStatus} from '../../../components/Statuses'
-
-function createData(judul, startDate, endDate, jenjang, kategori, register, publish, updatedAt) {
-    return { judul, startDate, endDate, jenjang, kategori, register, publish, updatedAt };
-}
-
-const rows = [
-    createData('Salman Cendikia Get to Know Business Competition', '22-02-2021','26-02-21', 'Aktivis', 'Aktualisasi Diri', 'closed', 'published', '1'),
-    createData('Salman Cendikia Get to Know Business Competition', '22-02-2021','26-02-21', 'Aktivis', 'Aktualisasi Diri', 'closed', 'published', '1'),
-    createData('Salman Cendikia Get to Know Business Competition', '22-02-2021','26-02-21', 'Aktivis', 'Aktualisasi Diri', 'closed', 'published', '1'),
-    createData('Salman Cendikia Get to Know Business Competition', '22-02-2021','26-02-21', 'Aktivis', 'Aktualisasi Diri', 'closed', 'published', '1'),
-    createData('Salman Cendikia Get to Know Business Competition', '22-02-2021','26-02-21', 'Aktivis', 'Aktualisasi Diri', 'opened', 'unpublished', '1'),
-    createData('Salman Cendikia Get to Know Business Competition', '22-02-2021','26-02-21', 'Aktivis', 'Aktualisasi Diri', 'opened', 'unpublished', '1'),
-    createData('Salman Cendikia Get to Know Business Competition', '22-02-2021','26-02-21', 'Aktivis', 'Aktualisasi Diri', 'opened', 'published', '1'),
-    createData('Salman Cendikia Get to Know Business Competition', '22-02-2021','26-02-21', 'Aktivis', 'Aktualisasi Diri', 'opened', 'published', '1'),
-    createData('Salman Cendikia Get to Know Business Competition', '22-02-2021','26-02-21', 'Aktivis', 'Aktualisasi Diri', 'closed', 'published', '1'),
-    createData('Salman Cendikia Get to Know Business Competition', '22-02-2021','26-02-21', 'Aktivis', 'Aktualisasi Diri', 'closed', 'published', '1')
-];
+import {AdminActivityContext} from '../../../context/AdminActivityContext'
 
 const headCells = [
     { id: 'no', numeric: true, label: 'No.' },
@@ -57,12 +41,53 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+let params = {
+    page:1
+}
+
 const KegiatanTable = () => {
     const classes = useStyles();
-    const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('calories');
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [order, setOrder] = useState('asc');
+    const [orderBy, setOrderBy] = useState('startDate');
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [status, setStatus] = useState(true)
+    const {listActivity, activity, filterActivity, setFilterActivity, functions} = useContext(AdminActivityContext)
+    const { getActivity } = functions
+
+    if (listActivity.length < 1 && status){
+        getActivity(params)
+        setStatus(false)
+    }
+
+    useEffect(()=>{
+        if (filterActivity.status){
+            params = {...params, ...filterActivity}
+            if (params.category_id === -1){
+                delete params.category_id
+            }
+            if (params.search === ""){
+                delete params.search
+            }
+            if (params.minimum_roles_id === -1){
+                delete params.minimum_roles_id
+            }
+            if (Object.keys(params).length > 1){
+                getActivity(params)
+            }
+            params.page = 1
+            setFilterActivity({...filterActivity, status:false})
+        }
+    }, [filterActivity, setFilterActivity, getActivity])
+
+    if (!activity.status){
+        return (
+            <div className="tableactivity">
+            <h1 className="headline" style={{ color: '#999999' }}>Kegiatan dan Aktivitas</h1>
+                <CircularProgress/>
+            </div>
+        )
+    }
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -72,11 +97,16 @@ const KegiatanTable = () => {
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
+        params.page = newPage+1
+        getActivity(params)
     };
 
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
+        params.page = 1
+        params.perPage = parseInt(event.target.value, 10)
+        getActivity(params)
     };
 
     return (
@@ -94,12 +124,12 @@ const KegiatanTable = () => {
                 order={order}
                 orderBy={orderBy}
                 onRequestSort={handleRequestSort}
-                rowCount={rows.length}
+                rowCount={listActivity.length}
                 headCells={headCells}
                 />
                 <TableBody>
-                {stableSort(rows, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, (page * rowsPerPage) + rowsPerPage)
+                {stableSort(listActivity, getComparator(order, orderBy))
+                    // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
                     return (
                         <TableRow
@@ -125,7 +155,7 @@ const KegiatanTable = () => {
             <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={rows.length}
+            count={activity?.data?.total}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}

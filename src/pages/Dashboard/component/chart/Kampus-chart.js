@@ -58,7 +58,7 @@ const KampusChart = () => {
     });
     return(
         <>
-            <div>
+            <div className="container-chart">
             <HorizontalBar 
                 data={barData}
                 id="chart"
@@ -74,7 +74,7 @@ const KampusChart = () => {
                     },
                     title: {
                         display: true,
-                        text: 'Trend Persebaran Data Kampus,',
+                        text: 'Trend Persebaran Data Kampus',
                         fontSize: 25,
                         padding: 20,
                     }, 

@@ -3,7 +3,8 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { Login } from '../pages/Login'
 import { AdminNavigation } from '../components/AdminNavigation'
 import KegiatanDanAktivis from '../pages/KegiatanDanAktivis/'
-import Dashboard  from '../pages/Dashboard/'
+import KegiatanDetail from '../pages/KegiatanDetail/'
+import Dashboard from '../pages/Dashboard/'
 import { DataAdministrasiRegional } from '../pages/DataAdministrasiRegional/'
 import KaderSalman from '../pages/KaderSalman/'
 import KaderSalmanDetail from '../pages/KaderSalmanDetail/'
@@ -43,17 +44,17 @@ export const Router = () => {
         <LoginRoute exact path="/login" component={Login} />
         <AdminProvider>
           <AdminNavigation>
-            <Routes exact path='/' component={Dashboard} />
-            <Routes exact path='/Dashboard' component={Dashboard} />
-            <Routes exact path='/questionnaire' component={Questionnaire} />
-            <Routes exact path='/new-questionnaire' component={QuestionnaireForm} />
-            <Routes exact path='/KegiatanDanAktivis' component={KegiatanDanAktivis} />
-            <Routes exact path='/aktivis' component={KaderSalman} />
-            <Routes exact path='/detail-aktivis/:name' component={KaderSalmanDetail} />
-            <Routes exact path='/PerguruanTinggi' component={PerguruanTinggi} />
-            <Routes exact path='/RuangCurhat' component={RuangCurhat} />
-            <Routes exact path='/DataAdministrasiRegional' component={DataAdministrasiRegional} />
-            <Routes exact path='/PublicContentManagement' component={PublicContentManagement} />
+              <Routes exact path='/' component={Dashboard} />
+              <Routes exact path='/questionnaire' component={Questionnaire} />
+              <Routes exact path='/new-questionnaire' component={QuestionnaireForm} />
+              <Routes exact path='/kegiatan' component={KegiatanDanAktivis} />
+              <Routes exact path='/detail-kegiatan/:id' component={KegiatanDetail} />
+              <Routes exact path='/aktivis' component={KaderSalman} />
+              <Routes exact path='/detail-aktivis/:name' component={KaderSalmanDetail} />
+              <Routes exact path='/PerguruanTinggi' component={PerguruanTinggi} />
+              <Routes exact path='/RuangCurhat' component={RuangCurhat} />
+              <Routes exact path='/DataAdministrasiRegional' component={DataAdministrasiRegional} />
+              <Routes exact path='/PublicContentManagement' component={PublicContentManagement} />
               <Routes exact path='/Setting' component={Setting} />
               <Routes exact path='/ListAkunAdmin' component={ListAkunAdmin} />
               <Routes exact path='/ListAkunAdmin/:name' component={ListDetailAdmin} />

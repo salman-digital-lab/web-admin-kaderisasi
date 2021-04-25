@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { lighten, makeStyles } from '@material-ui/core/styles';
-import { TableCell, TableHead, TableRow, TableSortLabel, Toolbar, Typography } from '@material-ui/core';
-
+import { CsvBuilder } from "filefy";
+import { TableCell, TableHead, TableRow, TableSortLabel, Toolbar, Tooltip, IconButton } from '@material-ui/core';
+import PrintIcon from '@material-ui/icons/Print'
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
@@ -44,7 +45,7 @@ export function EnhancedTableHead(props) {
                 className="table-cell"
                 sortDirection={orderBy === headCell.id ? order : false}
             >
-                {headCell.id !== "no" ? 
+                {(headCell.id !== "no") && (headCell.id !== "action")? 
                 <TableSortLabel
                 active={orderBy === headCell.id}
                 direction={orderBy === headCell.id ? order : 'asc'}
@@ -76,35 +77,34 @@ EnhancedTableHead.propTypes = {
     headCells: PropTypes.array.isRequired
 };
 
-const useToolbarStyles = makeStyles((theme) => ({
-    highlight:
-        theme.palette.type === 'light'
-        ? {
-            color: theme.palette.secondary.main,
-            backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-            }
-        : {
-            color: theme.palette.text.primary,
-            backgroundColor: theme.palette.secondary.dark,
-            },
-    title: {
-        flex: '1 1 100%',
-    },
-}));
+const exportCSV = (fileName, data) =>{
+    const columns = Object.keys(data[0])
+    const builder = new CsvBuilder(fileName + ".csv");
+    builder
+        .setDelimeter(',')
+        .setColumns(columns)
+        .addRows(data.map(rowData => columns.map(columnDef => rowData[columnDef])))
+        .exportFile();
+}
 
 export const EnhancedTableToolbar = (props) => {
-    const classes = useToolbarStyles();
-    const { title } = props;
-
-    return (
-        <Toolbar>
-        <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-            {title}
-        </Typography>
+    if (props.exportButton){
+        return (
+        <Toolbar className="toolbar-table">
+            <Tooltip title="Export CSV">
+            <IconButton aria-label="Export CSV" onClick={()=>exportCSV(props.fileName, props.data)}>
+                <PrintIcon/>
+            </IconButton>
+            </Tooltip>
         </Toolbar>
-    );
+        );
+    }
+    return null
 };
 
 EnhancedTableToolbar.propTypes = {
-    title: PropTypes.string.isRequired,
+    exportButton: PropTypes.bool.isRequired,
+    fileName : PropTypes.string,
+    headCells: PropTypes.array,
+    data: PropTypes.array,
 };
