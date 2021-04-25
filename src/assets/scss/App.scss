@@ -1,17 +1,22 @@
 .NotFound {
-    padding-top: 250px; 
-    font-size: 20px; 
-    text-align: center;
+  padding-top: 250px;
+  font-size: 20px;
+  text-align: center;
 }
 
 .flex-container {
-    display: flex;
-    flex-direction: row;
-    .flex-right {
-        width: 25%;
-        margin-top: 40px;
-    }
-    .flex-left {
-        width: 75%;
-    }
+  display: flex;
+  flex-direction: row;
+  .flex-right {
+    width: 25%;
+    margin-top: 40px;
+  }
+  .flex-left {
+    width: 75%;
+  }
+}
+
+.MuiToolbar-regular.toolbar-table {
+  min-height: 45px;
+  justify-content: flex-end;
 }

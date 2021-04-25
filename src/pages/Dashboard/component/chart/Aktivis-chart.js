@@ -68,7 +68,7 @@ const AktivisChart = () => {
     });
     return(
         <>
-            <div>
+            <div className="container-chart">
             <Bar
                 id="chart"
                 data={barData}
@@ -84,7 +84,7 @@ const AktivisChart = () => {
                     },
                     title: {
                         display: true,
-                        text: `Trend Persebaran Aktivis, `,
+                        text: `Trend Persebaran Aktivis`,
                         fontSize: 25,
                         padding: 20,
                     }, 

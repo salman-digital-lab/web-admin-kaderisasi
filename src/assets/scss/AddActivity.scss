@@ -1,0 +1,105 @@
+.tambah-kegiatan {
+    height: auto;
+    background-color: white;
+    border: 1px solid #c4c4c4;
+    box-sizing: border-box;
+    border-radius: 8px;
+    font-size: 1.9vh;
+    padding: 2vh;
+
+    .top-bar-kegiatan {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.container-button-kegiatan{
+
+    display: flex;
+    flex-direction: column;
+
+    .button-kegiatan{
+        b{
+            font-size: 15px;
+        }
+        width: 100%;
+        margin: 10px;
+    }
+}
+
+.button-bottom{
+    display: flex;
+    width: 100%;
+    .button-bottoms-kegiatan{
+        width: 50%;
+        margin: 5px;
+    }
+}
+
+.container-gambar-detail{
+    width: 100%;
+    img{
+        min-width: 100%;
+    }
+}
+
+.left-form{
+    // border: 1px solid red;
+    width: 40%;
+}
+
+.right-form{
+    width: 60%;
+    // border: 1px solid green;
+}
+
+.form-flex {
+    display: flex;
+    justify-content: center;
+}
+
+.detail-activity{
+    display: flex;
+    margin: 10px;
+
+    .input-form{
+        margin: 10px;
+        font-weight: 600;
+        width: 100%;
+    }
+}
+
+.select-form{
+    margin: 20px;
+
+    .select-input-form{
+        width: 45vh;
+    }
+}
+
+.button-tambah-kegiatan{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .button-top-tambah-kegiatan{
+        margin: 0px 10px;
+    }
+}
+
+.editor{
+    padding: 10px;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+    white-space: pre-wrap;
+}
+
+.img-fluid{
+    max-width: 100%;
+    height: auto;
+}
+
+.MuiFormControl-root.form-modal{
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
+}
