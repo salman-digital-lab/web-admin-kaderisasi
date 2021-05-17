@@ -1,6 +1,5 @@
 import React from "react"
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
-import { Login } from '../pages/Login'
 import { AdminNavigation } from '../components/AdminNavigation'
 import KegiatanDanAktivis from '../pages/KegiatanDanAktivis/'
 import KegiatanDetail from '../pages/KegiatanDetail/'
@@ -19,6 +18,7 @@ import RegisterAkunAdmin from "../pages/RegisterAkunAdmin"
 import ListDetailAdmin from "../pages/ListDetailAdmin"
 import { Questionnaire } from "../pages/Questionnaire"
 import { QuestionnaireForm } from "../pages/Questionnaire/Form"
+import { Login } from "../pages/Login/Login"
 
 export const Router = () => {
 

@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import '../assets/scss/Login.scss'
-import { useHistory } from 'react-router-dom';
+import React, { useContext } from 'react';
+import '../../assets/scss/Login.scss'
 
 import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -12,6 +10,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import MuiAlert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { AdminLoginContext } from '../../context/AdminLoginContext';
 
 const useOutlinedInputStyles = makeStyles(theme => ({
   root: {
@@ -27,15 +26,9 @@ const useOutlinedInputStyles = makeStyles(theme => ({
 }));
 
 export const CardLogin = () => {
-  let history = useHistory()
   const outlinedInputClasses = useOutlinedInputStyles();
-  const [displayEror, setDisplayEror] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [values, setValues] = useState({
-    username:'',
-    password: '',
-    showPassword: false,
-  });
+  const { displayEror,loading,setLoading,values, setValues, functions } = useContext(AdminLoginContext)
+  const {HandleLogin} = functions
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -49,30 +42,15 @@ export const CardLogin = () => {
     event.preventDefault();
   };
   
+
   const handleLogin = (event) => {
     event.preventDefault()
     setLoading(true)
 
-    let username = values.username
+    let email = values.email
     let password = values.password
     
-    axios.post(`https://backend-example.salmanitb.com/api/user-login`,{
-      email: username,
-      password: password
-    })
-    .then((res) => {
-      let token = res.data.token
-      document.cookie = `token=${token}; max-age=7200; path=/`;
-      setValues({username:'',password: '',showPassword: false,})
-      setDisplayEror(false)
-      setLoading(false)
-      history.push("/")
-    })
-    .catch(()=>{
-      setDisplayEror(true)
-      setLoading(false)
-      setValues({username:'',password: '',showPassword: false,})
-    })
+    HandleLogin(email, password);
   }
 
   const Alert = (props) => {
@@ -82,14 +60,14 @@ export const CardLogin = () => {
   return (
     <Card  className="container-card">
       <CardContent className={"container-input"}>
-        {displayEror ? (<><Alert severity="error">Username atau Password anda salah, coba lagi!</Alert></>) : false}
+        {displayEror ? (<><Alert severity="error">Email atau Password anda salah, coba lagi!</Alert></>) : false}
         <FormControl className="input-field" variant="outlined">
-          <InputLabel className="input-label" >Username</InputLabel>
+          <InputLabel className="input-label" >Email</InputLabel>
           <OutlinedInput
             required
             type={'text'}
-            value={values.username}
-            onChange={handleChange('username')}
+            value={values.email}
+            onChange={handleChange('email')}
             classes={outlinedInputClasses}
             labelWidth={70}
           />

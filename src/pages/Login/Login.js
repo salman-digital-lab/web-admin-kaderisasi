@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react"
-import "../assets/scss/Login.scss"
-import { CardLogin } from "../components/CardLogin"
+import "../../assets/scss/Login.scss"
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
+import { AdminLoginProvider } from "../../context/AdminLoginContext";
+import { CardLogin } from "./CardLogin";
 
 export const Login = () => {
   const [display, setDisplay] = useState(true)
@@ -12,6 +13,7 @@ export const Login = () => {
   },[display, setDisplay])
 
   return(
+    <AdminLoginProvider>
     <div className="container-login">
       <div>
         <div className="headline-tittle-login">
@@ -31,5 +33,6 @@ export const Login = () => {
           )}
       </div>
     </div>
+    </AdminLoginProvider>
   )
 }
