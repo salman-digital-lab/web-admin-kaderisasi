@@ -5,11 +5,14 @@ import { AdminContext } from '../../context/AdminContext'
 import { styled } from './styled'
 import { AppBar, Toolbar, IconButton, Menu, MenuItem, Typography, Box } from "@material-ui/core";
 import { AccountCircle, MoreVert, Menu as MenuIcon } from '@material-ui/icons';
-
+import { useHistory } from 'react-router-dom';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export const Topbar = (props) => {
+  let history = useHistory()
   const classes = styled();
   const { state, setState } = React.useContext(AdminContext)
+  const [loading, setLoading] = React.useState(true)
   const isMenuOpen = Boolean(state.anchorEl);
   const isMobileMenuOpen = Boolean(state.mobileMoreAnchorEl);
   const menuId = 'primary-search-account-menu';
@@ -19,13 +22,23 @@ export const Topbar = (props) => {
   const handleMenuClose = () => handleMobileMenuClose()
   const handleMobileMenuOpen = (event) => setState({ ...state, mobileMoreAnchorEl: event.currentTarget })
   const handleDrawerOpen = () => setState({ ...state, openDrawer: true })
+  const handleLogout = () => {
+        document.cookie = "token=; max-age=-1;";
+        setLoading(false)
+
+        setTimeout(() => {
+            history.push("/login") 
+            setLoading(false)
+        }, 5000)
+    }
 
 
   const renderProfileMenu = (
     <Menu anchorEl={state.anchorEl} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} id={menuId} keepMounted transformOrigin={{ vertical: 'top', horizontal: 'right' }} open={isMenuOpen} onClose={handleMenuClose}>
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+      <MenuItem onClick={handleLogout}>Logout 
+      {loading ?  false : <CircularProgress size={10} color="inherit" className="circular-Progress" /> }</MenuItem>
     </Menu>
   );
 
