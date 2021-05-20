@@ -8,7 +8,7 @@ const CardDashboard = (props) => {
             </div>
             <div className="right-innercard">
                 <p className="title-innercard">{props.title}</p>
-                <h2>291.322</h2>
+                <h2>{props.value}</h2>
                 <p>{props.text}</p>
             </div>
         </div>
