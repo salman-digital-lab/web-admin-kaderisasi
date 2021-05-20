@@ -1,75 +1,164 @@
-import React from 'react';
-import { Card, CardContent, FormControlLabel,
-    TextField, Box, FormControl, InputLabel,
-    FormLabel, RadioGroup, MenuItem, Select,
-    Input
-} from '@material-ui/core';
-import StyledRadio from '../../../components/RadioButton';
-import { MenuProps, getStyles } from '../../../components/Select';
-import { useTheme } from '@material-ui/core/styles';
+import React, { useContext, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  FormControlLabel,
+  TextField,
+  Box,
+  FormControl,
+  InputLabel,
+  FormLabel,
+  RadioGroup,
+  MenuItem,
+  Select,
+  Input,
+} from "@material-ui/core";
+import { MenuProps, getStyles } from "../../../components/Select";
+import StyledRadio from "../../../components/RadioButton";
+import { useTheme } from "@material-ui/core/styles";
+import { AdminActivityContext } from "../../../context/AdminActivityContext";
 
+const PendaftarFilter = () => {
+  const theme = useTheme();
+  const {
+    filterParticipantsActivity,
+    setFilterParticipantsActivity,
+    universityList,
+    functions,
+  } = useContext(AdminActivityContext);
+  const { getAllUniversities } = functions;
+  useEffect(() => {
+    if (universityList.length < 1) {
+      getAllUniversities();
+    }
+  });
 
-const PendaftarFilter =() => {
-    const theme = useTheme();
-    const [univName, setUnivName] = React.useState("all");
-    const names = [
-        {value:"all", label:"Semua Perguruan Tinggi"},
-        {value:"TelU", label:"Telkom University"},
-        {value:"ITB", label:"Institut Teknologi Bandung"},
-        {value:"Unikom", label:"Universitas Komputer"},
-        {value:"Unisba", label:"Universitas Islam Bandung"},
-        {value:"Polban", label:"Politeknik Bandung"},
-    ];
-    const handleKeyDown = (event) => {
-        if (event.key === 'Enter') {
-            console.log(event.target.value)
-        }
-    };
+  const statusList = [
+    { value: -1, label: "Semua" },
+    { value: "REGISTERED", label: "Registered" },
+    { value: "JOINED", label: "Joined" },
+    { value: "PASSED", label: "Passed" },
+    { value: "FAILED", label: "Failed" },
+    { value: "REJECTED", label: "Rejected" },
+  ];
 
-    const handleChangeUniv = (s) => {
-        setUnivName(s)
-        console.log(s)
-    };
+  const handleUniversityChange = (s) => {
+    setFilterParticipantsActivity({
+      ...filterParticipantsActivity,
+      university_id: Number(s),
+      filter: true,
+    });
+  };
 
-    const filterByStatus = (s) => {
-        console.log(s)
-    };
+  const handleStatusChange = (s) => {
+    setFilterParticipantsActivity({
+      ...filterParticipantsActivity,
+      status: s,
+      filter: true,
+    });
+  };
 
-    return (
-        <>
-        <Card>
-            <CardContent className="filter-content">
-                <Box pl={5} pr={5}>
-                <TextField id="filled-basic" size="small" label="Cari Pendaftar" variant="outlined" className="filter-input" onKeyDown={handleKeyDown} />
-                <FormControl component="fieldset" className="radio-button jenkel">
-                    <FormLabel component="legend">Min. Jenjang</FormLabel>
-                    <RadioGroup defaultValue="all" aria-label="activity" name="customized-radios">
-                        <FormControlLabel value="all" control={<StyledRadio />} onChange={(e) => filterByStatus(e.target.value)} label="Semua" />
-                        <FormControlLabel value="kader" control={<StyledRadio />} onChange={(e) => filterByStatus(e.target.value)} label="Kader" />
-                        <FormControlLabel value="aktivis" control={<StyledRadio />} onChange={(e) => filterByStatus(e.target.value)} label="Aktivis" />
-                        <FormControlLabel value="jamaah" control={<StyledRadio />} onChange={(e) => filterByStatus(e.target.value)} label="Jamaah" />
-                    </RadioGroup>
-                </FormControl>
-                <FormControl className="select-dropdown">
-                    <InputLabel id="demo-mutiple-name-label">Perguruan Tinggi</InputLabel>
-                    <Select
-                        value={univName}
-                        onChange={(e) => handleChangeUniv(e.target.value)}
-                        input={<Input />}
-                        MenuProps={MenuProps}
+  const filterByJenjang = (s) => {
+    setFilterParticipantsActivity({
+      ...filterParticipantsActivity,
+      role_id: Number(s),
+      filter: true,
+    });
+  };
+
+  return (
+    <>
+      <Card>
+        <CardContent className="filter-content">
+          <Box pl={5} pr={5}>
+            <FormControl className="select-dropdown">
+              <InputLabel id="demo-mutiple-name-label">Status</InputLabel>
+              {statusList.length > 0 && (
+                <Select
+                  value={filterParticipantsActivity.status}
+                  onChange={(e) => handleStatusChange(e.target.value)}
+                  input={<Input />}
+                  MenuProps={MenuProps}
+                >
+                  {statusList.map((name, idx) => (
+                    <MenuItem
+                      key={idx}
+                      value={name.value}
+                      label={name.label}
+                      style={getStyles(name, statusList, theme)}
                     >
-                    {names.map((name, idx) => (
-                        <MenuItem key={idx} value={name.value} label={name.label} style={getStyles(name, univName, theme)}>
-                        {name.label}
-                        </MenuItem>
-                    ))}
-                    </Select>
-                </FormControl>
-                </Box>
-            </CardContent>
-        </Card>
-        </>
-    );
-}
+                      {name.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              )}
+            </FormControl>
+            <FormControl component="fieldset" className="radio-button jenkel">
+              <FormLabel component="legend">Min. Jenjang</FormLabel>
+              <RadioGroup
+                value={filterParticipantsActivity.role_id}
+                aria-label="activity"
+                name="customized-radios"
+              >
+                <FormControlLabel
+                  value={-1}
+                  control={<StyledRadio />}
+                  onChange={(e) => filterByJenjang(e.target.value)}
+                  label="Semua"
+                />
+                <FormControlLabel
+                  value={4}
+                  control={<StyledRadio />}
+                  onChange={(e) => filterByJenjang(e.target.value)}
+                  label="Jamaah"
+                />
+                <FormControlLabel
+                  value={5}
+                  control={<StyledRadio />}
+                  onChange={(e) => filterByJenjang(e.target.value)}
+                  label="Aktivis"
+                />
+                <FormControlLabel
+                  value={6}
+                  control={<StyledRadio />}
+                  onChange={(e) => filterByJenjang(e.target.value)}
+                  label="Kader"
+                />
+                <FormControlLabel
+                  value={7}
+                  control={<StyledRadio />}
+                  onChange={(e) => filterByJenjang(e.target.value)}
+                  label="Kader Lanjut"
+                />
+              </RadioGroup>
+            </FormControl>
+            <FormControl className="select-dropdown">
+              <InputLabel id="demo-mutiple-name-label">Universitas</InputLabel>
+              {universityList.length > 0 && (
+                <Select
+                  value={filterParticipantsActivity.university_id}
+                  onChange={(e) => handleUniversityChange(e.target.value)}
+                  input={<Input />}
+                  MenuProps={MenuProps}
+                >
+                  {universityList.map((name, idx) => (
+                    <MenuItem
+                      key={idx}
+                      value={name.value}
+                      label={name.label}
+                      style={getStyles(name, universityList, theme)}
+                    >
+                      {name.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              )}
+            </FormControl>
+          </Box>
+        </CardContent>
+      </Card>
+    </>
+  );
+};
 
 export default PendaftarFilter;
