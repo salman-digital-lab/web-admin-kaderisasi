@@ -1,22 +1,22 @@
-import React from "react"
+import React, { useContext, useEffect } from "react"
 import CardDashboard from "./card-dashboard"
-import EqualizerIcon from '@material-ui/icons/Equalizer';
-import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
+import { AdminDashboardContext } from "../../../context/AdminDashboardContext";
 
-const ColorCard = [
-    {icon: <PeopleOutlineIcon fontSize="large"/>, color: "#61B15A", title:"Jumlah Akun", text:"Akun"},
-    {icon: <EqualizerIcon fontSize="large"/>,color: "#1C6C7D", title:"Jumlah Jamaah", text:"Jamaah"},
-    {icon: <EqualizerIcon fontSize="large"/>, color: "#73C5D0", title:"Jumlah Aktivis", text:"Aktivis"},
-    {icon: <EqualizerIcon fontSize="large"/>, color: "#FFA72E", title:"Jumlah Kader", text:"Kader"},
-]
 
 const Card = () => {
-    const data = [...ColorCard]
+    const { valueMapping, functions } = useContext(AdminDashboardContext)
+    const { CardData, GetAllMember, barData } = functions
+    const data = [...CardData]
+    useEffect(() => {
+        if (valueMapping.status === null) {
+            GetAllMember()
+        }
+    }, [])
 
-    return(
+    return (
         <>
-            {data.map((e,idx) => {
-                return <CardDashboard key={idx} color={e.color} icon={e.icon} title={e.title} text={e.text} />
+            {data.map((e, idx) => {
+                return <CardDashboard key={idx} color={e.color} icon={e.icon} title={e.title} text={e.text} value={e.value} />
             })}
         </>
     )

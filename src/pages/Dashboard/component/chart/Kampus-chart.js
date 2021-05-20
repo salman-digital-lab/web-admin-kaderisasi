@@ -1,100 +1,116 @@
-import React, {useState } from "react"
-import { HorizontalBar  } from 'react-chartjs-2';
+import React, { useContext, useEffect} from "react"
+import { HorizontalBar } from 'react-chartjs-2';
+import { AdminDashboardContext } from "../../../../context/AdminDashboardContext";
 
 const KampusChart = () => {
+    const { KampusState, functions, KampusBar, setKampusBar } = useContext(AdminDashboardContext)
+    const { colors, GetKampus } = functions
+    // sort by value
+    if (KampusState !== undefined) {
+        function compare(a, b) {
+            const valueA = a.jenis_member.toUpperCase();
+            const valueB = b.jenis_member.toUpperCase();
+            let comparison = 0;
+            if (valueA > valueB) {
+                comparison = 1;
+            } else if (valueA < valueB) {
+                comparison = -1;
+            }
+            return comparison;
+        }
 
-    const [barData, ] = useState({
-        labels: [ 
-            'Institut Teknologi Bandung, Bandung', 'Universitas Pendidikan Indonesia, Bandung', 'Universitas Islam Negeri (UIN) Sunan Gunung Djati Bandung',
-            'Universitas Padjajaran, Bandung', 'Universitas Diponegoro', 'Institut Pertanian Bogor',
-            'Universitas Surakarta Sebelas Maret','Politeknik negeri bandung','Universitas Gajah Mada',
-            'Universitas Sriwijaya', 'Universitas Andalas', 'Universitas Siliwangi',
-            'Banten','Institut Teknologi sepuluh Nopember','UIN syarif hidayahtullah',
-            'Universitas Kesehatan Kemenkes','Universitas Jendral sudirman','Universitas Islam Bandung',
-            'Universitas Negeri Yogyakarta','Universitas negeri semarang',
+        KampusState.sort(compare)
+    }
 
-        ],
-        datasets: [
-            {
-                label: 'JAMAAH',
-                data: [            
-                1, 5, 2,
-                3, 3, 5,
-                1, 2, 2,
-                2, 5, 2,
-                1, 2, 2,
-                5, 5, 2,
-                1, 3, ],
-                backgroundColor: 'rgba(28, 108, 125, 1)',
-                borderWidth: 1,
-            },
-            {
-                label: 'Aktivis',
-                data: [            
-                    3, 5, 2,
-                    2, 3, 5,
-                    2, 2, 2,
-                    5, 2, 2,
-                    2, 2, 2,
-                    5, 3, 2,
-                    1, 2, ],
-                backgroundColor: 'rgba(115, 197, 208, 1)',
-                borderWidth: 1
-            },
-            {
-                label: 'Kader',
-                data: [            
-                    3, 5, 2,
-                    2, 3, 5,
-                    1, 2, 2,
-                    2, 5, 2,
-                    1, 2, 2,
-                    5, 3, 2,
-                    1, 5,  ],
-                backgroundColor: 'rgba(255, 167, 46, 1)',
-                borderWidth: 1
-            },
-        ]
-    });
-    return(
+    useEffect(() => {
+        setKampusBar({
+            labels: [],
+            datasets: [],
+            status: null,
+        });
+
+        if (KampusBar.status === null) {
+            GetKampus()
+        }
+    }, [])
+
+    if (KampusState !== undefined) {
+        KampusState.forEach(function (e) {
+            // create labels
+            var labelIndex = KampusBar.labels.indexOf(e.nama_universitas)
+            if (labelIndex === -1) {
+                labelIndex = KampusBar.labels.length;
+                KampusBar.labels.push(e.nama_universitas);
+                // dummy entries for each dataset for the label
+                KampusBar.datasets.forEach(function (dataset) {
+                    dataset.data.push(0)
+                })
+            }
+
+            // get the area dataset
+            var area = KampusBar.datasets.filter(function (area) {
+                return (area.label === e.jenis_member);
+            })[0]
+            // otherwise create it
+            if (area === undefined) {
+                area = {
+                    label: e.jenis_member,
+                    data: KampusBar.labels.map(function () {
+                        return 0;
+                    }),
+                    fill: false,
+                    backgroundColor: colors[KampusBar.datasets.length],
+                    borderColor: colors[KampusBar.datasets.length]
+                };
+                KampusBar.datasets.push(area)
+            }
+
+            // set the value
+            area.data[labelIndex] = e.jumlah_permember;
+        })
+    }
+    return (
         <>
             <div className="container-chart">
-            <HorizontalBar 
-                data={barData}
-                id="chart"
-                base={10}
-                options={{
-                    layout: {
-                        margin: {
-                            left: 50,
-                            right: 0,
-                            top: 0,
-                            bottom: 500
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: 'Trend Persebaran Data Kampus',
-                        fontSize: 25,
-                        padding: 20,
-                    }, 
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    legend: {
-                        onClick: (e) => e.stopPropagation(),
-                        
-                    },
-                    scales:{
-                        xAxes:[{
-                          ticks:{
-                            suggestedMin:5,
-                            beginAtZero:true,
-                          }
-                        }]
-                      },  
-                    skipNull: true
-                }}
-            />
+                <HorizontalBar
+                    data={KampusBar}
+                    id="chart"
+                    base={10}
+                    options={{
+                        layout: {
+                            margin: {
+                                left: 50,
+                                right: 0,
+                                top: 0,
+                                bottom: 500
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: 'Trend Persebaran Data Kampus',
+                            fontSize: 25,
+                            padding: 20,
+                        },
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        legend: {
+                            onClick: (e) => e.stopPropagation(),
+                        },
+                        scales: {
+                            xAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    min: 0,
+                                    callback: function (value, index, values) {
+                                        return value.toLocaleString();
+                                    }
+                                }
+                            }]
+
+                        },
+                        skipNull: true
+                    }}
+                />
             </div>
         </>
     )
