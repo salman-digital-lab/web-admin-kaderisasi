@@ -20,3 +20,16 @@
   min-height: 45px;
   justify-content: flex-end;
 }
+
+.loading-table{
+  padding: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.text-ellipsis{
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  overflow:hidden;
+  width: 250px;
+}

@@ -1,135 +1,205 @@
-import React, { useState, useContext, useEffect } from 'react';
-import DetailKegiatanModal from '../../../components/modals/detail-kegiatan-modal'
-import { Button, Modal, Fade, Backdrop, Select, MenuItem, TextField } from '@material-ui/core';
-import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, ContentState } from 'draft-js';
+import React, { useState, useContext, useEffect } from "react";
+import DetailKegiatanModal from "../../../components/modals/detail-kegiatan-modal";
+import { Button, Select, MenuItem, TextField } from "@material-ui/core";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState, convertToRaw, ContentState } from "draft-js";
+import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { AdminActivityContext } from '../../../context/AdminActivityContext';
+import { AdminActivityContext } from "../../../context/AdminActivityContext";
+import { useParams } from "react-router";
+import LoadingAnimation from "../../../components/loading-animation";
 
 const FormKegiatan = () => {
-    const deskripsi = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tincidunt ornare massa eget egestas purus viverra accumsan. Turpis egestas maecenas pharetra convallis posuere morbi leo. Sem viverra aliquet eget sit. Egestas tellus rutrum tellus pellentesque eu tincidunt. Adipiscing diam donec adipiscing tristique. Proin nibh nisl condimentum id venenatis a condimentum vitae. Enim lobortis scelerisque fermentum dui faucibus in ornare. Eu consequat ac felis donec. Facilisis gravida neque convallis a cras semper auctor neque. Nam at lectus urna duis convallis convallis tellus. Non odio euismod lacinia at quis risus sed vulputate.\nSed faucibus turpis in eu mi bibendum. Tortor pretium viverra suspendisse potenti nullam ac tortor vitae. Iaculis eu non diam phasellus. Vitae tortor condimentum lacinia quis. Amet nisl purus in mollis nunc sed id semper. Quam id leo in vitae turpis massa. Nisl purus in mollis nunc sed id semper risus. Maecenas accumsan lacus vel facilisis volutpat est velit egestas. Diam ut venenatis tellus in metus vulputate eu. Id diam vel quam elementum pulvinar. Bibendum neque egestas congue quisque egestas diam in arcu cursus. Enim diam vulputate ut pharetra sit amet aliquam id diam. Nunc mattis enim ut tellus elementum sagittis vitae. Amet nisl purus in mollis nunc. Neque vitae tempus quam pellentesque nec nam aliquam sem et.';
-    const stateEdit = EditorState.createWithContent(ContentState.createFromText(deskripsi));
-    const [editorState, setEditorState] = useState(stateEdit);
-    const [judul, setJudul] = useState('Salman Cendikia Get to Know Business Competition');
-    const [kategori, setKategori] = useState('Dondo');
-    const [kode, setKode] = useState('110421')
-    const { categoryList, functions } = useContext(AdminActivityContext)
-    const { getActivityCategory } = functions
+  const { activityForm, categoryList, functions } =
+    useContext(AdminActivityContext);
+  const { getActivityCategory, getActivityDetail, editActivity } = functions;
+  const stateEdit = EditorState.createEmpty();
+  const [editorState, setEditorState] = useState(stateEdit);
+  const [stateCanBeEdited, setStateCanBeEdited] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [formData, setFormData] = useState({});
+  const [check, setCheck] = useState(true);
+  const { id } = useParams();
 
-    const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
 
-    const handleOpen = () => {
-        setOpen(true);
-    };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+  const handleEdit = () => {
+    setStateCanBeEdited(!stateCanBeEdited);
+  };
 
-    const [editState, setEditState] = useState(true);
-    const editButton = () => {
-        setEditState(!editState);
-    };
+  const handleForm = (value, type) => {
+    setFormData({ ...formData, [type]: value });
+  };
 
-    const handleJudulChange = (event) => {
-        setJudul(event.target.value);
-    };
+  const handleEditor = (value) => {
+    setEditorState(value);
+    handleForm(
+      draftToHtml(convertToRaw(editorState.getCurrentContent())),
+      "description"
+    );
+  };
 
-    const handleKategoriChange = (event) => {
-        setKategori(event.target.value);
-    };
+  const handleSubmit = () => {
+    editActivity(id, formData);
+    handleEdit();
+  };
 
-    const handleKodeChange = (event) => {
-        setKode(event.target.value);
-    };
-    useEffect(() => {
-        if (categoryList.length < 1) {
-            getActivityCategory()
-        }
-    })
-    
-    return (
-        <div className="tambah-kegiatan">
+  useEffect(() => {
+    if (activityForm.length < 1 && categoryList.length < 1) {
+      getActivityDetail(id);
+      getActivityCategory();
+    }
+    if (activityForm.length > 0 && check) {
+      const contentBlock = htmlToDraft(activityForm[0].description);
+      const stateEdit = EditorState.createWithContent(
+        ContentState.createFromBlockArray(contentBlock.contentBlocks)
+      );
+      setEditorState(stateEdit);
+      setCheck(false);
+    }
+  });
+
+  if (activityForm.length > 0 && check) {
+    const contentBlock = htmlToDraft(activityForm[0].description);
+    const stateEdit = EditorState.createWithContent(
+      ContentState.createFromBlockArray(contentBlock.contentBlocks)
+    );
+    setEditorState(stateEdit);
+    setCheck(false);
+  }
+
+  return (
+    <>
+      <div className="tambah-kegiatan">
+        {activityForm.length === 1 && categoryList.length > 1 ? (
+          <>
             <div className="top-bar-kegiatan">
-                <div className="detail-activity">
-                    <div className="input-form">
-                        Judul<br />
-                        <TextField
-                            defaultValue={judul}
-                            InputProps={{
-                                readOnly: editState,
-                            }}
-                            onChange={handleJudulChange}
-                        />
-                    </div>
-                    <div className="input-form">
-                        Kategori Kegiatan<br />
-                        {editState ?
-                            <TextField
-                                defaultValue={kategori}
-                                InputProps={{
-                                    readOnly: true,
-                                }} /> :
-                            <Select className="select-input-form" defaultValue="aktualisasi" value={kategori} onChange={handleKategoriChange}>
-                                {categoryList.length >= 0 && categoryList.map((name, index) => (
-                                    <MenuItem key={index} value={name.label}>{name.label}</MenuItem>
-                                ))}
-                            </Select>}
-                    </div>
-                    <div className="input-form">
-                        Kode
-                        <br />
-                        <TextField
-                            defaultValue={kode}
-                            onChange={handleKodeChange}
-                            InputProps={{
-                                readOnly: editState,
-                            }} />
-                    </div>
+              <div className="detail-activity">
+                <div className="input-form">
+                  Judul
+                  <br />
+                  <TextField
+                    defaultValue={activityForm[0].name}
+                    InputProps={{
+                      readOnly: !stateCanBeEdited,
+                    }}
+                    onChange={(event) => handleForm(event.target.value, "name")}
+                  />
                 </div>
-                <div className="button-tambah-kegiatan">
-                    {editState ?
-                        <>
-                            <Button className="edit-button" variant="contained" color="primary" onClick={editButton}>Edit</Button>
-                            <Button className="button-top-tambah-kegiatan" variant="contained" color="primary" onClick={handleOpen}>Tambah Detail</Button>
-                        </> :
-                        <>
-                            <Button variant="contained" color="secondary" onClick={editButton}>Batalkan</Button>
-                            <Button className="button-top-tambah-kegiatan" variant="contained" color="primary" onClick={editButton}>Simpan</Button></>}
+                <div className="input-form">
+                  Kategori Kegiatan
+                  <br />
+                  {!stateCanBeEdited ? (
+                    <TextField
+                      value={categoryList[activityForm[0].category_id].label}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                    />
+                  ) : (
+                    <Select
+                      className="select-input-form"
+                      defaultValue={activityForm[0].category_id}
+                      onChange={(event) =>
+                        handleForm(event.target.value, "category_id")
+                      }
+                    >
+                      {categoryList
+                        .filter((x) => x.value !== -1)
+                        .map((value, index) => (
+                          <MenuItem key={index} value={value.value}>
+                            {value.label}
+                          </MenuItem>
+                        ))}
+                    </Select>
+                  )}
                 </div>
+              </div>
+              <div className="button-tambah-kegiatan">
+                {!stateCanBeEdited ? (
+                  <>
+                    <Button
+                      className="edit-button"
+                      variant="contained"
+                      color="primary"
+                      onClick={handleEdit}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      className="button-top-tambah-kegiatan"
+                      variant="contained"
+                      color="primary"
+                      onClick={handleOpen}
+                    >
+                      Tambah Detail
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={handleEdit}
+                    >
+                      Batalkan
+                    </Button>
+                    <Button
+                      className="button-top-tambah-kegiatan"
+                      variant="contained"
+                      color="primary"
+                      onClick={handleSubmit}
+                    >
+                      Simpan
+                    </Button>
+                  </>
+                )}
+              </div>
             </div>
             <div className="content-tambah-kegiatan">
-                <div className="input-form">Deskripsi</div>
-                <br />
-                <div className="editor">
-                    {editState ? editorState.getCurrentContent().getPlainText() :
-                        <Editor
-                            editorState={editorState}
-                            toolbarClassName="toolbarClassName"
-                            wrapperClassName="wrapperClassName"
-                            editorClassName="editorClassName"
-                            pla
-                            onEditorStateChange={setEditorState}
-                        />}
-                </div>
+              <div className="input-form">Deskripsi</div>
+              <br />
+              <div className="editor">
+                {!stateCanBeEdited ? (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: draftToHtml(
+                        convertToRaw(editorState.getCurrentContent())
+                      ),
+                    }}
+                  />
+                ) : (
+                  <>
+                    <Editor
+                      editorState={editorState}
+                      wrapperClassName="demo-wrapper"
+                      editorClassName="demo-editor"
+                      onEditorStateChange={handleEditor}
+                    />
+                  </>
+                )}
+              </div>
             </div>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-            >
-                <Fade in={open}>
-                    <DetailKegiatanModal onClose={handleClose} />
-                </Fade>
-            </Modal>
-        </div>
-    );
-    
-}
+            <DetailKegiatanModal
+              open={open}
+              onClose={handleClose}
+              data={activityForm[0]}
+            />
+          </>
+        ) : (
+          <div className="loading-table">
+            <LoadingAnimation table />
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
 export default FormKegiatan;
