@@ -1,12 +1,23 @@
-import React from "react";
-import { Button } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
-import { AdminQuestionnaireContext } from "../../../context/AdminQuestionnaireContext";
+import React from "react"
+import { Button } from "@material-ui/core"
+import { useHistory, useLocation, useParams } from "react-router-dom"
+import { AdminQuestionnaireContext } from "../../../context/AdminQuestionnaireContext"
 export const SaveAndBackButton = () => {
-  let history = useHistory();
-  const { functions } = React.useContext(AdminQuestionnaireContext);
-  const { handleSaveQuestionnaire } = functions;
-  const handleBackToMenu = () => history.push("/questionnaire");
+  let history = useHistory()
+  const url = useLocation()
+  const params = useParams()
+  const { data, functions } = React.useContext(AdminQuestionnaireContext)
+  const { createQuestionnaire, updateQuestionnaire } = functions
+  const handleBackToMenu = () => history.push("/questionnaire")
+  const handleSave = () => {
+    console.log(params.id, url.pathname, data)
+    if (Boolean(url.pathname === '/new-questionnaire')) {
+      createQuestionnaire()
+    }
+    else {
+      updateQuestionnaire(params.id)
+    }
+  }
   return (
     <>
       <div
@@ -24,7 +35,7 @@ export const SaveAndBackButton = () => {
           Back to Menu
         </Button>
         <Button
-          onClick={handleSaveQuestionnaire}
+          onClick={handleSave}
           variant="contained"
           color="primary"
           disableElevation
@@ -33,5 +44,5 @@ export const SaveAndBackButton = () => {
         </Button>
       </div>
     </>
-  );
-};
+  )
+}

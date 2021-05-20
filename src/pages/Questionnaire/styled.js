@@ -12,6 +12,7 @@ export const styled = makeStyles(Theme => (
             margin: '0 1.4em 1.4em 0',
             position: 'relative',
             cursor: 'pointer',
+            height: '22em',
         },
         NormalCard: {
             backgroundColor: '#a8a8a8',

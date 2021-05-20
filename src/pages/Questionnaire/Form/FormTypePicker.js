@@ -15,6 +15,7 @@ import { ShortTextForm } from "./ShortTextForm";
 import { ParagraphForm } from "./ParagraphForm";
 import { RadioForm } from "./RadioForm";
 import { CheckboxForm } from "./CheckboxForm";
+import { SliderForm } from "./SliderForm";
 export const FormTypePicker = (props) => {
   const classes = styled();
   const { data, functions } = React.useContext(AdminQuestionnaireContext);
@@ -42,6 +43,7 @@ export const FormTypePicker = (props) => {
                       <option value="paragraph_text">Paragraph</option>
                       <option value="radio_button">Radio</option>
                       <option value="checkbox">Checkbox</option>
+                      <option value="slider">Slider</option>
                     </select>
                   </Typography>
                 </CardContent>
@@ -51,6 +53,7 @@ export const FormTypePicker = (props) => {
             {variant === "paragraph_text" && <ParagraphForm id={id} />}
             {variant === "radio_button" && <RadioForm id={id} />}
             {variant === "checkbox" && <CheckboxForm id={id} />}
+            {variant === "slider" && <SliderForm id={id} />}
           </Grid>
           <Divider />
           <br />
@@ -82,7 +85,7 @@ export const FormTypePicker = (props) => {
             >
               <Typography>Required</Typography>
               <Switch
-                value={data.form[id].required}
+                checked={data.form[id].required}
                 onClick={() => handleRequiredForm(id)}
                 color="primary"
                 inputProps={{ "aria-label": "primary checkbox" }}
