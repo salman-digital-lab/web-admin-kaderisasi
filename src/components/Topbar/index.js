@@ -7,6 +7,7 @@ import { AppBar, Toolbar, IconButton, Menu, MenuItem, Typography, Box } from "@m
 import { AccountCircle, MoreVert, Menu as MenuIcon } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Cookies from 'js-cookie'
 
 export const Topbar = (props) => {
   let history = useHistory()
@@ -23,7 +24,7 @@ export const Topbar = (props) => {
   const handleMobileMenuOpen = (event) => setState({ ...state, mobileMoreAnchorEl: event.currentTarget })
   const handleDrawerOpen = () => setState({ ...state, openDrawer: true })
   const handleLogout = () => {
-        document.cookie = "token=; max-age=-1;";
+        Cookies.remove('token')
         setLoading(false)
 
         setTimeout(() => {
