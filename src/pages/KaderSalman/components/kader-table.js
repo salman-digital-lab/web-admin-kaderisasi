@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Table,
@@ -15,93 +15,8 @@ import {
   stableSort,
   getComparator,
 } from "../../../components/TableDesign";
-
-function createData(name, email, phone, univ, jenjang, activity) {
-  return { name, email, phone, univ, jenjang, activity };
-}
-
-const rows = [
-  createData(
-    "Ryan Satria Yudhistira",
-    "ryansatriay@gmail.com",
-    "08123456789",
-    "Universitas Telkom",
-    "Kader",
-    "SSC"
-  ),
-  createData(
-    "Muhammad Ridaffa Purnomo",
-    "ridaffa05@gmail.com",
-    "08123456789",
-    "Universitas Telkom",
-    "Kader",
-    "LMD"
-  ),
-  createData(
-    "Dian Aries Alfatah",
-    "diesalfatah@gmail.com",
-    "08123456789",
-    "Universitas Telkom",
-    "Kader",
-    "SSC"
-  ),
-  createData(
-    "Ahmad Mumtaz",
-    "amumtaze@gmail.com",
-    "08123456789",
-    "Universitas Telkom",
-    "Kader",
-    "SPC"
-  ),
-  createData(
-    "Attaqi Qowiyyun",
-    "attaqi08@gmail.com",
-    "08123456789",
-    "Universitas Telkom",
-    "Kader",
-    "SSC"
-  ),
-  createData(
-    "Ghozy Ghulamul Afif",
-    "ghozyghlmlaff@gmail.com",
-    "08123456789",
-    "Universitas Telkom",
-    "Kader",
-    "SSC"
-  ),
-  createData(
-    "Moerdowo",
-    "moerdowototo@gmail.com",
-    "08123456789",
-    "Universitas Telkom",
-    "Kader",
-    "LMD"
-  ),
-  createData(
-    "Ibnu Yahya",
-    "ibnuyahya@gmail.com",
-    "08123456789",
-    "Universitas Telkom",
-    "Kader",
-    "SSC"
-  ),
-  createData(
-    "Faruq Fathin Az-Zaim",
-    "faruqfathin@gmail.com",
-    "08123456789",
-    "Universitas Telkom",
-    "Kader",
-    "SPC"
-  ),
-  createData(
-    "Shofiyah Rahmah Muthmainnah",
-    "shofiyahrm@gmail.com",
-    "08123456789",
-    "Universitas Telkom",
-    "Kader",
-    "SSC"
-  ),
-];
+import LoadingAnimation from "../../../components/loading-animation";
+import { AdminActivityContext } from "../../../context/AdminActivityContext";
 
 const headCells = [
   { id: "no", numeric: true, label: "No." },
@@ -137,12 +52,54 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let params = {
+  page: 1,
+  page_size: 5,
+};
+
 const KaderTable = () => {
   const classes = useStyles();
-  const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("startDate");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [status, setStatus] = useState(true);
+  const { listMembers, members, filterMember, setFilterMember, functions } =
+    useContext(AdminActivityContext);
+  const { getMembers } = functions;
+
+  if (listMembers.length < 1 && status) {
+    getMembers(params);
+    setStatus(false);
+  }
+
+  useEffect(() => {
+    if (filterMember.filter) {
+      params.page = 1;
+      setPage(0);
+      params = { ...params, ...filterMember };
+      if (params.ssc === -1) {
+        delete params.ssc;
+        delete params.filter;
+      }
+      if (params.lmd === -1) {
+        delete params.lmd;
+        delete params.filter;
+      }
+      if (params.search_query === "") {
+        delete params.search_query;
+        delete params.filter;
+      }
+      if (params.gender === "") {
+        delete params.gender;
+        delete params.filter;
+      }
+      if (Object.keys(params).length > 1) {
+        getMembers(params);
+      }
+      setFilterMember({ ...filterMember, filter: false });
+    }
+  }, [filterMember, setFilterMember, getMembers]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -152,11 +109,16 @@ const KaderTable = () => {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    params.page = newPage + 1;
+    getMembers(params);
   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+    params.page = 1;
+    params.page_size = parseInt(event.target.value, 10);
+    getMembers(params);
   };
 
   return (
@@ -165,66 +127,76 @@ const KaderTable = () => {
         Aktivis dan Jamaah
       </h1>
       <Paper>
-        <TableContainer>
-          <Table
-            aria-labelledby="tableTitle"
-            size={"medium"}
-            aria-label="enhanced table"
-          >
-            <EnhancedTableHead
-              classes={classes}
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-              headCells={headCells}
+        {!members.status ? (
+          <div className="loading-table">
+            <LoadingAnimation table />
+          </div>
+        ) : (
+          <>
+            <TableContainer>
+              <Table
+                aria-labelledby="tableTitle"
+                size={"medium"}
+                aria-label="enhanced table"
+              >
+                <EnhancedTableHead
+                  classes={classes}
+                  order={order}
+                  orderBy={orderBy}
+                  onRequestSort={handleRequestSort}
+                  headCells={headCells}
+                />
+                <TableBody>
+                  {stableSort(listMembers, getComparator(order, orderBy)).map(
+                    (row, index) => {
+                      return (
+                        <TableRow hover tabIndex={-1} key={row.name}>
+                          <TableCell
+                            component="th"
+                            scope="row"
+                            className="table-cell"
+                          >
+                            {index + 1 + rowsPerPage * page}
+                          </TableCell>
+                          <TableCell className="table-cell">
+                            <Link to={"/detail-aktivis/" + row.id}>
+                              {row.name}
+                            </Link>
+                          </TableCell>
+                          <TableCell className="table-cell">
+                            {row.email}
+                          </TableCell>
+                          <TableCell className="table-cell">
+                            {row.phone}
+                          </TableCell>
+                          <TableCell className="table-cell">
+                            {row.university}
+                          </TableCell>
+                          <TableCell className="table-cell">
+                            {row.jenjang}
+                          </TableCell>
+                          <TableCell className="table-cell">
+                            {row.ssc}
+                            {row.lmd}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    }
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={members?.data?.total ? members?.data?.total : "Loading"}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
             />
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  return (
-                    <TableRow hover tabIndex={-1} key={row.name}>
-                      <TableCell
-                        component="th"
-                        scope="row"
-                        className="table-cell"
-                      >
-                        {index + 1 + rowsPerPage * page}
-                      </TableCell>
-                      <TableCell className="table-cell">
-                        <Link
-                          to={
-                            "/detail-aktivis/" + row.email.match(/^([^@]*)@/)[1]
-                          }
-                        >
-                          {row.name}
-                        </Link>
-                      </TableCell>
-                      <TableCell className="table-cell">{row.email}</TableCell>
-                      <TableCell className="table-cell">{row.phone}</TableCell>
-                      <TableCell className="table-cell">{row.univ}</TableCell>
-                      <TableCell className="table-cell">
-                        {row.jenjang}
-                      </TableCell>
-                      <TableCell className="table-cell">
-                        {row.activity}
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
+          </>
+        )}
       </Paper>
     </div>
   );

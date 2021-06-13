@@ -1,5 +1,5 @@
 import React from 'react';
-import ContentLoader from 'react-content-loader';
+import ContentLoader, {Facebook} from 'react-content-loader';
 
 const LoadingAnimation = (props) => {
   if (props.bmka) {
@@ -38,6 +38,11 @@ const LoadingAnimation = (props) => {
         <rect x="341" y="5" rx="0" ry="0" width="41" height="10" />
       </ContentLoader>
     );
+  }
+  if (props.facebook){
+    return (
+      <Facebook/>
+    )
   }
   return (
     <ContentLoader

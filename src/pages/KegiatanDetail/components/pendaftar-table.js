@@ -162,7 +162,6 @@ const PendaftarTable = () => {
                   order={order}
                   orderBy={orderBy}
                   onRequestSort={handleRequestSort}
-                  rowCount={listParticipants.length}
                   headCells={headCells}
                 />
 

@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import data from "../data.json";
 import profile from "../images.jpg";
+import { useParams } from "react-router-dom";
+import LoadingAnimation from "../../../components/loading-animation";
+import { AdminActivityContext } from "../../../context/AdminActivityContext";
 
 const KaderDetail = () => {
+  const {id} = useParams();
+  const [status, setStatus] = useState(true);
+  const { memberForm, functions } =
+    useContext(AdminActivityContext);
+  const { getMemberDetail } = functions;
+
+  if (memberForm.length < 1 && status) {
+    getMemberDetail(id);
+    setStatus(false);
+  }
+  
   return (
-    <>
+    memberForm?.member?.length > 0 ? (
+      <>
       <div className="head-aktivis">
         <div className="head-left">
           <img
@@ -21,7 +36,7 @@ const KaderDetail = () => {
               Nama Jamaah
             </div>
             <div className="input-group-text-head" id="basic-addon1">
-              <span className="editable">{data[0].name}</span>
+              <span className="editable">{memberForm?.member[0].name}</span>
             </div>
           </div>
           <div className="head-aktivis-data">
@@ -29,15 +44,15 @@ const KaderDetail = () => {
               Jenis Kelamin
             </div>
             <div className="input-group-text-head" id="basic-addon1">
-              <span className="editable">{data[0].jenkel}</span>
+              <span className="editable">{memberForm?.member[0].gender}</span>
             </div>
           </div>
           <div className="head-aktivis-data">
             <div className="input-group-title-head" id="basic-addon1">
-              Tanggal Lahir
+              Tempat, Tanggal Lahir
             </div>
             <div className="input-group-text-head" id="basic-addon1">
-              <span className="editable">{data[0].tanggal_lahir}</span>
+              <span className="editable">{memberForm?.member[0].city_of_birth}, {new Date(memberForm?.member[0].date_of_birthday).toLocaleDateString()}</span>
             </div>
           </div>
           <div className="head-aktivis-data">
@@ -45,7 +60,7 @@ const KaderDetail = () => {
               Phone/Whatsapp
             </div>
             <div className="input-group-text-head" id="basic-addon1">
-              <span className="editable">{data[0].phone}</span>
+              <span className="editable">{memberForm?.member[0].phone}</span>
             </div>
           </div>
         </div>
@@ -58,7 +73,7 @@ const KaderDetail = () => {
             Email
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].email}</span>
+            <span className="editable">{memberForm?.member[0].email}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -66,7 +81,7 @@ const KaderDetail = () => {
             ID Line
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].line}</span>
+            <span className="editable">{memberForm?.member[0].line_id}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -74,7 +89,7 @@ const KaderDetail = () => {
             Perguruan Tinggi/Univ
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].univ}</span>
+            <span className="editable">{memberForm?.member[0].university}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -82,7 +97,7 @@ const KaderDetail = () => {
             Fakultas
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].fakultas}</span>
+            <span className="editable">{memberForm?.member[0].faculty}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -90,7 +105,7 @@ const KaderDetail = () => {
             Jurusan
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].jurusan}</span>
+            <span className="editable">{memberForm?.member[0].major}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -98,7 +113,7 @@ const KaderDetail = () => {
             NIM
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].nim}</span>
+            <span className="editable">{memberForm?.member[0].student_id}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -106,15 +121,7 @@ const KaderDetail = () => {
             Angkatan
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].angkatan}</span>
-          </div>
-        </div>
-        <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            Pendidikan Terakhir
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].pend_terakhir}</span>
+            <span className="editable">{memberForm?.member[0].intake_year}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -122,7 +129,7 @@ const KaderDetail = () => {
             Jenjang
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].jenjang}</span>
+            <span className="editable">{memberForm?.member[0].role_id}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -130,7 +137,7 @@ const KaderDetail = () => {
             Ikut Serta Kegiatan
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].kegiatan}</span>
+            <span className="editable">{memberForm?.member[0].kegiatan}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -138,7 +145,7 @@ const KaderDetail = () => {
             Alamat Sesuai KTP
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].alamat_ktp}</span>
+            <span className="editable">{memberForm?.member[0].from_address}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -146,7 +153,7 @@ const KaderDetail = () => {
             Alamat Sekarang
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].alamat}</span>
+            <span className="editable">{memberForm?.member[0].current_address}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -154,7 +161,7 @@ const KaderDetail = () => {
             Provinsi
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].provinsi}</span>
+            <span className="editable">{memberForm?.member[0].province_id}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -162,7 +169,7 @@ const KaderDetail = () => {
             Kota/Kabupaten
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].kota}</span>
+            <span className="editable">{memberForm?.member[0].district_id}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -170,7 +177,7 @@ const KaderDetail = () => {
             Kecamatan
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].kecamatan}</span>
+            <span className="editable">{memberForm?.member[0].village_id}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -178,7 +185,7 @@ const KaderDetail = () => {
             Kelurahan
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].kelurahan}</span>
+            <span className="editable">{memberForm?.member[0].regency_id}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -186,12 +193,17 @@ const KaderDetail = () => {
             Tanggal Mendaftar
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data[0].tanggal_mendaftar}</span>
+            <span className="editable">{memberForm?.member[0].intake_year}</span>
           </div>
         </div>
       </div>
       <br />
     </>
+    ) : (
+      <div className="loading-table">
+        <LoadingAnimation facebook/>
+      </div>
+    )
   );
 };
 

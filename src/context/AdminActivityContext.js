@@ -24,6 +24,19 @@ export const AdminActivityProvider = (props) => {
   const [formTemplateList, setFormTemplateList] = useState([]);
   const [activityForm, setActivityForm] = useState([]);
   const [universityList, setUniversityList] = useState([]);
+
+  const [filterMember, setFilterMember] = useState({
+    filter: false,
+    gender: "",
+    ssc: -1,
+    lmd: -1,
+    search_query: "",
+  });
+  const [members, setMembers] = useState([]);
+  const [listMembers, setListMembers] = useState([]);
+  const [memberForm, setMemberForm] = useState([]);
+
+
   /*
     Get all activity
   */
@@ -50,7 +63,7 @@ export const AdminActivityProvider = (props) => {
               startDate: x.begin_date,
               endDate: x.end_date,
               jenjang: x.minimumRole.name,
-              kategori: x.activityCategory.name,
+              kategori: x.activityCategory?.name,
               register: x.status.toLowerCase(),
               publish: x.is_published ? "published" : "unpublished",
             });
@@ -338,6 +351,66 @@ export const AdminActivityProvider = (props) => {
         });
     };
 
+    /*
+    Get all Members
+  */
+  const getMembers = async (params) => {
+    setMembers({});
+    let params_query = "?";
+    Object.keys(params).map((x, i) =>
+      i === Object.keys(params).length - 1
+        ? (params_query += x + "=" + params[x].toString())
+        : (params_query += x + "=" + params[x].toString() + "&")
+    );
+    let result = null;
+
+    axios
+      .get(process.env.REACT_APP_BASE_URL + `/v1/members` + params_query)
+      .then((res) => {
+        result = res.data.data.data;
+        let list = [];
+        if (result.length > 0) {
+          result.forEach((x) => {
+            list.push({
+              id: x.id,
+              name: x.name,
+              email: x.email,
+              phone: x.phone,
+              university: x.university,
+              jenjang: x.role_id,
+              ssc: x.ssc,
+              lmd: x.lmd,
+            });
+          });
+        }
+        setListMembers(list);
+        setMembers(res.data);
+      })
+      .catch((err) => {
+        console.log("Get Members Error Cuy", err);
+      });
+  };
+
+    /*
+    @params
+    id: integer
+  
+    Get member where id = params.id
+  */
+  const getMemberDetail = (id) => {
+    setMemberForm({});
+    axios
+      .get(process.env.REACT_APP_BASE_URL + `/v1/member/${id}`)
+      .then((res) => {
+        const form = res.data.data;
+        setMemberForm(form);
+      })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  };
+
   const functions = {
     getActivity,
     getActivityDetail,
@@ -351,7 +424,9 @@ export const AdminActivityProvider = (props) => {
     editActivityCategory,
     deleteActivityCategory,
     getAllUniversities,
-    getAllFormTemplate
+    getAllFormTemplate,
+    getMembers,
+    getMemberDetail
   };
 
   return (
@@ -372,6 +447,11 @@ export const AdminActivityProvider = (props) => {
         categoryList,
         universityList,
         formTemplateList,
+        members,
+        listMembers,
+        memberForm,
+        filterMember,
+        setFilterMember,
         functions,
       }}
     >
