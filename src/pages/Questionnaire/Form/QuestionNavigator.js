@@ -1,14 +1,18 @@
-import React from "react";
+import React from "react"
 import {
-  Typography,
   Hidden,
   List,
   ListItem,
-} from "@material-ui/core";
-import { AdminQuestionnaireContext } from "../../../context/AdminQuestionnaireContext";
+  Divider,
+  Typography,
+} from "@material-ui/core"
+import BorderColorIcon from '@material-ui/icons/BorderColor';
+import { AdminQuestionnaireContext } from "../../../context/AdminQuestionnaireContext"
+
+
 export const QuestionNavigator = () => {
-  const { data, ref } = React.useContext(AdminQuestionnaireContext);
-  const handleDirectNavigate = (id) => ref[id].focus();
+  const { data, ref } = React.useContext(AdminQuestionnaireContext)
+  const handleDirectNavigate = (id) => ref[id].focus()
   return (
     <>
       <Hidden smDown>
@@ -16,8 +20,8 @@ export const QuestionNavigator = () => {
           style={{
             height: "100vh",
             overflow: "auto",
-            backgroundColor: "inherit",
-            color: "#2498c9",
+            backgroundColor: "#fff",
+            boxShadow: '0 1px 2px rgba(94, 45, 216, 0.3)',
           }}
         >
           <List style={{ padding: "0" }}>
@@ -25,16 +29,19 @@ export const QuestionNavigator = () => {
               <div key={index}>
                 <ListItem
                   onClick={() => handleDirectNavigate(index)}
-                  style={{ border: "1px solid grey", marginBottom: "10px" }}
                   button
                 >
-                  <Typography variant="h6">Question {index + 1}</Typography>
+                  <BorderColorIcon style={{ margin: '5px 1em 5px 0' }} />
+                  <Typography>
+                    {`Question ${index + 1}`}
+                  </Typography>
                 </ListItem>
+                <Divider />
               </div>
             ))}
           </List>
         </div>
       </Hidden>
     </>
-  );
-};
+  )
+}
