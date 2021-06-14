@@ -12,6 +12,7 @@ import { PerguruanTinggi } from '../pages/PerguruanTinggi/'
 import { PublicContentManagement } from '../pages/PublicContentManagement/'
 import { RuangCurhat } from '../pages/RuangCurhat/'
 import { Setting } from '../pages/Setting/'
+import CategorySetting from '../pages/CategorySetting'
 import { NotFound } from '../pages/Error/NotFound/'
 import { AdminProvider } from '../context/AdminContext'
 import ListAkunAdmin from "../pages/ListAkunAdmin"
@@ -35,7 +36,7 @@ export const Router = () => {
       return <Redirect to="/login" />
     } else {
       return <Route {...props} />
-    }
+    } 
   }
 
   return (
@@ -57,6 +58,7 @@ export const Router = () => {
             <Routes exact path='/DataAdministrasiRegional' component={DataAdministrasiRegional} />
             <Routes exact path='/PublicContentManagement' component={PublicContentManagement} />
             <Routes exact path='/Setting' component={Setting} />
+            <Routes exact path='/activity-setting' component={CategorySetting} />
             <Routes exact path='/ListAkunAdmin' component={ListAkunAdmin} />
             <Routes exact path='/ListAkunAdmin/:name' component={ListDetailAdmin} />
             <Routes exact path='/RegisterAkunAdmin' component={RegisterAkunAdmin} />

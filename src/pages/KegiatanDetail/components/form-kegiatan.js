@@ -98,7 +98,7 @@ const FormKegiatan = () => {
                   <br />
                   {!stateCanBeEdited ? (
                     <TextField
-                      value={categoryList[activityForm[0].category_id].label}
+                      value={categoryList.filter(x => x.value === activityForm[0].category_id)[0].label}
                       InputProps={{
                         readOnly: true,
                       }}

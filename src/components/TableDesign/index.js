@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { lighten, makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
 import { CsvBuilder } from "filefy";
 import { TableCell, TableHead, TableRow, TableSortLabel, Toolbar, Tooltip, IconButton } from '@material-ui/core';
 import PrintIcon from '@material-ui/icons/Print'
@@ -76,24 +77,21 @@ EnhancedTableHead.propTypes = {
     headCells: PropTypes.array.isRequired
 };
 
-const exportCSV = (fileName, data) =>{
-    const columns = Object.keys(data[0])
-    const builder = new CsvBuilder(fileName + ".csv");
-    builder
-        .setDelimeter(',')
-        .setColumns(columns)
-        .addRows(data.map(rowData => columns.map(columnDef => rowData[columnDef])))
-        .exportFile();
-}
+// const exportCSV = (api) =>{
+//     axios.get(api)
+//         .then(res => console.log(res))
+// }
 
 export const EnhancedTableToolbar = (props) => {
     if (props.exportButton){
         return (
         <Toolbar className="toolbar-table">
             <Tooltip title="Export CSV">
-            <IconButton aria-label="Export CSV" onClick={()=>exportCSV(props.fileName, props.data)}>
+            <a href={props.exportLink} download={props.fileName}>
+            <IconButton aria-label="Export CSV" >
                 <PrintIcon/>
             </IconButton>
+            </a>
             </Tooltip>
         </Toolbar>
         );
@@ -103,6 +101,7 @@ export const EnhancedTableToolbar = (props) => {
 
 EnhancedTableToolbar.propTypes = {
     exportButton: PropTypes.bool.isRequired,
+    exportLink: PropTypes.string,
     fileName : PropTypes.string,
     headCells: PropTypes.array,
     data: PropTypes.array,

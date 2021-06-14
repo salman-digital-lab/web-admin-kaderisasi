@@ -82,7 +82,7 @@ export const data =
                     icon: <GroupIcon />,
                     url: '/ListAkunAdmin',
                 },
-                { id: 8.2, name: 'Text 2', url: '/Setting' },
+                { id: 8.2, name: 'List Kategori Kegiatan', url: '/activity-setting' },
                 { id: 8.3, name: 'Text 3', url: '/Setting' },
             ],
         },

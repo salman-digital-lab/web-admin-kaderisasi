@@ -63,7 +63,7 @@ export const AdminActivityProvider = (props) => {
               startDate: x.begin_date,
               endDate: x.end_date,
               jenjang: x.minimumRole.name,
-              kategori: x.activityCategory?.name,
+              kategori: x.activityCategory ? x.activityCategory.name : null,
               register: x.status.toLowerCase(),
               publish: x.is_published ? "published" : "unpublished",
             });
@@ -93,8 +93,7 @@ export const AdminActivityProvider = (props) => {
     axios
       .get(
         process.env.REACT_APP_BASE_URL +
-          `/v1/activity/participants/` +
-          activity_id +
+          `/v1/activity/${activity_id}/participant` +
           params_query
       )
       .then((res) => {
@@ -254,6 +253,7 @@ export const AdminActivityProvider = (props) => {
     axios
       .post(process.env.REACT_APP_BASE_URL + `/v1/activity-category`, formData)
       .then((res) => {
+        getActivityCategory()
         result = res;
         return result;
       })
@@ -278,6 +278,7 @@ export const AdminActivityProvider = (props) => {
         formData
       )
       .then((res) => {
+        getActivityCategory()
         result = res;
         return result;
       })
@@ -298,6 +299,7 @@ export const AdminActivityProvider = (props) => {
     axios
       .delete(process.env.REACT_APP_BASE_URL + `/v1/activity-category/${id}`)
       .then((res) => {
+        getActivityCategory()
         result = res;
         return result;
       })

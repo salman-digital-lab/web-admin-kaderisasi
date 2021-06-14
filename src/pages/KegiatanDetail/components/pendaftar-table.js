@@ -148,6 +148,7 @@ const PendaftarTable = () => {
           <>
             <EnhancedTableToolbar
               exportButton={true}
+              exportLink={process.env.REACT_APP_BASE_URL + `/v1/activity/${id}/participant/export`}
               fileName={"Pendaftar Kegiatan"}
               data={listParticipants}
             />
