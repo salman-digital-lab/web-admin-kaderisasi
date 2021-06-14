@@ -89,7 +89,6 @@ const AdminTable = () => {
                 order={order}
                 orderBy={orderBy}
                 onRequestSort={handleRequestSort}
-                rowCount={rows.length}
                 headCells={headCells}
                 />
                 <TableBody>

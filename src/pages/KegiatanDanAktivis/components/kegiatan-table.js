@@ -148,7 +148,6 @@ const KegiatanTable = () => {
                   order={order}
                   orderBy={orderBy}
                   onRequestSort={handleRequestSort}
-                  rowCount={listActivity.length}
                   headCells={headCells}
                 />
 

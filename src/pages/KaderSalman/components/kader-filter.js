@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useContext, useEffect} from "react";
 import {
   Card,
   CardContent,
@@ -16,10 +16,12 @@ import {
 import StyledRadio from "../../../components/RadioButton";
 import { MenuProps, getStyles } from "../../../components/Select";
 import { useTheme } from "@material-ui/core/styles";
+import { AdminActivityContext } from "../../../context/AdminActivityContext";
 
 const KaderFilter = () => {
   const theme = useTheme();
-  const [univName, setUnivName] = React.useState("all");
+  const { filterMember, setFilterMember } = useContext(AdminActivityContext);
+  const [univName, setUnivName] = useState("all");
   const names = [
     { value: "all", label: "Semua Perguruan Tinggi" },
     { value: "TelU", label: "Telkom University" },
@@ -31,7 +33,11 @@ const KaderFilter = () => {
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      console.log(event.target.value);
+      setFilterMember({
+        ...filterMember,
+        search_query: event.target.value,
+        filter: true,
+      });
     }
   };
 
@@ -42,6 +48,14 @@ const KaderFilter = () => {
 
   const filterByStatus = (s) => {
     console.log(s);
+  };
+
+  const handleChangeGender = (s) => {
+    setFilterMember({
+      ...filterMember,
+      gender: s,
+      filter: true,
+    });
   };
 
   return (
@@ -56,7 +70,7 @@ const KaderFilter = () => {
             className="filter-input"
             onKeyDown={handleKeyDown}
           />
-          <FormControl component="fieldset" className="radio-button activity">
+          {/* <FormControl component="fieldset" className="radio-button activity">
             <FormLabel component="legend">Aktivitas</FormLabel>
             <RadioGroup
               defaultValue="all"
@@ -88,30 +102,30 @@ const KaderFilter = () => {
                 label="SPC"
               />
             </RadioGroup>
-          </FormControl>
+          </FormControl> */}
           <FormControl component="fieldset" className="radio-button jenkel">
             <FormLabel component="legend">Jenis Kelamin</FormLabel>
             <RadioGroup
-              defaultValue="all"
+              defaultValue=""
               aria-label="activity"
               name="customized-radios"
             >
               <FormControlLabel
-                value="all"
+                value=""
                 control={<StyledRadio />}
-                onChange={(e) => filterByStatus(e.target.value)}
+                onChange={(e) => handleChangeGender(e.target.value)}
                 label="Semua"
               />
               <FormControlLabel
-                value="male"
+                value="M"
                 control={<StyledRadio />}
-                onChange={(e) => filterByStatus(e.target.value)}
+                onChange={(e) => handleChangeGender(e.target.value)}
                 label="Pria"
               />
               <FormControlLabel
-                value="female"
+                value="F"
                 control={<StyledRadio />}
-                onChange={(e) => filterByStatus(e.target.value)}
+                onChange={(e) => handleChangeGender(e.target.value)}
                 label="Perempuan"
               />
             </RadioGroup>

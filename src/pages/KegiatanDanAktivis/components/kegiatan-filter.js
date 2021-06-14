@@ -54,7 +54,7 @@ const KegiatanFilter = () => {
     setFilterActivity({ ...filterActivity, category_id: s, filter: true });
   };
 
-  const filterByJenjang = (s) => {
+  const handleChangeRole = (s) => {
     setFilterActivity({
       ...filterActivity,
       minimum_roles_id: Number(s),
@@ -100,31 +100,31 @@ const KegiatanFilter = () => {
                 <FormControlLabel
                   value={-1}
                   control={<StyledRadio />}
-                  onChange={(e) => filterByJenjang(e.target.value)}
+                  onChange={(e) => handleChangeRole(e.target.value)}
                   label="Semua"
                 />
                 <FormControlLabel
                   value={4}
                   control={<StyledRadio />}
-                  onChange={(e) => filterByJenjang(e.target.value)}
+                  onChange={(e) => handleChangeRole(e.target.value)}
                   label="Jamaah"
                 />
                 <FormControlLabel
                   value={5}
                   control={<StyledRadio />}
-                  onChange={(e) => filterByJenjang(e.target.value)}
+                  onChange={(e) => handleChangeRole(e.target.value)}
                   label="Aktivis"
                 />
                 <FormControlLabel
                   value={6}
                   control={<StyledRadio />}
-                  onChange={(e) => filterByJenjang(e.target.value)}
+                  onChange={(e) => handleChangeRole(e.target.value)}
                   label="Kader"
                 />
                 <FormControlLabel
                   value={7}
                   control={<StyledRadio />}
-                  onChange={(e) => filterByJenjang(e.target.value)}
+                  onChange={(e) => handleChangeRole(e.target.value)}
                   label="Kader Lanjut"
                 />
               </RadioGroup>

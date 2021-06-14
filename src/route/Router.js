@@ -51,7 +51,7 @@ export const Router = () => {
             <Routes exact path='/kegiatan' component={KegiatanDanAktivis} />
             <Routes exact path='/detail-kegiatan/:id' component={KegiatanDetail} />
             <Routes exact path='/aktivis' component={KaderSalman} />
-            <Routes exact path='/detail-aktivis/:name' component={KaderSalmanDetail} />
+            <Routes exact path='/detail-aktivis/:id' component={KaderSalmanDetail} />
             <Routes exact path='/PerguruanTinggi' component={PerguruanTinggi} />
             <Routes exact path='/RuangCurhat' component={RuangCurhat} />
             <Routes exact path='/DataAdministrasiRegional' component={DataAdministrasiRegional} />

@@ -351,7 +351,6 @@ export const DetailKegiatanModal = ({ open, onClose, data }) => {
                         order={order}
                         orderBy={orderBy}
                         onRequestSort={handleRequestSort}
-                        rowCount={rows.length}
                         headCells={headCells}
                       />
                       <TableBody>
