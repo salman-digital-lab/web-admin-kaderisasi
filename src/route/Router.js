@@ -19,11 +19,11 @@ import RegisterAkunAdmin from "../pages/RegisterAkunAdmin"
 import ListDetailAdmin from "../pages/ListDetailAdmin"
 import { Questionnaire } from "../pages/Questionnaire/"
 import { QuestionnaireForm } from "../pages/Questionnaire/Form/"
+import Cookies from 'js-cookie'
 
 export const Router = () => {
-
   const LoginRoute = ({ ...props }) => {
-    if (document.cookie !== "") {
+    if (Cookies.get('token') !== undefined) {
       return <Redirect to="/" />
     } else {
       return <Route {...props} />
@@ -31,7 +31,7 @@ export const Router = () => {
   }
 
   const Routes = ({ ...props }) => {
-    if (document.cookie === "") {
+    if (Cookies.get('token') === undefined) {
       return <Redirect to="/login" />
     } else {
       return <Route {...props} />

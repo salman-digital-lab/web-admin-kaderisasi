@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Cookies from 'js-cookie'
 import axios from "axios";
 import { useHistory } from 'react-router-dom';
 
@@ -23,7 +23,7 @@ export const AdminLoginProvider = (props) => {
           .then((res) => {
             console.log(res)
             let token = res.data.token.token
-            document.cookie = `token=${token}; max-age=7200; path=/`;
+            Cookies.set('token', `${token}`, { expires: 1 })
             setValues({email:'',password: '',showPassword: false,})
             setDisplayEror(false)
             setLoading(false)
