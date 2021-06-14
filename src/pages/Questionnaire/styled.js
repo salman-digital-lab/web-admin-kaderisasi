@@ -2,21 +2,12 @@ import { makeStyles } from '@material-ui/core/styles'
 export const styled = makeStyles(Theme => (
     {
         card: {
-            padding: '2em',
-            textAlign: 'center',
-            whiteSpace: 'nowrap',
-            borderRadius: '1em',
-            boxShadow: 'none',
-            color: '#fff',
-            width: '17em',
+            padding: '1em',
             margin: '0 1.4em 1.4em 0',
-            position: 'relative',
-            cursor: 'pointer',
-            height: '22em',
+            maxWidth: '300px',
+            height: 'max-content'
         },
-        NormalCard: {
-            backgroundColor: '#a8a8a8',
-        },
+
         titleText: {
             overflow: 'hidden',
             whiteSpace: 'nowrap',
@@ -27,11 +18,11 @@ export const styled = makeStyles(Theme => (
             marginBottom: '0.8em',
         },
         closeButtonWrapper: {
-            position: 'absolute', 
-            top: '-5px', 
-            right: '10px', 
-            backgroundColor: '#666', 
-            borderRadius: '50px', 
+            position: 'absolute',
+            top: '-5px',
+            right: '10px',
+            backgroundColor: '#666',
+            borderRadius: '50px',
             padding: '2px',
             display: 'flex',
             alignItems: 'center',
@@ -45,9 +36,16 @@ export const styled = makeStyles(Theme => (
         },
         NewQuestionCard: {
             backgroundColor: Theme.palette.success.light,
+            padding: '2em',
+            textAlign: 'center',
+            whiteSpace: 'nowrap',
+            borderRadius: '1em',
+            boxShadow: 'none',
+            color: '#fff',
+            margin: '0 1.4em 1.4em 0',
+            position: 'relative',
+            cursor: 'pointer',
+            height: '22em',
         },
-        addIconButton: {
-            fontSize: '5em',
-        }
     }
 ))

@@ -1,12 +1,12 @@
 import React from 'react'
-import { Card, Typography } from "@material-ui/core"
-import CloseIcon from '@material-ui/icons/Close'
+import { Card, Typography, CardActionArea, CardMedia, CardContent, CardActions, Button } from "@material-ui/core"
 import { useHistory } from 'react-router-dom'
 import { styled } from './styled'
 import { AdminQuestionnaireContext } from '../../context/AdminQuestionnaireContext'
+import ImageCard from '../../assets/images/questionnaire-card-image.jpg'
 
 
-export const QuestionCard = ({ id, title, totalQuestions }) => {
+export const QuestionCard = ({ id, title, subtitle, totalQuestions }) => {
     let history = useHistory()
     const classes = styled()
     const { setIdDelete, functions } = React.useContext(AdminQuestionnaireContext)
@@ -24,19 +24,36 @@ export const QuestionCard = ({ id, title, totalQuestions }) => {
 
     return (
         <>
-            <div style={{ position: 'relative' }}>
-                <span className={classes.closeButtonWrapper} onClick={() => handleDelete(id)}>
-                    <CloseIcon className={classes.closeButton} />
-                </span>
-                <Card className={`${classes.card} ${classes.NormalCard}`} onClick={handleDetailQuestionnaire}>
-                    <Typography variant='h5' className={classes.titleText}>
-                        {title}
-                    </Typography>
-                    <Typography className={classes.text}>
-                        Total: {totalQuestions > 1 ? totalQuestions + ' questions' : totalQuestions + ' question'}
-                    </Typography>
-                </Card>
-            </div>
+            <Card className={classes.card}>
+                <CardActionArea onClick={handleDetailQuestionnaire}>
+                    <CardMedia
+                        component="img"
+                        alt="Contemplative Reptile"
+                        height="170"
+                        image={ImageCard}
+                        title="Contemplative Reptile"
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2">
+                            {title}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            {totalQuestions > 1 ? totalQuestions + ' questions' : totalQuestions + ' question'}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            {subtitle.length > 99 ? subtitle.split('').slice(0, 100).join('') + '...' : subtitle}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+                <CardActions>
+                    <Button size="small" color="primary" onClick={handleDelete}>
+                        Delete
+                        </Button>
+                    <Button size="small" color="primary" onClick={handleDetailQuestionnaire}>
+                        More Detail
+                        </Button>
+                </CardActions>
+            </Card>
         </>
     )
 }

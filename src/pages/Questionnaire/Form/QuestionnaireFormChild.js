@@ -46,7 +46,7 @@ export const QuestionnaireFormChild = () => {
       {unlockForm &&
         <>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={9}>
+            <Grid item xs={12} md={12}>
               <SaveAndBackButton />
             </Grid>
           </Grid>
@@ -55,7 +55,7 @@ export const QuestionnaireFormChild = () => {
             <Grid
               item
               xs={12}
-              md={9}
+              md={10}
               style={{
                 height: "100vh",
                 overflow: "auto",
@@ -65,7 +65,7 @@ export const QuestionnaireFormChild = () => {
               <Form />
               <AddQuestionButton />
             </Grid>
-            <Grid item md={3}>
+            <Grid item md={2}>
               <QuestionNavigator />
             </Grid>
           </Grid>

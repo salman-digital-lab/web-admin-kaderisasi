@@ -15,23 +15,19 @@ export const TitleAndSubtitleForm = () => {
         <CardContent className={classes.cardContent}>
           <TextField
             className={classes.textField}
-            InputProps={{
-              classes: { input: classes.titleInput },
-            }}
             value={data.title}
             onChange={handleChangeTitleForm}
             label="Title"
             fullWidth
+            multiline
           />
           <TextField
             className={classes.textField}
-            InputProps={{
-              classes: { input: classes.subTitleInput },
-            }}
             value={data.subtitle}
             onChange={handleChangeSubtitleForm}
-            label="Sub title"
+            label="Subtitle"
             fullWidth
+            multiline
           />
         </CardContent>
       </Card>
