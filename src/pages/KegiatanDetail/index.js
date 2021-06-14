@@ -10,6 +10,7 @@ import "../../assets/scss/Kegiatan.scss";
 import "../../assets/scss/RichText.scss";
 import "../../assets/scss/AddActivity.scss";
 import { AdminActivityProvider } from "../../context/AdminActivityContext";
+import { Questionnaire } from "../Questionnaire";
 
 const KegiatanDetail = () => {
   const theme = useTheme();
@@ -38,6 +39,7 @@ const KegiatanDetail = () => {
           >
             <Tab label="DETAIL KEGIATAN" {...a11yProps(0)} />
             <Tab label="PENDAFTAR" {...a11yProps(1)} />
+            <Tab label="QUESTIONNAIRE" {...a11yProps(2)} />
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0} dir={theme.direction}>
@@ -52,6 +54,9 @@ const KegiatanDetail = () => {
               <PendaftarFilter />
             </div>
           </div>
+        </TabPanel>
+        <TabPanel value={value} index={2} dir={theme.direction}>
+          <Questionnaire />
         </TabPanel>
       </div>
     </AdminActivityProvider>

@@ -124,7 +124,7 @@ const KegiatanTable = () => {
     params.perPage = parseInt(event.target.value, 10);
     getActivity(params);
   };
-
+  console.log(activity.status)
   return (
     <div className="tableactivity">
       <h1 className="headline" style={{ color: "#999999" }}>
