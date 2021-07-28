@@ -8,7 +8,7 @@ import Dashboard from '../pages/Dashboard/'
 import { DataAdministrasiRegional } from '../pages/DataAdministrasiRegional/'
 import KaderSalman from '../pages/KaderSalman/'
 import KaderSalmanDetail from '../pages/KaderSalmanDetail/'
-import { PerguruanTinggi } from '../pages/PerguruanTinggi/'
+import  PerguruanTinggi  from '../pages/PerguruanTinggi/'
 import { PublicContentManagement } from '../pages/PublicContentManagement/'
 import { RuangCurhat } from '../pages/RuangCurhat/'
 import { Setting } from '../pages/Setting/'
@@ -20,6 +20,7 @@ import RegisterAkunAdmin from "../pages/RegisterAkunAdmin"
 import ListDetailAdmin from "../pages/ListDetailAdmin"
 import { Questionnaire } from "../pages/Questionnaire/"
 import { QuestionnaireForm } from "../pages/Questionnaire/Form/"
+import Formuniversitas from "../pages/PerguruanTinggi/components/form-universitas"
 import Cookies from 'js-cookie'
 
 export const Router = () => {
@@ -54,6 +55,8 @@ export const Router = () => {
             <Routes exact path='/aktivis' component={KaderSalman} />
             <Routes exact path='/detail-aktivis/:id' component={KaderSalmanDetail} />
             <Routes exact path='/PerguruanTinggi' component={PerguruanTinggi} />
+            <Routes exact path='/PerguruanTinggi/form-universitas' component={Formuniversitas} />
+            <Routes exact path='/PerguruanTinggi/form-universitas/:id' component={Formuniversitas} />
             <Routes exact path='/RuangCurhat' component={RuangCurhat} />
             <Routes exact path='/DataAdministrasiRegional' component={DataAdministrasiRegional} />
             <Routes exact path='/PublicContentManagement' component={PublicContentManagement} />

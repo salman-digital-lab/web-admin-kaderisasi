@@ -1,0 +1,68 @@
+.container-list-admin{
+    width: 100%;
+    .btn-tambah-akun-admin{
+        margin: 20px 10px;
+        float: right;
+    }
+    .content-list-admin{
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: 1fr ;
+
+    }
+}
+
+.edit{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+
+.container-register-universitas{
+    width: 100%;
+    padding: 20px 0;
+    .content-register-universitas{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .card-register-universitas{
+            background-color: #ffffff;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 1px 1px rgba(0,0,0,0.15), 
+            0 2px 2px rgba(0,0,0,0.15), 
+            0 4px 4px rgba(0,0,0,0.15), 
+            0 8px 8px rgba(0,0,0,0.15);
+
+            .form-register-universitas{
+                margin-top: 10px;
+                padding: 20px;
+                width: 500px;
+                .input-register{
+                    margin-top: 10px;
+                }
+                .btn-register{
+                    width: 100%;
+                    margin-top: 30px;
+                }
+
+                .helpertext{
+                    color: red;
+                }
+            }
+            .logo-universitas{
+                max-width: 100px;
+                margin: 10px;
+            }
+        }
+    }
+}
+
+.card-filter{
+    height: 70px !important;
+
+    .btn-filter{
+        width: 100%;
+    }
+}
