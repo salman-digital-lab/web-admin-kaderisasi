@@ -34,8 +34,9 @@ export const AdminActivityProvider = (props) => {
   });
   const [members, setMembers] = useState([]);
   const [listMembers, setListMembers] = useState([]);
-  const [memberForm, setMemberForm] = useState([]);
-
+  const [memberForm, setMemberForm] = useState({});
+  const [blockMemberResp, setBlockMemberResp] = useState({});
+  const [unblockMemberResp, setUnblockMemberResp] = useState({});
 
   /*
     Get all activity
@@ -157,7 +158,8 @@ export const AdminActivityProvider = (props) => {
       .post(process.env.REACT_APP_BASE_URL + `/v1/activity`, formData)
       .then((res) => {
         const form = res.data.data;
-        window.location.href = 'http://localhost:3000/detail-kegiatan/'+form[0].id
+        window.location.href =
+          "http://localhost:3000/detail-kegiatan/" + form[0].id;
         setActivityForm(form);
       })
       .catch((err) => console.log(err));
@@ -253,7 +255,7 @@ export const AdminActivityProvider = (props) => {
     axios
       .post(process.env.REACT_APP_BASE_URL + `/v1/activity-category`, formData)
       .then((res) => {
-        getActivityCategory()
+        getActivityCategory();
         result = res;
         return result;
       })
@@ -278,7 +280,7 @@ export const AdminActivityProvider = (props) => {
         formData
       )
       .then((res) => {
-        getActivityCategory()
+        getActivityCategory();
         result = res;
         return result;
       })
@@ -299,7 +301,7 @@ export const AdminActivityProvider = (props) => {
     axios
       .delete(process.env.REACT_APP_BASE_URL + `/v1/activity-category/${id}`)
       .then((res) => {
-        getActivityCategory()
+        getActivityCategory();
         result = res;
         return result;
       })
@@ -331,29 +333,29 @@ export const AdminActivityProvider = (props) => {
       });
   };
 
-/*
+  /*
     Get all kuesioner
   */
-    const getAllFormTemplate = () => {
-      let template = [];
-      setFormTemplateList(template);
-      template.push({ value: -1, label: "Loading..." });
-      axios
-        .get(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template`)
-        .then((res) => {
-          const response = res.data.data;
-          template.push({ value: -1, label: "Pilih Template" });
-          response.map((x) => template.push({ value: x.id, label: x.name }));
-          setFormTemplateList(template.slice(1, template.length));
-        })
-        .catch((err) => {
-          console.log("Get Activity Category Error Cuy", err);
-          template.push({ value: -1, label: "Kategori Tidak Ditemukan." });
-          setFormTemplateList(template.slice(1, template.length));
-        });
-    };
+  const getAllFormTemplate = () => {
+    let template = [];
+    setFormTemplateList(template);
+    template.push({ value: -1, label: "Loading..." });
+    axios
+      .get(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template`)
+      .then((res) => {
+        const response = res.data.data;
+        template.push({ value: -1, label: "Pilih Template" });
+        response.map((x) => template.push({ value: x.id, label: x.name }));
+        setFormTemplateList(template.slice(1, template.length));
+      })
+      .catch((err) => {
+        console.log("Get Activity Category Error Cuy", err);
+        template.push({ value: -1, label: "Kategori Tidak Ditemukan." });
+        setFormTemplateList(template.slice(1, template.length));
+      });
+  };
 
-    /*
+  /*
     Get all Members
   */
   const getMembers = async (params) => {
@@ -393,19 +395,59 @@ export const AdminActivityProvider = (props) => {
       });
   };
 
-    /*
+  /*
     @params
     id: integer
   
     Get member where id = params.id
   */
-  const getMemberDetail = (id) => {
-    setMemberForm({});
+  const getMemberDetail = async (id) => {
     axios
       .get(process.env.REACT_APP_BASE_URL + `/v1/member/${id}`)
       .then((res) => {
         const form = res.data.data;
         setMemberForm(form);
+        return form;
+      })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  };
+
+  /*
+    @params
+    id: integer
+  
+    block member where id = params.id
+  */
+  const blockMemberById = (id) => {
+    setBlockMemberResp({});
+    axios
+      .patch(process.env.REACT_APP_BASE_URL + `/v1/member/${id}/block`)
+      .then((res) => {
+        const data = res.data;
+        setBlockMemberResp(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        return false;
+      });
+  };
+
+  /*
+    @params
+    id: integer
+  
+    unblock member where id = params.id
+  */
+  const unblockMemberById = (id) => {
+    setUnblockMemberResp({});
+    axios
+      .patch(process.env.REACT_APP_BASE_URL + `/v1/member/${id}/unblock`)
+      .then((res) => {
+        const data = res.data;
+        setUnblockMemberResp(data);
       })
       .catch((err) => {
         console.log(err);
@@ -428,7 +470,9 @@ export const AdminActivityProvider = (props) => {
     getAllUniversities,
     getAllFormTemplate,
     getMembers,
-    getMemberDetail
+    getMemberDetail,
+    blockMemberById,
+    unblockMemberById,
   };
 
   return (
@@ -454,6 +498,8 @@ export const AdminActivityProvider = (props) => {
         memberForm,
         filterMember,
         setFilterMember,
+        blockMemberResp,
+        unblockMemberResp,
         functions,
       }}
     >
