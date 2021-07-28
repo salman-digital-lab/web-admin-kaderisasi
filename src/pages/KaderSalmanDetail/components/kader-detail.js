@@ -1,30 +1,119 @@
-import React, { useContext, useState } from "react";
-import data from "../data.json";
-import profile from "../images.jpg";
+import React, { useContext, useState, useEffect } from "react";
+import profile from "../profile.png";
 import { useParams } from "react-router-dom";
 import LoadingAnimation from "../../../components/loading-animation";
 import { AdminActivityContext } from "../../../context/AdminActivityContext";
+import { Link } from "react-router-dom";
+import { Block, ArrowBack, Close } from "@material-ui/icons";
+import { Button, Collapse, IconButton } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 
 const KaderDetail = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   const [status, setStatus] = useState(true);
-  const { memberForm, functions } =
+  const { memberForm, blockMemberResp, functions } =
     useContext(AdminActivityContext);
-  const { getMemberDetail } = functions;
+  const [successBlockMember, setSuccessBlockMember] = useState(false);
+  const [failedBlockMember, setFailedBlockMember] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { getMemberDetail, blockMemberById } = functions;
 
-  if (memberForm.length < 1 && status) {
-    getMemberDetail(id);
-    setStatus(false);
+  let data = {};
+  if (memberForm?.member?.length > 0) {
+    data = memberForm.member[0];
   }
-  
-  return (
-    memberForm?.member?.length > 0 ? (
-      <>
+
+  const handleBlockMember = (id) => {
+    setLoading(true);
+    blockMemberById(id);
+    setStatus(true);
+  };
+
+  useEffect(() => {
+    if (status) {
+      getMemberDetail(id);
+      setStatus(false);
+    }
+    if (blockMemberResp.status === "SUCCESS") {
+      setSuccessBlockMember(true);
+      setLoading(false);
+    }
+  }, [blockMemberResp, memberForm, status]);
+
+  return memberForm?.member?.length > 0 ? (
+    <>
+      <Collapse in={successBlockMember}>
+        <Alert
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setSuccessBlockMember(false);
+              }}
+            >
+              <Close fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          Close me!
+        </Alert>
+      </Collapse>
+      <Collapse in={failedBlockMember}>
+        <Alert
+          severity="error"
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setFailedBlockMember(false);
+              }}
+            >
+              <Close fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          Close me!
+        </Alert>
+      </Collapse>
+      <div className="button-area">
+        <div className="button-left">
+          <Button size="small" className="back-button" variant="outlined">
+            <Link to={"/aktivis"}>
+              <ArrowBack fontSize="inherit" />
+              KEMBALI
+            </Link>
+          </Button>
+        </div>
+        <div className="button-right">
+          <Button
+            color="secondary"
+            size="small"
+            className="edit-button"
+            variant="contained"
+          >
+            SUNTING
+          </Button>
+          <Button
+            color="secondary"
+            size="small"
+            className="delete-button"
+            variant="contained"
+            onClick={() => handleBlockMember(id)}
+            disabled={loading}
+          >
+            <Block fontSize="small" /> BLOKIR
+          </Button>
+        </div>
+      </div>
       <div className="head-aktivis">
         <div className="head-left">
           <img
             className="profile-image"
-            src={profile}
+            src={data.file_image ? data.file_image : profile}
             width="160px"
             height="160px"
             alt="profile"
@@ -36,7 +125,7 @@ const KaderDetail = () => {
               Nama Jamaah
             </div>
             <div className="input-group-text-head" id="basic-addon1">
-              <span className="editable">{memberForm?.member[0].name}</span>
+              <span className="editable">{data.name}</span>
             </div>
           </div>
           <div className="head-aktivis-data">
@@ -44,7 +133,7 @@ const KaderDetail = () => {
               Jenis Kelamin
             </div>
             <div className="input-group-text-head" id="basic-addon1">
-              <span className="editable">{memberForm?.member[0].gender}</span>
+              <span className="editable">{data.gender}</span>
             </div>
           </div>
           <div className="head-aktivis-data">
@@ -52,7 +141,10 @@ const KaderDetail = () => {
               Tempat, Tanggal Lahir
             </div>
             <div className="input-group-text-head" id="basic-addon1">
-              <span className="editable">{memberForm?.member[0].city_of_birth}, {new Date(memberForm?.member[0].date_of_birthday).toLocaleDateString()}</span>
+              <span className="editable">
+                {data.city_of_birth},{" "}
+                {new Date(data.date_of_birthday).toLocaleDateString()}
+              </span>
             </div>
           </div>
           <div className="head-aktivis-data">
@@ -60,7 +152,7 @@ const KaderDetail = () => {
               Phone/Whatsapp
             </div>
             <div className="input-group-text-head" id="basic-addon1">
-              <span className="editable">{memberForm?.member[0].phone}</span>
+              <span className="editable">{data.phone}</span>
             </div>
           </div>
         </div>
@@ -73,7 +165,7 @@ const KaderDetail = () => {
             Email
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{memberForm?.member[0].email}</span>
+            <span className="editable">{data.email}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -81,7 +173,7 @@ const KaderDetail = () => {
             ID Line
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{memberForm?.member[0].line_id}</span>
+            <span className="editable">{data.line_id}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -89,7 +181,7 @@ const KaderDetail = () => {
             Perguruan Tinggi/Univ
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{memberForm?.member[0].university}</span>
+            <span className="editable">{data.university}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -97,7 +189,7 @@ const KaderDetail = () => {
             Fakultas
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{memberForm?.member[0].faculty}</span>
+            <span className="editable">{data.faculty}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -105,7 +197,7 @@ const KaderDetail = () => {
             Jurusan
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{memberForm?.member[0].major}</span>
+            <span className="editable">{data.major}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -113,7 +205,7 @@ const KaderDetail = () => {
             NIM
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{memberForm?.member[0].student_id}</span>
+            <span className="editable">{data.student_id}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -121,7 +213,7 @@ const KaderDetail = () => {
             Angkatan
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{memberForm?.member[0].intake_year}</span>
+            <span className="editable">{data.intake_year}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -129,7 +221,7 @@ const KaderDetail = () => {
             Jenjang
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{memberForm?.member[0].role_id}</span>
+            <span className="editable">{data.role_id}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -137,7 +229,7 @@ const KaderDetail = () => {
             Ikut Serta Kegiatan
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{memberForm?.member[0].kegiatan}</span>
+            <span className="editable">{data.kegiatan}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -145,7 +237,7 @@ const KaderDetail = () => {
             Alamat Sesuai KTP
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{memberForm?.member[0].from_address}</span>
+            <span className="editable">{data.from_address}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -153,7 +245,7 @@ const KaderDetail = () => {
             Alamat Sekarang
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{memberForm?.member[0].current_address}</span>
+            <span className="editable">{data.current_address}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -161,7 +253,7 @@ const KaderDetail = () => {
             Provinsi
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{memberForm?.member[0].province_id}</span>
+            <span className="editable">{data.province_id}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -169,7 +261,7 @@ const KaderDetail = () => {
             Kota/Kabupaten
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{memberForm?.member[0].district_id}</span>
+            <span className="editable">{data.district_id}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -177,7 +269,7 @@ const KaderDetail = () => {
             Kecamatan
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{memberForm?.member[0].village_id}</span>
+            <span className="editable">{data.village_id}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -185,7 +277,7 @@ const KaderDetail = () => {
             Kelurahan
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{memberForm?.member[0].regency_id}</span>
+            <span className="editable">{data.regency_id}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -193,17 +285,16 @@ const KaderDetail = () => {
             Tanggal Mendaftar
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{memberForm?.member[0].intake_year}</span>
+            <span className="editable">{data.intake_year}</span>
           </div>
         </div>
       </div>
       <br />
     </>
-    ) : (
-      <div className="loading-table">
-        <LoadingAnimation facebook/>
-      </div>
-    )
+  ) : (
+    <div className="loading-table">
+      <LoadingAnimation facebook />
+    </div>
   );
 };
 
