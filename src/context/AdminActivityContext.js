@@ -63,7 +63,7 @@ export const AdminActivityProvider = (props) => {
               judul: x.name,
               startDate: x.begin_date,
               endDate: x.end_date,
-              jenjang: x.minimumRole.name,
+              jenjang: x.minimumRole?.name,
               kategori: x.activityCategory ? x.activityCategory.name : null,
               register: x.status.toLowerCase(),
               publish: x.is_published ? "published" : "unpublished",
