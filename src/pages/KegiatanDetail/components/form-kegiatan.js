@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import DetailKegiatanModal from "../../../components/modals/detail-kegiatan-modal";
-import { Button, Select, MenuItem, TextField } from "@material-ui/core";
+import { Button, Select, MenuItem, TextField, Link } from "@material-ui/core";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState, convertToRaw, ContentState } from "draft-js";
 import draftToHtml from "draftjs-to-html";
@@ -9,6 +9,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { AdminActivityContext } from "../../../context/AdminActivityContext";
 import { useParams } from "react-router";
 import LoadingAnimation from "../../../components/loading-animation";
+import embed from "embed-video";
 
 const FormKegiatan = () => {
   const { activityForm, categoryList, functions } =
@@ -64,16 +65,7 @@ const FormKegiatan = () => {
       setEditorState(stateEdit);
       setCheck(false);
     }
-  });
-
-  if (activityForm.length > 0 && check) {
-    const contentBlock = htmlToDraft(activityForm[0].description);
-    const stateEdit = EditorState.createWithContent(
-      ContentState.createFromBlockArray(contentBlock.contentBlocks)
-    );
-    setEditorState(stateEdit);
-    setCheck(false);
-  }
+  }, [activityForm]);
 
   return (
     <>
@@ -98,7 +90,11 @@ const FormKegiatan = () => {
                   <br />
                   {!stateCanBeEdited ? (
                     <TextField
-                      value={categoryList.filter(x => x.value === activityForm[0].category_id)[0].label}
+                      value={
+                        categoryList.filter(
+                          (x) => x.value === activityForm[0].category_id
+                        )[0].label
+                      }
                       InputProps={{
                         readOnly: true,
                       }}
@@ -168,12 +164,12 @@ const FormKegiatan = () => {
               <br />
               <div className="editor">
                 {!stateCanBeEdited ? (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: draftToHtml(
-                        convertToRaw(editorState.getCurrentContent())
-                      ),
-                    }}
+                  <Editor
+                    editorState={editorState}
+                    wrapperClassName="demo-wrapper"
+                    editorClassName="demo-editor"
+                    readOnly
+                    toolbarHidden
                   />
                 ) : (
                   <>
@@ -182,6 +178,19 @@ const FormKegiatan = () => {
                       wrapperClassName="demo-wrapper"
                       editorClassName="demo-editor"
                       onEditorStateChange={handleEditor}
+                      toolbar={{
+                        link: {
+                          linkCallback: (params) => ({ ...params }),
+                        },
+                        embedded: {
+                          embedCallback: (link) => {
+                            const detectedSrc = /<iframe.*? src="(.*?)"/.exec(
+                              embed(link)
+                            );
+                            return (detectedSrc && detectedSrc[1]) || link;
+                          },
+                        },
+                      }}
                     />
                   </>
                 )}
