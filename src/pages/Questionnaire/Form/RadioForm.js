@@ -1,20 +1,21 @@
-import React from "react";
-import { TextField, Grid, Typography, IconButton } from "@material-ui/core";
-import { AdminQuestionnaireContext } from "../../../context/AdminQuestionnaireContext";
-import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked";
-import CloseIcon from "@material-ui/icons/Close";
-import { styled } from "./styled";
-export const RadioForm = (props) => {
-  const { data, functions } = React.useContext(AdminQuestionnaireContext);
+import React from "react"
+import { TextField, Grid, Typography, IconButton } from "@material-ui/core"
+import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked"
+import CloseIcon from "@material-ui/icons/Close"
+import styled from "./styled"
+import { AdminQuestionnaireContext } from "../../../context/AdminQuestionnaireContext"
+/* eslint-disable */
+const RadioForm = (props) => {
+  const { data, functions } = React.useContext(AdminQuestionnaireContext)
   const {
     handleChangeQuestionForm,
     handleChangeAnswerForm,
     handleDeleteAnswerForm,
     handleAddAnswerForm,
     handleAddRef,
-  } = functions;
-  const { id } = props;
-  const classes = styled();
+  } = functions
+  const { id } = props
+  const classes = styled()
   return (
     <>
       <Grid item xs={12} sm={8}>
@@ -30,7 +31,7 @@ export const RadioForm = (props) => {
         />
         {data.form[id].answer.map((value, index) => (
           <div
-            key={index}
+            key={value}
             style={{
               display: "flex",
               alignItems: "center",
@@ -65,5 +66,6 @@ export const RadioForm = (props) => {
         </div>
       </Grid>
     </>
-  );
-};
+  )
+}
+export default RadioForm

@@ -1,85 +1,108 @@
-import React, { useContext } from 'react';
-import '../../assets/scss/Login.scss'
-
-import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import MuiAlert from '@material-ui/lab/Alert';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { AdminLoginContext } from '../../context/AdminLoginContext';
-
-const useOutlinedInputStyles = makeStyles(theme => ({
+import React, { useContext } from "react"
+import "../../assets/scss/Login.scss"
+import {
+  FormControl,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  OutlinedInput,
+} from "@material-ui/core"
+import { makeStyles } from "@material-ui/core/styles"
+import Card from "@material-ui/core/Card"
+import CardContent from "@material-ui/core/CardContent"
+import Button from "@material-ui/core/Button"
+import Visibility from "@material-ui/icons/Visibility"
+import VisibilityOff from "@material-ui/icons/VisibilityOff"
+import MuiAlert from "@material-ui/lab/Alert"
+import CircularProgress from "@material-ui/core/CircularProgress"
+import { AdminLoginContext } from "../../context/AdminLoginContext"
+/* eslint-disable */
+const useOutlinedInputStyles = makeStyles(() => ({
   root: {
     "&$focused $notchedOutline": {
       borderColor: "#5E91F8",
     },
     "&:hover $notchedOutline": {
-      borderColor: "#5E91F8"
+      borderColor: "#5E91F8",
     },
   },
   focused: {},
-  notchedOutline: {}
-}));
+  notchedOutline: {},
+}))
 
-export const CardLogin = () => {
-  const outlinedInputClasses = useOutlinedInputStyles();
-  const { displayEror,loading,setLoading,values, setValues, functions } = useContext(AdminLoginContext)
-  const {HandleLogin} = functions
+const CardLogin = () => {
+  const outlinedInputClasses = useOutlinedInputStyles()
+  const { displayEror, loading, setLoading, values, setValues, functions } =
+    useContext(AdminLoginContext)
+  const { HandleLogin } = functions
 
   const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
-  };
+    setValues({ ...values, [prop]: event.target.value })
+  }
 
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-  
+    setValues({ ...values, showPassword: !values.showPassword })
+  }
+
   const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-  
+    event.preventDefault()
+  }
 
   const handleLogin = (event) => {
     event.preventDefault()
     setLoading(true)
 
-    let email = values.email
-    let password = values.password
-    
-    HandleLogin(email, password);
+    const email = values.email
+    const password = values.password
+
+    HandleLogin(email, password)
   }
 
-  const Alert = (props) => {
-    return <MuiAlert className={"pop-up-error"} elevation={1} variant="filled" {...props} />;
-  }
+  const Alert = (props) => (
+    <MuiAlert
+      className={"pop-up-error"}
+      elevation={1}
+      variant="filled"
+      {...props}
+    />
+  )
 
   return (
-    <Card  className="container-card">
+    <Card className="container-card">
       <CardContent className={"container-input"}>
-        {displayEror ? (<><Alert severity="error">Email atau Password anda salah, coba lagi!</Alert></>) : false}
+        {displayEror ? (
+          <>
+            <Alert severity="error">
+              Email atau Password anda salah, coba lagi!
+            </Alert>
+          </>
+        ) : (
+          false
+        )}
         <FormControl className="input-field" variant="outlined">
-          <InputLabel className="input-label" >Email</InputLabel>
+          <InputLabel className="input-label">Email</InputLabel>
           <OutlinedInput
             required
-            type={'text'}
+            type={"text"}
             value={values.email}
-            onChange={handleChange('email')}
+            onChange={handleChange("email")}
             classes={outlinedInputClasses}
             labelWidth={70}
           />
         </FormControl>
         <FormControl className="input-field" variant="outlined">
-          <InputLabel className="input-label" htmlFor="outlined-adornment-password">Password</InputLabel>
+          <InputLabel
+            className="input-label"
+            htmlFor="outlined-adornment-password"
+          >
+            Password
+          </InputLabel>
           <OutlinedInput
             required
             id="outlined-adornment-password"
-            type={values.showPassword ? 'text' : 'password'}
+            type={values.showPassword ? "text" : "password"}
             value={values.password}
-            onChange={handleChange('password')}
+            onChange={handleChange("password")}
             classes={outlinedInputClasses}
             endAdornment={
               <InputAdornment position="end">
@@ -88,7 +111,7 @@ export const CardLogin = () => {
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
                   edge="end"
-                >   
+                >
                   {values.showPassword ? <Visibility /> : <VisibilityOff />}
                 </IconButton>
               </InputAdornment>
@@ -96,15 +119,26 @@ export const CardLogin = () => {
             labelWidth={70}
           />
         </FormControl>
-        <br/>
-        <Button variant="contained"
+        <br />
+        <Button
+          variant="contained"
           onClick={handleLogin}
-          className="button-login" 
-          disableElevation>
-          Login 
-          {loading ?  <CircularProgress size={10} color="inherit" className="circular-Progress" /> : false}
+          className="button-login"
+          disableElevation
+        >
+          Login
+          {loading ? (
+            <CircularProgress
+              size={10}
+              color="inherit"
+              className="circular-Progress"
+            />
+          ) : (
+            false
+          )}
         </Button>
       </CardContent>
     </Card>
-  );
+  )
 }
+export default CardLogin

@@ -1,44 +1,43 @@
-import React, { useContext, useState, useEffect } from "react";
-import profile from "../profile.png";
-import { useParams } from "react-router-dom";
-import LoadingAnimation from "../../../components/loading-animation";
-import { AdminActivityContext } from "../../../context/AdminActivityContext";
-import { Link } from "react-router-dom";
-import { Block, ArrowBack, Close } from "@material-ui/icons";
-import { Button, Collapse, IconButton } from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
-
-const KaderDetail = () => {
-  const { id } = useParams();
-  const [status, setStatus] = useState(true);
+import React, { useContext, useState, useEffect } from "react"
+import { useParams, Link } from "react-router-dom"
+import { Block, ArrowBack, Close } from "@material-ui/icons"
+import { Button, Collapse, IconButton } from "@material-ui/core"
+import Alert from "@material-ui/lab/Alert"
+import LoadingAnimation from "../../../components/loading-animation"
+import { AdminActivityContext } from "../../../context/AdminActivityContext"
+import profile from "../profile.png"
+/* eslint-disable */
+const MemberDetail = () => {
+  const { id } = useParams()
+  const [status, setStatus] = useState(true)
   const { memberForm, blockMemberResp, functions } =
-    useContext(AdminActivityContext);
-  const [successBlockMember, setSuccessBlockMember] = useState(false);
-  const [failedBlockMember, setFailedBlockMember] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const { getMemberDetail, blockMemberById } = functions;
+    useContext(AdminActivityContext)
+  const [successBlockMember, setSuccessBlockMember] = useState(false)
+  const [failedBlockMember, setFailedBlockMember] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const { getMemberDetail, blockMemberById } = functions
 
-  let data = {};
+  let data = {}
   if (memberForm?.member?.length > 0) {
-    data = memberForm.member[0];
+    data = memberForm.member[0]
   }
 
-  const handleBlockMember = (id) => {
-    setLoading(true);
-    blockMemberById(id);
-    setStatus(true);
-  };
+  const handleBlockMember = (idx) => {
+    setLoading(true)
+    blockMemberById(idx)
+    setStatus(true)
+  }
 
   useEffect(() => {
     if (status) {
-      getMemberDetail(id);
-      setStatus(false);
+      getMemberDetail(id)
+      setStatus(false)
     }
     if (blockMemberResp.status === "SUCCESS") {
-      setSuccessBlockMember(true);
-      setLoading(false);
+      setSuccessBlockMember(true)
+      setLoading(false)
     }
-  }, [blockMemberResp, memberForm, status]);
+  }, [blockMemberResp, memberForm, status])
 
   return memberForm?.member?.length > 0 ? (
     <>
@@ -50,7 +49,7 @@ const KaderDetail = () => {
               color="inherit"
               size="small"
               onClick={() => {
-                setSuccessBlockMember(false);
+                setSuccessBlockMember(false)
               }}
             >
               <Close fontSize="inherit" />
@@ -69,7 +68,7 @@ const KaderDetail = () => {
               color="inherit"
               size="small"
               onClick={() => {
-                setFailedBlockMember(false);
+                setFailedBlockMember(false)
               }}
             >
               <Close fontSize="inherit" />
@@ -117,7 +116,7 @@ const KaderDetail = () => {
             width="160px"
             height="160px"
             alt="profile"
-          ></img>
+          />
         </div>
         <div className="head-right">
           <div className="head-aktivis-data">
@@ -221,7 +220,7 @@ const KaderDetail = () => {
             Jenjang
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.role_id}</span>
+            <span className="editable">{data.role_name}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -253,7 +252,7 @@ const KaderDetail = () => {
             Provinsi
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.province_id}</span>
+            <span className="editable">{data.province_name}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -261,7 +260,7 @@ const KaderDetail = () => {
             Kota/Kabupaten
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.district_id}</span>
+            <span className="editable">{data.district_name}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -269,7 +268,7 @@ const KaderDetail = () => {
             Kecamatan
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.village_id}</span>
+            <span className="editable">{data.village_name}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -277,7 +276,7 @@ const KaderDetail = () => {
             Kelurahan
           </div>
           <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.regency_id}</span>
+            <span className="editable">{data.regency_name}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
@@ -295,7 +294,7 @@ const KaderDetail = () => {
     <div className="loading-table">
       <LoadingAnimation facebook />
     </div>
-  );
-};
+  )
+}
 
-export default KaderDetail;
+export default MemberDetail

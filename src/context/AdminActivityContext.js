@@ -1,29 +1,29 @@
-import React, { createContext, useState } from "react";
-import axios from "axios";
-
-export const AdminActivityContext = createContext();
-export const AdminActivityProvider = (props) => {
-  const [state, setState] = useState(null);
+import React, { createContext, useState } from "react"
+import axios from "axios"
+/* eslint-disable */
+export const AdminActivityContext = createContext()
+const AdminActivityProvider = (props) => {
+  const [state, setState] = useState(null)
   const [filterActivity, setFilterActivity] = useState({
     filter: false,
     category_id: -1,
     minimum_roles_id: -1,
     search: "",
-  });
+  })
   const [filterParticipantsActivity, setFilterParticipantsActivity] = useState({
     filter: false,
     status: -1,
     role_id: -1,
     university_id: -1,
-  });
-  const [activity, setActivity] = useState([]);
-  const [listActivity, setListActivity] = useState([]);
-  const [activityParticipants, setActivityParticipants] = useState([]);
-  const [listParticipants, setListParticipants] = useState([]);
-  const [categoryList, setCategoryList] = useState([]);
-  const [formTemplateList, setFormTemplateList] = useState([]);
-  const [activityForm, setActivityForm] = useState([]);
-  const [universityList, setUniversityList] = useState([]);
+  })
+  const [activity, setActivity] = useState([])
+  const [listActivity, setListActivity] = useState([])
+  const [activityParticipants, setActivityParticipants] = useState([])
+  const [listParticipants, setListParticipants] = useState([])
+  const [categoryList, setCategoryList] = useState([])
+  const [formTemplateList, setFormTemplateList] = useState([])
+  const [activityForm, setActivityForm] = useState([])
+  const [universityList, setUniversityList] = useState([])
 
   const [filterMember, setFilterMember] = useState({
     filter: false,
@@ -31,31 +31,32 @@ export const AdminActivityProvider = (props) => {
     ssc: -1,
     lmd: -1,
     search_query: "",
-  });
-  const [members, setMembers] = useState([]);
-  const [listMembers, setListMembers] = useState([]);
-  const [memberForm, setMemberForm] = useState({});
-  const [blockMemberResp, setBlockMemberResp] = useState({});
-  const [unblockMemberResp, setUnblockMemberResp] = useState({});
+  })
+  const [members, setMembers] = useState([])
+  const [listMembers, setListMembers] = useState([])
+  const [memberForm, setMemberForm] = useState({})
+  const [memberActivities, setMemberActivities] = useState(null)
+  const [blockMemberResp, setBlockMemberResp] = useState({})
+  const [unblockMemberResp, setUnblockMemberResp] = useState({})
 
   /*
     Get all activity
   */
   const getActivity = async (params) => {
-    setActivity({});
-    let params_query = "?";
-    Object.keys(params).map((x, i) =>
+    setActivity({})
+    let paramsQuery = "?"
+    Object.keys(params).map((x, i) => {
       i === Object.keys(params).length - 1
-        ? (params_query += x + "=" + params[x].toString())
-        : (params_query += x + "=" + params[x].toString() + "&")
-    );
-    let result = null;
+        ? (paramsQuery += x + "=" + params[x].toString())
+        : (paramsQuery += x + "=" + params[x].toString() + "&")
+    })
+    let result = null
 
     axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/activity` + params_query)
+      .get(process.env.REACT_APP_BASE_URL + `/v1/activity` + paramsQuery)
       .then((res) => {
-        result = res.data.data.data;
-        let list = [];
+        result = res.data.data.data
+        const list = []
         if (result.length > 0) {
           result.forEach((x) => {
             list.push({
@@ -67,39 +68,39 @@ export const AdminActivityProvider = (props) => {
               kategori: x.activityCategory ? x.activityCategory.name : null,
               register: x.status.toLowerCase(),
               publish: x.is_published ? "published" : "unpublished",
-            });
-          });
+            })
+          })
         }
-        setListActivity(list);
-        setActivity(res.data);
+        setListActivity(list)
+        setActivity(res.data)
       })
       .catch((err) => {
-        console.log("Get Activity Error Cuy", err);
-      });
-  };
+        console.log("Get Activity Error Cuy", err)
+      })
+  }
 
   /*
     Get all activity participants
   */
-  const getActivityParticipants = async (activity_id, params) => {
-    setActivityParticipants({});
-    let params_query = "?";
-    Object.keys(params).map((x, i) =>
+  const getActivityParticipants = async (activityId, params) => {
+    setActivityParticipants({})
+    let paramsQuery = "?"
+    Object.keys(params).map((x, i) => {
       i === Object.keys(params).length - 1
-        ? (params_query += x + "=" + params[x].toString())
-        : (params_query += x + "=" + params[x].toString() + "&")
-    );
-    let result = null;
+        ? (paramsQuery += x + "=" + params[x].toString())
+        : (paramsQuery += x + "=" + params[x].toString() + "&")
+    })
+    let result = null
 
     axios
       .get(
         process.env.REACT_APP_BASE_URL +
-          `/v1/activity/${activity_id}/participant` +
-          params_query
+          `/v1/activity/${activityId}/participant` +
+          paramsQuery
       )
       .then((res) => {
-        result = res.data.data.data;
-        let list = [];
+        result = res.data.data.data
+        const list = []
         if (result.length > 0) {
           result.forEach((x) => {
             list.push({
@@ -111,17 +112,17 @@ export const AdminActivityProvider = (props) => {
               jurusan: x.major,
               univ: x.university_name,
               status: x.status,
-            });
-          });
+            })
+          })
         }
-        console.log(list);
-        setListParticipants(list);
-        setActivityParticipants(res.data);
+        console.log(list)
+        setListParticipants(list)
+        setActivityParticipants(res.data)
       })
       .catch((err) => {
-        console.log("Get Activity Participants Error Cuy", err);
-      });
-  };
+        console.log("Get Activity Participants Error Cuy", err)
+      })
+  }
 
   /*
     @params
@@ -130,22 +131,22 @@ export const AdminActivityProvider = (props) => {
     Get activity where id = params.id
   */
   const getActivityDetail = (id) => {
-    setActivityForm({});
+    setActivityForm({})
     axios
       .get(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}`)
       .then((res) => {
-        const form = res.data.data;
+        const form = res.data.data
         form[0].description =
           form[0].description === null
             ? "Description cannot be null"
-            : form[0].description;
-        setActivityForm(form);
+            : form[0].description
+        setActivityForm(form)
       })
       .catch((err) => {
-        console.log(err);
-        return false;
-      });
-  };
+        console.log(err)
+        return false
+      })
+  }
 
   /*
     @params
@@ -157,13 +158,13 @@ export const AdminActivityProvider = (props) => {
     axios
       .post(process.env.REACT_APP_BASE_URL + `/v1/activity`, formData)
       .then((res) => {
-        const form = res.data.data;
+        const form = res.data.data
         window.location.href =
-          "http://localhost:3000/detail-kegiatan/" + form[0].id;
-        setActivityForm(form);
+          "http://localhost:3000/detail-kegiatan/" + form[0].id
+        setActivityForm(form)
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
 
   /*
     @params
@@ -176,15 +177,15 @@ export const AdminActivityProvider = (props) => {
     axios
       .put(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}`, formData)
       .then((res) => {
-        const form = res.data.data;
+        const form = res.data.data
         form[0].description =
           form[0].description === null
             ? "Description cannot be null"
-            : form[0].description;
-        setActivityForm(form);
+            : form[0].description
+        setActivityForm(form)
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
 
   /*
     @params
@@ -196,33 +197,33 @@ export const AdminActivityProvider = (props) => {
     axios
       .delete(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}`)
       .then((res) => {
-        console.log(res);
-        setState(null);
+        console.log(res)
+        setState(null)
       })
-      .catch((err) => console.log(err));
-  };
+      .catch((err) => console.log(err))
+  }
 
   /*
     Get all activity category
   */
   const getActivityCategory = () => {
-    let categories = [];
-    setCategoryList(categories);
-    categories.push({ value: -1, label: "Loading..." });
+    const categories = []
+    setCategoryList(categories)
+    categories.push({ value: -1, label: "Loading..." })
     axios
       .get(process.env.REACT_APP_BASE_URL + `/v1/activity-category`)
       .then((res) => {
-        const response = res.data.data;
-        categories.push({ value: -1, label: "Semua Kategori" });
-        response.map((x) => categories.push({ value: x.id, label: x.name }));
-        setCategoryList(categories.slice(1, categories.length));
+        const response = res.data.data
+        categories.push({ value: -1, label: "Semua Kategori" })
+        response.map((x) => categories.push({ value: x.id, label: x.name }))
+        setCategoryList(categories.slice(1, categories.length))
       })
       .catch((err) => {
-        console.log("Get Activity Category Error Cuy", err);
-        categories.push({ value: -1, label: "Kategori Tidak Ditemukan." });
-        setCategoryList(categories.slice(1, categories.length));
-      });
-  };
+        console.log("Get Activity Category Error Cuy", err)
+        categories.push({ value: -1, label: "Kategori Tidak Ditemukan." })
+        setCategoryList(categories.slice(1, categories.length))
+      })
+  }
 
   /*
     @params
@@ -231,18 +232,18 @@ export const AdminActivityProvider = (props) => {
     Get activity category where id = params.id
   */
   const getActivityCategoryDetail = (id) => {
-    let result = null;
+    let result = null
     axios
       .get(process.env.REACT_APP_BASE_URL + `/v1/activity-category/${id}`)
       .then((res) => {
-        result = res.data;
-        return result;
+        result = res.data
+        return result
       })
       .catch((err) => {
-        console.log(err);
-        return result;
-      });
-  };
+        console.log(err)
+        return result
+      })
+  }
 
   /*
     @params
@@ -251,19 +252,19 @@ export const AdminActivityProvider = (props) => {
     Create new activity category
   */
   const addActivityCategory = (formData) => {
-    let result = null;
+    let result = null
     axios
       .post(process.env.REACT_APP_BASE_URL + `/v1/activity-category`, formData)
       .then((res) => {
-        getActivityCategory();
-        result = res;
-        return result;
+        getActivityCategory()
+        result = res
+        return result
       })
       .catch((err) => {
-        console.log(err);
-        return result;
-      });
-  };
+        console.log(err)
+        return result
+      })
+  }
 
   /*
     @params
@@ -273,22 +274,22 @@ export const AdminActivityProvider = (props) => {
     Update activity category where id = params.id
   */
   const editActivityCategory = (id, formData) => {
-    let result = null;
+    let result = null
     axios
       .put(
         process.env.REACT_APP_BASE_URL + `/v1/activity-category/${id}`,
         formData
       )
       .then((res) => {
-        getActivityCategory();
-        result = res;
-        return result;
+        getActivityCategory()
+        result = res
+        return result
       })
       .catch((err) => {
-        console.log(err);
-        return result;
-      });
-  };
+        console.log(err)
+        return result
+      })
+  }
 
   /*
     @params
@@ -297,82 +298,82 @@ export const AdminActivityProvider = (props) => {
     Delete activity category where id = params.id
   */
   const deleteActivityCategory = (id) => {
-    let result = null;
+    let result = null
     axios
       .delete(process.env.REACT_APP_BASE_URL + `/v1/activity-category/${id}`)
       .then((res) => {
-        getActivityCategory();
-        result = res;
-        return result;
+        getActivityCategory()
+        result = res
+        return result
       })
       .catch((err) => {
-        console.log(err);
-        return result;
-      });
-  };
+        console.log(err)
+        return result
+      })
+  }
 
   /*
     Get all universites
   */
   const getAllUniversities = () => {
-    let universities = [];
-    setUniversityList(universities);
-    universities.push({ value: -1, label: "Loading..." });
+    const universities = []
+    setUniversityList(universities)
+    universities.push({ value: -1, label: "Loading..." })
     axios
       .get(process.env.REACT_APP_BASE_URL + `/v1/universities`)
       .then((res) => {
-        const response = res.data.data;
-        universities.push({ value: -1, label: "Semua Universitas" });
-        response.map((x) => universities.push({ value: x.id, label: x.name }));
-        setUniversityList(universities.slice(1, universities.length));
+        const response = res.data.data
+        universities.push({ value: -1, label: "Semua Universitas" })
+        response.map((x) => universities.push({ value: x.id, label: x.name }))
+        setUniversityList(universities.slice(1, universities.length))
       })
       .catch((err) => {
-        console.log("Get Activity Category Error Cuy", err);
-        universities.push({ value: -1, label: "Universitas Tidak Ditemukan." });
-        setUniversityList(universities.slice(1, universities.length));
-      });
-  };
+        console.log("Get Activity Category Error Cuy", err)
+        universities.push({ value: -1, label: "Universitas Tidak Ditemukan." })
+        setUniversityList(universities.slice(1, universities.length))
+      })
+  }
 
   /*
     Get all kuesioner
   */
   const getAllFormTemplate = () => {
-    let template = [];
-    setFormTemplateList(template);
-    template.push({ value: -1, label: "Loading..." });
+    const template = []
+    setFormTemplateList(template)
+    template.push({ value: -1, label: "Loading..." })
     axios
       .get(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template`)
       .then((res) => {
-        const response = res.data.data;
-        template.push({ value: -1, label: "Pilih Template" });
-        response.map((x) => template.push({ value: x.id, label: x.name }));
-        setFormTemplateList(template.slice(1, template.length));
+        const response = res.data.data
+        template.push({ value: -1, label: "Pilih Template" })
+        response.map((x) => template.push({ value: x.id, label: x.name }))
+        setFormTemplateList(template.slice(1, template.length))
       })
       .catch((err) => {
-        console.log("Get Activity Category Error Cuy", err);
-        template.push({ value: -1, label: "Kategori Tidak Ditemukan." });
-        setFormTemplateList(template.slice(1, template.length));
-      });
-  };
+        console.log("Get Activity Category Error Cuy", err)
+        template.push({ value: -1, label: "Kategori Tidak Ditemukan." })
+        setFormTemplateList(template.slice(1, template.length))
+      })
+  }
 
   /*
     Get all Members
   */
   const getMembers = async (params) => {
-    setMembers({});
-    let params_query = "?";
-    Object.keys(params).map((x, i) =>
+    setMembers({})
+    let paramsQuery = "?"
+    Object.keys(params).map((x, i) => {
       i === Object.keys(params).length - 1
-        ? (params_query += x + "=" + params[x].toString())
-        : (params_query += x + "=" + params[x].toString() + "&")
-    );
-    let result = null;
+        ? (paramsQuery += x + "=" + params[x].toString())
+        : (paramsQuery += x + "=" + params[x].toString() + "&")
+    })
+    let result = null
 
     axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/members` + params_query)
+      .get(process.env.REACT_APP_BASE_URL + `/v1/members` + paramsQuery)
       .then((res) => {
-        result = res.data.data.data;
-        let list = [];
+        result = res.data.data.data
+        const list = []
         if (result.length > 0) {
           result.forEach((x) => {
             list.push({
@@ -384,16 +385,16 @@ export const AdminActivityProvider = (props) => {
               jenjang: x.role_id,
               ssc: x.ssc,
               lmd: x.lmd,
-            });
-          });
+            })
+          })
         }
-        setListMembers(list);
-        setMembers(res.data);
+        setListMembers(list)
+        setMembers(res.data)
       })
       .catch((err) => {
-        console.log("Get Members Error Cuy", err);
-      });
-  };
+        console.log("Get Members Error Cuy", err)
+      })
+  }
 
   /*
     @params
@@ -405,15 +406,35 @@ export const AdminActivityProvider = (props) => {
     axios
       .get(process.env.REACT_APP_BASE_URL + `/v1/member/${id}`)
       .then((res) => {
-        const form = res.data.data;
-        setMemberForm(form);
-        return form;
+        const form = res.data.data
+        setMemberForm(form)
+        return form
       })
       .catch((err) => {
-        console.log(err);
-        return false;
-      });
-  };
+        console.log(err)
+        return false
+      })
+  }
+
+  /*
+    @params
+    id: integer
+  
+    Get member where id = params.id
+  */
+  const getMemberActivities = async (id) => {
+    axios
+      .get(process.env.REACT_APP_BASE_URL + `/v1/member/${id}/activities`)
+      .then((res) => {
+        const form = res.data.data.activities
+        setMemberActivities(form)
+        return form
+      })
+      .catch((err) => {
+        console.log(err)
+        return false
+      })
+  }
 
   /*
     @params
@@ -422,18 +443,18 @@ export const AdminActivityProvider = (props) => {
     block member where id = params.id
   */
   const blockMemberById = (id) => {
-    setBlockMemberResp({});
+    setBlockMemberResp({})
     axios
       .patch(process.env.REACT_APP_BASE_URL + `/v1/member/${id}/block`)
       .then((res) => {
-        const data = res.data;
-        setBlockMemberResp(data);
+        const data = res.data
+        setBlockMemberResp(data)
       })
       .catch((err) => {
-        console.log(err);
-        return false;
-      });
-  };
+        console.log(err)
+        return false
+      })
+  }
 
   /*
     @params
@@ -442,18 +463,18 @@ export const AdminActivityProvider = (props) => {
     unblock member where id = params.id
   */
   const unblockMemberById = (id) => {
-    setUnblockMemberResp({});
+    setUnblockMemberResp({})
     axios
       .patch(process.env.REACT_APP_BASE_URL + `/v1/member/${id}/unblock`)
       .then((res) => {
-        const data = res.data;
-        setUnblockMemberResp(data);
+        const data = res.data
+        setUnblockMemberResp(data)
       })
       .catch((err) => {
-        console.log(err);
-        return false;
-      });
-  };
+        console.log(err)
+        return false
+      })
+  }
 
   const functions = {
     getActivity,
@@ -471,9 +492,10 @@ export const AdminActivityProvider = (props) => {
     getAllFormTemplate,
     getMembers,
     getMemberDetail,
+    getMemberActivities,
     blockMemberById,
     unblockMemberById,
-  };
+  }
 
   return (
     <AdminActivityContext.Provider
@@ -496,6 +518,7 @@ export const AdminActivityProvider = (props) => {
         members,
         listMembers,
         memberForm,
+        memberActivities,
         filterMember,
         setFilterMember,
         blockMemberResp,
@@ -505,5 +528,6 @@ export const AdminActivityProvider = (props) => {
     >
       {props.children}
     </AdminActivityContext.Provider>
-  );
-};
+  )
+}
+export default AdminActivityProvider

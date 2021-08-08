@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useContext, useState, useEffect } from "react"
+import { makeStyles } from "@material-ui/core/styles"
 import {
   Table,
   TableBody,
@@ -8,17 +8,17 @@ import {
   TablePagination,
   TableRow,
   Paper,
-} from "@material-ui/core";
-import { Link } from "react-router-dom";
+} from "@material-ui/core"
+import { Link } from "react-router-dom"
 import {
   EnhancedTableHead,
   stableSort,
   getComparator,
-} from "../../../components/TableDesign";
-import { PublishStatus, RegisterStatus } from "../../../components/Statuses";
-import LoadingAnimation from "../../../components/loading-animation";
-import { AdminActivityContext } from "../../../context/AdminActivityContext";
-
+} from "../../../components/TableDesign"
+import { PublishStatus, RegisterStatus } from "../../../components/Statuses"
+import LoadingAnimation from "../../../components/loading-animation"
+import { AdminActivityContext } from "../../../context/AdminActivityContext"
+/* eslint-disable */
 const headCells = [
   { id: "no", numeric: true, label: "No." },
   { id: "judul", numeric: false, label: "Judul Aktivitas/Kegiatan" },
@@ -28,7 +28,7 @@ const headCells = [
   { id: "register", numeric: false, label: "Register" },
   { id: "publish", numeric: false, label: "Publish" },
   { id: "view", numeric: false, label: "Action" },
-];
+]
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,77 +53,77 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
-}));
+}))
 
 let params = {
   page: 1,
   perPage: 5,
-};
+}
 
 const KegiatanTable = () => {
-  const classes = useStyles();
-  const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("startDate");
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [status, setStatus] = useState(true);
+  const classes = useStyles()
+  const [order, setOrder] = useState("asc")
+  const [orderBy, setOrderBy] = useState("startDate")
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [status, setStatus] = useState(true)
   const {
     listActivity,
     activity,
     filterActivity,
     setFilterActivity,
     functions,
-  } = useContext(AdminActivityContext);
-  const { getActivity } = functions;
+  } = useContext(AdminActivityContext)
+  const { getActivity } = functions
 
   if (listActivity.length < 1 && status) {
-    getActivity(params);
-    setStatus(false);
+    getActivity(params)
+    setStatus(false)
   }
 
   useEffect(() => {
     if (filterActivity.filter) {
-      params.page = 1;
-      setPage(0);
-      params = { ...params, ...filterActivity };
+      params.page = 1
+      setPage(0)
+      params = { ...params, ...filterActivity }
       if (params.category_id === -1) {
-        delete params.category_id;
-        delete params.filter;
+        delete params.category_id
+        delete params.filter
       }
       if (params.search === "") {
-        delete params.search;
-        delete params.filter;
+        delete params.search
+        delete params.filter
       }
       if (params.minimum_roles_id === -1) {
-        delete params.minimum_roles_id;
-        delete params.filter;
+        delete params.minimum_roles_id
+        delete params.filter
       }
       if (Object.keys(params).length > 1) {
-        getActivity(params);
+        getActivity(params)
       }
-      setFilterActivity({ ...filterActivity, filter: false });
+      setFilterActivity({ ...filterActivity, filter: false })
     }
-  }, [filterActivity, setFilterActivity, getActivity]);
+  }, [filterActivity, setFilterActivity, getActivity])
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
+    const isAsc = orderBy === property && order === "asc"
+    setOrder(isAsc ? "desc" : "asc")
+    setOrderBy(property)
+  }
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-    params.page = newPage + 1;
-    getActivity(params);
-  };
+    setPage(newPage)
+    params.page = newPage + 1
+    getActivity(params)
+  }
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-    params.page = 1;
-    params.perPage = parseInt(event.target.value, 10);
-    getActivity(params);
-  };
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+    params.page = 1
+    params.perPage = parseInt(event.target.value, 10)
+    getActivity(params)
+  }
   console.log(activity.status)
   return (
     <div className="tableactivity">
@@ -190,7 +190,7 @@ const KegiatanTable = () => {
                             <Link to={"/detail-kegiatan/" + row.id}>View</Link>
                           </TableCell>
                         </TableRow>
-                      );
+                      )
                     }
                   )}
                 </TableBody>
@@ -209,7 +209,7 @@ const KegiatanTable = () => {
         )}
       </Paper>
     </div>
-  );
-};
+  )
+}
 
-export default KegiatanTable;
+export default KegiatanTable

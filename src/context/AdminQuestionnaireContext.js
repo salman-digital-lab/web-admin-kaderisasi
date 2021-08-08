@@ -1,7 +1,9 @@
 import React from "react"
-import axios from 'axios'
+import axios from "axios"
+
+/* eslint-disable */
 export const AdminQuestionnaireContext = React.createContext()
-export const AdminQuestionnaireProvider = (props) => {
+const AdminQuestionnaireProvider = (props) => {
   const ref = []
   const [state, setState] = React.useState({
     title: "The Question",
@@ -13,18 +15,15 @@ export const AdminQuestionnaireProvider = (props) => {
   const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false)
   const [openSnackbar, setOpenSnackbar] = React.useState(false)
 
-
   const handleChangeTitleForm = (event) =>
     setState({ ...state, title: event.target.value })
-
 
   const handleChangeSubtitleForm = (event) =>
     setState({ ...state, subtitle: event.target.value })
 
-
   const handleChangeVariantForm = (id, event) => {
     const variant = event.target.value
-    let form = state.form
+    const form = state.form
     form[id] = {
       ...state.form[id],
       variant: variant,
@@ -35,7 +34,7 @@ export const AdminQuestionnaireProvider = (props) => {
         answer: ["Yes of course"],
       }
     }
-    if (variant === 'slider') {
+    if (variant === "slider") {
       form[id] = {
         ...state.form[id],
         minValue: 0,
@@ -45,9 +44,8 @@ export const AdminQuestionnaireProvider = (props) => {
     setState({ ...state, form })
   }
 
-
   const handleChangeQuestionForm = (id, event) => {
-    let form = state.form
+    const form = state.form
     form[id] = {
       ...state.form[id],
       question: event.target.value,
@@ -55,12 +53,11 @@ export const AdminQuestionnaireProvider = (props) => {
     setState({ ...state, form })
   }
 
-
   const handleChangeMinValueForm = (id, event) => {
     const minValue = event.target.value
     const maxValue = state.form[id].maxValue
     if (!(minValue >= maxValue)) {
-      let form = state.form
+      const form = state.form
       form[id] = {
         ...state.form[id],
         minValue,
@@ -69,12 +66,11 @@ export const AdminQuestionnaireProvider = (props) => {
     }
   }
 
-
   const handleChangeMaxValueForm = (id, event) => {
     const maxValue = event.target.value
     const minValue = state.form[id].minValue
     if (!(maxValue <= minValue)) {
-      let form = state.form
+      const form = state.form
       form[id] = {
         ...state.form[id],
         maxValue: event.target.value,
@@ -83,39 +79,34 @@ export const AdminQuestionnaireProvider = (props) => {
     }
   }
 
-
   const handleChangeAnswerForm = (id, index, event) => {
-    let form = state.form
-    let answer = state.form[id].answer
+    const form = state.form
+    const answer = state.form[id].answer
     const currentValue = event.target.value
     answer[index] = currentValue
     form[id] = { ...form[id], answer }
     setState({ ...state, form })
   }
 
-
   const handleAddAnswerForm = (id) => {
-    let form = state.form
-    let answer = state.form[id].answer
+    const form = state.form
+    const answer = state.form[id].answer
     answer.push("Yes of course")
     form[id] = { ...form[id], answer }
     setState({ ...state, form })
   }
 
-
   const handleDeleteAnswerForm = (id, index) => {
-    let form = state.form
+    const form = state.form
     let answer = state.form[id].answer
     answer = answer.filter((value, indexFilter) => index !== indexFilter)
     form[id] = { ...form[id], answer }
     setState({ ...state, form })
   }
 
-
   const handleSaveQuestionnaire = () => {
     console.log(state)
   }
-
 
   const handleAddNewForm = () =>
     setState({
@@ -130,116 +121,114 @@ export const AdminQuestionnaireProvider = (props) => {
       ],
     })
 
-
   const handleDeleteForm = (id) => {
     let form = state.form
     form = form.filter((value, index) => id !== index)
     setState({ ...state, form })
   }
 
-
   const handleRequiredForm = (id) => {
-    let form = state.form
+    const form = state.form
     const required = state.form[id].required
     form[id] = { ...form[id], required: !required }
     setState({ ...state, form })
   }
 
-
   const handleAddRef = (element) => {
     ref.push(element)
   }
 
-
   const getAllQuestionnaire = (callback) => {
-    axios.get(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template`)
-      .then(res => callback(res))
-      .catch(err => console.log(err))
+    axios
+      .get(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template`)
+      .then((res) => callback(res))
+      .catch((err) => console.log(err))
   }
 
-
   const getQuestionnaire = (id, callback) => {
-    axios.get(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template/${id}`)
-      .then(res => {
+    axios
+      .get(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template/${id}`)
+      .then((res) => {
         console.log(JSON.parse(res.data.data.data))
         const { title, subtitle, form } = JSON.parse(res.data.data.data)
         setState({
           ...state,
           title,
           subtitle,
-          form
+          form,
         })
         callback()
       })
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err))
   }
-
 
   const createQuestionnaire = () => {
     const { title, subtitle, form } = state
     const body = { title, subtitle, form }
     console.log({
       name: title,
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     })
-    axios.post(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template`, {
-      name: title,
-      body: JSON.stringify(body)
-    })
-      .then(res => {
+    axios
+      .post(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template`, {
+        name: title,
+        body: JSON.stringify(body),
+      })
+      .then((res) => {
         console.log(res)
         setOpenSnackbar(true)
       })
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err))
   }
-
 
   const updateQuestionnaire = (id) => {
     const { title, subtitle, form } = state
     const body = { title, subtitle, form }
     console.log({
       name: title,
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     })
-    axios.put(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template/${id}`, {
-      name: title,
-      body: JSON.stringify(body)
-    })
-      .then(res => {
+    axios
+      .put(
+        process.env.REACT_APP_BASE_URL + `/v1/activity-form-template/${id}`,
+        {
+          name: title,
+          body: JSON.stringify(body),
+        }
+      )
+      .then((res) => {
         console.log(res)
         setOpenSnackbar(true)
       })
-      .catch(err => console.log(err))
+      .catch((err) => console.log(err))
   }
-
-
-  const deleteQuestionnaire = (id) => {
-    console.log(id)
-    axios.delete(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template/${id}`)
-      .then(res => {
-        console.log(res)
-        setOpenSnackbar(true)
-        setReload(true)
-      })
-      .catch(err => console.log(err))
-    handleOpenDeleteDialog()
-  }
-
 
   const handleOpenDeleteDialog = () => {
     setOpenDeleteDialog(!openDeleteDialog)
   }
 
+  const deleteQuestionnaire = (id) => {
+    console.log(id)
+    axios
+      .delete(
+        process.env.REACT_APP_BASE_URL + `/v1/activity-form-template/${id}`
+      )
+      .then((res) => {
+        console.log(res)
+        setOpenSnackbar(true)
+        setReload(true)
+      })
+      .catch((err) => console.log(err))
+    handleOpenDeleteDialog()
+  }
 
   const agreeToDeleteQuestionnaire = () => {
     deleteQuestionnaire(idDelete)
   }
 
-
   const handleSnackbar = () => {
     setOpenSnackbar(!openSnackbar)
   }
-
 
   const functions = {
     handleChangeTitleForm,
@@ -266,7 +255,6 @@ export const AdminQuestionnaireProvider = (props) => {
     handleSnackbar,
   }
 
-
   return (
     <AdminQuestionnaireContext.Provider
       value={{
@@ -286,3 +274,4 @@ export const AdminQuestionnaireProvider = (props) => {
     </AdminQuestionnaireContext.Provider>
   )
 }
+export default AdminQuestionnaireProvider

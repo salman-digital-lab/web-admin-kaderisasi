@@ -1,5 +1,6 @@
-import { makeStyles } from "@material-ui/core";
-export const styled = makeStyles((theme) => ({
+import { makeStyles } from "@material-ui/core"
+
+const styled = makeStyles((theme) => ({
   root: {
     // height: 400,
     flexGrow: 1,
@@ -38,4 +39,5 @@ export const styled = makeStyles((theme) => ({
     paddingLeft: 0,
     paddingRight: 0,
   },
-}));
+}))
+export default styled

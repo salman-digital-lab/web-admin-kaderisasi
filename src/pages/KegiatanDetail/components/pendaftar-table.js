@@ -1,6 +1,6 @@
-import React, { useContext, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useContext, useState, useEffect } from "react"
+import { useParams, Link } from "react-router-dom"
+import { makeStyles } from "@material-ui/core/styles"
 import {
   Table,
   TableBody,
@@ -9,18 +9,17 @@ import {
   TablePagination,
   TableRow,
   Paper,
-} from "@material-ui/core";
-import { Link } from "react-router-dom";
+} from "@material-ui/core"
 import {
   EnhancedTableHead,
   EnhancedTableToolbar,
   stableSort,
   getComparator,
-} from "../../../components/TableDesign";
-import { RegistrantStatus } from "../../../components/Statuses";
-import LoadingAnimation from "../../../components/loading-animation";
-import { AdminActivityContext } from "../../../context/AdminActivityContext";
-
+} from "../../../components/TableDesign"
+import { RegistrantStatus } from "../../../components/Statuses/RegistrantStatus"
+import LoadingAnimation from "../../../components/loading-animation"
+import { AdminActivityContext } from "../../../context/AdminActivityContext"
+/* eslint-disable */
 const headCells = [
   { id: "no", numeric: true, label: "No." },
   { id: "name", numeric: false, label: "Nama Lengkap" },
@@ -28,7 +27,7 @@ const headCells = [
   { id: "univ", numeric: false, label: "Perguruan Tinggi" },
   { id: "status", numeric: false, label: "Status Pendaftaran" },
   { id: "view", numeric: false, label: "Action" },
-];
+]
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,86 +52,86 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
-}));
+}))
 
 let params = {
   page: 1,
   perPage: 5,
-};
+}
 
 const PendaftarTable = () => {
-  const classes = useStyles();
-  const { id } = useParams();
-  const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("startDate");
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [status, setStatus] = useState(true);
+  const classes = useStyles()
+  const { id } = useParams()
+  const [order, setOrder] = useState("asc")
+  const [orderBy, setOrderBy] = useState("startDate")
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [status, setStatus] = useState(true)
   const {
     listParticipants,
     activityParticipants,
     filterParticipantsActivity,
     setFilterParticipantsActivity,
     functions,
-  } = useContext(AdminActivityContext);
-  const { getActivityParticipants } = functions;
+  } = useContext(AdminActivityContext)
+  const { getActivityParticipants } = functions
 
   if (listParticipants.length < 1 && status) {
-    getActivityParticipants(id, params);
-    setStatus(false);
+    getActivityParticipants(id, params)
+    setStatus(false)
   }
 
   useEffect(() => {
     if (filterParticipantsActivity.filter) {
-      params.page = 1;
-      setPage(0);
-      params = { ...params, ...filterParticipantsActivity };
+      params.page = 1
+      setPage(0)
+      params = { ...params, ...filterParticipantsActivity }
       if (params.university_id === -1) {
-        delete params.university_id;
-        delete params.filter;
+        delete params.university_id
+        delete params.filter
       }
       if (params.status === -1) {
-        delete params.status;
-        delete params.filter;
+        delete params.status
+        delete params.filter
       }
       if (params.role_id === -1) {
-        delete params.role_id;
-        delete params.filter;
+        delete params.role_id
+        delete params.filter
       }
       if (Object.keys(params).length > 1) {
-        getActivityParticipants(id, params);
+        getActivityParticipants(id, params)
       }
       setFilterParticipantsActivity({
         ...filterParticipantsActivity,
         filter: false,
-      });
+      })
     }
   }, [
     filterParticipantsActivity,
     setFilterParticipantsActivity,
     getActivityParticipants,
     id,
-  ]);
+  ])
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
+    const isAsc = orderBy === property && order === "asc"
+    setOrder(isAsc ? "desc" : "asc")
+    setOrderBy(property)
+  }
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-    params.page = newPage + 1;
-    getActivityParticipants(id, params);
-  };
+    setPage(newPage)
+    params.page = newPage + 1
+    getActivityParticipants(id, params)
+  }
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-    params.page = 1;
-    params.perPage = parseInt(event.target.value, 10);
-    getActivityParticipants(id, params);
-  };
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+    params.page = 1
+    params.perPage = parseInt(event.target.value, 10)
+    getActivityParticipants(id, params)
+  }
 
   return (
     <div className="tableactivity">
@@ -148,7 +147,10 @@ const PendaftarTable = () => {
           <>
             <EnhancedTableToolbar
               exportButton={true}
-              exportLink={process.env.REACT_APP_BASE_URL + `/v1/activity/${id}/participant/export`}
+              exportLink={
+                process.env.REACT_APP_BASE_URL +
+                `/v1/activity/${id}/participant/export`
+              }
               fileName={"Pendaftar Kegiatan"}
               data={listParticipants}
             />
@@ -203,7 +205,7 @@ const PendaftarTable = () => {
                           <Link to={"/detail-aktivis/" + row.id}>View</Link>
                         </TableCell>
                       </TableRow>
-                    );
+                    )
                   })}
                 </TableBody>
               </Table>
@@ -221,7 +223,7 @@ const PendaftarTable = () => {
         )}
       </Paper>
     </div>
-  );
-};
+  )
+}
 
-export default PendaftarTable;
+export default PendaftarTable

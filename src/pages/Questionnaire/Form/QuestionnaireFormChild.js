@@ -1,22 +1,18 @@
 import React, { useEffect, useContext, useState } from "react"
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams } from "react-router-dom"
 import { Grid } from "@material-ui/core"
-import { QuestionNavigator } from "./QuestionNavigator"
-import { SaveAndBackButton } from "./SaveAndBackButton"
-import { TitleAndSubtitleForm } from "./TitleAndSubtitleForm"
-import { AddQuestionButton } from "./AddQuestionButton"
+import Snackbar from "@material-ui/core/Snackbar"
+import MuiAlert from "@material-ui/lab/Alert"
+import QuestionNavigator from "./QuestionNavigator"
+import SaveAndBackButton from "./SaveAndBackButton"
+import TitleAndSubtitleForm from "./TitleAndSubtitleForm"
+import AddQuestionButton from "./AddQuestionButton"
 import { AdminQuestionnaireContext } from "../../../context/AdminQuestionnaireContext"
-import Snackbar from '@material-ui/core/Snackbar'
-import MuiAlert from '@material-ui/lab/Alert'
-import { Form } from "./Form"
+import Form from "./Form"
+/* eslint-disable */
+const Alert = (props) => <MuiAlert elevation={6} variant="filled" {...props} />
 
-
-const Alert = (props) => {
-  return <MuiAlert elevation={6} variant="filled" {...props} />
-}
-
-
-export const QuestionnaireFormChild = () => {
+const QuestionnaireFormChild = () => {
   const url = useLocation()
   const params = useParams()
   const { openSnackbar, functions } = useContext(AdminQuestionnaireContext)
@@ -24,14 +20,13 @@ export const QuestionnaireFormChild = () => {
   const [reload, setReload] = useState(true)
   const { getQuestionnaire, handleSnackbar } = functions
 
-
   useEffect(() => {
     if (reload) {
-      if (Boolean(url.pathname === '/new-questionnaire')) {
+      if (url.pathname === "/new-questionnaire") {
         setUnlockForm(true)
         setReload(false)
       }
-      if (Boolean(params.id)) {
+      if (params.id) {
         getQuestionnaire(params.id, () => {
           setUnlockForm(true)
         })
@@ -42,8 +37,10 @@ export const QuestionnaireFormChild = () => {
 
   return (
     <>
-      {!unlockForm && <h1 style={{ color: "#999999" }}>Loading... please wait</h1>}
-      {unlockForm &&
+      {!unlockForm && (
+        <h1 style={{ color: "#999999" }}>Loading... please wait</h1>
+      )}
+      {unlockForm && (
         <>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
@@ -72,15 +69,16 @@ export const QuestionnaireFormChild = () => {
           <Snackbar
             open={openSnackbar}
             autoHideDuration={4000}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
             onClose={handleSnackbar}
           >
             <Alert severity="success" onClose={handleSnackbar}>
               Questionnaire berhasil disave
-                </Alert>
+            </Alert>
           </Snackbar>
         </>
-      }
+      )}
     </>
   )
 }
+export default QuestionnaireFormChild

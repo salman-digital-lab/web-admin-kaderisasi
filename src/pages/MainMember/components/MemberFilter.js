@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react"
 import {
   Card,
   CardContent,
@@ -12,16 +12,16 @@ import {
   MenuItem,
   Input,
   FormControlLabel,
-} from "@material-ui/core";
-import StyledRadio from "../../../components/RadioButton";
-import { MenuProps, getStyles } from "../../../components/Select";
-import { useTheme } from "@material-ui/core/styles";
-import { AdminActivityContext } from "../../../context/AdminActivityContext";
+} from "@material-ui/core"
+import { useTheme } from "@material-ui/core/styles"
+import { AdminActivityContext } from "../../../context/AdminActivityContext"
+import StyledRadio from "../../../components/RadioButton"
+import { MenuProps, getStyles } from "../../../components/Select"
 
-const KaderFilter = () => {
-  const theme = useTheme();
-  const { filterMember, setFilterMember } = useContext(AdminActivityContext);
-  const [univName, setUnivName] = useState("all");
+const MemberFilter = () => {
+  const theme = useTheme()
+  const { filterMember, setFilterMember } = useContext(AdminActivityContext)
+  const [univName, setUnivName] = useState("all")
   const names = [
     { value: "all", label: "Semua Perguruan Tinggi" },
     { value: "TelU", label: "Telkom University" },
@@ -29,7 +29,7 @@ const KaderFilter = () => {
     { value: "Unikom", label: "Universitas Komputer" },
     { value: "Unisba", label: "Universitas Islam Bandung" },
     { value: "Polban", label: "Politeknik Bandung" },
-  ];
+  ]
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -37,26 +37,26 @@ const KaderFilter = () => {
         ...filterMember,
         search_query: event.target.value,
         filter: true,
-      });
+      })
     }
-  };
+  }
 
   const handleChange = (s) => {
-    setUnivName(s);
-    console.log(s);
-  };
+    setUnivName(s)
+    console.log(s)
+  }
 
-  const filterByStatus = (s) => {
-    console.log(s);
-  };
+  // const filterByStatus = (s) => {
+  //   console.log(s)
+  // }
 
   const handleChangeGender = (s) => {
     setFilterMember({
       ...filterMember,
       gender: s,
       filter: true,
-    });
-  };
+    })
+  }
 
   return (
     <Card>
@@ -140,9 +140,9 @@ const KaderFilter = () => {
               input={<Input />}
               MenuProps={MenuProps}
             >
-              {names.map((name, idx) => (
+              {names.map((name) => (
                 <MenuItem
-                  key={idx}
+                  key={name}
                   value={name.value}
                   label={name.label}
                   style={getStyles(name, univName, theme)}
@@ -155,7 +155,7 @@ const KaderFilter = () => {
         </Box>
       </CardContent>
     </Card>
-  );
-};
+  )
+}
 
-export default KaderFilter;
+export default MemberFilter

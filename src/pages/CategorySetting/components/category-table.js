@@ -1,5 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState, useContext, useEffect } from "react"
+import { makeStyles } from "@material-ui/core/styles"
 import {
   Table,
   TableBody,
@@ -9,22 +9,22 @@ import {
   TableRow,
   Paper,
   Button,
-} from "@material-ui/core";
-import { AdminActivityContext } from "../../../context/AdminActivityContext";
+} from "@material-ui/core"
+import { Delete, Edit } from "@material-ui/icons"
+import { AdminActivityContext } from "../../../context/AdminActivityContext"
 import {
   EnhancedTableHead,
   stableSort,
   getComparator,
-} from "../../../components/TableDesign";
-import { KategoriModal } from "./kategori-modal";
-import { ConfirmationModal } from "./confirmation-modal";
-import { Delete, Edit } from "@material-ui/icons";
-
+} from "../../../components/TableDesign"
+import { KategoriModal } from "./kategori-modal"
+import { ConfirmationModal } from "./confirmation-modal"
+/* eslint-disable */
 const headCells = [
   { id: "no", numeric: true, label: "No." },
   { id: "name", numeric: false, label: "Nama Kategori" },
   { id: "action", numeric: true, label: "Action" },
-];
+]
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,70 +48,70 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
-}));
+}))
 
 const CategoryTable = () => {
-  const classes = useStyles();
-  const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("calories");
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [dataEdit, setDataEdit] = useState({});
-  const [open, setOpen] = useState(false);
-  const [deleteCategory, setDeleteCategory] = useState(false);
-  const [deleteId, setDeleteId] = useState(-1);
+  const classes = useStyles()
+  const [order, setOrder] = useState("asc")
+  const [orderBy, setOrderBy] = useState("calories")
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [dataEdit, setDataEdit] = useState({})
+  const [open, setOpen] = useState(false)
+  const [deleteCategory, setDeleteCategory] = useState(false)
+  const [deleteId, setDeleteId] = useState(-1)
 
   const handleCloseDelete = () => {
-    setDeleteCategory(false);
-  };
+    setDeleteCategory(false)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
-  const { categoryList, functions } = useContext(AdminActivityContext);
-  const { getActivityCategory, deleteActivityCategory } = functions;
+  const { categoryList, functions } = useContext(AdminActivityContext)
+  const { getActivityCategory, deleteActivityCategory } = functions
   useEffect(() => {
     if (categoryList.length < 1) {
-      getActivityCategory();
+      getActivityCategory()
     }
-  });
+  })
 
   const handleAddCategory = () => {
-    setDataEdit({});
-    setOpen(true);
-  };
+    setDataEdit({})
+    setOpen(true)
+  }
 
   const handleEditCategory = (id, name) => {
-    setDataEdit({ id, name });
-    setOpen(true);
-  };
+    setDataEdit({ id, name })
+    setOpen(true)
+  }
 
   const handleDeleteCategory = (id) => {
-    setDeleteId(id);
-    setDeleteCategory(true);
-  };
+    setDeleteId(id)
+    setDeleteCategory(true)
+  }
 
   const categoryDelete = () => {
-    deleteActivityCategory(deleteId);
+    deleteActivityCategory(deleteId)
     setPage(0)
-    handleCloseDelete();
-  };
+    handleCloseDelete()
+  }
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
+    const isAsc = orderBy === property && order === "asc"
+    setOrder(isAsc ? "desc" : "asc")
+    setOrderBy(property)
+  }
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
+    setPage(newPage)
+  }
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
+    setRowsPerPage(parseInt(event.target.value, 10))
+    setPage(0)
+  }
 
   return (
     <div className="tableuser">
@@ -138,12 +138,12 @@ const CategoryTable = () => {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={categoryList.filter((x) => x.value != -1).length}
+              rowCount={categoryList.filter((x) => x.value !== -1).length}
               headCells={headCells}
             />
             <TableBody>
               {stableSort(
-                categoryList.filter((x) => x.value != -1),
+                categoryList.filter((x) => x.value !== -1),
                 getComparator(order, orderBy)
               )
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -181,7 +181,7 @@ const CategoryTable = () => {
                         </Button>
                       </TableCell>
                     </TableRow>
-                  );
+                  )
                 })}
             </TableBody>
           </Table>
@@ -189,7 +189,7 @@ const CategoryTable = () => {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={categoryList.filter((x) => x.value != -1).length}
+          count={categoryList.filter((x) => x.value !== -1).length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
@@ -204,7 +204,7 @@ const CategoryTable = () => {
         onSubmit={() => categoryDelete()}
       />
     </div>
-  );
-};
+  )
+}
 
-export default CategoryTable;
+export default CategoryTable

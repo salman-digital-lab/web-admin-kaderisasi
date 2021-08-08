@@ -1,11 +1,11 @@
-import React from "react";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import React from "react"
+import { Card, CardContent, TextField } from "@material-ui/core"
 import { AdminQuestionnaireContext } from "../../../../../context/AdminQuestionnaireContext"
-import { styled } from "./styled";
+import styled from "./styled"
 export const TitleAndSubtitleForm = () => {
-  const { data, functions } = React.useContext(AdminQuestionnaireContext);
-  const { handleChangeTitleForm, handleChangeSubtitleForm } = functions;
-  const classes = styled();
+  const { data, functions } = React.useContext(AdminQuestionnaireContext)
+  const { handleChangeTitleForm, handleChangeSubtitleForm } = functions
+  const classes = styled()
   return (
     <>
       <Card
@@ -32,5 +32,5 @@ export const TitleAndSubtitleForm = () => {
         </CardContent>
       </Card>
     </>
-  );
-};
+  )
+}

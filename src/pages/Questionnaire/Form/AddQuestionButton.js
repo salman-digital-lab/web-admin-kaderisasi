@@ -1,10 +1,11 @@
-import React from "react";
-import { AdminQuestionnaireContext } from "../../../context/AdminQuestionnaireContext";
-import { IconButton } from "@material-ui/core";
-import { AddCircleOutline } from "@material-ui/icons";
-export const AddQuestionButton = () => {
-  const { functions } = React.useContext(AdminQuestionnaireContext);
-  const { handleAddNewForm } = functions;
+import React from "react"
+import { IconButton } from "@material-ui/core"
+import { AddCircleOutline } from "@material-ui/icons"
+import { AdminQuestionnaireContext } from "../../../context/AdminQuestionnaireContext"
+/* eslint-disable */
+const AddQuestionButton = () => {
+  const { functions } = React.useContext(AdminQuestionnaireContext)
+  const { handleAddNewForm } = functions
   return (
     <>
       <div
@@ -27,5 +28,6 @@ export const AddQuestionButton = () => {
         </span>
       </div>
     </>
-  );
-};
+  )
+}
+export default AddQuestionButton

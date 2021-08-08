@@ -1,22 +1,17 @@
-import React from "react";
-import {
-  Button,
-  Modal,
-  Fade,
-  Backdrop,
-} from "@material-ui/core";
-import "../../../assets/scss/AddActivity.scss";
-import { styled } from "./styled";
-
-
-export const ConfirmationModal = ({ 
+import React from "react"
+import { Button, Modal, Fade, Backdrop } from "@material-ui/core"
+import "../../../assets/scss/AddActivity.scss"
+import styled from "./styled"
+/* eslint-disable */
+export const ConfirmationModal = ({
   title,
   message,
   onSubmit,
   onClose,
   open,
-  isSubmitting = false, }) => {
-  const classes = styled();
+  isSubmitting = false,
+}) => {
+  const classes = styled()
 
   return (
     <Modal
@@ -52,8 +47,8 @@ export const ConfirmationModal = ({
                   onClick={onSubmit}
                   className="button-bottoms-kegiatan"
                   variant="contained"
-                  color="primary"        
-                  disabled={isSubmitting}        
+                  color="primary"
+                  disabled={isSubmitting}
                 >
                   Ya, Saya Yakin!
                 </Button>
@@ -63,5 +58,5 @@ export const ConfirmationModal = ({
         </div>
       </Fade>
     </Modal>
-  );
-};
+  )
+}

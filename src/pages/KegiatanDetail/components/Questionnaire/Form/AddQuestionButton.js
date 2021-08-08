@@ -1,10 +1,10 @@
-import React from "react";
+import React from "react"
 import { AdminQuestionnaireContext } from "../../../../../context/AdminQuestionnaireContext"
-import { IconButton } from "@material-ui/core";
-import { AddCircleOutline } from "@material-ui/icons";
+import { IconButton } from "@material-ui/core"
+import { AddCircleOutline } from "@material-ui/icons"
 export const AddQuestionButton = () => {
-  const { functions } = React.useContext(AdminQuestionnaireContext);
-  const { handleAddNewForm } = functions;
+  const { functions } = React.useContext(AdminQuestionnaireContext)
+  const { handleAddNewForm } = functions
   return (
     <>
       <div
@@ -27,5 +27,5 @@ export const AddQuestionButton = () => {
         </span>
       </div>
     </>
-  );
-};
+  )
+}

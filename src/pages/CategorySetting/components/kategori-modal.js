@@ -1,41 +1,35 @@
-import React, { useState, useEffect, useContext } from "react";
-import {
-  Button,
-  Modal,
-  Fade,
-  Backdrop,
-  TextField,
-} from "@material-ui/core";
-import "../../../assets/scss/AddActivity.scss";
-import { styled } from "./styled";
-import { AdminActivityContext } from "../../../context/AdminActivityContext";
-
-
+import React, { useState, useEffect, useContext } from "react"
+import { Button, Modal, Fade, Backdrop, TextField } from "@material-ui/core"
+import "../../../assets/scss/AddActivity.scss"
+import styled from "./styled"
+import { AdminActivityContext } from "../../../context/AdminActivityContext"
+/* eslint-disable */
 export const KategoriModal = ({ open, onClose, data }) => {
-  const classes = styled();
+  const classes = styled()
   const [state, setState] = useState({
-    name: ""
-  });
-  const { categoryList, functions } = useContext(AdminActivityContext);
-  const { getActivityCategory, addActivityCategory, editActivityCategory } = functions;
+    name: "",
+  })
+  const { categoryList, functions } = useContext(AdminActivityContext)
+  const { getActivityCategory, addActivityCategory, editActivityCategory } =
+    functions
 
   useEffect(() => {
     if (categoryList.length < 1) {
-      getActivityCategory();
+      getActivityCategory()
     }
-  },[state,categoryList]);
+  }, [state, categoryList])
 
   const handleForm = (value, type) => {
-    setState({ ...state, [type]: value });
-  };
+    setState({ ...state, [type]: value })
+  }
 
-  const handleSubmit = async() => {
-    data.id ? 
-      await editActivityCategory(data.id, {name:state.name}) :
-      await addActivityCategory({name:state.name})
-    setState({name:""})
-    onClose();
-  };
+  const handleSubmit = async () => {
+    data.id
+      ? await editActivityCategory(data.id, { name: state.name })
+      : await addActivityCategory({ name: state.name })
+    setState({ name: "" })
+    onClose()
+  }
 
   return (
     <Modal
@@ -78,7 +72,7 @@ export const KategoriModal = ({ open, onClose, data }) => {
                   onClick={handleSubmit}
                   className="button-bottoms-kegiatan"
                   variant="contained"
-                  color="primary"                
+                  color="primary"
                 >
                   Simpan
                 </Button>
@@ -88,5 +82,5 @@ export const KategoriModal = ({ open, onClose, data }) => {
         </div>
       </Fade>
     </Modal>
-  );
-};
+  )
+}

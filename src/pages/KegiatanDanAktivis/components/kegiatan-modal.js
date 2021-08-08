@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react"
 import {
   Button,
   Modal,
@@ -7,91 +7,97 @@ import {
   Select,
   TextField,
   MenuItem,
-} from "@material-ui/core";
-import DateFnsUtils from "@date-io/date-fns";
+} from "@material-ui/core"
+import moment from "moment"
+import DateFnsUtils from "@date-io/date-fns"
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
-} from "@material-ui/pickers";
-import "../../../assets/scss/AddActivity.scss";
-import { styled } from "./styled";
-import { AdminActivityContext } from "../../../context/AdminActivityContext";
-import moment from 'moment'
-
+} from "@material-ui/pickers"
+import "../../../assets/scss/AddActivity.scss"
+import styled from "./styled"
+import { AdminActivityContext } from "../../../context/AdminActivityContext"
+/* eslint-disable */
 const initialErrors = {
   formRegistValidity: false, // flip to true if form incorrect
   dateRegistValidity: false,
   dateRegistErrorMsg: "",
   formActivityValidity: false, // flip to true if form incorrect
   dateActivityValidity: false,
-  dateActivityErrorMsg: ""
-};
+  dateActivityErrorMsg: "",
+}
 
 export const DatePickerCustom = ({
   title: titleProps,
   value: valueProps,
   onChange: onChangeProps,
   helperText: helperTextProps,
-  error: errorProps
+  error: errorProps,
 }) => {
   return (
-      <div className="input-form">
-        {titleProps}
-        <br />
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <KeyboardDatePicker
-            className="form-modal"
-            minDate={new Date()}
-            format="dd/MM/yyyy"
-            margin="normal"
-            value={valueProps}
-            onChange={onChangeProps}
-            KeyboardButtonProps={{
-              "aria-label": "change date",
-            }}
-            helperText={helperTextProps}
-            error={errorProps}
-          />
-        </MuiPickersUtilsProvider>
-      </div>
-  );
-};
+    <div className="input-form">
+      {titleProps}
+      <br />
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <KeyboardDatePicker
+          className="form-modal"
+          minDate={new Date()}
+          format="dd/MM/yyyy"
+          margin="normal"
+          value={valueProps}
+          onChange={onChangeProps}
+          KeyboardButtonProps={{
+            "aria-label": "change date",
+          }}
+          helperText={helperTextProps}
+          error={errorProps}
+        />
+      </MuiPickersUtilsProvider>
+    </div>
+  )
+}
 
 export const KegiatanModal = ({ open, onClose }) => {
-  const classes = styled();
+  const classes = styled()
   const [state, setState] = useState({
     name: "",
-    begin_date: moment().format('YYYY-MM-DD'),
-    end_date: moment().format('YYYY-MM-DD'),
-    register_begin_date: moment().format('YYYY-MM-DD'),
-    register_end_date: moment().format('YYYY-MM-DD'),
+    begin_date: moment().format("YYYY-MM-DD"),
+    end_date: moment().format("YYYY-MM-DD"),
+    register_begin_date: moment().format("YYYY-MM-DD"),
+    register_end_date: moment().format("YYYY-MM-DD"),
     category_id: 1,
     minimum_role_id: 4,
-  });
-  const { categoryList, functions } = useContext(AdminActivityContext);
-  const { getActivityCategory, addActivity } = functions;
-  const [errors, setErrors] = useState(initialErrors);
+  })
+  const { categoryList, functions } = useContext(AdminActivityContext)
+  const { getActivityCategory, addActivity } = functions
+  const [errors, setErrors] = useState(initialErrors)
 
-  const validateDates=()=> {
+  const validateDates = () => {
     // check dates via the dates{} state object, line 33
-    let dateRegistErrorMsg = "";
-    let dateRegistValidity = false;
-    let formRegistValidity = false;
+    let dateRegistErrorMsg = ""
+    let dateRegistValidity = false
+    let formRegistValidity = false
 
-    let formActivityValidity = false; // flip to true if form incorrect
-    let dateActivityValidity = false;
-    let dateActivityErrorMsg = "";
+    let formActivityValidity = false // flip to true if form incorrect
+    let dateActivityValidity = false
+    let dateActivityErrorMsg = ""
 
-    const dateRegistrationCheck = new Date(state.register_begin_date) <= new Date(state.register_end_date);
-    const dateActivityCheck = new Date(state.begin_date) <= new Date(state.end_date);
+    const dateRegistrationCheck =
+      new Date(state.register_begin_date) <= new Date(state.register_end_date)
+    const dateActivityCheck =
+      new Date(state.begin_date) <= new Date(state.end_date)
 
-    dateRegistErrorMsg = dateRegistrationCheck ? "" : `End registration date can't be before start registration date.`;
-    dateRegistValidity = dateRegistrationCheck ? false : true; // true if error - end date before start date
-    formRegistValidity = dateRegistValidity ? false : true; // true if errors in the form
+    dateRegistErrorMsg = dateRegistrationCheck
+      ? ""
+      : `End registration date can't be before start registration date.`
+    dateRegistValidity = dateRegistrationCheck ? false : true // true if error - end date before start date
+    formRegistValidity = dateRegistValidity ? false : true // true if errors in the form
 
-    dateActivityErrorMsg = dateActivityCheck ? "" : `End activity date can't be before start activity date.`;
-    dateActivityValidity = dateActivityCheck ? false : true; // true if error - end date before start date
-    formActivityValidity = dateActivityValidity ? false : true; // true if errors in the form
+    dateActivityErrorMsg = dateActivityCheck
+      ? ""
+      : `End activity date can't be before start activity date.`
+    dateActivityValidity = dateActivityCheck ? false : true // true if error - end date before start date
+    formActivityValidity = dateActivityValidity ? false : true // true if errors in the form
 
     setErrors((prevState) => ({
       ...prevState,
@@ -100,25 +106,25 @@ export const KegiatanModal = ({ open, onClose }) => {
       formRegistValidity,
       dateActivityErrorMsg,
       dateActivityValidity,
-      formActivityValidity
-    }));
+      formActivityValidity,
+    }))
   }
 
   useEffect(() => {
     if (categoryList.length < 1) {
-      getActivityCategory();
+      getActivityCategory()
     }
     validateDates()
-  },[state,categoryList]);
+  }, [state, categoryList])
 
   const handleForm = (value, type) => {
-    setState({ ...state, [type]: value });
-  };
+    setState({ ...state, [type]: value })
+  }
 
-  const handleSubmit = async() => {
-    await addActivity(state);
-    onClose();
-  };
+  const handleSubmit = async () => {
+    await addActivity(state)
+    onClose()
+  }
 
   return (
     <Modal
@@ -179,48 +185,51 @@ export const KegiatanModal = ({ open, onClose }) => {
                 >
                   <MenuItem value={4}>Jamaah</MenuItem>
                   <MenuItem value={5}>Aktivis</MenuItem>
-                  <MenuItem value={6}>Kader</MenuItem>
-                  <MenuItem value={7}>Kader Lanjut</MenuItem>
+                  <MenuItem value={6}>Member</MenuItem>
+                  <MenuItem value={7}>Member Lanjut</MenuItem>
                 </Select>
               </div>
               <div className="detail-activity">
-              <DatePickerCustom
-                title="Tanggal Mulai Kegiatan"
-                value={state.begin_date}
-                onChange={(event) =>
-                  handleForm(moment(event).format('YYYY-MM-DD'), "begin_date")
-                }
-              />
-              <DatePickerCustom
-                title="Tanggal Selesai Kegiatan"
-                value={state.end_date}
-                onChange={(event) =>
-                  handleForm(moment(event).format('YYYY-MM-DD'), "end_date")
-                }
-                error={errors.dateActivityValidity}
-                helperText={errors.dateActivityErrorMsg}
-              />
+                <DatePickerCustom
+                  title="Tanggal Mulai Kegiatan"
+                  value={state.begin_date}
+                  onChange={(event) =>
+                    handleForm(moment(event).format("YYYY-MM-DD"), "begin_date")
+                  }
+                />
+                <DatePickerCustom
+                  title="Tanggal Selesai Kegiatan"
+                  value={state.end_date}
+                  onChange={(event) =>
+                    handleForm(moment(event).format("YYYY-MM-DD"), "end_date")
+                  }
+                  error={errors.dateActivityValidity}
+                  helperText={errors.dateActivityErrorMsg}
+                />
               </div>
               <div className="detail-activity">
-              <DatePickerCustom
-                title="Tanggal Mulai Registrasi"
-                value={state.register_begin_date}
-                onChange={(event) =>
-                  handleForm(moment(event).format('YYYY-MM-DD'), "register_begin_date")
-                }
-              />
-              <DatePickerCustom
-                title="Tanggal Registrasi Selesai"
-                value={state.register_end_date}
-                onChange={(event) =>
-                  handleForm(
-                    moment(event).format('YYYY-MM-DD'),
-                    "register_end_date"
-                  )
-                }
-                error={errors.dateRegistValidity}
-                helperText={errors.dateRegistErrorMsg}
-              />
+                <DatePickerCustom
+                  title="Tanggal Mulai Registrasi"
+                  value={state.register_begin_date}
+                  onChange={(event) =>
+                    handleForm(
+                      moment(event).format("YYYY-MM-DD"),
+                      "register_begin_date"
+                    )
+                  }
+                />
+                <DatePickerCustom
+                  title="Tanggal Registrasi Selesai"
+                  value={state.register_end_date}
+                  onChange={(event) =>
+                    handleForm(
+                      moment(event).format("YYYY-MM-DD"),
+                      "register_end_date"
+                    )
+                  }
+                  error={errors.dateRegistValidity}
+                  helperText={errors.dateRegistErrorMsg}
+                />
               </div>
               <div className="button-bottom">
                 <Button
@@ -236,7 +245,9 @@ export const KegiatanModal = ({ open, onClose }) => {
                   className="button-bottoms-kegiatan"
                   variant="contained"
                   color="primary"
-                  disabled={!errors.formActivityValidity || !errors.formRegistValidity}
+                  disabled={
+                    !errors.formActivityValidity || !errors.formRegistValidity
+                  }
                 >
                   Simpan
                 </Button>
@@ -246,5 +257,5 @@ export const KegiatanModal = ({ open, onClose }) => {
         </div>
       </Fade>
     </Modal>
-  );
-};
+  )
+}

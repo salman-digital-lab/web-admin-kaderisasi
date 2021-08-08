@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react"
 import {
   Card,
   CardContent,
@@ -13,54 +13,54 @@ import {
   Select,
   MenuItem,
   Input,
-} from "@material-ui/core";
-import StyledRadio from "../../../components/RadioButton";
-import { KegiatanModal } from "./kegiatan-modal";
-import { AdminActivityContext } from "../../../context/AdminActivityContext";
-import "../../../assets/scss/AddActivity.scss";
-import { MenuProps, getStyles } from "../../../components/Select";
-import { useTheme } from "@material-ui/core/styles";
-
+} from "@material-ui/core"
+import { useTheme } from "@material-ui/core/styles"
+import StyledRadio from "../../../components/RadioButton"
+import { KegiatanModal } from "./kegiatan-modal"
+import { AdminActivityContext } from "../../../context/AdminActivityContext"
+import "../../../assets/scss/AddActivity.scss"
+import { MenuProps, getStyles } from "../../../components/Select"
+/* eslint-disable */
 const KegiatanFilter = () => {
-  const theme = useTheme();
+  const theme = useTheme()
   const { filterActivity, setFilterActivity, categoryList, functions } =
-    useContext(AdminActivityContext);
-  const { getActivityCategory } = functions;
+    useContext(AdminActivityContext)
+  const { getActivityCategory } = functions
   useEffect(() => {
     if (categoryList.length < 1) {
-      getActivityCategory();
+      getActivityCategory()
     }
-  });
-  const [open, setOpen] = useState(false);
+  })
+  const [open, setOpen] = useState(false)
 
   const handleOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       setFilterActivity({
         ...filterActivity,
         search: event.target.value,
         filter: true,
-      });
+      })
     }
-  };
+  }
 
   const handleCategoryChange = (s) => {
-    setFilterActivity({ ...filterActivity, category_id: s, filter: true });
-  };
+    setFilterActivity({ ...filterActivity, category_id: s, filter: true })
+  }
 
   const handleChangeRole = (s) => {
     setFilterActivity({
       ...filterActivity,
       minimum_roles_id: Number(s),
       filter: true,
-    });
-  };
+    })
+  }
 
   return (
     <>
@@ -119,13 +119,13 @@ const KegiatanFilter = () => {
                   value={6}
                   control={<StyledRadio />}
                   onChange={(e) => handleChangeRole(e.target.value)}
-                  label="Kader"
+                  label="Member"
                 />
                 <FormControlLabel
                   value={7}
                   control={<StyledRadio />}
                   onChange={(e) => handleChangeRole(e.target.value)}
-                  label="Kader Lanjut"
+                  label="Member Lanjut"
                 />
               </RadioGroup>
             </FormControl>
@@ -156,7 +156,7 @@ const KegiatanFilter = () => {
       </Card>
       <KegiatanModal open={open} onClose={handleClose} />
     </>
-  );
-};
+  )
+}
 
-export default KegiatanFilter;
+export default KegiatanFilter

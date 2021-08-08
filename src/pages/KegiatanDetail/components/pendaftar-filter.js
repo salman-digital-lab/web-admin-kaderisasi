@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react"
 import {
   Card,
   CardContent,
   FormControlLabel,
-  TextField,
   Box,
   FormControl,
   InputLabel,
@@ -12,26 +11,26 @@ import {
   MenuItem,
   Select,
   Input,
-} from "@material-ui/core";
-import { MenuProps, getStyles } from "../../../components/Select";
-import StyledRadio from "../../../components/RadioButton";
-import { useTheme } from "@material-ui/core/styles";
-import { AdminActivityContext } from "../../../context/AdminActivityContext";
-
+} from "@material-ui/core"
+import { useTheme } from "@material-ui/core/styles"
+import { AdminActivityContext } from "../../../context/AdminActivityContext"
+import { MenuProps, getStyles } from "../../../components/Select"
+import StyledRadio from "../../../components/RadioButton"
+/* eslint-disable */
 const PendaftarFilter = () => {
-  const theme = useTheme();
+  const theme = useTheme()
   const {
     filterParticipantsActivity,
     setFilterParticipantsActivity,
     universityList,
     functions,
-  } = useContext(AdminActivityContext);
-  const { getAllUniversities } = functions;
+  } = useContext(AdminActivityContext)
+  const { getAllUniversities } = functions
   useEffect(() => {
     if (universityList.length < 1) {
-      getAllUniversities();
+      getAllUniversities()
     }
-  });
+  })
 
   const statusList = [
     { value: -1, label: "Semua" },
@@ -40,31 +39,31 @@ const PendaftarFilter = () => {
     { value: "PASSED", label: "Passed" },
     { value: "FAILED", label: "Failed" },
     { value: "REJECTED", label: "Rejected" },
-  ];
+  ]
 
   const handleUniversityChange = (s) => {
     setFilterParticipantsActivity({
       ...filterParticipantsActivity,
       university_id: Number(s),
       filter: true,
-    });
-  };
+    })
+  }
 
   const handleStatusChange = (s) => {
     setFilterParticipantsActivity({
       ...filterParticipantsActivity,
       status: s,
       filter: true,
-    });
-  };
+    })
+  }
 
   const filterByJenjang = (s) => {
     setFilterParticipantsActivity({
       ...filterParticipantsActivity,
       role_id: Number(s),
       filter: true,
-    });
-  };
+    })
+  }
 
   return (
     <>
@@ -122,13 +121,13 @@ const PendaftarFilter = () => {
                   value={6}
                   control={<StyledRadio />}
                   onChange={(e) => filterByJenjang(e.target.value)}
-                  label="Kader"
+                  label="Member"
                 />
                 <FormControlLabel
                   value={7}
                   control={<StyledRadio />}
                   onChange={(e) => filterByJenjang(e.target.value)}
-                  label="Kader Lanjut"
+                  label="Member Lanjut"
                 />
               </RadioGroup>
             </FormControl>
@@ -158,7 +157,7 @@ const PendaftarFilter = () => {
         </CardContent>
       </Card>
     </>
-  );
-};
+  )
+}
 
-export default PendaftarFilter;
+export default PendaftarFilter

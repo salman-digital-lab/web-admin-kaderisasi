@@ -1,8 +1,7 @@
-$blue-color : #5E91F8;
-$white-color : #ffffff;
+$blue-color: #5e91f8;
+$white-color: #ffffff;
 
-.container-login{
-
+.container-login {
   width: 100%;
   height: 100vh;
   background-color: $blue-color;
@@ -11,29 +10,29 @@ $white-color : #ffffff;
   justify-content: center;
   align-items: center;
 
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 
-  .headline-tittle-login{
+  .headline-tittle-login {
     text-align: center;
     color: $white-color;
     font-size: 1.5rem;
 
-    .icon-login{
+    .icon-login {
       font-size: 50px;
       animation: mymove 5s infinite;
     }
 
-    p{
+    p {
       margin-top: 15px;
       margin-bottom: 40px;
       font-weight: 400;
       line-height: 15px;
     }
-
   }
 
-  .bottom-login{
-    p{
+  .bottom-login {
+    p {
       width: 290px;
       color: $white-color;
       font-weight: 200;
@@ -46,47 +45,47 @@ $white-color : #ffffff;
     }
   }
 
-  #outlined-adornment-password{
+  #outlined-adornment-password {
     outline: $blue-color;
   }
-  .textField{
+  .textField {
     color: $blue-color;
   }
-  
-  .container-card{
+
+  .container-card {
     width: 530px;
     border-radius: 12px;
     padding: 50px;
     transition: 1s ease;
 
-    .pop-up-error{
+    .pop-up-error {
       min-width: 100%;
       margin-bottom: 20px;
     }
 
-    .container-input{
+    .container-input {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      
-      .input-field{
+
+      .input-field {
         margin: 7px;
         width: 100%;
         color: #aaa;
 
-        .input-label{
+        .input-label {
           color: #aaa;
         }
       }
-      
-      .button-login{
+
+      .button-login {
         background-color: $blue-color;
         color: $white-color;
         min-width: 100%;
         min-height: 50px;
 
-        .circular-Progress{
+        .circular-Progress {
           margin-left: 10px;
         }
       }
@@ -94,16 +93,16 @@ $white-color : #ffffff;
   }
 }
 
-@media screen and (max-width: 570px ){
-  .container-login{
-    .container-card{
+@media screen and (max-width: 570px) {
+  .container-login {
+    .container-card {
       width: 350px;
       border-radius: 12px;
       padding: 15px;
     }
 
-    .bottom-login{
-      p{
+    .bottom-login {
+      p {
         width: 260px;
         color: $white-color;
         font-weight: 200;
@@ -115,20 +114,19 @@ $white-color : #ffffff;
         cursor: pointer;
       }
     }
-    
   }
 }
 
-@media screen and (max-width: 365px ){
-  .container-login{
-    .container-card{
+@media screen and (max-width: 365px) {
+  .container-login {
+    .container-card {
       width: 280px;
       border-radius: 12px;
       padding: 15px;
     }
 
-    .bottom-login{
-      p{
+    .bottom-login {
+      p {
         width: 260px;
         color: $white-color;
         font-weight: 200;
@@ -140,20 +138,19 @@ $white-color : #ffffff;
         cursor: pointer;
       }
     }
-
   }
 }
 
-@media screen and (max-width: 280px ){
-  .container-login{
-    .container-card{
+@media screen and (max-width: 280px) {
+  .container-login {
+    .container-card {
       width: 150px;
       border-radius: 12px;
       padding: 15px;
     }
 
-    .bottom-login{
-      p{
+    .bottom-login {
+      p {
         width: 150px;
         color: $white-color;
         font-weight: 200;
@@ -165,11 +162,14 @@ $white-color : #ffffff;
         cursor: pointer;
       }
     }
-
   }
 }
 
 @keyframes mymove {
-  from {transform: rotate(0deg);}
-  to {transform: rotate(180deg);}
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
 }
