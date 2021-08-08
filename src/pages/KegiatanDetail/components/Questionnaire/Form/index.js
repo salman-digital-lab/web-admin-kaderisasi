@@ -1,11 +1,11 @@
-import React from 'react'
+import React from "react"
 import { AdminQuestionnaireProvider } from "../../../../../context/AdminQuestionnaireContext"
-import { QuestionnaireFormChild } from './QuestionnaireFormChild'
+import { QuestionnaireForm } from './QuestionnaireForm';
 
-export const QuestionnaireForm = () => {
+export default function Questionnaire () {
     return (
         <AdminQuestionnaireProvider>
-            <QuestionnaireFormChild />
+            <QuestionnaireForm />
         </AdminQuestionnaireProvider>
     )
 }

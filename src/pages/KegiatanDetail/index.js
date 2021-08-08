@@ -10,7 +10,7 @@ import "../../assets/scss/Kegiatan.scss";
 import "../../assets/scss/RichText.scss";
 import "../../assets/scss/AddActivity.scss";
 import { AdminActivityProvider } from "../../context/AdminActivityContext";
-import { Questionnaire } from "../Questionnaire/";
+import { Questionnaire } from "./components/Questionnaire"
 
 const KegiatanDetail = () => {
   const theme = useTheme();

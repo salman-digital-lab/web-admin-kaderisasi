@@ -1,14 +1,16 @@
 import React, { useEffect, useContext, useState } from "react"
-import { useLocation, useParams } from 'react-router-dom'
-import { Grid } from "@material-ui/core"
+import { useParams } from 'react-router-dom'
+import { Grid, Box } from "@material-ui/core"
 import { QuestionNavigator } from "./QuestionNavigator"
-import { SaveAndBackButton } from "./SaveAndBackButton"
+import { SaveButton } from "./SaveButton"
 import { TitleAndSubtitleForm } from "./TitleAndSubtitleForm"
 import { AddQuestionButton } from "./AddQuestionButton"
-import { AdminQuestionnaireContext } from "../../../context/AdminQuestionnaireContext"
+import Skeleton from '@material-ui/lab/Skeleton'
+import { AdminQuestionnaireContext } from "../../../../../context/AdminQuestionnaireContext"
 import Snackbar from '@material-ui/core/Snackbar'
 import MuiAlert from '@material-ui/lab/Alert'
 import { Form } from "./Form"
+import axios from 'axios'
 
 
 const Alert = (props) => {
@@ -16,38 +18,56 @@ const Alert = (props) => {
 }
 
 
-export const QuestionnaireFormChild = () => {
-  const url = useLocation()
-  const params = useParams()
-  const { openSnackbar, functions } = useContext(AdminQuestionnaireContext)
-  const [unlockForm, setUnlockForm] = useState(false)
+export const QuestionnaireForm = () => {
+  const { id } = useParams()
+  const { openSnackbar, functions, data, setData } = useContext(AdminQuestionnaireContext)
+  const [loading, setLoading] = useState(true)
   const [reload, setReload] = useState(true)
-  const { getQuestionnaire, handleSnackbar } = functions
+  const { handleSnackbar } = functions
 
 
   useEffect(() => {
     if (reload) {
-      if (Boolean(url.pathname === '/new-questionnaire')) {
-        setUnlockForm(true)
-        setReload(false)
-      }
-      if (Boolean(params.id)) {
-        getQuestionnaire(params.id, () => {
-          setUnlockForm(true)
+      setReload(false)
+      console.log('load')
+      axios
+        .get(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}`)
+        .then((res) => {
+          const form = JSON.parse(res.data.data[0].form_data) ?? null
+          console.log(form)
+          setLoading(false)
+          // if (Boolean(form)) {
+          //   setData(form)
+          // }
         })
-        setReload(false)
-      }
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  }, [getQuestionnaire, params, reload, url])
+  }, [id, reload, data, setData])
 
   return (
     <>
-      {!unlockForm && <h1 style={{ color: "#999999" }}>Loading... please wait</h1>}
-      {unlockForm &&
+      {loading && (
+        <React.Fragment>
+          <div>
+            <Box width='75%'>
+              <Skeleton />
+            </Box>
+            <Box width='70%'>
+              <Skeleton animation={false} />
+            </Box>
+            <Box width='65%'>
+              <Skeleton animation="wave" />
+            </Box>
+          </div>
+        </React.Fragment>
+      )}
+      {!loading &&
         <>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
-              <SaveAndBackButton />
+              <SaveButton />
             </Grid>
           </Grid>
           <br />
@@ -77,7 +97,7 @@ export const QuestionnaireFormChild = () => {
           >
             <Alert severity="success" onClose={handleSnackbar}>
               Questionnaire berhasil disave
-                </Alert>
+            </Alert>
           </Snackbar>
         </>
       }
