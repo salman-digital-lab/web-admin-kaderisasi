@@ -1,9 +1,9 @@
 import React from "react"
-import "../../assets/scss/ListDetailAdmin.scss"
+import "../../assets/scss/DetailAdmin.scss"
 import { IconButton } from "@material-ui/core"
 import { AccountCircle } from "@material-ui/icons"
-import DetailAdmin from "./components/detail-admin"
-import data from "./data-admin.json"
+import DetailAdmin from "./components/DetailAdmin"
+import data from "./DataAdmin.json"
 
 const ListDetailAdmin = () => (
   <div className="container-detail-admin">
