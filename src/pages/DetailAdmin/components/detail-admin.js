@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core"
 import { ArrowBack, Delete } from "@material-ui/icons"
 import { Link } from "react-router-dom"
-import data from "../data-admin.json"
+import data from "../DataAdmin.json"
 import ModalAdmin from "./ModalAdmin"
 /* eslint-disable */
 const DetailAdmin = () => {
