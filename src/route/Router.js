@@ -15,7 +15,7 @@ import CategorySetting from "../pages/CategorySetting"
 import NotFound from "../pages/Error/NotFound"
 import AdminProvider from "../context/AdminContext"
 import MainAdmin from "../pages/MainAdmin"
-import RegisterAkunAdmin from "../pages/RegisterAdmin"
+import RegisterAdmin from "../pages/RegisterAdmin"
 import ListDetailAdmin from "../pages/DetailAdmin"
 import Questionnaire from "../pages/Questionnaire"
 import QuestionnaireForm from "../pages/Questionnaire/Form"
@@ -86,11 +86,7 @@ const Router = () => {
             />
             <Routes exact path="/MainAdmin" component={MainAdmin} />
             <Routes exact path="/MainAdmin/:name" component={ListDetailAdmin} />
-            <Routes
-              exact
-              path="/RegisterAkunAdmin"
-              component={RegisterAkunAdmin}
-            />
+            <Routes exact path="/RegisterAdmin" component={RegisterAdmin} />
           </NavigationAdmin>
         </AdminProvider>
         <Routes component={NotFound} />
