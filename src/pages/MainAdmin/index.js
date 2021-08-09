@@ -1,8 +1,8 @@
 import { Button } from "@material-ui/core"
 import React from "react"
 import { Link } from "react-router-dom"
-import "../../assets/scss/ListAdmin.scss"
-import AdminTable from "./components/ListAdminTable"
+import "../../assets/scss/MainAdmin.scss"
+import AdminTable from "./components/MainAdminTable"
 
 const ListAdmin = () => (
   <div className="container-list-admin">
