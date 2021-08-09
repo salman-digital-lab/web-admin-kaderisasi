@@ -30,9 +30,9 @@ const Router = () => {
   }
 
   const Routes = ({ ...props }) => {
-    // if (Cookies.get("token") === undefined) {
-    //   return <Redirect to="/login" />
-    // }
+    if (Cookies.get("token") === undefined) {
+      return <Redirect to="/login" />
+    }
     return <Route {...props} />
   }
 
