@@ -2,7 +2,7 @@ import React from "react"
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom"
 import Cookies from "js-cookie"
 import Login from "../pages/Login"
-import AdminNavigation from "../components/NavigationAdmin"
+import NavigationAdmin from "../components/NavigationAdmin"
 import KegiatanDanAktivis from "../pages/KegiatanDanAktivis"
 import KegiatanDetail from "../pages/KegiatanDetail"
 import Dashboard from "../pages/Dashboard"
@@ -41,7 +41,7 @@ const Router = () => {
       <Switch>
         <LoginRoute exact path="/login" component={Login} />
         <AdminProvider>
-          <AdminNavigation>
+          <NavigationAdmin>
             <Routes exact path="/" component={Dashboard} />
             <Routes exact path="/questionnaire" component={Questionnaire} />
             <Routes
@@ -95,7 +95,7 @@ const Router = () => {
               path="/RegisterAkunAdmin"
               component={RegisterAkunAdmin}
             />
-          </AdminNavigation>
+          </NavigationAdmin>
         </AdminProvider>
         <Routes component={NotFound} />
       </Switch>
