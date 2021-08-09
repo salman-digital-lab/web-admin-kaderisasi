@@ -26,6 +26,7 @@ const headCells = [
   { id: "univ", numeric: false, label: "Perguruan Tinggi/Univ" },
   { id: "jengjang", numeric: false, label: "Jenjang" },
   { id: "activity", numeric: false, label: "SSC, LMD & SPC" },
+  { id: "view", numeric: false, label: "Action" },
 ]
 
 const useStyles = makeStyles((theme) => ({
@@ -124,7 +125,7 @@ const MemberTable = () => {
   return (
     <div className="tableuser">
       <h1 className="headline" style={{ color: "#999999" }}>
-        Member Salman
+        Member
       </h1>
       <Paper>
         {!members.status ? (
@@ -177,6 +178,9 @@ const MemberTable = () => {
                         <TableCell className="table-cell">
                           {row.ssc}
                           {row.lmd}
+                        </TableCell>
+                        <TableCell className="table-cell">
+                          <Link to={`/detail-aktivis/${row.id}`}>View</Link>
                         </TableCell>
                       </TableRow>
                     )
