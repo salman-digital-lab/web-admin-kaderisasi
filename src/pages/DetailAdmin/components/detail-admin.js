@@ -9,7 +9,7 @@ import {
 import { ArrowBack, Delete } from "@material-ui/icons"
 import { Link } from "react-router-dom"
 import data from "../data-admin.json"
-import ModalAdmin from "./tambah-admin-modal"
+import ModalAdmin from "./ModalAdmin"
 /* eslint-disable */
 const DetailAdmin = () => {
   const [open, setOpen] = useState(false)
