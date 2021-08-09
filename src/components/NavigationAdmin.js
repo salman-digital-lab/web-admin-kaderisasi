@@ -4,7 +4,7 @@ import Topbar from "./Topbar"
 import Sidebar from "./Sidebar"
 import Content from "./Content"
 /* eslint-disable */
-const AdminNavigation = (props) => (
+const NavigationAdmin = (props) => (
   <div style={{ display: "flex" }}>
     <CssBaseline />
     <Topbar />
@@ -13,4 +13,4 @@ const AdminNavigation = (props) => (
   </div>
 )
 
-export default AdminNavigation
+export default NavigationAdmin
