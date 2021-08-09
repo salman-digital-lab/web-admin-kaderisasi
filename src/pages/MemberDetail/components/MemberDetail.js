@@ -157,7 +157,7 @@ const MemberDetail = () => {
         </div>
       </div>
       <br />
-      <h3>Detail Aktivis</h3>
+      <h3>Detail Member</h3>
       <div className="body-aktivis">
         <div className="body-aktivis-data">
           <div className="input-group-title-body" id="basic-addon1">

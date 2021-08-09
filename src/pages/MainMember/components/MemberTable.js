@@ -17,7 +17,7 @@ import {
 } from "../../../components/TableDesign"
 import LoadingAnimation from "../../../components/loading-animation"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
-/* eslint-disable */
+
 const headCells = [
   { id: "no", numeric: true, label: "No." },
   { id: "name", numeric: false, label: "Nama Jamaah" },
@@ -124,7 +124,7 @@ const MemberTable = () => {
   return (
     <div className="tableuser">
       <h1 className="headline" style={{ color: "#999999" }}>
-        Aktivis dan Jamaah
+        Member Salman
       </h1>
       <Paper>
         {!members.status ? (
@@ -136,7 +136,7 @@ const MemberTable = () => {
             <TableContainer>
               <Table
                 aria-labelledby="tableTitle"
-                size={"medium"}
+                size="medium"
                 aria-label="enhanced table"
               >
                 <EnhancedTableHead
@@ -158,7 +158,7 @@ const MemberTable = () => {
                           {index + 1 + rowsPerPage * page}
                         </TableCell>
                         <TableCell className="table-cell">
-                          <Link to={"/detail-aktivis/" + row.id}>
+                          <Link to={`/detail-aktivis/${row.id}`}>
                             {row.name}
                           </Link>
                         </TableCell>
