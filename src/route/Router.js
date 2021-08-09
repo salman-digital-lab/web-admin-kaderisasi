@@ -30,9 +30,9 @@ const Router = () => {
   }
 
   const Routes = ({ ...props }) => {
-    if (Cookies.get("token") === undefined) {
-      return <Redirect to="/login" />
-    }
+    // if (Cookies.get("token") === undefined) {
+    //   return <Redirect to="/login" />
+    // }
     return <Route {...props} />
   }
 
@@ -84,9 +84,13 @@ const Router = () => {
               path="/activity-setting"
               component={CategorySetting}
             />
-            <Routes exact path="/MainAdmin" component={MainAdmin} />
-            <Routes exact path="/MainAdmin/:name" component={ListDetailAdmin} />
-            <Routes exact path="/RegisterAdmin" component={RegisterAdmin} />
+            <Routes exact path="/ListAkunAdmin" component={MainAdmin} />
+            <Routes
+              exact
+              path="/ListAkunAdmin/:name"
+              component={ListDetailAdmin}
+            />
+            <Routes exact path="/RegisterAkunAdmin" component={RegisterAdmin} />
           </NavigationAdmin>
         </AdminProvider>
         <Routes component={NotFound} />
