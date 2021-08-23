@@ -81,7 +81,7 @@ const MemberDetail = () => {
       <div className="button-area">
         <div className="button-left">
           <Button size="small" className="back-button" variant="outlined">
-            <Link to={"/aktivis"}>
+            <Link to={"/member"}>
               <ArrowBack fontSize="inherit" />
               KEMBALI
             </Link>

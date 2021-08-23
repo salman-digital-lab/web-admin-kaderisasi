@@ -3,8 +3,8 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom"
 import Cookies from "js-cookie"
 import Login from "../pages/Login"
 import AdminNavigation from "../components/AdminNavigation"
-import KegiatanDanAktivis from "../pages/KegiatanDanAktivis"
-import KegiatanDetail from "../pages/KegiatanDetail"
+import KegiatanDanAktivis from "../pages/MainActivity"
+import KegiatanDetail from "../pages/ActivityDetail"
 import Dashboard from "../pages/Dashboard"
 import MemberSalman from "../pages/MainMember"
 import MemberSalmanDetail from "../pages/MemberDetail"
@@ -54,16 +54,16 @@ const Router = () => {
               path="/new-questionnaire"
               component={QuestionnaireForm}
             />
-            <Routes exact path="/kegiatan" component={KegiatanDanAktivis} />
+            <Routes exact path="/activity" component={KegiatanDanAktivis} />
             <Routes
               exact
-              path="/detail-kegiatan/:id"
+              path="/activity-detail/:id"
               component={KegiatanDetail}
             />
-            <Routes exact path="/aktivis" component={MemberSalman} />
+            <Routes exact path="/member" component={MemberSalman} />
             <Routes
               exact
-              path="/detail-aktivis/:id"
+              path="/member-detail/:id"
               component={MemberSalmanDetail}
             />
             <Routes exact path="/PerguruanTinggi" component={PerguruanTinggi} />

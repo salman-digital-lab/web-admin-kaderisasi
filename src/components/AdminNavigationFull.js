@@ -126,7 +126,7 @@ const drawerList = [
   },
   {
     key: 2,
-    name: "Kegiatan & Aktivis",
+    name: "Kegiatan & Aktivitas",
     icon: <ArchiveIcon />,
     url: "/test",
     children: [

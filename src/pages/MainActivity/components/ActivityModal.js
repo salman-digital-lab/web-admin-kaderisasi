@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core"
 import moment from "moment"
 import DateFnsUtils from "@date-io/date-fns"
+import PropTypes from "prop-types"
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
@@ -17,7 +18,7 @@ import {
 import "../../../assets/scss/AddActivity.scss"
 import styled from "./styled"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
-/* eslint-disable */
+
 const initialErrors = {
   formRegistValidity: false, // flip to true if form incorrect
   dateRegistValidity: false,
@@ -33,28 +34,34 @@ export const DatePickerCustom = ({
   onChange: onChangeProps,
   helperText: helperTextProps,
   error: errorProps,
-}) => {
-  return (
-    <div className="input-form">
-      {titleProps}
-      <br />
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <KeyboardDatePicker
-          className="form-modal"
-          minDate={new Date()}
-          format="dd/MM/yyyy"
-          margin="normal"
-          value={valueProps}
-          onChange={onChangeProps}
-          KeyboardButtonProps={{
-            "aria-label": "change date",
-          }}
-          helperText={helperTextProps}
-          error={errorProps}
-        />
-      </MuiPickersUtilsProvider>
-    </div>
-  )
+}) => (
+  <div className="input-form">
+    {titleProps}
+    <br />
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <KeyboardDatePicker
+        className="form-modal"
+        minDate={new Date()}
+        format="dd/MM/yyyy"
+        margin="normal"
+        value={valueProps}
+        onChange={onChangeProps}
+        KeyboardButtonProps={{
+          "aria-label": "change date",
+        }}
+        helperText={helperTextProps}
+        error={errorProps}
+      />
+    </MuiPickersUtilsProvider>
+  </div>
+)
+
+DatePickerCustom.propTypes = {
+  title: PropTypes.string.isRequired,
+  value: PropTypes.instanceOf(Date).isRequired,
+  onChange: PropTypes.func.isRequired,
+  helperText: PropTypes.string.isRequired,
+  error: PropTypes.string.isRequired,
 }
 
 export const KegiatanModal = ({ open, onClose }) => {
@@ -90,14 +97,14 @@ export const KegiatanModal = ({ open, onClose }) => {
     dateRegistErrorMsg = dateRegistrationCheck
       ? ""
       : `End registration date can't be before start registration date.`
-    dateRegistValidity = dateRegistrationCheck ? false : true // true if error - end date before start date
-    formRegistValidity = dateRegistValidity ? false : true // true if errors in the form
+    dateRegistValidity = dateRegistrationCheck // true if error - end date before start date
+    formRegistValidity = dateRegistValidity // true if errors in the form
 
     dateActivityErrorMsg = dateActivityCheck
       ? ""
       : `End activity date can't be before start activity date.`
-    dateActivityValidity = dateActivityCheck ? false : true // true if error - end date before start date
-    formActivityValidity = dateActivityValidity ? false : true // true if errors in the form
+    dateActivityValidity = dateActivityCheck // true if error - end date before start date
+    formActivityValidity = dateActivityValidity // true if errors in the form
 
     setErrors((prevState) => ({
       ...prevState,
@@ -165,8 +172,8 @@ export const KegiatanModal = ({ open, onClose }) => {
                       handleForm(event.target.value, "category_id")
                     }
                   >
-                    {categoryList.map((name, idx) => (
-                      <MenuItem key={idx} value={name.value}>
+                    {categoryList.map((name) => (
+                      <MenuItem key={name} value={name.value}>
                         {name.label}
                       </MenuItem>
                     ))}
@@ -258,4 +265,9 @@ export const KegiatanModal = ({ open, onClose }) => {
       </Fade>
     </Modal>
   )
+}
+
+KegiatanModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.bool.isRequired,
 }

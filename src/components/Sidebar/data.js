@@ -18,19 +18,19 @@ const data = [
   },
   {
     id: 2,
-    name: "Kegiatan & Aktivis",
+    name: "Kegiatan & Aktivitas",
     icon: <EventAvailableIcon />,
     children: [
-      { id: 2.1, name: "Text 1", url: "/kegiatan" },
-      { id: 2.2, name: "Text 2", url: "/kegiatan" },
-      { id: 2.3, name: "Text 3", url: "/kegiatan" },
+      { id: 2.1, name: "Text 1", url: "/activity" },
+      { id: 2.2, name: "Text 2", url: "/activity" },
+      { id: 2.3, name: "Text 3", url: "/activity" },
     ],
   },
   {
     id: 3,
     name: "Aktivis & Jamaah",
     icon: <GroupIcon />,
-    url: "/aktivis",
+    url: "/member",
   },
   {
     id: 4,

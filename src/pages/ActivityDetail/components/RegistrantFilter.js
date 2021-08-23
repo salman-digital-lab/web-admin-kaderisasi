@@ -16,7 +16,7 @@ import { useTheme } from "@material-ui/core/styles"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 import { MenuProps, getStyles } from "../../../components/Select"
 import StyledRadio from "../../../components/RadioButton"
-/* eslint-disable */
+
 const PendaftarFilter = () => {
   const theme = useTheme()
   const {
@@ -79,9 +79,9 @@ const PendaftarFilter = () => {
                   input={<Input />}
                   MenuProps={MenuProps}
                 >
-                  {statusList.map((name, idx) => (
+                  {statusList.map((name) => (
                     <MenuItem
-                      key={idx}
+                      key={name}
                       value={name.value}
                       label={name.label}
                       style={getStyles(name, statusList, theme)}
@@ -140,9 +140,9 @@ const PendaftarFilter = () => {
                   input={<Input />}
                   MenuProps={MenuProps}
                 >
-                  {universityList.map((name, idx) => (
+                  {universityList.map((name) => (
                     <MenuItem
-                      key={idx}
+                      key={name}
                       value={name.value}
                       label={name.label}
                       style={getStyles(name, universityList, theme)}

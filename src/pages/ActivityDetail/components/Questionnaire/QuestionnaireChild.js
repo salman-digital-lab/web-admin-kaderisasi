@@ -4,7 +4,7 @@ import AddCircleIcon from "@material-ui/icons/AddCircle"
 import { useHistory, useParams } from "react-router-dom"
 import Skeleton from "@material-ui/lab/Skeleton"
 import axios from "axios"
-import { QuestionnaireForm } from "../Questionnaire/Form/"
+import { QuestionnaireForm } from "./Form"
 
 export const QuestionnaireChild = () => {
   const [loading, setLoading] = useState(true)
