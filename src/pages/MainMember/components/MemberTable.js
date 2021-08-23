@@ -159,7 +159,7 @@ const MemberTable = () => {
                           {index + 1 + rowsPerPage * page}
                         </TableCell>
                         <TableCell className="table-cell">
-                          <Link to={`/detail-aktivis/${row.id}`}>
+                          <Link to={`/member-detail/${row.id}`}>
                             {row.name}
                           </Link>
                         </TableCell>
@@ -180,7 +180,7 @@ const MemberTable = () => {
                           {row.lmd}
                         </TableCell>
                         <TableCell className="table-cell">
-                          <Link to={`/detail-aktivis/${row.id}`}>View</Link>
+                          <Link to={`/member-detail/${row.id}`}>View</Link>
                         </TableCell>
                       </TableRow>
                     )

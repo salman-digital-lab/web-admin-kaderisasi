@@ -158,16 +158,16 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
   const { id } = useParams()
   const [formData, setFormData] = useState({})
   const [registerBeginDate, setStartDate] = useState(
-    moment(data.registerBeginDate).format("YYYY-MM-DD")
+    moment(data.register_begin_date).format("YYYY-MM-DD")
   )
   const [registerEndDate, setExpiredDate] = useState(
-    moment(data.registerEndDate).format("YYYY-MM-DD")
+    moment(data.register_end_date).format("YYYY-MM-DD")
   )
   const [beginDate, setActivityStart] = useState(
-    moment(data.beginDate).format("YYYY-MM-DD")
+    moment(data.begin_date).format("YYYY-MM-DD")
   )
   const [endDate, setActivityExpired] = useState(
-    moment(data.endDate).format("YYYY-MM-DD")
+    moment(data.end_date).format("YYYY-MM-DD")
   )
   const [errors, setErrors] = useState(initialErrors)
 
@@ -238,22 +238,22 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
   }
 
   const handleStartRegistrationChange = (date) => {
-    handleForm(moment(date).format("YYYY-MM-DD"), "registerBeginDate")
+    handleForm(moment(date).format("YYYY-MM-DD"), "register_begin_date")
     setStartDate(date)
   }
 
   const handleExpiredRegistrationChange = (date) => {
-    handleForm(moment(date).format("YYYY-MM-DD"), "registerEndDate")
+    handleForm(moment(date).format("YYYY-MM-DD"), "register_end_date")
     setExpiredDate(date)
   }
 
   const handleStartActivityChange = (date) => {
-    handleForm(moment(date).format("YYYY-MM-DD"), "beginDate")
+    handleForm(moment(date).format("YYYY-MM-DD"), "begin_date")
     setActivityStart(date)
   }
 
   const handleExpiredActivityChange = (date) => {
-    handleForm(moment(date).format("YYYY-MM-DD"), "endDate")
+    handleForm(moment(date).format("YYYY-MM-DD"), "end_date")
     setActivityExpired(date)
   }
 

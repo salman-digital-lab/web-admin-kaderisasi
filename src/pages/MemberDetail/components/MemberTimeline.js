@@ -14,7 +14,7 @@ const TimelineItem = ({ status, beginDate, name }) => (
       <time>{new Date(beginDate).toLocaleDateString()}</time>
       <p>{name}</p>
       {/* {data.activity_id && (
-        <Link to={"/detail-kegiatan/" + data.activity_id}>
+        <Link to={"/activity-detail/" + data.activity_id}>
           {data.category_name}
         </Link>
       )} */}

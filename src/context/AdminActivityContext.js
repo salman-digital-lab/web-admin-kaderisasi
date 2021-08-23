@@ -160,7 +160,7 @@ const AdminActivityProvider = (props) => {
       .then((res) => {
         const form = res.data.data
         window.location.href =
-          "http://localhost:3000/detail-kegiatan/" + form[0].id
+          "http://localhost:3000/activity-detail/" + form[0].id
         setActivityForm(form)
       })
       .catch((err) => console.log(err))

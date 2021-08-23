@@ -5,12 +5,12 @@ import "../../assets/scss/Kegiatan.scss"
 import "../../assets/scss/RichText.scss"
 import "../../assets/scss/AddActivity.scss"
 import TabPanel from "../../components/TabPanel"
-import PendaftarFilter from "./components/pendaftar-filter"
-import PendaftarTable from "./components/pendaftar-table"
-import FormKegiatan from "./components/form-kegiatan"
+import PendaftarFilter from "./components/RegistrantFilter"
+import PendaftarTable from "./components/RegistrantTable"
+import FormKegiatan from "./components/ActivityForm"
 import AdminActivityProvider from "../../context/AdminActivityContext"
 import Questionnaire from "../Questionnaire"
-/* eslint-disable */
+
 const KegiatanDetail = () => {
   const theme = useTheme()
   const [value, setValue] = useState(0)
@@ -19,12 +19,10 @@ const KegiatanDetail = () => {
     setValue(newValue)
   }
 
-  const a11yProps = (index) => {
-    return {
-      id: `full-width-tab-${index}`,
-      "aria-controls": `full-width-tabpanel-${index}`,
-    }
-  }
+  const tabProps = (index) => ({
+    id: `full-width-tab-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
+  })
   return (
     <AdminActivityProvider>
       <div className="kegiatan-list">
@@ -36,9 +34,21 @@ const KegiatanDetail = () => {
             textColor="primary"
             variant="fullWidth"
           >
-            <Tab label="DETAIL KEGIATAN" {...a11yProps(0)} />
-            <Tab label="PENDAFTAR" {...a11yProps(1)} />
-            <Tab label="QUESTIONNAIRE" {...a11yProps(2)} />
+            <Tab
+              label="DETAIL KEGIATAN"
+              id={tabProps(0).id}
+              aria-controls={tabProps(0)["aria-controls"]}
+            />
+            <Tab
+              label="PENDAFTAR"
+              id={tabProps(1).id}
+              aria-controls={tabProps(1)["aria-controls"]}
+            />
+            <Tab
+              label="QUESTIONNAIRE"
+              id={tabProps(2).id}
+              aria-controls={tabProps(2)["aria-controls"]}
+            />
           </Tabs>
         </AppBar>
         <TabPanel value={value} index={0} dir={theme.direction}>
