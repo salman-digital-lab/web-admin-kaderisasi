@@ -1,71 +1,72 @@
-import React, { useState, useContext, useEffect } from "react";
-import DetailKegiatanModal from "../../../components/modals/detail-kegiatan-modal";
-import { Button, Select, MenuItem, TextField, Link } from "@material-ui/core";
-import { Editor } from "react-draft-wysiwyg";
-import { EditorState, convertToRaw, ContentState } from "draft-js";
-import draftToHtml from "draftjs-to-html";
-import htmlToDraft from "html-to-draftjs";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { AdminActivityContext } from "../../../context/AdminActivityContext";
-import { useParams } from "react-router";
-import LoadingAnimation from "../../../components/loading-animation";
-import embed from "embed-video";
-
+import React, { useState, useContext, useEffect } from "react"
+import { Button, Select, MenuItem, TextField } from "@material-ui/core"
+import { Editor } from "react-draft-wysiwyg"
+import { EditorState, convertToRaw, ContentState } from "draft-js"
+import draftToHtml from "draftjs-to-html"
+import htmlToDraft from "html-to-draftjs"
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
+import { useParams } from "react-router"
+import embed from "embed-video"
+import { AdminActivityContext } from "../../../context/AdminActivityContext"
+import DetailKegiatanModal from "../../../components/modals/detail-kegiatan-modal"
+import LoadingAnimation from "../../../components/loading-animation"
+/* eslint-disable */
 const FormKegiatan = () => {
   const { activityForm, categoryList, functions } =
-    useContext(AdminActivityContext);
-  const { getActivityCategory, getActivityDetail, editActivity } = functions;
-  const stateEdit = EditorState.createEmpty();
-  const [editorState, setEditorState] = useState(stateEdit);
-  const [stateCanBeEdited, setStateCanBeEdited] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [formData, setFormData] = useState({});
-  const [check, setCheck] = useState(true);
-  const { id } = useParams();
+    useContext(AdminActivityContext)
+  const { getActivityCategory, getActivityDetail, editActivity } = functions
+  const stateEdit = EditorState.createEmpty()
+  const [editorState, setEditorState] = useState(stateEdit)
+  const [stateCanBeEdited, setStateCanBeEdited] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [formData, setFormData] = useState({})
+  const [check, setCheck] = useState(true)
+  const { id } = useParams()
 
   const handleOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleEdit = () => {
-    setStateCanBeEdited(!stateCanBeEdited);
-  };
+    setStateCanBeEdited(!stateCanBeEdited)
+  }
 
   const handleForm = (value, type) => {
-    setFormData({ ...formData, [type]: value });
-  };
+    setFormData({ ...formData, [type]: value })
+  }
 
   const handleEditor = (value) => {
-    setEditorState(value);
+    setEditorState(value)
     handleForm(
       draftToHtml(convertToRaw(editorState.getCurrentContent())),
       "description"
-    );
-  };
+    )
+  }
 
   const handleSubmit = () => {
-    editActivity(id, formData);
-    handleEdit();
-  };
+    editActivity(id, formData)
+    handleEdit()
+  }
 
   useEffect(() => {
     if (activityForm.length < 1 && categoryList.length < 1) {
-      getActivityDetail(id);
-      getActivityCategory();
+      getActivityDetail(id)
+      getActivityCategory()
     }
     if (activityForm.length > 0 && check) {
-      const contentBlock = htmlToDraft(activityForm[0].description);
-      const stateEdit = EditorState.createWithContent(
-        ContentState.createFromBlockArray(contentBlock.contentBlocks)
-      );
-      setEditorState(stateEdit);
-      setCheck(false);
+      const contentBlock = htmlToDraft(activityForm[0].description)
+      setEditorState(
+        EditorState.createWithContent(
+          ContentState.createFromBlockArray(contentBlock.contentBlocks)
+        )
+      )
+      setCheck(false)
     }
-  }, [activityForm]);
+  }, [activityForm])
 
   return (
     <>
@@ -186,8 +187,8 @@ const FormKegiatan = () => {
                           embedCallback: (link) => {
                             const detectedSrc = /<iframe.*? src="(.*?)"/.exec(
                               embed(link)
-                            );
-                            return (detectedSrc && detectedSrc[1]) || link;
+                            )
+                            return (detectedSrc && detectedSrc[1]) || link
                           },
                         },
                       }}
@@ -209,6 +210,6 @@ const FormKegiatan = () => {
         )}
       </div>
     </>
-  );
-};
-export default FormKegiatan;
+  )
+}
+export default FormKegiatan

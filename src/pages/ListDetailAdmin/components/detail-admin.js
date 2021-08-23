@@ -1,32 +1,32 @@
-import React, { useState } from "react";
+import React, { useState } from "react"
 import {
   Button,
   Divider,
   List,
   ListItem,
   ListItemText,
-} from "@material-ui/core";
-import { ArrowBack, Delete, Title } from "@material-ui/icons";
-import { Link } from "react-router-dom";
-import data from "../data-admin.json";
-import { TambahAdminModal } from "./tambah-admin-modal";
-
+} from "@material-ui/core"
+import { ArrowBack, Delete } from "@material-ui/icons"
+import { Link } from "react-router-dom"
+import data from "../data-admin.json"
+import TambahAdminModal from "./tambah-admin-modal"
+/* eslint-disable */
 const DetailAdmin = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
   const [title] = useState({
     username: <b>Username</b>,
     firstname: <b>First Name</b>,
     lastname: <b>Last Name</b>,
     email: <b>Email</b>,
     password: <b>Password</b>,
-  });
+  })
   const handleOpen = () => {
-    setOpen(true);
-    console.log(open);
-  };
+    setOpen(true)
+    console.log(open)
+  }
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
   return (
     <>
       <div className="nav-detail-admin">
@@ -101,7 +101,7 @@ const DetailAdmin = () => {
         <TambahAdminModal open={open} onClose={handleClose} />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default DetailAdmin;
+export default DetailAdmin

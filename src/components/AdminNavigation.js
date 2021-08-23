@@ -1,19 +1,16 @@
-import React from 'react'
-import { Topbar } from './Topbar/'
-import { Sidebar } from '../components/Sidebar/'
-import { Content } from './Content'
-import { CssBaseline } from '@material-ui/core/'
+import React from "react"
+import { CssBaseline } from "@material-ui/core/"
+import Topbar from "./Topbar"
+import Sidebar from "./Sidebar"
+import Content from "./Content"
+/* eslint-disable */
+const AdminNavigation = (props) => (
+  <div style={{ display: "flex" }}>
+    <CssBaseline />
+    <Topbar />
+    <Sidebar />
+    <Content>{props.children}</Content>
+  </div>
+)
 
-
-export const AdminNavigation = (props) => {
-  return (
-    <div style={{ display: 'flex' }}>
-      <CssBaseline />
-      <Topbar />
-      <Sidebar />
-      <Content>
-        {props.children}
-      </Content>
-    </div>
-  )
-}
+export default AdminNavigation

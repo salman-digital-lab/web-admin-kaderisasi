@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
-import { useParams } from "react-router";
-import { makeStyles } from "@material-ui/core/styles";
+import React, { useState, useContext, useEffect } from "react"
+import { useParams } from "react-router"
+import { makeStyles } from "@material-ui/core/styles"
 import {
   Button,
   Checkbox,
@@ -15,30 +15,30 @@ import {
   Backdrop,
   Select,
   MenuItem,
-} from "@material-ui/core";
-import Alert from "@material-ui/lab/Alert";
-import { Delete, Visibility } from "@material-ui/icons";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import "../../assets/scss/AddActivity.scss";
-import BaseImage from "./1056x816small.png";
-import DateFnsUtils from "@date-io/date-fns";
+} from "@material-ui/core"
+import Alert from "@material-ui/lab/Alert"
+import { Delete, Visibility } from "@material-ui/icons"
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
+import "../../assets/scss/AddActivity.scss"
+import DateFnsUtils from "@date-io/date-fns"
 import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
-} from "@material-ui/pickers";
-import { EnhancedTableHead, stableSort, getComparator } from "../TableDesign";
-import { AdminActivityContext } from "../../context/AdminActivityContext";
-import moment from 'moment'
-
+} from "@material-ui/pickers"
+import moment from "moment"
+import { EnhancedTableHead, stableSort, getComparator } from "../TableDesign"
+import { AdminActivityContext } from "../../context/AdminActivityContext"
+import BaseImage from "./1056x816small.png"
+/* eslint-disable */
 function createData(id, value, uploadedAt) {
-  return { id, value, uploadedAt };
+  return { id, value, uploadedAt }
 }
 
 const headCells = [
   { id: "id", numeric: false, label: "ID" },
   // { id: 'uploadedAt', numeric: false, label: 'Uploaded At' },
   { id: "action", numeric: false, label: "Action" },
-];
+]
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -77,17 +77,17 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
-}));
+}))
 
 function getformStyle() {
-  const top = 50;
-  const left = 50;
+  const top = 50
+  const left = 50
 
   return {
     top: `${top}%`,
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`,
-  };
+  }
 }
 
 const initialErrors = {
@@ -96,42 +96,40 @@ const initialErrors = {
   dateRegistErrorMsg: "",
   formActivityValidity: false, // flip to true if form incorrect
   dateActivityValidity: false,
-  dateActivityErrorMsg: ""
-};
+  dateActivityErrorMsg: "",
+}
 
 export const DatePickerCustom = ({
   title: titleProps,
   value: valueProps,
   onChange: onChangeProps,
   helperText: helperTextProps,
-  error: errorProps
-}) => {
-  return (
-      <div className="input-form">
-        {titleProps}
-        <br />
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <KeyboardDatePicker
-            className="form-modal"
-            minDate={new Date()}
-            format="dd/MM/yyyy"
-            margin="normal"
-            value={valueProps}
-            onChange={onChangeProps}
-            KeyboardButtonProps={{
-              "aria-label": "change date",
-            }}
-            helperText={helperTextProps}
-            error={errorProps}
-          />
-        </MuiPickersUtilsProvider>
-      </div>
-  );
-};
+  error: errorProps,
+}) => (
+  <div className="input-form">
+    {titleProps}
+    <br />
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <KeyboardDatePicker
+        className="form-modal"
+        minDate={new Date()}
+        format="dd/MM/yyyy"
+        margin="normal"
+        value={valueProps}
+        onChange={onChangeProps}
+        KeyboardButtonProps={{
+          "aria-label": "change date",
+        }}
+        helperText={helperTextProps}
+        error={errorProps}
+      />
+    </MuiPickersUtilsProvider>
+  </div>
+)
 
-export const DetailKegiatanModal = ({ open, onClose, data }) => {
-  const { formTemplateList, functions } = useContext(AdminActivityContext);
-  const { editActivity, getAllFormTemplate } = functions;
+const DetailKegiatanModal = ({ open, onClose, data }) => {
+  const { formTemplateList, functions } = useContext(AdminActivityContext)
+  const { editActivity, getAllFormTemplate } = functions
   const [rows, setRows] = useState(
     JSON.parse(localStorage.getItem(0)) &&
       JSON.parse(localStorage.getItem(0)).length > 0
@@ -139,7 +137,7 @@ export const DetailKegiatanModal = ({ open, onClose, data }) => {
           createData(x.id, x.value, x.uploadedAt)
         )
       : []
-  );
+  )
   const [uploadedImage, setUploadImage] = useState(
     JSON.parse(localStorage.getItem(0)) &&
       JSON.parse(localStorage.getItem(0)).length > 0
@@ -147,53 +145,62 @@ export const DetailKegiatanModal = ({ open, onClose, data }) => {
           JSON.parse(localStorage.getItem(0)).length - 1
         ].value
       : BaseImage
-  );
-  const [submitError, setSubmitError] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  const classes = useStyles();
-  const [formStyle] = useState(getformStyle);
-  const [jenjang, setJenjang] = useState(data.minimum_role_id);
-  const [isPublished, setIsPublished] = useState(data.is_published === 1 ? true : false);
-  const [status, setStatus] = useState(data.status === "OPENED" ? true : false);
-  const { id } = useParams();
-  const [formData, setFormData] = useState({});
-  const [register_begin_date, setStartDate] = useState(
-    moment(data.register_begin_date).format('YYYY-MM-DD')
-  );
-  const [register_end_date, setExpiredDate] = useState(
-    moment(data.register_end_date).format('YYYY-MM-DD')
-  );
-  const [begin_date, setActivityStart] = useState(moment(data.begin_date).format('YYYY-MM-DD'));
-  const [end_date, setActivityExpired] = useState(
-    moment(data.end_date).format('YYYY-MM-DD')
-  );
-  const [errors, setErrors] = useState(initialErrors);
+  )
+  const [submitError, setSubmitError] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const classes = useStyles()
+  const [formStyle] = useState(getformStyle)
+  const [jenjang, setJenjang] = useState(data.minimum_role_id)
+  const [isPublished, setIsPublished] = useState(
+    data.is_published === 1 ? true : false
+  )
+  const [status, setStatus] = useState(data.status === "OPENED" ? true : false)
+  const { id } = useParams()
+  const [formData, setFormData] = useState({})
+  const [registerBeginDate, setStartDate] = useState(
+    moment(data.registerBeginDate).format("YYYY-MM-DD")
+  )
+  const [registerEndDate, setExpiredDate] = useState(
+    moment(data.registerEndDate).format("YYYY-MM-DD")
+  )
+  const [beginDate, setActivityStart] = useState(
+    moment(data.beginDate).format("YYYY-MM-DD")
+  )
+  const [endDate, setActivityExpired] = useState(
+    moment(data.endDate).format("YYYY-MM-DD")
+  )
+  const [errors, setErrors] = useState(initialErrors)
 
-  const [order, setOrder] = useState("asc");
-  const [orderBy, setOrderBy] = useState("uploadedAt");
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [order, setOrder] = useState("asc")
+  const [orderBy, setOrderBy] = useState("uploadedAt")
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(5)
 
-  const validateDates=()=> {
+  const validateDates = () => {
     // check dates via the dates{} state object, line 33
-    let dateRegistErrorMsg = "";
-    let dateRegistValidity = false;
-    let formRegistValidity = false;
+    let dateRegistErrorMsg = ""
+    let dateRegistValidity = false
+    let formRegistValidity = false
 
-    let formActivityValidity = false; // flip to true if form incorrect
-    let dateActivityValidity = false;
-    let dateActivityErrorMsg = "";
+    let formActivityValidity = false // flip to true if form incorrect
+    let dateActivityValidity = false
+    let dateActivityErrorMsg = ""
 
-    const dateRegistrationCheck = new Date(register_begin_date) <= new Date(register_end_date);
-    const dateActivityCheck = new Date(begin_date) <= new Date(end_date);
+    const dateRegistrationCheck =
+      new Date(registerBeginDate) <= new Date(registerEndDate)
+    const dateActivityCheck = new Date(beginDate) <= new Date(endDate)
 
-    dateRegistErrorMsg = dateRegistrationCheck ? "" : `End registration date can't be before start registration date.`;
-    dateRegistValidity = dateRegistrationCheck ? false : true; // true if error - end date before start date
-    formRegistValidity = dateRegistValidity ? false : true; // true if errors in the form
+    dateRegistErrorMsg = dateRegistrationCheck
+      ? ""
+      : `End registration date can't be before start registration date.`
+    dateRegistValidity = dateRegistrationCheck ? false : true // true if error - end date before start date
+    formRegistValidity = dateRegistValidity ? false : true // true if errors in the form
 
-    dateActivityErrorMsg = dateActivityCheck ? "" : `End activity date can't be before start activity date.`;
-    dateActivityValidity = dateActivityCheck ? false : true; // true if error - end date before start date
-    formActivityValidity = dateActivityValidity ? false : true; // true if errors in the form
+    dateActivityErrorMsg = dateActivityCheck
+      ? ""
+      : `End activity date can't be before start activity date.`
+    dateActivityValidity = dateActivityCheck ? false : true // true if error - end date before start date
+    formActivityValidity = dateActivityValidity ? false : true // true if errors in the form
 
     setErrors((prevState) => ({
       ...prevState,
@@ -202,121 +209,126 @@ export const DetailKegiatanModal = ({ open, onClose, data }) => {
       formRegistValidity,
       dateActivityErrorMsg,
       dateActivityValidity,
-      formActivityValidity
-    }));
+      formActivityValidity,
+    }))
   }
 
   useEffect(() => {
     if (formTemplateList.length < 1) {
-      getAllFormTemplate();
+      getAllFormTemplate()
     }
     validateDates()
-  },[register_begin_date,register_end_date,begin_date,end_date,formTemplateList,getAllFormTemplate]);
+  }, [
+    registerBeginDate,
+    registerEndDate,
+    beginDate,
+    endDate,
+    formTemplateList,
+    getAllFormTemplate,
+  ])
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc";
-    setOrder(isAsc ? "desc" : "asc");
-    setOrderBy(property);
-  };
+    const isAsc = orderBy === property && order === "asc"
+    setOrder(isAsc ? "desc" : "asc")
+    setOrderBy(property)
+  }
 
   const handleForm = (value, type) => {
-    setFormData({ ...formData, [type]: value });
-  };
+    setFormData({ ...formData, [type]: value })
+  }
 
   const handleStartRegistrationChange = (date) => {
-    handleForm(moment(date).format('YYYY-MM-DD'), "register_begin_date");
-    setStartDate(date);
-  };
+    handleForm(moment(date).format("YYYY-MM-DD"), "registerBeginDate")
+    setStartDate(date)
+  }
 
   const handleExpiredRegistrationChange = (date) => {
-    handleForm(moment(date).format('YYYY-MM-DD'), "register_end_date");
-    setExpiredDate(date);
-  };
+    handleForm(moment(date).format("YYYY-MM-DD"), "registerEndDate")
+    setExpiredDate(date)
+  }
 
   const handleStartActivityChange = (date) => {
-    handleForm(moment(date).format('YYYY-MM-DD'), "begin_date");
-    setActivityStart(date);
-  };
+    handleForm(moment(date).format("YYYY-MM-DD"), "beginDate")
+    setActivityStart(date)
+  }
 
   const handleExpiredActivityChange = (date) => {
-    handleForm(moment(date).format('YYYY-MM-DD'), "end_date");
-    setActivityExpired(date);
-  };
+    handleForm(moment(date).format("YYYY-MM-DD"), "endDate")
+    setActivityExpired(date)
+  }
 
   const handleJenjangChange = (event) => {
-    handleForm(Number(event.target.value), "minimum_role_id");
-    setJenjang(event.target.value);
-  };
+    handleForm(Number(event.target.value), "minimum_role_id")
+    setJenjang(event.target.value)
+  }
 
   const handleKuisioner = (event) => {
     handleForm(event.target.value, "form_id")
-  };
+  }
 
   const handleStatus = (event) => {
-    handleForm(event.target.checked ? "OPENED" : "CLOSED", "status");
-    setStatus(event.target.checked);
-  };
+    handleForm(event.target.checked ? "OPENED" : "CLOSED", "status")
+    setStatus(event.target.checked)
+  }
 
   const handlePublished = (event) => {
-    handleForm(event.target.checked ? "1" : "0", "is_published");
-    setIsPublished(event.target.checked);
-  };
+    handleForm(event.target.checked ? "1" : "0", "is_published")
+    setIsPublished(event.target.checked)
+  }
 
   const handleRemoveImage = (id) => {
-    const tmp = JSON.parse(localStorage.getItem(0)).filter((x) => x.id !== id);
-    localStorage.setItem(0, JSON.stringify(tmp));
-    setRows(tmp);
-  };
+    const tmp = JSON.parse(localStorage.getItem(0)).filter((x) => x.id !== id)
+    localStorage.setItem(0, JSON.stringify(tmp))
+    setRows(tmp)
+  }
 
   const submitForm = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (document.getElementById("logo").files[0]) {
-      const file = URL.createObjectURL(
-        document.getElementById("logo").files[0]
-      );
-      const canvas = document.createElement("canvas");
-      canvas.width = 1056;
-      canvas.height = 816;
-      const imgTemp = document.createElement("img");
-      imgTemp.setAttribute("src", file);
-      const ctx = canvas.getContext("2d");
+      const file = URL.createObjectURL(document.getElementById("logo").files[0])
+      const canvas = document.createElement("canvas")
+      canvas.width = 1056
+      canvas.height = 816
+      const imgTemp = document.createElement("img")
+      imgTemp.setAttribute("src", file)
+      const ctx = canvas.getContext("2d")
       imgTemp.onload = function () {
-        ctx.drawImage(imgTemp, 0, 0);
-        const url = canvas.toDataURL("image/png");
+        ctx.drawImage(imgTemp, 0, 0)
+        const url = canvas.toDataURL("image/png")
         const dataImage = JSON.parse(localStorage.getItem(0))
           ? JSON.parse(localStorage.getItem(0))
-          : [];
+          : []
         try {
           dataImage.push({
             id: new Date().getTime(),
             value: url,
             uploadedAt: new Date(),
-          });
-          setUploadImage(url);
-          window.localStorage.setItem(0, JSON.stringify(dataImage));
-          setSubmitSuccess(true);
+          })
+          setUploadImage(url)
+          window.localStorage.setItem(0, JSON.stringify(dataImage))
+          setSubmitSuccess(true)
           setRows(
             JSON.parse(localStorage.getItem(0)).map((x) =>
               createData(x.id, x.value, x.uploadedAt)
             )
-          );
+          )
         } catch (evt) {
-          setUploadImage(BaseImage);
-          setSubmitError(true);
+          setUploadImage(BaseImage)
+          setSubmitError(true)
         }
-      };
+      }
     } else {
-      setUploadImage(BaseImage);
-      setSubmitError(true);
+      setUploadImage(BaseImage)
+      setSubmitError(true)
     }
-  };
+  }
 
   const handleSubmit = () => {
     if (errors.formActivityValidity && errors.formRegistValidity) {
-      editActivity(id, formData);
-      onClose();
+      editActivity(id, formData)
+      onClose()
     }
-  };
+  }
 
   return (
     <Modal
@@ -383,7 +395,7 @@ export const DetailKegiatanModal = ({ open, onClose, data }) => {
                                   </Button>
                                 </TableCell>
                               </TableRow>
-                            );
+                            )
                           })}
                       </TableBody>
                     </Table>
@@ -397,7 +409,7 @@ export const DetailKegiatanModal = ({ open, onClose, data }) => {
                   <Alert
                     className="button-kegiatan"
                     onClose={() => {
-                      setSubmitError(false);
+                      setSubmitError(false)
                     }}
                     severity="error"
                   >
@@ -408,7 +420,7 @@ export const DetailKegiatanModal = ({ open, onClose, data }) => {
                   <Alert
                     className="button-kegiatan"
                     onClose={() => {
-                      setSubmitSuccess(false);
+                      setSubmitSuccess(false)
                     }}
                     severity="success"
                   >
@@ -459,17 +471,13 @@ export const DetailKegiatanModal = ({ open, onClose, data }) => {
               <div className="detail-activity">
                 <DatePickerCustom
                   title="Tanggal Mulai Kegiatan"
-                  value={begin_date}
-                  onChange={
-                    handleStartActivityChange
-                  }
+                  value={beginDate}
+                  onChange={handleStartActivityChange}
                 />
                 <DatePickerCustom
                   title="Tanggal Selesai Kegiatan"
-                  value={end_date}
-                  onChange={
-                    handleExpiredActivityChange
-                  }
+                  value={endDate}
+                  onChange={handleExpiredActivityChange}
                   error={errors.dateActivityValidity}
                   helperText={errors.dateActivityErrorMsg}
                 />
@@ -477,17 +485,13 @@ export const DetailKegiatanModal = ({ open, onClose, data }) => {
               <div className="detail-activity">
                 <DatePickerCustom
                   title="Tanggal Mulai Registrasi"
-                  value={register_begin_date}
-                  onChange={
-                    handleStartRegistrationChange
-                  }
+                  value={registerBeginDate}
+                  onChange={handleStartRegistrationChange}
                 />
                 <DatePickerCustom
                   title="Tanggal Selesai Registrasi"
-                  value={register_end_date}
-                  onChange={
-                    handleExpiredRegistrationChange
-                  }
+                  value={registerEndDate}
+                  onChange={handleExpiredRegistrationChange}
                   error={errors.dateRegistValidity}
                   helperText={errors.dateRegistErrorMsg}
                 />
@@ -502,8 +506,8 @@ export const DetailKegiatanModal = ({ open, onClose, data }) => {
                 >
                   <MenuItem value={4}>Jamaah</MenuItem>
                   <MenuItem value={5}>Aktivis</MenuItem>
-                  <MenuItem value={6}>Kader</MenuItem>
-                  <MenuItem value={7}>Kader Lanjut</MenuItem>
+                  <MenuItem value={6}>Member</MenuItem>
+                  <MenuItem value={7}>Member Lanjut</MenuItem>
                 </Select>
               </div>
               <div className="select-form">
@@ -514,12 +518,11 @@ export const DetailKegiatanModal = ({ open, onClose, data }) => {
                   defaultValue={-1}
                   onChange={handleKuisioner}
                 >
-                  {formTemplateList
-                    .map((value, index) => (
-                      <MenuItem key={index} value={value.value}>
-                        {value.label}
-                      </MenuItem>
-                    ))}
+                  {formTemplateList.map((value, index) => (
+                    <MenuItem key={index} value={value.value}>
+                      {value.label}
+                    </MenuItem>
+                  ))}
                 </Select>
               </div>
               <div className="button-bottom">
@@ -536,7 +539,9 @@ export const DetailKegiatanModal = ({ open, onClose, data }) => {
                   className="button-bottoms-kegiatan"
                   variant="contained"
                   color="primary"
-                  disabled={!errors.formActivityValidity || !errors.formRegistValidity}
+                  disabled={
+                    !errors.formActivityValidity || !errors.formRegistValidity
+                  }
                 >
                   Simpan
                 </Button>
@@ -546,7 +551,7 @@ export const DetailKegiatanModal = ({ open, onClose, data }) => {
         </div>
       </Fade>
     </Modal>
-  );
-};
+  )
+}
 
-export default DetailKegiatanModal;
+export default DetailKegiatanModal

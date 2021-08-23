@@ -2,8 +2,9 @@ import React from "react"
 import { Button } from "@material-ui/core"
 import { useHistory, useLocation, useParams } from "react-router-dom"
 import { AdminQuestionnaireContext } from "../../../context/AdminQuestionnaireContext"
-export const SaveAndBackButton = () => {
-  let history = useHistory()
+
+const SaveAndBackButton = () => {
+  const history = useHistory()
   const url = useLocation()
   const params = useParams()
   const { data, functions } = React.useContext(AdminQuestionnaireContext)
@@ -11,10 +12,9 @@ export const SaveAndBackButton = () => {
   const handleBackToMenu = () => history.push("/questionnaire")
   const handleSave = () => {
     console.log(params.id, url.pathname, data)
-    if (Boolean(url.pathname === '/new-questionnaire')) {
+    if (url.pathname === "/new-questionnaire") {
       createQuestionnaire()
-    }
-    else {
+    } else {
       updateQuestionnaire(params.id)
     }
   }
@@ -46,3 +46,4 @@ export const SaveAndBackButton = () => {
     </>
   )
 }
+export default SaveAndBackButton

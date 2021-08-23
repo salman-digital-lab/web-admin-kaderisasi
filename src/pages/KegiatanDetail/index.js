@@ -1,31 +1,30 @@
-import React, { useState } from "react";
-import PendaftarFilter from "./components/pendaftar-filter";
-import PendaftarTable from "./components/pendaftar-table";
-import FormKegiatan from "./components/form-kegiatan";
-import { AppBar, Tabs, Tab } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
-import TabPanel from "../../components/TabPanel";
-
-import "../../assets/scss/Kegiatan.scss";
-import "../../assets/scss/RichText.scss";
-import "../../assets/scss/AddActivity.scss";
-import { AdminActivityProvider } from "../../context/AdminActivityContext";
-import { Questionnaire } from "../Questionnaire/";
-
+import React, { useState } from "react"
+import { AppBar, Tabs, Tab } from "@material-ui/core"
+import { useTheme } from "@material-ui/core/styles"
+import "../../assets/scss/Kegiatan.scss"
+import "../../assets/scss/RichText.scss"
+import "../../assets/scss/AddActivity.scss"
+import TabPanel from "../../components/TabPanel"
+import PendaftarFilter from "./components/pendaftar-filter"
+import PendaftarTable from "./components/pendaftar-table"
+import FormKegiatan from "./components/form-kegiatan"
+import AdminActivityProvider from "../../context/AdminActivityContext"
+import Questionnaire from "../Questionnaire"
+/* eslint-disable */
 const KegiatanDetail = () => {
-  const theme = useTheme();
-  const [value, setValue] = useState(0);
+  const theme = useTheme()
+  const [value, setValue] = useState(0)
 
   const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+    setValue(newValue)
+  }
 
   const a11yProps = (index) => {
     return {
       id: `full-width-tab-${index}`,
       "aria-controls": `full-width-tabpanel-${index}`,
-    };
-  };
+    }
+  }
   return (
     <AdminActivityProvider>
       <div className="kegiatan-list">
@@ -60,6 +59,6 @@ const KegiatanDetail = () => {
         </TabPanel>
       </div>
     </AdminActivityProvider>
-  );
-};
-export default KegiatanDetail;
+  )
+}
+export default KegiatanDetail

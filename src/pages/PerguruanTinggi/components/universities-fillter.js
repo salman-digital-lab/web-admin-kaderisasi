@@ -1,16 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
-import {
-  Card,
-  CardContent,
-  TextField,
-  Box,
-  Button,
-} from "@material-ui/core";
-import "../../../assets/scss/AddActivity.scss";
-import { UniversitasContext } from "../../../context/AdminUniversitasContext";
+import React, { useContext } from "react"
+import { Card, CardContent, TextField, Box } from "@material-ui/core"
+import "../../../assets/scss/AddActivity.scss"
+import { UniversitasContext } from "../../../context/AdminUniversitasContext"
 
 const UniversitiesFillter = () => {
-  const { filterActivity, setFilterActivity } = useContext(UniversitasContext);
+  const { filterActivity, setFilterActivity } = useContext(UniversitasContext)
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -18,10 +12,9 @@ const UniversitiesFillter = () => {
         ...filterActivity,
         search: event.target.value,
         filter: true,
-      });
+      })
     }
-  };
-
+  }
 
   return (
     <>
@@ -41,7 +34,7 @@ const UniversitiesFillter = () => {
         </CardContent>
       </Card>
     </>
-  );
-};
+  )
+}
 
-export default UniversitiesFillter;
+export default UniversitiesFillter

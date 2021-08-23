@@ -1,9 +1,9 @@
-import React from "react";
-import "../../assets/scss/Kegiatan.scss";
-import KegiatanFilter from "./components/kegiatan-filter";
-import KegiatanTable from "./components/kegiatan-table";
-import { AdminActivityProvider } from "../../context/AdminActivityContext";
-
+import React from "react"
+import "../../assets/scss/Kegiatan.scss"
+import KegiatanFilter from "./components/kegiatan-filter"
+import KegiatanTable from "./components/kegiatan-table"
+import AdminActivityProvider from "../../context/AdminActivityContext"
+/* eslint-disable */
 const KegiatanDanAktivis = () => {
   return (
     <AdminActivityProvider>
@@ -18,6 +18,6 @@ const KegiatanDanAktivis = () => {
         </div>
       </div>
     </AdminActivityProvider>
-  );
-};
-export default KegiatanDanAktivis;
+  )
+}
+export default KegiatanDanAktivis

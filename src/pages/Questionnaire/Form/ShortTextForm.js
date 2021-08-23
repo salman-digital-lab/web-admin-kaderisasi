@@ -1,12 +1,13 @@
-import React from "react";
-import { TextField, Grid } from "@material-ui/core";
-import { AdminQuestionnaireContext } from "../../../context/AdminQuestionnaireContext";
-import { styled } from "./styled";
-export const ShortTextForm = (props) => {
-  const { data, functions } = React.useContext(AdminQuestionnaireContext);
-  const { handleChangeQuestionForm, handleAddRef } = functions;
-  const { id } = props;
-  const classes = styled();
+import React from "react"
+import { TextField, Grid } from "@material-ui/core"
+import { AdminQuestionnaireContext } from "../../../context/AdminQuestionnaireContext"
+import styled from "./styled"
+/* eslint-disable */
+const ShortTextForm = (props) => {
+  const { data, functions } = React.useContext(AdminQuestionnaireContext)
+  const { handleChangeQuestionForm, handleAddRef } = functions
+  const { id } = props
+  const classes = styled()
   return (
     <>
       <Grid item xs={12} sm={8}>
@@ -22,5 +23,6 @@ export const ShortTextForm = (props) => {
         />
       </Grid>
     </>
-  );
-};
+  )
+}
+export default ShortTextForm

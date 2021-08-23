@@ -1,12 +1,17 @@
-// import React from "react";
-import { Button, Modal, Table, TableCell, TableRow } from "@material-ui/core";
-import React from "react";
-import "../../../assets/scss/AddActivity.scss";
-import { Checkbox } from "@material-ui/core";
-import { styled } from "./styled";
-
-export const TambahAdminModal = ({ open, onClose }) => {
-  const classes = styled();
+import React from "react"
+import {
+  Button,
+  Modal,
+  Table,
+  TableCell,
+  TableRow,
+  Checkbox,
+} from "@material-ui/core"
+import "../../../assets/scss/AddActivity.scss"
+import styled from "./styled"
+/* eslint-disable */
+const TambahAdminModal = ({ open, onClose }) => {
+  const classes = styled()
   return (
     <>
       <div className={classes.root}>
@@ -94,5 +99,6 @@ export const TambahAdminModal = ({ open, onClose }) => {
         </Modal>
       </div>
     </>
-  );
-};
+  )
+}
+export default TambahAdminModal

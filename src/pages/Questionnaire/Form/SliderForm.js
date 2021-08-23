@@ -1,12 +1,18 @@
-import React from "react";
-import { TextField, Grid } from "@material-ui/core";
-import { AdminQuestionnaireContext } from "../../../context/AdminQuestionnaireContext";
-import { styled } from "./styled";
-export const SliderForm = (props) => {
-  const { data, functions } = React.useContext(AdminQuestionnaireContext);
-  const { handleChangeQuestionForm, handleAddRef, handleChangeMinValueForm, handleChangeMaxValueForm } = functions;
-  const { id } = props;
-  const classes = styled();
+import React from "react"
+import { TextField, Grid } from "@material-ui/core"
+import { AdminQuestionnaireContext } from "../../../context/AdminQuestionnaireContext"
+import styled from "./styled"
+/* eslint-disable */
+const SliderForm = (props) => {
+  const { data, functions } = React.useContext(AdminQuestionnaireContext)
+  const {
+    handleChangeQuestionForm,
+    handleAddRef,
+    handleChangeMinValueForm,
+    handleChangeMaxValueForm,
+  } = functions
+  const { id } = props
+  const classes = styled()
   return (
     <>
       <Grid item xs={12} sm={8}>
@@ -25,7 +31,7 @@ export const SliderForm = (props) => {
           className={classes.textField}
           label="Min Value"
           value={data.form[id].minValue}
-          type='number'
+          type="number"
           variant="filled"
           onChange={(event) => handleChangeMinValueForm(id, event)}
           fullWidth
@@ -35,12 +41,13 @@ export const SliderForm = (props) => {
           className={classes.textField}
           label="Max Value"
           value={data.form[id].maxValue}
-          type='number'
+          type="number"
           variant="filled"
           onChange={(event) => handleChangeMaxValueForm(id, event)}
           fullWidth
         />
       </Grid>
     </>
-  );
-};
+  )
+}
+export default SliderForm

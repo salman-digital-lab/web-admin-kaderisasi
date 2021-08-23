@@ -1,38 +1,38 @@
-import React from "react";
-import clsx from "clsx";
-import { Link } from 'react-router-dom'
-import logo from '../assets/images/logo-header.png'
+import React from "react"
+import clsx from "clsx"
+import { Link } from "react-router-dom"
+import logo from "../assets/images/logo-header.png"
 
 // Import Material-UI Component
-import { makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Collapse from '@material-ui/core/Collapse';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import { makeStyles } from "@material-ui/core/styles"
+import Drawer from "@material-ui/core/Drawer"
+import CssBaseline from "@material-ui/core/CssBaseline"
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
+import List from "@material-ui/core/List"
+import Divider from "@material-ui/core/Divider"
+import IconButton from "@material-ui/core/IconButton"
+import MenuIcon from "@material-ui/icons/Menu"
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft"
+import ListItem from "@material-ui/core/ListItem"
+import ListItemIcon from "@material-ui/core/ListItemIcon"
+import ListItemText from "@material-ui/core/ListItemText"
+import Collapse from "@material-ui/core/Collapse"
+import AccountCircle from "@material-ui/icons/AccountCircle"
+import NotificationsIcon from "@material-ui/icons/Notifications"
+import Badge from "@material-ui/core/Badge"
+import MenuItem from "@material-ui/core/MenuItem"
+import Menu from "@material-ui/core/Menu"
 
 // Import Icon
-import HomeIcon from '@material-ui/icons/Home';
-import ArchiveIcon from '@material-ui/icons/Archive';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import MailIcon from '@material-ui/icons/Mail';
-import MoreIcon from '@material-ui/icons/MoreVert';
+import HomeIcon from "@material-ui/icons/Home"
+import ArchiveIcon from "@material-ui/icons/Archive"
+import ExpandLess from "@material-ui/icons/ExpandLess"
+import ExpandMore from "@material-ui/icons/ExpandMore"
+import MailIcon from "@material-ui/icons/Mail"
+import MoreIcon from "@material-ui/icons/MoreVert"
 
-const drawerWidth = 240;
+const drawerWidth = 240
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,8 +43,9 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    background: 'linear-gradient(90deg, rgba(255,255,255,1) 5%, rgba(65,179,255,1) 100%)',
-    boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)'
+    background:
+      "linear-gradient(90deg, rgba(255,255,255,1) 5%, rgba(65,179,255,1) 100%)",
+    boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .3)",
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -56,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
-    color: '#474747'
+    color: "#474747",
   },
   hide: {
     display: "none",
@@ -77,8 +78,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
   },
   drawerList: {
-    textDecoration: 'none',
-    color: theme.palette.text.primary
+    textDecoration: "none",
+    color: theme.palette.text.primary,
   },
   content: {
     flexGrow: 1,
@@ -103,132 +104,122 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
     },
   },
   sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
     },
   },
-}));
-
+}))
 
 const drawerList = [
   {
     key: 1,
-    name: 'Dashboard',
+    name: "Dashboard",
     icon: <HomeIcon />,
-    url: '/dashboard',
+    url: "/dashboard",
   },
   {
     key: 2,
-    name: 'Kegiatan & Aktivis',
+    name: "Kegiatan & Aktivis",
     icon: <ArchiveIcon />,
-    url: '/test',
+    url: "/test",
     children: [
-      { key: 1, name: 'Text 1', url: '/test' },
-      { key: 2, name: 'Text 2', url: '/test' },
-      { key: 3, name: 'Text 3', url: '/test' },
-    ]
+      { key: 1, name: "Text 1", url: "/test" },
+      { key: 2, name: "Text 2", url: "/test" },
+      { key: 3, name: "Text 3", url: "/test" },
+    ],
   },
   {
     key: 3,
-    name: 'Aktivis & Jamaah',
+    name: "Aktivis & Jamaah",
     icon: <ArchiveIcon />,
-    url: '/test'
+    url: "/test",
   },
   {
     key: 4,
-    name: 'Perguruan Tinggi',
+    name: "Perguruan Tinggi",
     icon: <ArchiveIcon />,
-    url: '/test'
+    url: "/test",
   },
   {
     key: 5,
-    name: 'Ruang Curhat',
+    name: "Ruang Curhat",
     icon: <ArchiveIcon />,
-    url: '/test'
+    url: "/test",
   },
   {
     key: 6,
-    name: 'Data Administrasi Regional',
+    name: "Data Administrasi Regional",
     icon: <ArchiveIcon />,
-    url: '/test'
+    url: "/test",
   },
   {
     key: 7,
-    name: 'Public Content Management',
+    name: "Public Content Management",
     icon: <ArchiveIcon />,
-    url: '/test'
+    url: "/test",
   },
   {
     key: 8,
-    name: 'Setting',
+    name: "Setting",
     icon: <ArchiveIcon />,
-    url: '/test'
+    url: "/test",
   },
 ]
 
-
 export const AdminNavigation = (props) => {
-  const classes = useStyles();
-  const [openDrawer, setOpenDrawer] = React.useState(false);
-  const [openCollapse, setOpenCollapse] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const classes = useStyles()
+  const [openDrawer, setOpenDrawer] = React.useState(false)
+  const [openCollapse, setOpenCollapse] = React.useState(false)
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null)
 
-
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
+  const isMenuOpen = Boolean(anchorEl)
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
 
   const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
-  };
-
+    setMobileMoreAnchorEl(null)
+  }
 
   const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
+    setAnchorEl(null)
+    handleMobileMenuClose()
+  }
 
   const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
-  };
-
+    setMobileMoreAnchorEl(event.currentTarget)
+  }
 
   const handleCollapseToggle = () => {
-    setOpenCollapse(!openCollapse);
-  };
-
+    setOpenCollapse(!openCollapse)
+  }
 
   const handleDrawerOpen = () => {
-    setOpenDrawer(true);
-  };
-
+    setOpenDrawer(true)
+  }
 
   const handleDrawerClose = () => {
-    setOpenDrawer(false);
-  };
+    setOpenDrawer(false)
+  }
 
-  const menuId = 'primary-search-account-menu';
+  const menuId = "primary-search-account-menu"
   const renderProfileMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -236,17 +227,16 @@ export const AdminNavigation = (props) => {
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
     </Menu>
-  );
+  )
 
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
+  const mobileMenuId = "primary-search-account-menu-mobile"
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
@@ -278,8 +268,7 @@ export const AdminNavigation = (props) => {
         <p>Profile</p>
       </MenuItem>
     </Menu>
-  );
-
+  )
 
   return (
     <div className={classes.root}>
@@ -300,7 +289,7 @@ export const AdminNavigation = (props) => {
           >
             <MenuIcon />
           </IconButton>
-          <img src={logo} alt="" style={{ height: '3.5em', width: 'auto' }} />
+          <img src={logo} alt="" style={{ height: "3.5em", width: "auto" }} />
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 4 new mails" color="inherit">
@@ -355,42 +344,44 @@ export const AdminNavigation = (props) => {
         </div>
         <Divider />
         <List>
-          {drawerList.map((value, index) => (
+          {drawerList.map((value, index) =>
             value.children === undefined ? (
-              <Link to={value.url} className={classes.drawerList} key={value.key}>
+              <Link
+                to={value.url}
+                className={classes.drawerList}
+                key={value.key}
+              >
                 <ListItem button key={value.key}>
-                  <ListItemIcon>
-                    {value.icon}
-                  </ListItemIcon>
+                  <ListItemIcon>{value.icon}</ListItemIcon>
                   <ListItemText primary={value.name} />
                 </ListItem>
               </Link>
             ) : (
-                <>
-                  <ListItem button key={value.key} onClick={handleCollapseToggle}>
-                    <ListItemIcon>
-                      {value.icon}
-                    </ListItemIcon>
-                    <ListItemText primary={value.name} />
-                    {openCollapse ? <ExpandLess /> : <ExpandMore />}
-                  </ListItem>
-                  <Collapse in={openCollapse} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding key>
-                      {value.children.map(child => (
-                        <Link to={child.url} className={classes.drawerList} key={child.key}>
-                          <ListItem button className={classes.nested}>
-                            <ListItemIcon>
-                              {/* <StarBorder /> */}
-                            </ListItemIcon>
-                            <ListItemText primary={child.name} />
-                          </ListItem>
-                        </Link>
-                      ))}
-                    </List>
-                  </Collapse>
-                </>
-              )
-          ))}
+              <>
+                <ListItem button key={value.key} onClick={handleCollapseToggle}>
+                  <ListItemIcon>{value.icon}</ListItemIcon>
+                  <ListItemText primary={value.name} />
+                  {openCollapse ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+                <Collapse in={openCollapse} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding key>
+                    {value.children.map((child) => (
+                      <Link
+                        to={child.url}
+                        className={classes.drawerList}
+                        key={child.key}
+                      >
+                        <ListItem button className={classes.nested}>
+                          <ListItemIcon>{/* <StarBorder /> */}</ListItemIcon>
+                          <ListItemText primary={child.name} />
+                        </ListItem>
+                      </Link>
+                    ))}
+                  </List>
+                </Collapse>
+              </>
+            )
+          )}
         </List>
       </Drawer>
       <main
@@ -402,5 +393,5 @@ export const AdminNavigation = (props) => {
         {props.children}
       </main>
     </div>
-  );
+  )
 }

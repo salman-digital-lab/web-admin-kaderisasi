@@ -1,5 +1,6 @@
-import { makeStyles } from "@material-ui/core/styles";
-export const styled = makeStyles((theme) => ({
+import { makeStyles } from "@material-ui/core/styles"
+
+const styled = makeStyles((theme) => ({
   modal: {
     display: "flex",
     alignItems: "center",
@@ -23,4 +24,5 @@ export const styled = makeStyles((theme) => ({
   root: {
     width: "100%",
   },
-}));
+}))
+export default styled

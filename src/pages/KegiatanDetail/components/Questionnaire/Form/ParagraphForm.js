@@ -1,12 +1,12 @@
-import React from "react";
-import { TextField, Grid } from "@material-ui/core";
+import React from "react"
+import { TextField, Grid } from "@material-ui/core"
 import { AdminQuestionnaireContext } from "../../../../../context/AdminQuestionnaireContext"
-import { styled } from "./styled";
+import styled from "./styled"
 export const ParagraphForm = (props) => {
-  const { data, functions } = React.useContext(AdminQuestionnaireContext);
-  const { handleChangeQuestionForm, handleAddRef } = functions;
-  const { id } = props;
-  const classes = styled();
+  const { data, functions } = React.useContext(AdminQuestionnaireContext)
+  const { handleChangeQuestionForm, handleAddRef } = functions
+  const { id } = props
+  const classes = styled()
   return (
     <>
       <Grid item xs={12} sm={8}>
@@ -22,5 +22,5 @@ export const ParagraphForm = (props) => {
         />
       </Grid>
     </>
-  );
-};
+  )
+}

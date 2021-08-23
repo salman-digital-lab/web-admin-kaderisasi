@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import { AdminQuestionnaireContext } from "../../../../../context/AdminQuestionnaireContext"
 import {
   Card,
@@ -8,23 +8,20 @@ import {
   Divider,
   Switch,
   IconButton,
-} from "@material-ui/core";
-import DeleteIcon from "@material-ui/icons/Delete";
-import { styled } from "./styled";
-import { ShortTextForm } from "./ShortTextForm";
-import { ParagraphForm } from "./ParagraphForm";
-import { RadioForm } from "./RadioForm";
-import { CheckboxForm } from "./CheckboxForm";
-import { SliderForm } from "./SliderForm";
+} from "@material-ui/core"
+import DeleteIcon from "@material-ui/icons/Delete"
+import styled from "./styled"
+import { ShortTextForm } from "./ShortTextForm"
+import { ParagraphForm } from "./ParagraphForm"
+import { RadioForm } from "./RadioForm"
+import { CheckboxForm } from "./CheckboxForm"
+import { SliderForm } from "./SliderForm"
 export const FormTypePicker = (props) => {
-  const classes = styled();
-  const { data, functions } = React.useContext(AdminQuestionnaireContext);
-  const {
-    handleChangeVariantForm,
-    handleDeleteForm,
-    handleRequiredForm,
-  } = functions;
-  const { id, variant } = props;
+  const classes = styled()
+  const { data, functions } = React.useContext(AdminQuestionnaireContext)
+  const { handleChangeVariantForm, handleDeleteForm, handleRequiredForm } =
+    functions
+  const { id, variant } = props
   return (
     <>
       <Card className={classes.card} variant="outlined">
@@ -95,5 +92,5 @@ export const FormTypePicker = (props) => {
         </CardContent>
       </Card>
     </>
-  );
-};
+  )
+}

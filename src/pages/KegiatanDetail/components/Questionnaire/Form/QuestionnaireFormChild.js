@@ -1,35 +1,34 @@
 import React, { useEffect, useContext, useState } from "react"
-import { useParams } from 'react-router-dom'
+import { useParams } from "react-router-dom"
 import { Grid, Box } from "@material-ui/core"
 import { QuestionNavigator } from "./QuestionNavigator"
 import { SaveAndBackButton } from "./SaveAndBackButton"
 import { TitleAndSubtitleForm } from "./TitleAndSubtitleForm"
 import { AddQuestionButton } from "./AddQuestionButton"
-import Skeleton from '@material-ui/lab/Skeleton'
+import Skeleton from "@material-ui/lab/Skeleton"
 import { AdminQuestionnaireContext } from "../../../../../context/AdminQuestionnaireContext"
-import Snackbar from '@material-ui/core/Snackbar'
-import MuiAlert from '@material-ui/lab/Alert'
+import Snackbar from "@material-ui/core/Snackbar"
+import MuiAlert from "@material-ui/lab/Alert"
 import { Form } from "./Form"
-import axios from 'axios'
-
+import axios from "axios"
 
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />
 }
 
-
 export const QuestionnaireFormChild = () => {
   const { id } = useParams()
-  const { openSnackbar, functions, data, setData } = useContext(AdminQuestionnaireContext)
+  const { openSnackbar, functions, data, setData } = useContext(
+    AdminQuestionnaireContext
+  )
   const [loading, setLoading] = useState(true)
   const [reload, setReload] = useState(true)
   const { handleSnackbar } = functions
 
-
   useEffect(() => {
     if (reload) {
       setReload(false)
-      console.log('load')
+      console.log("load")
       axios
         .get(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}`)
         .then((res) => {
@@ -41,8 +40,8 @@ export const QuestionnaireFormChild = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
-        });
+          console.log(err)
+        })
     }
   }, [id, reload, data, setData])
 
@@ -51,19 +50,19 @@ export const QuestionnaireFormChild = () => {
       {loading && (
         <React.Fragment>
           <div>
-            <Box width='75%'>
+            <Box width="75%">
               <Skeleton />
             </Box>
-            <Box width='70%'>
+            <Box width="70%">
               <Skeleton animation={false} />
             </Box>
-            <Box width='65%'>
+            <Box width="65%">
               <Skeleton animation="wave" />
             </Box>
           </div>
         </React.Fragment>
       )}
-      {!loading &&
+      {!loading && (
         <>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
@@ -92,7 +91,7 @@ export const QuestionnaireFormChild = () => {
           <Snackbar
             open={openSnackbar}
             autoHideDuration={4000}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
             onClose={handleSnackbar}
           >
             <Alert severity="success" onClose={handleSnackbar}>
@@ -100,7 +99,7 @@ export const QuestionnaireFormChild = () => {
             </Alert>
           </Snackbar>
         </>
-      }
+      )}
     </>
   )
 }

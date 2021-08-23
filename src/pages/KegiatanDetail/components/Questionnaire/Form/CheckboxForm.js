@@ -1,21 +1,21 @@
-import React from "react";
-import { TextField, Grid, IconButton, Typography } from "@material-ui/core";
+import React from "react"
+import { TextField, Grid, IconButton, Typography } from "@material-ui/core"
 import { AdminQuestionnaireContext } from "../../../../../context/AdminQuestionnaireContext"
-import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CloseIcon from "@material-ui/icons/Close";
+import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank"
+import CloseIcon from "@material-ui/icons/Close"
 
-import { styled } from "./styled";
+import styled from "./styled"
 export const CheckboxForm = (props) => {
-  const { data, functions } = React.useContext(AdminQuestionnaireContext);
+  const { data, functions } = React.useContext(AdminQuestionnaireContext)
   const {
     handleChangeQuestionForm,
     handleChangeAnswerForm,
     handleDeleteAnswerForm,
     handleAddAnswerForm,
     handleAddRef,
-  } = functions;
-  const { id } = props;
-  const classes = styled();
+  } = functions
+  const { id } = props
+  const classes = styled()
   return (
     <>
       <Grid item xs={12} sm={8}>
@@ -66,5 +66,5 @@ export const CheckboxForm = (props) => {
         </div>
       </Grid>
     </>
-  );
-};
+  )
+}
