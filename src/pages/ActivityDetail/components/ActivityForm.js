@@ -10,7 +10,7 @@ import embed from "embed-video"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 import DetailKegiatanModal from "../../../components/modals/detail-kegiatan-modal"
 import LoadingAnimation from "../../../components/loading-animation"
-/* eslint-disable */
+
 const FormKegiatan = () => {
   const { activityForm, categoryList, functions } =
     useContext(AdminActivityContext)
@@ -110,8 +110,8 @@ const FormKegiatan = () => {
                     >
                       {categoryList
                         .filter((x) => x.value !== -1)
-                        .map((value, index) => (
-                          <MenuItem key={index} value={value.value}>
+                        .map((value) => (
+                          <MenuItem key={value} value={value.value}>
                             {value.label}
                           </MenuItem>
                         ))}

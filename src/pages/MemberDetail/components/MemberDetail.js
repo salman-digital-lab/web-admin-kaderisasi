@@ -81,7 +81,7 @@ const MemberDetail = () => {
       <div className="button-area">
         <div className="button-left">
           <Button size="small" className="back-button" variant="outlined">
-            <Link to={"/aktivis"}>
+            <Link to={"/member"}>
               <ArrowBack fontSize="inherit" />
               KEMBALI
             </Link>
@@ -157,7 +157,7 @@ const MemberDetail = () => {
         </div>
       </div>
       <br />
-      <h3>Detail Aktivis</h3>
+      <h3>Detail Member</h3>
       <div className="body-aktivis">
         <div className="body-aktivis-data">
           <div className="input-group-title-body" id="basic-addon1">

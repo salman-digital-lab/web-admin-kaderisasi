@@ -1,19 +1,20 @@
 import React, { useContext, useEffect } from "react"
 import { useParams } from "react-router-dom"
+import PropTypes from "prop-types"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 import LoadingAnimation from "../../../components/loading-animation"
 import { RegistrantStatus } from "../../../components/Statuses/RegistrantStatus"
-/* eslint-disable */
-const TimelineItem = ({ data }) => (
+
+const TimelineItem = ({ status, beginDate, name }) => (
   <div className="timeline-item">
     <div className="timeline-item-content">
       <span className="tag">
-        <RegistrantStatus status={data.status.toLowerCase()} />
+        <RegistrantStatus status={status.toLowerCase()} />
       </span>
-      <time>{new Date(data.begin_date).toLocaleDateString()}</time>
-      <p>{data.name}</p>
+      <time>{new Date(beginDate).toLocaleDateString()}</time>
+      <p>{name}</p>
       {/* {data.activity_id && (
-        <Link to={"/detail-kegiatan/" + data.activity_id}>
+        <Link to={"/activity-detail/" + data.activity_id}>
           {data.category_name}
         </Link>
       )} */}
@@ -21,6 +22,12 @@ const TimelineItem = ({ data }) => (
     </div>
   </div>
 )
+
+TimelineItem.propTypes = {
+  status: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  beginDate: PropTypes.instanceOf(Date).isRequired,
+}
 
 const MemberTimeline = () => {
   const { id } = useParams()
@@ -34,11 +41,16 @@ const MemberTimeline = () => {
 
   return memberActivities?.length > 0 ? (
     <div>
-      <h3>Timeline Aktivis</h3>
+      <h3>Timeline Member</h3>
       <div className="member-timeline-container">
         <div className="timeline-container">
-          {memberActivities.map((data, idx) => (
-            <TimelineItem data={data} key={idx} />
+          {memberActivities.map((data) => (
+            <TimelineItem
+              status={data.status}
+              beginDate={data.begin_date}
+              name={data.name}
+              key={data}
+            />
           ))}
         </div>
       </div>

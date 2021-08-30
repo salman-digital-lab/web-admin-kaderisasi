@@ -16,11 +16,11 @@ import {
 } from "@material-ui/core"
 import { useTheme } from "@material-ui/core/styles"
 import StyledRadio from "../../../components/RadioButton"
-import { KegiatanModal } from "./kegiatan-modal"
+import { KegiatanModal } from "./ActivityModal"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 import "../../../assets/scss/AddActivity.scss"
 import { MenuProps, getStyles } from "../../../components/Select"
-/* eslint-disable */
+
 const KegiatanFilter = () => {
   const theme = useTheme()
   const { filterActivity, setFilterActivity, categoryList, functions } =
@@ -138,10 +138,10 @@ const KegiatanFilter = () => {
                   input={<Input />}
                   MenuProps={MenuProps}
                 >
-                  {categoryList.map((name, idx) => (
+                  {categoryList.map((name) => (
                     <MenuItem
-                      key={idx}
-                      value={name.value}
+                      key={`${name.value}`}
+                      value={name}
                       label={name.label}
                       style={getStyles(name, categoryList, theme)}
                     >

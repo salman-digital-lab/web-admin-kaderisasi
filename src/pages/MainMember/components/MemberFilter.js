@@ -65,7 +65,7 @@ const MemberFilter = () => {
           <TextField
             id="filled-basic"
             size="small"
-            label="Cari Aktivis"
+            label="Cari Member"
             variant="outlined"
             className="filter-input"
             onKeyDown={handleKeyDown}

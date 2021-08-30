@@ -17,7 +17,7 @@ import {
 } from "../../../components/TableDesign"
 import LoadingAnimation from "../../../components/loading-animation"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
-/* eslint-disable */
+
 const headCells = [
   { id: "no", numeric: true, label: "No." },
   { id: "name", numeric: false, label: "Nama Jamaah" },
@@ -26,6 +26,7 @@ const headCells = [
   { id: "univ", numeric: false, label: "Perguruan Tinggi/Univ" },
   { id: "jengjang", numeric: false, label: "Jenjang" },
   { id: "activity", numeric: false, label: "SSC, LMD & SPC" },
+  { id: "view", numeric: false, label: "Action" },
 ]
 
 const useStyles = makeStyles((theme) => ({
@@ -124,7 +125,7 @@ const MemberTable = () => {
   return (
     <div className="tableuser">
       <h1 className="headline" style={{ color: "#999999" }}>
-        Aktivis dan Jamaah
+        Member
       </h1>
       <Paper>
         {!members.status ? (
@@ -136,7 +137,7 @@ const MemberTable = () => {
             <TableContainer>
               <Table
                 aria-labelledby="tableTitle"
-                size={"medium"}
+                size="medium"
                 aria-label="enhanced table"
               >
                 <EnhancedTableHead
@@ -158,7 +159,7 @@ const MemberTable = () => {
                           {index + 1 + rowsPerPage * page}
                         </TableCell>
                         <TableCell className="table-cell">
-                          <Link to={"/detail-aktivis/" + row.id}>
+                          <Link to={`/member-detail/${row.id}`}>
                             {row.name}
                           </Link>
                         </TableCell>
@@ -177,6 +178,9 @@ const MemberTable = () => {
                         <TableCell className="table-cell">
                           {row.ssc}
                           {row.lmd}
+                        </TableCell>
+                        <TableCell className="table-cell">
+                          <Link to={`/member-detail/${row.id}`}>View</Link>
                         </TableCell>
                       </TableRow>
                     )

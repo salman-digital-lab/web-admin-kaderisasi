@@ -27,7 +27,7 @@ const ModalAdmin = ({ open, onClose }) => {
               <Table className={classes.table}>
                 <TableRow className={classes.row}>
                   <TableCell className={classes.cell}>
-                    <h3>Kegiatan dan Aktivis</h3>
+                    <h3>Kegiatan & Aktivitas</h3>
                   </TableCell>
                   <TableCell align="right" className={classes.cell}>
                     <Checkbox
