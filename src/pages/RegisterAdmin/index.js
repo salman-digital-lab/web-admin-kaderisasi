@@ -1,8 +1,8 @@
 import React from "react"
-import "../../assets/scss/RegisterAkunAdmin.scss"
-import CardRegisterAdmin from "./components/card-register-admin"
+import "../../assets/scss/RegisterAdmin.scss"
+import CardRegisterAdmin from "./components/CardRegisterAdmin"
 
-const RegisterAkunAdmin = () => (
+const RegisterAdmin = () => (
   <div className="container-register-admin">
     <h1 style={{ color: "#999999" }}>Register Akun Admin</h1>
     <div className="content-register-admin">
@@ -11,4 +11,4 @@ const RegisterAkunAdmin = () => (
   </div>
 )
 
-export default RegisterAkunAdmin
+export default RegisterAdmin

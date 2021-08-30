@@ -2,7 +2,7 @@ import React from "react"
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom"
 import Cookies from "js-cookie"
 import Login from "../pages/Login"
-import AdminNavigation from "../components/AdminNavigation"
+import NavigationAdmin from "../components/NavigationAdmin"
 import KegiatanDanAktivis from "../pages/MainActivity"
 import KegiatanDetail from "../pages/ActivityDetail"
 import Dashboard from "../pages/Dashboard"
@@ -14,9 +14,9 @@ import Setting from "../pages/Setting"
 import CategorySetting from "../pages/CategorySetting"
 import NotFound from "../pages/Error/NotFound"
 import AdminProvider from "../context/AdminContext"
-import ListAkunAdmin from "../pages/ListAkunAdmin"
-import RegisterAkunAdmin from "../pages/RegisterAkunAdmin"
-import ListDetailAdmin from "../pages/ListDetailAdmin"
+import MainAdmin from "../pages/MainAdmin"
+import RegisterAdmin from "../pages/RegisterAdmin"
+import ListDetailAdmin from "../pages/DetailAdmin"
 import Questionnaire from "../pages/Questionnaire"
 import QuestionnaireForm from "../pages/Questionnaire/Form"
 import Formuniversitas from "../pages/PerguruanTinggi/components/form-universitas"
@@ -41,7 +41,7 @@ const Router = () => {
       <Switch>
         <LoginRoute exact path="/login" component={Login} />
         <AdminProvider>
-          <AdminNavigation>
+          <NavigationAdmin>
             <Routes exact path="/" component={Dashboard} />
             <Routes exact path="/questionnaire" component={Questionnaire} />
             <Routes
@@ -84,18 +84,14 @@ const Router = () => {
               path="/activity-setting"
               component={CategorySetting}
             />
-            <Routes exact path="/ListAkunAdmin" component={ListAkunAdmin} />
+            <Routes exact path="/ListAkunAdmin" component={MainAdmin} />
             <Routes
               exact
               path="/ListAkunAdmin/:name"
               component={ListDetailAdmin}
             />
-            <Routes
-              exact
-              path="/RegisterAkunAdmin"
-              component={RegisterAkunAdmin}
-            />
-          </AdminNavigation>
+            <Routes exact path="/RegisterAkunAdmin" component={RegisterAdmin} />
+          </NavigationAdmin>
         </AdminProvider>
         <Routes component={NotFound} />
       </Switch>

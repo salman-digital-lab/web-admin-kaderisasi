@@ -8,8 +8,8 @@ import {
 } from "@material-ui/core"
 import { ArrowBack, Delete } from "@material-ui/icons"
 import { Link } from "react-router-dom"
-import data from "../data-admin.json"
-import TambahAdminModal from "./tambah-admin-modal"
+import data from "../DataAdmin.json"
+import ModalAdmin from "./ModalAdmin"
 /* eslint-disable */
 const DetailAdmin = () => {
   const [open, setOpen] = useState(false)
@@ -98,7 +98,7 @@ const DetailAdmin = () => {
         </List>
       </div>
       <div>
-        <TambahAdminModal open={open} onClose={handleClose} />
+        <ModalAdmin open={open} onClose={handleClose} />
       </div>
     </>
   )
