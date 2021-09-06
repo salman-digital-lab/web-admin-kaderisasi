@@ -1,5 +1,6 @@
-import { Router } from './route/Router'
-import './assets/scss/App.scss'
+import React from "react"
+import Router from "./route/Router"
+import "./assets/scss/App.scss"
 
-export const App = () => <Router />
-
+const App = () => <Router />
+export default App
