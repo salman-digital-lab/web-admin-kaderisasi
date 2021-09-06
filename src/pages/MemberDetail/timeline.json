@@ -1,0 +1,54 @@
+[
+    {
+        "text": "Bergabung!",
+        "date": "12 Februari 2021",
+        "category": {
+            "tag": "kader",
+            "color": "#018f69"
+        },
+        "link": {
+            "url":
+                "https://kaderisasi.salmanitb.com/",
+            "text": "Read more"
+        }
+    },
+    {
+        "text": "Pengembangan aplikasi admin panel BMKA",
+        "date": "19 Februari 2021",
+        "category": {
+            "tag": "start",
+            "color": "#018f69"
+        },
+        "link": {
+            "url":
+                "https://kaderisasi.salmanitb.com/",
+            "text": "Read more"
+        }
+    },
+    {
+        "text": "Selesai pengembangan aplikasi admin panel BMKA",
+        "date": "03 Mei  2021",
+        "category": {
+            "tag": "finish",
+            "color": "#018f69"
+        },
+        "link": {
+            "url":
+                "https://kaderisasi.salmanitb.com/",
+            "text": "Read more"
+        }
+    },
+    {
+        "text": "Implementasi aplikasi admin panel BMKA",
+        "date": "11 Mei 2021",
+        "category": {
+            "tag": "deployment",
+            "color": "#018f69"
+        },
+        "link": {
+            "url":
+                "https://kaderisasi.salmanitb.com/",
+            "text": "Read more"
+        }
+    }
+]
