@@ -41,7 +41,7 @@ const Router = () => {
         <AdminProvider>
           <NavigationAdmin>
             <Routes exact path="/" component={Dashboard} />
-            <Routes exact path="/kegiatan" component={KegiatanDanAktivis} />
+            <Routes exact path="/activity" component={KegiatanDanAktivis} />
             <Routes
               exact
               path="/activity-detail/:id"

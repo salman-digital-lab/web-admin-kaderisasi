@@ -1,25 +1,25 @@
 import React from "react"
-import { Button } from "@material-ui/core"
+import { Box, Button } from "@material-ui/core"
 import { useParams } from "react-router-dom"
 import { AdminQuestionnaireContext } from "../../../../../context/AdminQuestionnaireContext"
-export const SaveButton = () => {
-  const params = useParams()
+
+export default function SaveButton() {
+  const { id } = useParams()
   const { functions } = React.useContext(AdminQuestionnaireContext)
-  const { updateQuestionnaire } = functions
-  const handleSave = () => {
-    updateQuestionnaire(params.id)
-  }
+  const { updateQuestionnaire, handleSaveQuestionnaire } = functions
+
   return (
-    <div style={{ display: 'flex' }}>
-      <div style={{ flexGrow: 1 }} />
+    <Box display="flex">
+      <Box flexGrow={1} />
       <Button
-        // onClick={handleSave}
+        // onClick={() => updateQuestionnaire(id)}
+        onClick={handleSaveQuestionnaire}
         variant="contained"
         color="primary"
         disableElevation
       >
         Save Question
       </Button>
-    </div>
+    </Box>
   )
 }

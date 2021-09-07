@@ -15,14 +15,13 @@ const AdminQuestionnaireProvider = (props) => {
   const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false)
   const [openSnackbar, setOpenSnackbar] = React.useState(false)
 
-  const handleChangeTitleForm = (event) =>
-    setState({ ...state, title: event.target.value })
+  const handleChangeTitleForm = (value) =>
+    setState({ ...state, title: value })
 
-  const handleChangeSubtitleForm = (event) =>
-    setState({ ...state, subtitle: event.target.value })
+  const handleChangeSubtitleForm = (value) =>
+    setState({ ...state, subtitle: value })
 
-  const handleChangeVariantForm = (id, event) => {
-    const variant = event.target.value
+  const handleChangeVariantForm = (id, variant) => {
     const form = state.form
     form[id] = {
       ...state.form[id],
@@ -44,45 +43,45 @@ const AdminQuestionnaireProvider = (props) => {
     setState({ ...state, form })
   }
 
-  const handleChangeQuestionForm = (id, event) => {
+  const handleChangeQuestionForm = (id, value) => {
     const form = state.form
     form[id] = {
       ...state.form[id],
-      question: event.target.value,
+      question: value,
     }
     setState({ ...state, form })
   }
 
-  const handleChangeMinValueForm = (id, event) => {
-    const minValue = event.target.value
+  const handleChangeMinValueForm = (id, value) => {
+    const minValue = value
     const maxValue = state.form[id].maxValue
     if (!(minValue >= maxValue)) {
       const form = state.form
       form[id] = {
         ...state.form[id],
-        minValue,
+        minValue: minValue,
       }
       setState({ ...state, form })
     }
   }
 
-  const handleChangeMaxValueForm = (id, event) => {
-    const maxValue = event.target.value
+  const handleChangeMaxValueForm = (id, value) => {
+    const maxValue = value
     const minValue = state.form[id].minValue
     if (!(maxValue <= minValue)) {
       const form = state.form
       form[id] = {
         ...state.form[id],
-        maxValue: event.target.value,
+        maxValue: maxValue,
       }
       setState({ ...state, form })
     }
   }
 
-  const handleChangeAnswerForm = (id, index, event) => {
+  const handleChangeAnswerForm = (id, index, value) => {
     const form = state.form
     const answer = state.form[id].answer
-    const currentValue = event.target.value
+    const currentValue = value
     answer[index] = currentValue
     form[id] = { ...form[id], answer }
     setState({ ...state, form })
