@@ -66,6 +66,7 @@ const FormKegiatan = () => {
       )
       setCheck(false)
     }
+    // eslint-disable-next-line
   }, [activityForm])
 
   return (

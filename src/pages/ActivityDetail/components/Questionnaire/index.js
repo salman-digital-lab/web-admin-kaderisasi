@@ -15,7 +15,7 @@ import {
 import AdminQuestionnaireProvider, {
   AdminQuestionnaireContext,
 } from "../../../../context/AdminQuestionnaireContext"
-
+// eslint-disable-next-line
 const Alert = (props) => <MuiAlert elevation={6} variant="filled" {...props} />
 
 const SkeletonLoading = () => (
@@ -39,7 +39,7 @@ const QuestionnaireForm = () => {
   )
   const [loading, setLoading] = useState(true)
   const [reload, setReload] = useState(true)
-  const { handleSnackbar } = functions
+  const { handleSnackbar, handleResetStateDefault } = functions
 
   useEffect(() => {
     if (reload) {
@@ -49,15 +49,24 @@ const QuestionnaireForm = () => {
         .then((res) => {
           if (res.status === 200) {
             const form = JSON.parse(res.data.data[0].form_data) ?? null
-            console.log(form)
-            //   setData(form)
+            if (
+              Object.prototype.hasOwnProperty.call(form, "title") &&
+              Object.prototype.hasOwnProperty.call(form, "subtitle") &&
+              Object.prototype.hasOwnProperty.call(form, "form")
+            ) {
+              setData(form)
+            } else {
+              handleResetStateDefault()
+            }
             setLoading(false)
           }
         })
         .catch((err) => {
-          console.error(err)
+          // eslint-disable-next-line
+          console.error(err);
         })
     }
+    // eslint-disable-next-line
   }, [id, reload, data, setData])
 
   return (
@@ -82,9 +91,11 @@ const QuestionnaireForm = () => {
               }}
             >
               <TitleAndSubtitleForm />
-              {data.form.map((value, index) => (
-                <FormSelector id={index} key={index} variant={value.variant} />
-              ))}
+              {data?.form &&
+                data.form.map((value, index) => (
+                  // eslint-disable-next-line
+                  <FormSelector id={index} key={index} variant={value.variant} />
+                ))}
               <AddQuestionButton />
             </Grid>
             <Grid item md={2}>

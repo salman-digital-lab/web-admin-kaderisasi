@@ -42,7 +42,7 @@ export default function CheckBoxForm({ id }) {
     <Grid item xs={12} sm={8}>
       <TextField
         onChange={(event) => handleChangeQuestionForm(id, event.target.value)}
-        value={data.form[id].question}
+        value={data?.form[id]?.question && data.form[id].question}
         inputRef={handleAddRef}
         label="Question"
         variant="outlined"
@@ -50,23 +50,25 @@ export default function CheckBoxForm({ id }) {
         fullWidth
       />
 
-      {data.form[id].answer.map((value, index) => (
-        <Box key={index} component="div" style={componentStyle.row}>
-          <CheckBoxOutlineBlankIcon style={componentStyle.icon} />
-          <TextField
-            onChange={(event) =>
-              handleChangeAnswerForm(id, index, event.target.value)
-            }
-            style={componentStyle.answerInput}
-            value={value}
-            multiline
-            fullWidth
-          />
-          <IconButton onClick={() => handleDeleteAnswerForm(id, index)}>
-            <CloseIcon style={componentStyle.icon} />
-          </IconButton>
-        </Box>
-      ))}
+      {data?.form[id]?.answer &&
+        data.form[id].answer.map((value, index) => (
+          // eslint-disable-next-line
+          <Box key={index} component="div" style={componentStyle.row}>
+            <CheckBoxOutlineBlankIcon style={componentStyle.icon} />
+            <TextField
+              onChange={(event) =>
+                handleChangeAnswerForm(id, index, event.target.value)
+              }
+              style={componentStyle.answerInput}
+              value={value}
+              multiline
+              fullWidth
+            />
+            <IconButton onClick={() => handleDeleteAnswerForm(id, index)}>
+              <CloseIcon style={componentStyle.icon} />
+            </IconButton>
+          </Box>
+        ))}
 
       <Box style={componentStyle.row}>
         <CheckBoxOutlineBlankIcon style={componentStyle.icon} />

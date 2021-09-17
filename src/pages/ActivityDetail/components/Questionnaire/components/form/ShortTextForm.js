@@ -18,7 +18,7 @@ export default function ShortTextForm(props) {
       <Grid item xs={12} sm={8}>
         <TextField
           onChange={(event) => handleChangeQuestionForm(id, event.target.value)}
-          value={data.form[id].question}
+          value={data?.form[id]?.question && data.form[id].question}
           style={componentStyle.input}
           inputRef={handleAddRef}
           variant="outlined"

@@ -64,6 +64,7 @@ export default function FormSelector({ id, variant = "short_text" }) {
               }}
               value={formVariant.find((value) => variant === value.key)}
               renderInput={(params) => (
+                // eslint-disable-next-line
                 <TextField {...params} label="Combo box" variant="outlined" />
               )}
             />
@@ -93,7 +94,7 @@ export default function FormSelector({ id, variant = "short_text" }) {
           />
           <Typography>Required</Typography>
           <Switch
-            checked={data.form[id].required}
+            checked={data?.form[id]?.required && data.form[id].required}
             onClick={() => handleRequiredForm(id)}
             color="primary"
             inputProps={{ "aria-label": "primary checkbox" }}

@@ -28,15 +28,17 @@ export default function QuestionNavigator() {
     <Hidden smDown>
       <Box component="div" style={componentStyle.wrapper}>
         <List disablePadding>
-          {data.form.map((value, index) => (
-            <Box component="div" key={index}>
-              <ListItem onClick={() => handleDirectNavigate(index)} button>
-                <BorderColorIcon style={componentStyle.icon} />
-                <Typography>{`Question ${index + 1}`}</Typography>
-              </ListItem>
-              <Divider />
-            </Box>
-          ))}
+          {data?.form &&
+            data.form.map((value, index) => (
+              // eslint-disable-next-line
+              <Box component="div" key={index}>
+                <ListItem onClick={() => handleDirectNavigate(index)} button>
+                  <BorderColorIcon style={componentStyle.icon} />
+                  <Typography>{`Question ${index + 1}`}</Typography>
+                </ListItem>
+                <Divider />
+              </Box>
+            ))}
         </List>
       </Box>
     </Hidden>

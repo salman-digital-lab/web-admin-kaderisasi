@@ -11,9 +11,13 @@ const AdminQuestionnaireProvider = (props) => {
     form: [{ variant: "short_text", question: "", required: false }],
   })
   const [reload, setReload] = React.useState(true)
-  const [idDelete, setIdDelete] = React.useState(null)
-  const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false)
   const [openSnackbar, setOpenSnackbar] = React.useState(false)
+
+  const handleResetStateDefault = () => setState({
+    title: "The Question",
+    subtitle: "This question is about...",
+    form: [{ variant: "short_text", question: "", required: false }],
+  })
 
   const handleChangeTitleForm = (value) =>
     setState({ ...state, title: value })
@@ -104,6 +108,7 @@ const AdminQuestionnaireProvider = (props) => {
   }
 
   const handleSaveQuestionnaire = () => {
+    setOpenSnackbar(true)
     console.log(state)
   }
 
@@ -137,13 +142,6 @@ const AdminQuestionnaireProvider = (props) => {
     ref.push(element)
   }
 
-  const getAllQuestionnaire = (callback) => {
-    axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template`)
-      .then((res) => callback(res))
-      .catch((err) => console.log(err))
-  }
-
   const getQuestionnaire = (id, callback) => {
     axios
       .get(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template/${id}`)
@@ -157,25 +155,6 @@ const AdminQuestionnaireProvider = (props) => {
           form,
         })
         callback()
-      })
-      .catch((err) => console.log(err))
-  }
-
-  const createQuestionnaire = () => {
-    const { title, subtitle, form } = state
-    const body = { title, subtitle, form }
-    console.log({
-      name: title,
-      body: JSON.stringify(body),
-    })
-    axios
-      .post(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template`, {
-        name: title,
-        body: JSON.stringify(body),
-      })
-      .then((res) => {
-        console.log(res)
-        setOpenSnackbar(true)
       })
       .catch((err) => console.log(err))
   }
@@ -202,29 +181,6 @@ const AdminQuestionnaireProvider = (props) => {
       .catch((err) => console.log(err))
   }
 
-  const handleOpenDeleteDialog = () => {
-    setOpenDeleteDialog(!openDeleteDialog)
-  }
-
-  const deleteQuestionnaire = (id) => {
-    console.log(id)
-    axios
-      .delete(
-        process.env.REACT_APP_BASE_URL + `/v1/activity-form-template/${id}`
-      )
-      .then((res) => {
-        console.log(res)
-        setOpenSnackbar(true)
-        setReload(true)
-      })
-      .catch((err) => console.log(err))
-    handleOpenDeleteDialog()
-  }
-
-  const agreeToDeleteQuestionnaire = () => {
-    deleteQuestionnaire(idDelete)
-  }
-
   const handleSnackbar = () => {
     setOpenSnackbar(!openSnackbar)
   }
@@ -244,14 +200,10 @@ const AdminQuestionnaireProvider = (props) => {
     handleDeleteForm,
     handleRequiredForm,
     handleAddRef,
-    getAllQuestionnaire,
     getQuestionnaire,
-    createQuestionnaire,
     updateQuestionnaire,
-    deleteQuestionnaire,
-    handleOpenDeleteDialog,
-    agreeToDeleteQuestionnaire,
     handleSnackbar,
+    handleResetStateDefault
   }
 
   return (
@@ -259,10 +211,7 @@ const AdminQuestionnaireProvider = (props) => {
       value={{
         data: state,
         setData: setState,
-        openDeleteDialog,
         openSnackbar,
-        idDelete,
-        setIdDelete,
         reload,
         setReload,
         ref,

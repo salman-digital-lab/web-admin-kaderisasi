@@ -40,30 +40,32 @@ export default function RadioForm(props) {
       <Grid item xs={12} sm={8}>
         <TextField
           onChange={(event) => handleChangeQuestionForm(id, event.target.value)}
-          value={data.form[id].question}
+          value={data?.form[id]?.question && data.form[id].question}
           inputRef={handleAddRef}
           label="Question"
           variant="outlined"
           multiline
           fullWidth
         />
-        {data.form[id].answer.map((value, index) => (
-          <Box component="div" key={index} style={componentStyle.row}>
-            <RadioButtonUncheckedIcon style={componentStyle.icon} />
-            <TextField
-              onChange={(event) =>
-                handleChangeAnswerForm(id, index, event.target.value)
-              }
-              style={componentStyle.answerInput}
-              multiline
-              fullWidth
-              value={value}
-            />
-            <IconButton onClick={() => handleDeleteAnswerForm(id, index)}>
-              <CloseIcon style={componentStyle.icon} />
-            </IconButton>
-          </Box>
-        ))}
+        {data?.form[id]?.answer &&
+          data.form[id].answer.map((value, index) => (
+            // eslint-disable-next-line
+            <Box component="div" key={index} style={componentStyle.row}>
+              <RadioButtonUncheckedIcon style={componentStyle.icon} />
+              <TextField
+                onChange={(event) =>
+                  handleChangeAnswerForm(id, index, event.target.value)
+                }
+                style={componentStyle.answerInput}
+                multiline
+                fullWidth
+                value={value}
+              />
+              <IconButton onClick={() => handleDeleteAnswerForm(id, index)}>
+                <CloseIcon style={componentStyle.icon} />
+              </IconButton>
+            </Box>
+          ))}
 
         <Box component="div" style={componentStyle.row}>
           <RadioButtonUncheckedIcon style={componentStyle.icon} />

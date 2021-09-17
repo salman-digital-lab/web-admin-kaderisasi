@@ -20,7 +20,7 @@ export default function ParagraphForm({ id }) {
         label="Question"
         variant="outlined"
         style={componentStyle.input}
-        value={data.form[id].question}
+        value={data?.form[id]?.question && data.form[id].question}
         multiline
         fullWidth
       />

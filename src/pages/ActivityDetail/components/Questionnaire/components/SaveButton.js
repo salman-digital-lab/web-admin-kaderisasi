@@ -13,7 +13,9 @@ export default function SaveButton() {
       <Box flexGrow={1} />
       <Button
         // onClick={() => updateQuestionnaire(id)}
-        onClick={handleSaveQuestionnaire}
+        onClick={() => {
+          handleSaveQuestionnaire()
+        }}
         variant="contained"
         color="primary"
         disableElevation

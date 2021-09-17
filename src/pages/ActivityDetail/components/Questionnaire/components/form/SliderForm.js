@@ -22,7 +22,7 @@ export default function SliderForm(props) {
     <Grid item xs={12} sm={8}>
       <TextField
         onChange={(event) => handleChangeQuestionForm(id, event.target.value)}
-        value={data.form[id].question}
+        value={data?.form[id]?.question && data.form[id].question}
         style={componentStyle.input}
         inputRef={handleAddRef}
         variant="outlined"
@@ -33,7 +33,7 @@ export default function SliderForm(props) {
       <Box component="div" display="flex">
         <TextField
           onChange={(event) => handleChangeMinValueForm(id, event.target.value)}
-          value={data.form[id].minValue}
+          value={data?.form[id]?.minValue && data.form[id].minValue}
           style={componentStyle.input}
           inputRef={handleAddRef}
           label="Min Value"
@@ -44,7 +44,7 @@ export default function SliderForm(props) {
         <Box width="2em" />
         <TextField
           onChange={(event) => handleChangeMaxValueForm(id, event.target.value)}
-          value={data.form[id].maxValue}
+          value={data?.form[id]?.maxValue && data.form[id].maxValue}
           style={componentStyle.input}
           inputRef={handleAddRef}
           label="Max Value"
