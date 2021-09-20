@@ -153,7 +153,7 @@ export const UniversitasProvider = (props) => {
           variant="contained"
           color="secondary"
         >
-          <Link to={`/PerguruanTinggi/form-universitas/${Id}`} className="edit">
+          <Link to={`/university/university-form/${Id}`} className="edit">
             Edit
           </Link>
         </Button>

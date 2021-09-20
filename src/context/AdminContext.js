@@ -15,8 +15,9 @@ const AdminProvider = (props) => {
     gender: "",
     search_query: "",
   })
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState(null)
   const [listUsers, setListUsers] = useState([])
+  const [loading, setLoading] = useState(true)
   const AxiosInterceptor = axios.interceptors.request.use((config) => {
     if (Cookie.get("token")){
       config.headers.Authorization = `Bearer ${Cookie.get("token")}`
@@ -31,6 +32,7 @@ const AdminProvider = (props) => {
   */
   const getUsers = async (params) => {
     setUsers({})
+    setLoading(true)
     let paramsQuery = "?"
     Object.keys(params).map((x, i) => {
       i === Object.keys(params).length - 1
@@ -45,6 +47,7 @@ const AdminProvider = (props) => {
         result = res.data.data.data
         setListUsers(result)
         setUsers(res.data)
+        setLoading(false)
       })
       .catch((err) => {
         console.log(err)
@@ -58,11 +61,13 @@ const AdminProvider = (props) => {
       Get User where id = params.id
     */
   const getUserDetail = async (id) => {
+    setLoading(true)
     axios
       .get(process.env.REACT_APP_BASE_URL + `/v1/users/${id}`)
       .then((res) => {
         const result = res.data.data
         setUsers(result)
+        setLoading(false)
       })
       .catch((err) => {
         console.log(err)
@@ -85,6 +90,7 @@ const AdminProvider = (props) => {
         listUsers,
         filterUser,
         setFilterUser,
+        loading,
         functions,
       }}
     >

@@ -34,33 +34,28 @@ const Sidebar = () => {
     })
   const handleDrawerClose = () => setState({ ...state, openDrawer: false })
   const handleRoute = (url) => history.push(url)
-
-  const filterByGroup = (group) => {
-    let allowed = ["dashboard"]
-    if (group === "ADM") {
-      setAllowedList(data)
-    } else if (group === "KON") {
-      allowed.push("student-care")
-      setAllowedList(data.filter((x) => allowed.includes(x.modul)))
-    } else if (group === "KAP") {
-      allowed.push("activity")
-      setAllowedList(data.filter((x) => allowed.includes(x.modul)))
-    } else if (group === "MAN") {
-      setAllowedList(data)
+  const filterByModul = (privileges) => {
+    let allowed = ["dashboard", "setting"]
+    if (privileges) {
+      const priv = privileges.map(({ name }) => name)
+      allowed = [...allowed, ...priv]
+      setAllowedList(allowed)
+    } else {
+      setAllowedList(allowed)
     }
   }
   useEffect(() => {
     if (listDrawer === null || listDrawer.length < 1) {
-      filterByGroup(user?.group?.shortname)
+      filterByModul(user?.privileges)
       let drawerCollapse = {}
-      allowedList.forEach((element, index) => {
+      data.forEach((element, index) => {
         if (element.children !== undefined)
           drawerCollapse = { ...drawerCollapse, [index.toString()]: false }
       })
-      setListDrawer(allowedList)
+      setListDrawer(data)
       setOpenCollapse(drawerCollapse)
     }
-  }, [listDrawer, openCollapse, allowedList])
+  }, [listDrawer, openCollapse])
 
   return (
     <Drawer
@@ -77,49 +72,65 @@ const Sidebar = () => {
       </div>
       <List>
         {listDrawer &&
-          listDrawer.map((value, index) => (
-            <Link
-              to={value.url !== undefined ? value.url : "#"}
-              className={classes.drawerList}
-              key={value.id.toString()}
-            >
-              <ListItem
-                button
-                onClick={
-                  value.url === undefined
-                    ? () => handleCollapseToggle(index)
-                    : null
-                }
-              >
-                <ListItemIcon className={classes.icon}>
-                  {value.icon}
-                </ListItemIcon>
-                <ListItemText primary={value.name} />
-                {value.url === undefined ? (
-                  openCollapse[index] ? (
-                    <ExpandLess />
-                  ) : (
-                    <ExpandMore />
-                  )
-                ) : null}
-              </ListItem>
-              {value.url === undefined && (
-                <Collapse in={openCollapse[index]} timeout="auto" unmountOnExit>
-                  {value.children.map((child) => (
-                    <ListItem
-                      button
-                      className={classes.nested}
-                      key={child.id.toString()}
-                      onClick={() => handleRoute(child.url)}
+          listDrawer.map((value, index) => {
+            let child
+            if (value.children) {
+              child = value.children.filter((x) => allowedList.includes(x.modul))
+            }
+            return (
+              (allowedList.includes(value.modul) ||
+                (value.modul === undefined && child.length > 0)) && (
+                <Link
+                  to={value.url !== undefined ? value.url : "#"}
+                  className={classes.drawerList}
+                  key={value.id.toString()}
+                >
+                  <ListItem
+                    button
+                    onClick={
+                      value.url === undefined
+                        ? () => handleCollapseToggle(index)
+                        : null
+                    }
+                  >
+                    <ListItemIcon className={classes.icon}>
+                      {value.icon}
+                    </ListItemIcon>
+                    <ListItemText primary={value.name} />
+                    {value.url === undefined ? (
+                      openCollapse[index] ? (
+                        <ExpandLess />
+                      ) : (
+                        <ExpandMore />
+                      )
+                    ) : null}
+                  </ListItem>
+                  {value.url === undefined && (
+                    <Collapse
+                      in={openCollapse[index]}
+                      timeout="auto"
+                      unmountOnExit
                     >
-                      <ListItemIcon />
-                      <ListItemText primary={child.name} />
-                    </ListItem>
-                  ))}
-                </Collapse>
-              )}
-            </Link>
-          ))}
+                      {value.children.map(
+                        (child) =>
+                          allowedList.includes(child.modul) && (
+                            <ListItem
+                              button
+                              className={classes.nested}
+                              key={child.id.toString()}
+                              onClick={() => handleRoute(child.url)}
+                            >
+                              <ListItemIcon />
+                              <ListItemText primary={child.name} />
+                            </ListItem>
+                          )
+                      )}
+                    </Collapse>
+                  )}
+                </Link>
+              )
+            )
+          })}
       </List>
     </Drawer>
   )

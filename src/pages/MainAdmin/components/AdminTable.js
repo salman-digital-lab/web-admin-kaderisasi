@@ -64,7 +64,7 @@ const AdminTable = () => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   // const [status, setStatus] = useState(true)
-  const { listUsers, users, filterUser, setFilterUser, functions } =
+  const { listUsers, users, filterUser, setFilterUser, loading, functions } =
     useContext(AdminContext)
   const { getUsers } = functions
   useEffect(() => {
@@ -117,7 +117,7 @@ const AdminTable = () => {
         Admin
       </h1>
       <Paper>
-        {!users.status ? (
+        {loading ? (
           <div className="loading-table">
             <LoadingAnimation table />
           </div>

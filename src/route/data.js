@@ -3,16 +3,16 @@ import KegiatanDetail from "../pages/ActivityDetail"
 import Dashboard from "../pages/Dashboard"
 import MemberSalman from "../pages/MainMember"
 import MemberSalmanDetail from "../pages/MemberDetail"
-import PerguruanTinggi from "../pages/PerguruanTinggi"
-import RuangCurhat from "../pages/RuangCurhat"
+import Universities from "../pages/MainUniversities"
+import ChatRoom from "../pages/ChatRoom"
 import Setting from "../pages/Setting"
 import CategorySetting from "../pages/CategorySetting"
 import MainAdmin from "../pages/MainAdmin"
-import RegisterAdmin from "../pages/RegisterAdmin"
+import AdminCard from "../pages/AdminCard"
 import AdminSalmanDetail from "../pages/AdminDetail"
 import Questionnaire from "../pages/Questionnaire"
 import QuestionnaireForm from "../pages/Questionnaire/Form"
-import Formuniversitas from "../pages/PerguruanTinggi/components/form-universitas"
+import Formuniversitas from "../pages/MainUniversities/components/universities-form"
 
 const data = [
   {
@@ -46,6 +46,11 @@ const data = [
     component: KegiatanDetail,
   },
   {
+    url: "/category-setting",
+    modul: "activity",
+    component: CategorySetting,
+  },
+  {
     url: "/member",
     modul: "members",
     component: MemberSalman,
@@ -56,24 +61,24 @@ const data = [
     component: MemberSalmanDetail,
   },
   {
-    url: "/PerguruanTinggi",
+    url: "/university",
     modul: "university",
-    component: PerguruanTinggi,
+    component: Universities,
   },
   {
-    url: "/PerguruanTinggi/form-universitas",
-    modul: "university",
-    component: Formuniversitas,
-  },
-  {
-    url: "/PerguruanTinggi/form-universitas/:id",
+    url: "/university/university-form",
     modul: "university",
     component: Formuniversitas,
   },
   {
-    url: "/RuangCurhat",
+    url: "/university/university-form/:id",
+    modul: "university",
+    component: Formuniversitas,
+  },
+  {
+    url: "/chat-room",
     modul: "student-care",
-    component: RuangCurhat,
+    component: ChatRoom,
   },
   {
     url: "/settings",
@@ -93,12 +98,12 @@ const data = [
   {
     url: "/register-admin",
     modul: "users",
-    component: RegisterAdmin,
+    component: AdminCard,
   },
   {
-    url: "/category-setting",
+    url: "/edit-admin/:id",
     modul: "users",
-    component: CategorySetting,
+    component: AdminCard,
   },
 ]
 export default data

@@ -46,7 +46,7 @@ const AdminDetail = () => {
         >
           <AccountCircle fontSize="large" className="logo-detail-admin" />
         </IconButton>
-        <p className="heading-admin">{users.username}</p>
+        <p className="heading-admin">{users?.username}</p>
         <p>Admin</p>
       </div>
       <div className="right-detail-admin">
@@ -69,11 +69,11 @@ const AdminDetail = () => {
             </Button>
             <Button
               size="small"
-              className="edit-button buttons"
+              className="edit-button"
               variant="contained"
               color="secondary"
             >
-              Edit
+              <Link to={`/edit-admin/${id}`}>Edit</Link>
             </Button>
             <Button
               size="small"
@@ -94,26 +94,26 @@ const AdminDetail = () => {
           >
             <ListItem button>
               <ListItemText primary={title.username} />
-              <p>{users.username}</p>
+              <p>{users?.username}</p>
             </ListItem>
             <Divider />
             <ListItem button divider>
               <ListItemText primary={title.firstname} />
-              <p>{users.first_name}</p>
+              <p>{users?.first_name}</p>
             </ListItem>
             <ListItem button>
               <ListItemText primary={title.lastname} />
-              <p>{users.last_name}</p>
+              <p>{users?.last_name}</p>
             </ListItem>
             <Divider light />
             <ListItem button>
               <ListItemText primary={title.email} />
-              <p>{users.email}</p>
+              <p>{users?.email}</p>
             </ListItem>
             <Divider light />
             <ListItem button>
               <ListItemText primary={title.status} />
-              <AdminStatus status={users.active} />
+              <AdminStatus status={users?.active} />
             </ListItem>
             <Divider light />
           </List>
