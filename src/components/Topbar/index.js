@@ -21,28 +21,42 @@ import { AdminContext } from "../../context/AdminContext"
 const Topbar = (props) => {
   let history = useHistory()
   const classes = styled()
+  const token = Cookies.get("token")
+  let user
+  if (token) {
+    user = JSON.parse(Cookies.get("user"))
+  }
   const { state, setState } = React.useContext(AdminContext)
   const [loading, setLoading] = React.useState(true)
-  const isMenuOpen = Boolean(state.anchorEl)
-  const isMobileMenuOpen = Boolean(state.mobileMoreAnchorEl)
+  const [isMenuOpen, setIsMenuOpen] = React.useState(Boolean(state.anchorEl))
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(
+    Boolean(state.mobileMoreAnchorEl)
+  )
   const menuId = "primary-search-account-menu"
   const mobileMenuId = "primary-search-account-menu-mobile"
-  const handleProfileMenuOpen = (event) =>
+  const handleProfileMenuOpen = (event) => {
+    setIsMenuOpen(true)
     setState({ ...state, anchorEl: event.currentTarget })
-  const handleMobileMenuClose = () =>
+  }
+  const handleMobileMenuClose = () => {
+    setIsMenuOpen(false)
+    setIsMobileMenuOpen(false)
     setState({ ...state, mobileMoreAnchorEl: null, anchorEl: null })
+  }
   const handleMenuClose = () => handleMobileMenuClose()
-  const handleMobileMenuOpen = (event) =>
+  const handleMobileMenuOpen = (event) => {
+    setIsMobileMenuOpen(true)
     setState({ ...state, mobileMoreAnchorEl: event.currentTarget })
+  }
   const handleDrawerOpen = () => setState({ ...state, openDrawer: true })
   const handleLogout = () => {
-    Cookies.remove("token")
-    setLoading(false)
-
     setTimeout(() => {
+      handleMenuClose()
+      Cookies.remove("token")
+      Cookies.remove("user")
       history.push("/login")
       setLoading(false)
-    }, 5000)
+    }, 1000)
   }
 
   const renderProfileMenu = (
@@ -121,7 +135,7 @@ const Topbar = (props) => {
           <div className={classes.sectionDesktop}>
             <Typography className={classes.text} component="div">
               <Box lineHeight={3} m={1}>
-                Hello, Good Morning Admin
+                Hello, {user?.username}!
               </Box>
             </Typography>
             <IconButton

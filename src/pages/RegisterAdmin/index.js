@@ -4,7 +4,7 @@ import CardRegisterAdmin from "./components/CardRegisterAdmin"
 
 const RegisterAdmin = () => (
   <div className="container-register-admin">
-    <h1 style={{ color: "#999999" }}>Register Akun Admin</h1>
+    <h1 style={{ color: "#999999" }}>Register Admin Account</h1>
     <div className="content-register-admin">
       <CardRegisterAdmin />
     </div>

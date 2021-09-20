@@ -28,12 +28,10 @@ export const QuestionnaireFormChild = () => {
   useEffect(() => {
     if (reload) {
       setReload(false)
-      console.log("load")
       axios
         .get(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}`)
         .then((res) => {
           const form = JSON.parse(res.data.data[0].form_data) ?? null
-          console.log(form)
           setLoading(false)
           if (Boolean(form)) {
             setData(form)

@@ -15,7 +15,7 @@ import {
   stableSort,
   getComparator,
 } from "../../../components/TableDesign"
-import LoadingAnimation from "../../../components/loading-animation"
+import LoadingAnimation from "../../../components/LoadingAnimation"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 
 const headCells = [
@@ -159,9 +159,7 @@ const MemberTable = () => {
                           {index + 1 + rowsPerPage * page}
                         </TableCell>
                         <TableCell className="table-cell">
-                          <Link to={`/member-detail/${row.id}`}>
-                            {row.name}
-                          </Link>
+                          <Link to={`/member/${row.id}`}>{row.name}</Link>
                         </TableCell>
                         <TableCell className="table-cell">
                           {row.email}
@@ -173,14 +171,14 @@ const MemberTable = () => {
                           {row.university}
                         </TableCell>
                         <TableCell className="table-cell">
-                          {row.jenjang}
+                          {row.role_name}
                         </TableCell>
                         <TableCell className="table-cell">
                           {row.ssc}
                           {row.lmd}
                         </TableCell>
                         <TableCell className="table-cell">
-                          <Link to={`/member-detail/${row.id}`}>View</Link>
+                          <Link to={`/member/${row.id}`}>View</Link>
                         </TableCell>
                       </TableRow>
                     )

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useContext, useEffect } from "react"
 import { Link, useHistory } from "react-router-dom"
 import {
   Drawer,
@@ -10,15 +10,22 @@ import {
   Collapse,
 } from "@material-ui/core/"
 import { ChevronLeft, ExpandLess, ExpandMore } from "@material-ui/icons"
+import Cookies from "js-cookie"
 import { AdminContext } from "../../context/AdminContext"
 import styled from "./styled"
 import data from "./data"
 /* eslint-disable */
-const Sidebar = (props) => {
+const Sidebar = () => {
+  const token = Cookies.get("token")
+  if (!token) {
+    return null
+  }
+  const user = JSON.parse(Cookies.get("user"))
   const history = useHistory()
-  const { state, setState } = React.useContext(AdminContext)
-  const [openCollapse, setOpenCollapse] = React.useState({})
-  const [listDrawer, setListDrawer] = React.useState(null)
+  const { state, setState } = useContext(AdminContext)
+  const [openCollapse, setOpenCollapse] = useState({})
+  const [allowedList, setAllowedList] = useState([])
+  const [listDrawer, setListDrawer] = useState(null)
   const classes = styled()
   const handleCollapseToggle = (index) =>
     setOpenCollapse({
@@ -28,17 +35,32 @@ const Sidebar = (props) => {
   const handleDrawerClose = () => setState({ ...state, openDrawer: false })
   const handleRoute = (url) => history.push(url)
 
-  React.useEffect(() => {
-    if (listDrawer === null) {
+  const filterByGroup = (group) => {
+    let allowed = ["dashboard"]
+    if (group === "ADM") {
+      setAllowedList(data)
+    } else if (group === "KON") {
+      allowed.push("student-care")
+      setAllowedList(data.filter((x) => allowed.includes(x.modul)))
+    } else if (group === "KAP") {
+      allowed.push("activity")
+      setAllowedList(data.filter((x) => allowed.includes(x.modul)))
+    } else if (group === "MAN") {
+      setAllowedList(data)
+    }
+  }
+  useEffect(() => {
+    if (listDrawer === null || listDrawer.length < 1) {
+      filterByGroup(user?.group?.shortname)
       let drawerCollapse = {}
-      data.forEach((element, index) => {
+      allowedList.forEach((element, index) => {
         if (element.children !== undefined)
           drawerCollapse = { ...drawerCollapse, [index.toString()]: false }
       })
-      setListDrawer(data)
+      setListDrawer(allowedList)
       setOpenCollapse(drawerCollapse)
     }
-  }, [listDrawer, openCollapse])
+  }, [listDrawer, openCollapse, allowedList])
 
   return (
     <Drawer

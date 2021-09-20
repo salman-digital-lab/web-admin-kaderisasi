@@ -149,7 +149,6 @@ const AdminQuestionnaireProvider = (props) => {
     axios
       .get(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template/${id}`)
       .then((res) => {
-        console.log(JSON.parse(res.data.data.data))
         const { title, subtitle, form } = JSON.parse(res.data.data.data)
         setState({
           ...state,
@@ -165,17 +164,12 @@ const AdminQuestionnaireProvider = (props) => {
   const createQuestionnaire = () => {
     const { title, subtitle, form } = state
     const body = { title, subtitle, form }
-    console.log({
-      name: title,
-      body: JSON.stringify(body),
-    })
     axios
       .post(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template`, {
         name: title,
         body: JSON.stringify(body),
       })
       .then((res) => {
-        console.log(res)
         setOpenSnackbar(true)
       })
       .catch((err) => console.log(err))
@@ -184,10 +178,6 @@ const AdminQuestionnaireProvider = (props) => {
   const updateQuestionnaire = (id) => {
     const { title, subtitle, form } = state
     const body = { title, subtitle, form }
-    console.log({
-      name: title,
-      body: JSON.stringify(body),
-    })
     axios
       .put(
         process.env.REACT_APP_BASE_URL + `/v1/activity-form-template/${id}`,
@@ -197,7 +187,6 @@ const AdminQuestionnaireProvider = (props) => {
         }
       )
       .then((res) => {
-        console.log(res)
         setOpenSnackbar(true)
       })
       .catch((err) => console.log(err))
@@ -208,13 +197,11 @@ const AdminQuestionnaireProvider = (props) => {
   }
 
   const deleteQuestionnaire = (id) => {
-    console.log(id)
     axios
       .delete(
         process.env.REACT_APP_BASE_URL + `/v1/activity-form-template/${id}`
       )
       .then((res) => {
-        console.log(res)
         setOpenSnackbar(true)
         setReload(true)
       })

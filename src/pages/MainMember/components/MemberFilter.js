@@ -43,12 +43,7 @@ const MemberFilter = () => {
 
   const handleChange = (s) => {
     setUnivName(s)
-    console.log(s)
   }
-
-  // const filterByStatus = (s) => {
-  //   console.log(s)
-  // }
 
   const handleChangeGender = (s) => {
     setFilterMember({

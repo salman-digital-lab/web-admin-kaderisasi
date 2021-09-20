@@ -30,7 +30,6 @@ const QuestionnaireChild = () => {
   useEffect(() => {
     if (reload) {
       getAllQuestionnaire((res) => {
-        console.log(res.data.data)
         setData(res.data.data)
         setDataPerPage(res.data.data.slice(0, maxPerPage))
       })

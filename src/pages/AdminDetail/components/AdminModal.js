@@ -10,7 +10,7 @@ import {
 import "../../../assets/scss/AddActivity.scss"
 import styled from "./styled"
 /* eslint-disable */
-const ModalAdmin = ({ open, onClose }) => {
+const AdminModal = ({ open, onClose }) => {
   const classes = styled()
   return (
     <>
@@ -101,4 +101,4 @@ const ModalAdmin = ({ open, onClose }) => {
     </>
   )
 }
-export default ModalAdmin
+export default AdminModal
