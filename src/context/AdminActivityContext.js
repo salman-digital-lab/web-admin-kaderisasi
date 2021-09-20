@@ -75,7 +75,7 @@ const AdminActivityProvider = (props) => {
         setActivity(res.data)
       })
       .catch((err) => {
-        console.log("Get Activity Error Cuy", err)
+        console.log(err)
       })
   }
 
@@ -115,12 +115,11 @@ const AdminActivityProvider = (props) => {
             })
           })
         }
-        console.log(list)
         setListParticipants(list)
         setActivityParticipants(res.data)
       })
       .catch((err) => {
-        console.log("Get Activity Participants Error Cuy", err)
+        console.log(err)
       })
   }
 
@@ -159,8 +158,7 @@ const AdminActivityProvider = (props) => {
       .post(process.env.REACT_APP_BASE_URL + `/v1/activity`, formData)
       .then((res) => {
         const form = res.data.data
-        window.location.href =
-          "http://localhost:3000/activity-detail/" + form[0].id
+        window.location.href = `${process.env.ADMIN_APP_BASE_URL}/activity/${form[0].id}`
         setActivityForm(form)
       })
       .catch((err) => console.log(err))
@@ -197,7 +195,6 @@ const AdminActivityProvider = (props) => {
     axios
       .delete(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}`)
       .then((res) => {
-        console.log(res)
         setState(null)
       })
       .catch((err) => console.log(err))
@@ -219,7 +216,7 @@ const AdminActivityProvider = (props) => {
         setCategoryList(categories.slice(1, categories.length))
       })
       .catch((err) => {
-        console.log("Get Activity Category Error Cuy", err)
+        console.log(err)
         categories.push({ value: -1, label: "Kategori Tidak Ditemukan." })
         setCategoryList(categories.slice(1, categories.length))
       })
@@ -328,7 +325,7 @@ const AdminActivityProvider = (props) => {
         setUniversityList(universities.slice(1, universities.length))
       })
       .catch((err) => {
-        console.log("Get Activity Category Error Cuy", err)
+        console.log(err)
         universities.push({ value: -1, label: "Universitas Tidak Ditemukan." })
         setUniversityList(universities.slice(1, universities.length))
       })
@@ -350,7 +347,7 @@ const AdminActivityProvider = (props) => {
         setFormTemplateList(template.slice(1, template.length))
       })
       .catch((err) => {
-        console.log("Get Activity Category Error Cuy", err)
+        console.log(err)
         template.push({ value: -1, label: "Kategori Tidak Ditemukan." })
         setFormTemplateList(template.slice(1, template.length))
       })
@@ -373,26 +370,11 @@ const AdminActivityProvider = (props) => {
       .get(process.env.REACT_APP_BASE_URL + `/v1/members` + paramsQuery)
       .then((res) => {
         result = res.data.data.data
-        const list = []
-        if (result.length > 0) {
-          result.forEach((x) => {
-            list.push({
-              id: x.id,
-              name: x.name,
-              email: x.email,
-              phone: x.phone,
-              university: x.university,
-              jenjang: x.role_id,
-              ssc: x.ssc,
-              lmd: x.lmd,
-            })
-          })
-        }
-        setListMembers(list)
+        setListMembers(result)
         setMembers(res.data)
       })
       .catch((err) => {
-        console.log("Get Members Error Cuy", err)
+        console.log(err)
       })
   }
 

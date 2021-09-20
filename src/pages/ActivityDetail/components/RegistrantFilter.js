@@ -121,13 +121,13 @@ const PendaftarFilter = () => {
                   value={6}
                   control={<StyledRadio />}
                   onChange={(e) => filterByJenjang(e.target.value)}
-                  label="Member"
+                  label="Kader"
                 />
                 <FormControlLabel
                   value={7}
                   control={<StyledRadio />}
                   onChange={(e) => filterByJenjang(e.target.value)}
-                  label="Member Lanjut"
+                  label="Kader Lanjut"
                 />
               </RadioGroup>
             </FormControl>

@@ -1,5 +1,6 @@
 import React from "react"
 import { useHistory } from "react-router-dom"
+import Cookies from "js-cookie"
 import ServiceApi from "../utils/service"
 
 export const AdminLoginContext = React.createContext()
@@ -20,13 +21,20 @@ export const AdminLoginProvider = (props) => {
       password,
     })
       .then((res) => {
-        console.log(res)
-        const token = res.data.token.token
-        document.cookie = `token=${token}; max-age=7200; path=/`
-        setValues({ email: "", password: "", showPassword: false })
-        setDisplayEror(false)
-        setLoading(false)
-        history.push("/")
+        if (res.data.status === "SUCCESS") {
+          const token = res.data.token.token
+          const user = res.data.user
+          Cookies.set("token", token, { expires: 1 })
+          Cookies.set("user", user, { expires: 1 })
+          Cookies.set("admin-cookies", { email, password }, { expires: 31 })
+          setDisplayEror(false)
+          setLoading(false)
+          window.location.href = "/"
+        } else {
+          setDisplayEror(true)
+          setLoading(false)
+          setValues({ email: "", password: "", showPassword: false })
+        }
       })
       .catch((err) => {
         console.log(err)

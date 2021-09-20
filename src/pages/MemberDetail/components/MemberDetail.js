@@ -3,10 +3,10 @@ import { useParams, Link } from "react-router-dom"
 import { Block, ArrowBack, Close } from "@material-ui/icons"
 import { Button, Collapse, IconButton } from "@material-ui/core"
 import Alert from "@material-ui/lab/Alert"
-import LoadingAnimation from "../../../components/loading-animation"
+import LoadingAnimation from "../../../components/LoadingAnimation"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 import profile from "../profile.png"
-/* eslint-disable */
+
 const MemberDetail = () => {
   const { id } = useParams()
   const [status, setStatus] = useState(true)
@@ -19,7 +19,7 @@ const MemberDetail = () => {
 
   let data = {}
   if (memberForm?.member?.length > 0) {
-    data = memberForm.member[0]
+    ;[data] = memberForm.member
   }
 
   const handleBlockMember = (idx) => {
@@ -81,7 +81,7 @@ const MemberDetail = () => {
       <div className="button-area">
         <div className="button-left">
           <Button size="small" className="back-button" variant="outlined">
-            <Link to={"/member"}>
+            <Link to="/member">
               <ArrowBack fontSize="inherit" />
               KEMBALI
             </Link>

@@ -192,8 +192,8 @@ export const KegiatanModal = ({ open, onClose }) => {
                 >
                   <MenuItem value={4}>Jamaah</MenuItem>
                   <MenuItem value={5}>Aktivis</MenuItem>
-                  <MenuItem value={6}>Member</MenuItem>
-                  <MenuItem value={7}>Member Lanjut</MenuItem>
+                  <MenuItem value={6}>Kader</MenuItem>
+                  <MenuItem value={7}>Kader Lanjut</MenuItem>
                 </Select>
               </div>
               <div className="detail-activity">

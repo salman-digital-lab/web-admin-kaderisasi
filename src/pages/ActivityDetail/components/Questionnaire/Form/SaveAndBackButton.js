@@ -10,7 +10,6 @@ export const SaveAndBackButton = () => {
   const { createQuestionnaire, updateQuestionnaire } = functions
   const handleBackToMenu = () => history.goBack()
   const handleSave = () => {
-    console.log(params.id, url.pathname, data)
     if (Boolean(url.pathname === "/new-questionnaire")) {
       createQuestionnaire()
     } else {

@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import "../../assets/scss/Login.scss"
 import {
   FormControl,
@@ -15,8 +15,9 @@ import Visibility from "@material-ui/icons/Visibility"
 import VisibilityOff from "@material-ui/icons/VisibilityOff"
 import MuiAlert from "@material-ui/lab/Alert"
 import CircularProgress from "@material-ui/core/CircularProgress"
+import Cookies from "js-cookie"
 import { AdminLoginContext } from "../../context/AdminLoginContext"
-/* eslint-disable */
+
 const useOutlinedInputStyles = makeStyles(() => ({
   root: {
     "&$focused $notchedOutline": {
@@ -35,6 +36,16 @@ const CardLogin = () => {
   const { displayEror, loading, setLoading, values, setValues, functions } =
     useContext(AdminLoginContext)
   const { HandleLogin } = functions
+  const lastLoginData = Cookies.get("admin-cookies")
+  useEffect(() => {
+    if (lastLoginData && !values.email && !values.password) {
+      setValues({
+        ...values,
+        email: JSON.parse(lastLoginData).email,
+        password: JSON.parse(lastLoginData).password,
+      })
+    }
+  }, [])
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value })
@@ -48,33 +59,30 @@ const CardLogin = () => {
     event.preventDefault()
   }
 
-  const handleLogin = (event) => {
-    event.preventDefault()
+  const handleLogin = () => {
     setLoading(true)
-
-    const email = values.email
-    const password = values.password
-
+    const { email, password } = values
     HandleLogin(email, password)
   }
-
-  const Alert = (props) => (
-    <MuiAlert
-      className={"pop-up-error"}
-      elevation={1}
-      variant="filled"
-      {...props}
-    />
-  )
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleLogin()
+    }
+  }
 
   return (
     <Card className="container-card">
-      <CardContent className={"container-input"}>
+      <CardContent className="container-input">
         {displayEror ? (
           <>
-            <Alert severity="error">
+            <MuiAlert
+              className="pop-up-error"
+              elevation={1}
+              variant="filled"
+              severity="error"
+            >
               Email atau Password anda salah, coba lagi!
-            </Alert>
+            </MuiAlert>
           </>
         ) : (
           false
@@ -83,7 +91,7 @@ const CardLogin = () => {
           <InputLabel className="input-label">Email</InputLabel>
           <OutlinedInput
             required
-            type={"text"}
+            type="text"
             value={values.email}
             onChange={handleChange("email")}
             classes={outlinedInputClasses}
@@ -104,6 +112,7 @@ const CardLogin = () => {
             value={values.password}
             onChange={handleChange("password")}
             classes={outlinedInputClasses}
+            onKeyDown={handleKeyDown}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -141,4 +150,5 @@ const CardLogin = () => {
     </Card>
   )
 }
+
 export default CardLogin

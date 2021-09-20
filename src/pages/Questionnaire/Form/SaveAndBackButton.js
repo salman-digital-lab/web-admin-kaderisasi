@@ -7,11 +7,10 @@ const SaveAndBackButton = () => {
   const history = useHistory()
   const url = useLocation()
   const params = useParams()
-  const { data, functions } = React.useContext(AdminQuestionnaireContext)
+  const { functions } = React.useContext(AdminQuestionnaireContext)
   const { createQuestionnaire, updateQuestionnaire } = functions
   const handleBackToMenu = () => history.push("/questionnaire")
   const handleSave = () => {
-    console.log(params.id, url.pathname, data)
     if (url.pathname === "/new-questionnaire") {
       createQuestionnaire()
     } else {

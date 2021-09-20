@@ -59,7 +59,7 @@ const CardRegisterAdmin = () => {
           className="btn-register"
           onClick={() => formRef.current.reportValidity()}
         >
-          REGISTER AKUN ADMIN
+          Register Admin Account
         </Button>
       </form>
     </div>

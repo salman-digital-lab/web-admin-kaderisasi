@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import PropTypes from "prop-types"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
-import LoadingAnimation from "../../../components/loading-animation"
+import LoadingAnimation from "../../../components/LoadingAnimation"
 import { RegistrantStatus } from "../../../components/Statuses/RegistrantStatus"
 
 const TimelineItem = ({ status, beginDate, name }) => (
@@ -14,7 +14,7 @@ const TimelineItem = ({ status, beginDate, name }) => (
       <time>{new Date(beginDate).toLocaleDateString()}</time>
       <p>{name}</p>
       {/* {data.activity_id && (
-        <Link to={"/activity-detail/" + data.activity_id}>
+        <Link to={"/activity/" + data.activity_id}>
           {data.category_name}
         </Link>
       )} */}

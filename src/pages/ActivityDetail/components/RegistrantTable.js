@@ -17,7 +17,7 @@ import {
   getComparator,
 } from "../../../components/TableDesign"
 import { RegistrantStatus } from "../../../components/Statuses/RegistrantStatus"
-import LoadingAnimation from "../../../components/loading-animation"
+import LoadingAnimation from "../../../components/LoadingAnimation"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 
 const headCells = [
@@ -180,9 +180,7 @@ const PendaftarTable = () => {
                       </TableCell>
                       <TableCell className="table-cell">
                         <div className="text-ellipsis">
-                          <Link to={`/member-detail/${row.id}`}>
-                            {row.name}
-                          </Link>
+                          <Link to={`/member/${row.id}`}>{row.name}</Link>
                         </div>
                         {row.jenjang}
                       </TableCell>
@@ -198,7 +196,7 @@ const PendaftarTable = () => {
                         <RegistrantStatus status={row.status.toLowerCase()} />
                       </TableCell>
                       <TableCell className="table-cell">
-                        <Link to={`/member-detail/${row.id}`}>View</Link>
+                        <Link to={`/member/${row.id}`}>View</Link>
                       </TableCell>
                     </TableRow>
                   ))}
