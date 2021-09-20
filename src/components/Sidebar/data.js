@@ -4,8 +4,6 @@ import EventAvailableIcon from "@material-ui/icons/EventAvailable"
 import GroupIcon from "@material-ui/icons/Group"
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer"
 import SchoolIcon from "@material-ui/icons/School"
-import AccountBalanceIcon from "@material-ui/icons/AccountBalance"
-import PublicIcon from "@material-ui/icons/Public"
 import SettingsIcon from "@material-ui/icons/Settings"
 import LibraryAddCheckIcon from "@material-ui/icons/LibraryAddCheck"
 
@@ -58,28 +56,6 @@ const data = [
   },
   {
     id: 7,
-    name: "Data Administrasi Regional",
-    icon: <AccountBalanceIcon />,
-    children: [
-      { id: 6.1, name: "Text 1", url: "/DataAdministrasiRegional" },
-      { id: 6.2, name: "Text 2", url: "/DataAdministrasiRegional" },
-      { id: 6.3, name: "Text 3", url: "/DataAdministrasiRegional" },
-    ],
-    modul: "dar",
-  },
-  {
-    id: 8,
-    name: "Public Content Management",
-    icon: <PublicIcon />,
-    children: [
-      { id: 7.1, name: "Text 1", url: "/PublicContentManagement" },
-      { id: 7.2, name: "Text 2", url: "/PublicContentManagement" },
-      { id: 7.3, name: "Text 3", url: "/PublicContentManagement" },
-    ],
-    modul: "pcm",
-  },
-  {
-    id: 9,
     name: "Setting",
     icon: <SettingsIcon />,
     modul: "users",

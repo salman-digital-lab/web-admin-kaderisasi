@@ -54,7 +54,7 @@ const Topbar = (props) => {
       handleMenuClose()
       Cookies.remove("token")
       Cookies.remove("user")
-      history.push("/login")
+      window.location.href = "/login"
       setLoading(false)
     }, 1000)
   }

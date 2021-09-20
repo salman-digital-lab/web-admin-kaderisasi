@@ -29,7 +29,7 @@ export const AdminLoginProvider = (props) => {
           Cookies.set("admin-cookies", { email, password }, { expires: 31 })
           setDisplayEror(false)
           setLoading(false)
-          history.push("/")
+          window.location.href = "/"
         } else {
           setDisplayEror(true)
           setLoading(false)

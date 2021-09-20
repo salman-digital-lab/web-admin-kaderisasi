@@ -17,10 +17,10 @@ import data from "./data"
 /* eslint-disable */
 const Sidebar = () => {
   const token = Cookies.get("token")
-  if (!token) {
-    return null
+  let user
+  if (token) {
+    user = JSON.parse(Cookies.get("user"))
   }
-  const user = JSON.parse(Cookies.get("user"))
   const history = useHistory()
   const { state, setState } = useContext(AdminContext)
   const [openCollapse, setOpenCollapse] = useState({})

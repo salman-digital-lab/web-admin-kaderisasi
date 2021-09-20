@@ -1,41 +1,43 @@
-import React, { useEffect, useState } from "react"
+import React, { useState, useEffect } from "react"
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom"
 import Cookies from "js-cookie"
 import Login from "../pages/Login"
-import NavigationAdmin from "../components/NavigationAdmin"
+import AdminNavigation from "../components/AdminNavigation"
 import AdminProvider from "../context/AdminContext"
 import NotFound from "../pages/Error/NotFound"
 import data from "./data"
 
 /* eslint-disable */
-const Router = (props) => {
+const Router = () => {
   const token = Cookies.get("token")
   let user
-  if (token) {
-    user = JSON.parse(Cookies.get("user"))
-  }
-  const [allowedList, setAllowedList] = useState(null)
+  const [allowedList, setAllowedList] = useState([])
+
+  useEffect(() => {
+    if (token) {
+      user = JSON.parse(Cookies.get("user"))
+    }
+    if (allowedList.length < 1) {
+      filterByGroup(user ? user.group?.shortname : null)
+    }
+  }, [allowedList, token])
+
   const LoginRoute = ({ ...props }) => {
-    if (Cookies.get("token") !== undefined) {
+    if (token !== undefined ) {
       return <Redirect to="/" />
     }
     return <Route {...props} />
   }
 
   const Routes = ({ ...props }) => {
-    if (
-      Cookies.get("token") === undefined ||
-      Cookies.get("user") === undefined
-    ) {
-      Cookies.remove("token")
-      Cookies.remove("user")
+    if (token === undefined) {
       return <Redirect to="/login" />
     }
     return <Route {...props} />
   }
 
   const filterByGroup = (group) => {
-    let allowed = ["dashboard", "*"]
+    let allowed = ["dashboard"]
     if (group === "ADM") {
       setAllowedList(data)
     } else if (group === "KON") {
@@ -46,20 +48,17 @@ const Router = (props) => {
       setAllowedList(data.filter((x) => allowed.includes(x.modul)))
     } else if (group === "MAN") {
       setAllowedList(data)
+    } else {
+      setAllowedList(data.filter((x) => allowed.includes(x.modul)))
     }
   }
-  useEffect(() => {
-    if (allowedList === null) {
-      filterByGroup(user?.group?.shortname)
-    }
-  }, [allowedList])
 
   return (
     <BrowserRouter>
       <Switch>
         <LoginRoute exact path="/login" component={Login} />
         <AdminProvider>
-          <NavigationAdmin>
+          <AdminNavigation>
             {allowedList?.map((x) => {
               const RouteInner = x.component
               return (
@@ -71,9 +70,9 @@ const Router = (props) => {
                 />
               )
             })}
-          </NavigationAdmin>
+          </AdminNavigation>
         </AdminProvider>
-        <Route render={() => <NotFound />} />
+        <Routes render={() => <NotFound />} />
       </Switch>
     </BrowserRouter>
   )
