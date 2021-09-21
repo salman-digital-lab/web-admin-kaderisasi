@@ -6,6 +6,6 @@ export const AdminStatus = ({status}) => {
     case "1":
       return <Chip className="success" label="active" />
     default:
-      return <Chip color="waiting" label="inactive" />
+      return <Chip label="inactive" />
   }
 }

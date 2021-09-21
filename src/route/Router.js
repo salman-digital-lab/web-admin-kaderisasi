@@ -18,12 +18,12 @@ const Router = () => {
       user = JSON.parse(Cookies.get("user"))
     }
     if (allowedList.length < 1) {
-      filterByGroup(user ? user.group?.shortname : null)
+      filterByModul(user ? user.privileges : null)
     }
   }, [allowedList, token])
 
   const LoginRoute = ({ ...props }) => {
-    if (token !== undefined ) {
+    if (token !== undefined) {
       return <Redirect to="/" />
     }
     return <Route {...props} />
@@ -36,18 +36,12 @@ const Router = () => {
     return <Route {...props} />
   }
 
-  const filterByGroup = (group) => {
+  const filterByModul = (privileges) => {
     let allowed = ["dashboard"]
-    if (group === "ADM") {
-      setAllowedList(data)
-    } else if (group === "KON") {
-      allowed.push("student-care")
+    if (privileges) {
+      const priv = privileges.map(({ name }) => name)
+      allowed = [...allowed, ...priv]
       setAllowedList(data.filter((x) => allowed.includes(x.modul)))
-    } else if (group === "KAP") {
-      allowed.push("activity")
-      setAllowedList(data.filter((x) => allowed.includes(x.modul)))
-    } else if (group === "MAN") {
-      setAllowedList(data)
     } else {
       setAllowedList(data.filter((x) => allowed.includes(x.modul)))
     }

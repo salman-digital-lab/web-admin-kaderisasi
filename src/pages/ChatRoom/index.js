@@ -1,9 +1,9 @@
 import React from "react"
 
-const RuangCurhat = () => (
+const ChatRoom = () => (
   <>
     <h1 style={{ color: "#999999" }}>Ruang Curhat</h1>
   </>
 )
 
-export default RuangCurhat
+export default ChatRoom
