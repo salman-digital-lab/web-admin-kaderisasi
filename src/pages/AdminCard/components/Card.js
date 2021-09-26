@@ -94,6 +94,7 @@ const Card = (props) => {
     <div className="card-register-admin">
       <Collapse in={isSubmitSucces === "SUCCESS"}>
         <Alert
+        className="alert-popup"
           action={
             <IconButton
               aria-label="close"
@@ -184,18 +185,16 @@ const Card = (props) => {
           defaultValue={payload?.username}
           onChange={(event) => handleForm(event.target.value, "username")}
         />
-        {!isUpdate && (
-          <TextField
-            className="input-register"
-            required
-            label="Password"
-            type="password"
-            helperText={text}
-            fullWidth
-            placeholder="Password"
-            onChange={(event) => handleForm(event.target.value, "password")}
-          />
-        )}
+        <TextField
+          className="input-register"
+          required
+          label="Password"
+          type="password"
+          helperText={text}
+          fullWidth
+          placeholder="Password"
+          onChange={(event) => handleForm(event.target.value, "password")}
+        />
         <Select
           className="input-register"
           required
