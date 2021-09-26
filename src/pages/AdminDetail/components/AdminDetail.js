@@ -7,13 +7,12 @@ import {
   ListItemText,
   IconButton,
 } from "@material-ui/core"
-import { ArrowBack, Delete, AccountCircle } from "@material-ui/icons"
+import { ArrowBack, AccountCircle } from "@material-ui/icons"
 import { useParams, Link } from "react-router-dom"
 import ModalAdmin from "./AdminModal"
 import { AdminContext } from "../../../context/AdminContext"
 import { AdminStatus } from "../../../components/Statuses"
 
-/* eslint-disable */
 const AdminDetail = () => {
   const { id } = useParams()
   const { users, functions } = useContext(AdminContext)
@@ -31,9 +30,9 @@ const AdminDetail = () => {
     email: <b>Email</b>,
     status: <b>Status</b>,
   })
-  const handleOpen = () => {
-    setOpen(true)
-  }
+  // const handleOpen = () => {
+  //   setOpen(true)
+  // }
   const handleClose = () => {
     setOpen(false)
   }
@@ -53,13 +52,13 @@ const AdminDetail = () => {
       <div className="right-detail-admin">
         <div className="nav-detail-admin">
           <Button size="small" className="back-button" variant="outlined">
-            <Link to={"/user"}>
+            <Link to="/user">
               <ArrowBack fontSize="inherit" />
               KEMBALI
             </Link>
           </Button>
           <div className="button-group">
-            <Button
+            {/* <Button
               size="small"
               className="buttons"
               variant="contained"
@@ -67,7 +66,7 @@ const AdminDetail = () => {
               onClick={handleOpen}
             >
               Akses Fitur
-            </Button>
+            </Button> */}
             <Button
               size="small"
               className="edit-button"
@@ -76,7 +75,7 @@ const AdminDetail = () => {
             >
               <Link to={`/edit-admin/${id}`}>Edit</Link>
             </Button>
-            <Button
+            {/* <Button
               size="small"
               className="delete-button"
               variant="contained"
@@ -84,7 +83,7 @@ const AdminDetail = () => {
             >
               <Delete fontSize="small" />
               Hapus
-            </Button>
+            </Button> */}
           </div>
         </div>
         <div className="content-detail-admin">

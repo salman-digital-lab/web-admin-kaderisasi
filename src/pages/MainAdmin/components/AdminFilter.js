@@ -1,18 +1,7 @@
 import React, { useContext } from "react"
-import {
-  Card,
-  CardContent,
-  TextField,
-  Box,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Button,
-} from "@material-ui/core"
+import { Card, CardContent, TextField, Box, Button } from "@material-ui/core"
 import { Link } from "react-router-dom"
 import { AdminContext } from "../../../context/AdminContext"
-import StyledRadio from "../../../components/RadioButton"
 
 const AdminFilter = () => {
   const { filterUser, setFilterUser } = useContext(AdminContext)
@@ -27,13 +16,13 @@ const AdminFilter = () => {
     }
   }
 
-  const handleChangeGender = (s) => {
-    setFilterUser({
-      ...filterUser,
-      gender: s,
-      filter: true,
-    })
-  }
+  // const handleChangeGender = (s) => {
+  //   setFilterUser({
+  //     ...filterUser,
+  //     gender: s,
+  //     filter: true,
+  //   })
+  // }
 
   return (
     <>
@@ -97,7 +86,7 @@ const AdminFilter = () => {
               />
             </RadioGroup>
           </FormControl> */}
-            <FormControl component="fieldset" className="radio-button jenkel">
+            {/* <FormControl component="fieldset" className="radio-button jenkel">
               <FormLabel component="legend">Jenis Kelamin</FormLabel>
               <RadioGroup
                 defaultValue=""
@@ -123,7 +112,7 @@ const AdminFilter = () => {
                   label="Perempuan"
                 />
               </RadioGroup>
-            </FormControl>
+            </FormControl> */}
           </Box>
         </CardContent>
       </Card>

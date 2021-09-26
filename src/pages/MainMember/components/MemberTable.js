@@ -157,7 +157,9 @@ const MemberTable = () => {
                           {index + 1 + rowsPerPage * page}
                         </TableCell>
                         <TableCell className="table-cell">
-                          <Link to={`/member/${row.id}`}>{row.name}</Link>
+                          <Link to={`/member/${row.id}`}>
+                            {row.name} ({row.gender})
+                          </Link>
                         </TableCell>
                         <TableCell className="table-cell">
                           {row.email}
