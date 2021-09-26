@@ -95,7 +95,7 @@ const AdminDetail = () => {
           >
             <ListItem button>
               <ListItemText primary={title.displayname} />
-              <p>{users?.displayname}</p>
+              <p>{users?.display_name}</p>
             </ListItem>
             <Divider />
             <ListItem button divider>
