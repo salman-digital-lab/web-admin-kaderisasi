@@ -53,11 +53,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-let params = {
-  page: 1,
-  page_size: 5,
-}
-
 const MemberTable = () => {
   const classes = useStyles()
   const [order, setOrder] = useState("asc")
@@ -68,7 +63,10 @@ const MemberTable = () => {
   const { listMembers, members, filterMember, setFilterMember, functions } =
     useContext(AdminActivityContext)
   const { getMembers } = functions
-
+  let params = {
+    page: 1,
+    page_size: 5,
+  }
   if (listMembers.length < 1 && status) {
     getMembers(params)
     setStatus(false)

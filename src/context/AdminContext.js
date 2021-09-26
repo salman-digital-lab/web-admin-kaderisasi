@@ -17,14 +17,15 @@ const AdminProvider = (props) => {
   })
   const [users, setUsers] = useState(null)
   const [listUsers, setListUsers] = useState([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [isSubmitSucces, SetIsSubmitSuccess] = useState("")
   const AxiosInterceptor = axios.interceptors.request.use((config) => {
-    if (Cookie.get("token")){
+    if (Cookie.get("token")) {
       config.headers.Authorization = `Bearer ${Cookie.get("token")}`
       return config
     } else {
       window.location.href = "/login"
-    }    
+    }
   })
 
   /*
@@ -75,10 +76,69 @@ const AdminProvider = (props) => {
       })
   }
 
+  /*
+    @params
+    formData: object
+  
+    Create new user
+  */
+  const addUser = (formData) => {
+    axios
+      .post(process.env.REACT_APP_BASE_URL + `/v1/users`, formData)
+      .then((res) => {
+        const result = res.data.data
+        window.location.href = `/user/${result.id}`
+        setUsers(result)
+      })
+      .catch((err) => {
+        console.log(err)
+        SetIsSubmitSuccess("FAILED")
+      })
+  }
+
+  /*
+      @params
+      id: integer
+      formData: object
+    
+      Update user where id = params.id
+    */
+  const editUser = async (id, formData) => {
+    axios
+      .put(process.env.REACT_APP_BASE_URL + `/v1/users/${id}`, formData)
+      .then((res) => {
+        const result = res.data
+        SetIsSubmitSuccess(result.status)
+      })
+      .catch((err) => {
+        console.log(err)
+        return false
+      })
+  }
+
+  /*
+      @params
+      id: integer
+    
+      Delete user where id = params.id
+    */
+  const deleteUser = (id) => {
+    axios
+      .delete(process.env.REACT_APP_BASE_URL + `/v1/user/${id}`)
+      .then((res) => {
+        const result = res.data
+        SetIsSubmitSuccess(result.status)
+      })
+      .catch((err) => console.log(err))
+  }
+
   const functions = {
     AxiosInterceptor,
     getUsers,
     getUserDetail,
+    addUser,
+    editUser,
+    deleteUser,
   }
 
   return (
@@ -91,6 +151,8 @@ const AdminProvider = (props) => {
         filterUser,
         setFilterUser,
         loading,
+        isSubmitSucces,
+        SetIsSubmitSuccess,
         functions,
       }}
     >

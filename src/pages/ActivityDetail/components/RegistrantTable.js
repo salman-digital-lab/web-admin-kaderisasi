@@ -54,11 +54,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-let params = {
-  page: 1,
-  perPage: 5,
-}
-
 const PendaftarTable = () => {
   const classes = useStyles()
   const { id } = useParams()
@@ -75,7 +70,10 @@ const PendaftarTable = () => {
     functions,
   } = useContext(AdminActivityContext)
   const { getActivityParticipants } = functions
-
+  let params = {
+    page: 1,
+    perPage: 5,
+  }
   if (listParticipants.length < 1 && status) {
     getActivityParticipants(id, params)
     setStatus(false)

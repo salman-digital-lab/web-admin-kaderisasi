@@ -52,11 +52,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-let params = {
-  page: 1,
-  perPage: 5,
-}
-
 const AdminTable = () => {
   const classes = useStyles()
   const [order, setOrder] = useState("asc")
@@ -67,6 +62,10 @@ const AdminTable = () => {
   const { listUsers, users, filterUser, setFilterUser, loading, functions } =
     useContext(AdminContext)
   const { getUsers } = functions
+  let params = {
+    page: 1,
+    perPage: 5,
+  }
   useEffect(() => {
     getUsers(params)
   }, [])
