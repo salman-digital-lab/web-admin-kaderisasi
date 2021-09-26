@@ -55,11 +55,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-let params = {
-  page: 1,
-  perPage: 5,
-}
-
 const KegiatanTable = () => {
   const classes = useStyles()
   const [order, setOrder] = useState("asc")
@@ -75,6 +70,11 @@ const KegiatanTable = () => {
     functions,
   } = useContext(AdminActivityContext)
   const { getActivity } = functions
+
+  let params = {
+    page: 1,
+    perPage: 5,
+  }
 
   if (listActivity.length < 1 && status) {
     getActivity(params)

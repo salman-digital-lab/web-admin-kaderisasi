@@ -24,6 +24,7 @@ const AdminDetail = () => {
 
   const [open, setOpen] = useState(false)
   const [title] = useState({
+    displayname: <b>Display Name</b>,
     username: <b>Username</b>,
     firstname: <b>First Name</b>,
     lastname: <b>Last Name</b>,
@@ -93,8 +94,8 @@ const AdminDetail = () => {
             aria-label="mailbox folders"
           >
             <ListItem button>
-              <ListItemText primary={title.username} />
-              <p>{users?.username}</p>
+              <ListItemText primary={title.displayname} />
+              <p>{users?.displayname}</p>
             </ListItem>
             <Divider />
             <ListItem button divider>
@@ -109,6 +110,10 @@ const AdminDetail = () => {
             <ListItem button>
               <ListItemText primary={title.email} />
               <p>{users?.email}</p>
+            </ListItem>
+            <ListItem button>
+              <ListItemText primary={title.username} />
+              <p>{users?.username}</p>
             </ListItem>
             <Divider light />
             <ListItem button>
