@@ -57,7 +57,11 @@ const AdminChatRoomProvider = (props) => {
       .get(`${process.env.REACT_APP_BASE_URL}/v1/studentCare/${id}`)
       .then((res) => {
         const data = res.data.data
-        setStudentCare(data)
+        if (data.length > 0){
+          setStudentCare(data[0])
+        } else {
+          setStudentCare(null)
+        }
         setLoading(false)
       })
       .catch((err) => {
