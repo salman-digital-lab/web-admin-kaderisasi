@@ -14,13 +14,13 @@ import {
   FormControlLabel,
 } from "@material-ui/core"
 import { useTheme } from "@material-ui/core/styles"
-import { AdminActivityContext } from "../../../context/AdminActivityContext"
+import { AdminMemberContext } from "../../../context/AdminMemberContext"
 import StyledRadio from "../../../components/RadioButton"
 import { MenuProps, getStyles } from "../../../components/Select"
 
 const MemberFilter = () => {
   const theme = useTheme()
-  const { filterMember, setFilterMember } = useContext(AdminActivityContext)
+  const { filterMember, setFilterMember } = useContext(AdminMemberContext)
   const [univName, setUnivName] = useState("all")
   const names = [
     { value: "all", label: "Semua Perguruan Tinggi" },

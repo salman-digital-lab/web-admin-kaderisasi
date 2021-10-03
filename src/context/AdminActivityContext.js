@@ -25,20 +25,6 @@ const AdminActivityProvider = (props) => {
   const [activityForm, setActivityForm] = useState([])
   const [universityList, setUniversityList] = useState([])
 
-  const [filterMember, setFilterMember] = useState({
-    filter: false,
-    gender: "",
-    ssc: -1,
-    lmd: -1,
-    search_query: "",
-  })
-  const [members, setMembers] = useState([])
-  const [listMembers, setListMembers] = useState([])
-  const [memberForm, setMemberForm] = useState({})
-  const [memberActivities, setMemberActivities] = useState(null)
-  const [blockMemberResp, setBlockMemberResp] = useState({})
-  const [unblockMemberResp, setUnblockMemberResp] = useState({})
-
   /*
     Get all activity
   */
@@ -353,111 +339,6 @@ const AdminActivityProvider = (props) => {
       })
   }
 
-  /*
-    Get all Members
-  */
-  const getMembers = async (params) => {
-    setMembers({})
-    let paramsQuery = "?"
-    Object.keys(params).map((x, i) => {
-      i === Object.keys(params).length - 1
-        ? (paramsQuery += x + "=" + params[x].toString())
-        : (paramsQuery += x + "=" + params[x].toString() + "&")
-    })
-    let result = null
-
-    axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/members` + paramsQuery)
-      .then((res) => {
-        result = res.data.data.data
-        setListMembers(result)
-        setMembers(res.data)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
-
-  /*
-    @params
-    id: integer
-  
-    Get member where id = params.id
-  */
-  const getMemberDetail = async (id) => {
-    axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/member/${id}`)
-      .then((res) => {
-        const form = res.data.data
-        setMemberForm(form)
-        return form
-      })
-      .catch((err) => {
-        console.log(err)
-        return false
-      })
-  }
-
-  /*
-    @params
-    id: integer
-  
-    Get member where id = params.id
-  */
-  const getMemberActivities = async (id) => {
-    axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/member/${id}/activities`)
-      .then((res) => {
-        const form = res.data.data.activities
-        setMemberActivities(form)
-        return form
-      })
-      .catch((err) => {
-        console.log(err)
-        return false
-      })
-  }
-
-  /*
-    @params
-    id: integer
-  
-    block member where id = params.id
-  */
-  const blockMemberById = (id) => {
-    setBlockMemberResp({})
-    axios
-      .patch(process.env.REACT_APP_BASE_URL + `/v1/member/${id}/block`)
-      .then((res) => {
-        const data = res.data
-        setBlockMemberResp(data)
-      })
-      .catch((err) => {
-        console.log(err)
-        return false
-      })
-  }
-
-  /*
-    @params
-    id: integer
-  
-    unblock member where id = params.id
-  */
-  const unblockMemberById = (id) => {
-    setUnblockMemberResp({})
-    axios
-      .patch(process.env.REACT_APP_BASE_URL + `/v1/member/${id}/unblock`)
-      .then((res) => {
-        const data = res.data
-        setUnblockMemberResp(data)
-      })
-      .catch((err) => {
-        console.log(err)
-        return false
-      })
-  }
-
   const functions = {
     getActivity,
     getActivityDetail,
@@ -472,11 +353,6 @@ const AdminActivityProvider = (props) => {
     deleteActivityCategory,
     getAllUniversities,
     getAllFormTemplate,
-    getMembers,
-    getMemberDetail,
-    getMemberActivities,
-    blockMemberById,
-    unblockMemberById,
   }
 
   return (
@@ -497,14 +373,6 @@ const AdminActivityProvider = (props) => {
         categoryList,
         universityList,
         formTemplateList,
-        members,
-        listMembers,
-        memberForm,
-        memberActivities,
-        filterMember,
-        setFilterMember,
-        blockMemberResp,
-        unblockMemberResp,
         functions,
       }}
     >

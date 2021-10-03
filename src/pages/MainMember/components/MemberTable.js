@@ -16,7 +16,7 @@ import {
   getComparator,
 } from "../../../components/TableDesign"
 import LoadingAnimation from "../../../components/LoadingAnimation"
-import { AdminActivityContext } from "../../../context/AdminActivityContext"
+import { AdminMemberContext } from "../../../context/AdminMemberContext"
 
 const headCells = [
   { id: "no", numeric: true, label: "No." },
@@ -61,7 +61,7 @@ const MemberTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [status, setStatus] = useState(true)
   const { listMembers, members, filterMember, setFilterMember, functions } =
-    useContext(AdminActivityContext)
+    useContext(AdminMemberContext)
   const { getMembers } = functions
   let params = {
     page: 1,
