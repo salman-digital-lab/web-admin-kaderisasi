@@ -2,10 +2,11 @@ import axios from "axios"
 import React, { useContext, useEffect, useState } from "react"
 import { Bar } from "react-chartjs-2"
 import { AdminDashboardContext } from "../../../../context/AdminDashboardContext"
+/* eslint-disable */
 
 const GenderChart = () => {
   const { functions } = useContext(AdminDashboardContext)
-  const { colors, jenisGender } = functions
+  const { colors, jenis_gender } = functions
   const [myJSONData, setMyJSONData] = useState()
 
   // sort by value
@@ -19,6 +20,7 @@ const GenderChart = () => {
     status: null,
   })
 
+  
   useEffect(() => {
     if (barData.status === null) {
       axios
@@ -27,8 +29,12 @@ const GenderChart = () => {
         )
         .then((res) => {
           const result = res.data.data
-
-          setMyJSONData(result)
+          const filterResult = result.filter((e) => {
+            return e.gender !== null
+          })
+          // console.log(filterResult)
+          console.log(result)
+          setMyJSONData(filterResult)
         })
         .catch((error) => {
           console.log(error)
@@ -55,7 +61,7 @@ const GenderChart = () => {
         // otherwise create it
         if (area === undefined) {
           area = {
-            label: jenisGender[barData.datasets.length],
+            label: jenis_gender[barData.datasets.length],
             data: barData.labels.map(() => 0),
             fill: false,
             backgroundColor: colors[barData.datasets.length],
@@ -69,6 +75,7 @@ const GenderChart = () => {
       }
     })
   }
+  
   return (
     <>
       <div className="container-chart">

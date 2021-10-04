@@ -8,7 +8,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
 import { useParams } from "react-router"
 import embed from "embed-video"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
-import DetailKegiatanModal from "../../../components/Modals/detail-kegiatan-modal"
+import DetailKegiatanModal from "../../../components/modals/detail-kegiatan-modal"
 import LoadingAnimation from "../../../components/LoadingAnimation"
 
 const FormKegiatan = () => {

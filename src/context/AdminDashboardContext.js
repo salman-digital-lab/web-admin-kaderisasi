@@ -10,7 +10,7 @@ export const AdminDashboardProvider = (props) => {
     jumlah_member: 0,
     jamaah: 0,
     aktivis: 0,
-    member: 0,
+    kader: 0,
     status: null,
   })
   const [AktivisState, setAktivisState] = useState()
@@ -86,11 +86,12 @@ export const AdminDashboardProvider = (props) => {
       )
       .then((res) => {
         const data = res.data.data
+        console.log(data)
         const tmp = {
           jumlah: 0,
           aktivis: 0,
           jamaah: 0,
-          member: 0,
+          kader: 0,
         }
 
         data.forEach((e) => {
@@ -98,8 +99,8 @@ export const AdminDashboardProvider = (props) => {
             tmp.aktivis = e.jumlah
           } else if (e.name === "Jamaah") {
             tmp.jamaah = e.jumlah
-          } else if (e.name === "Member") {
-            tmp.member = e.jumlah
+          } else if (e.name === "Kader") {
+            tmp.kader = e.jumlah
           } else if (e.name === "jumlah_member") {
             tmp.jumlah = e.value
           }
@@ -110,7 +111,7 @@ export const AdminDashboardProvider = (props) => {
           jumlah_member: tmp.jumlah,
           jamaah: tmp.jamaah,
           aktivis: tmp.aktivis,
-          member: tmp.member,
+          kader: tmp.kader,
           status: "success",
         })
       })

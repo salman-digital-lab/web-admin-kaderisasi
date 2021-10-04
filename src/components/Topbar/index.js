@@ -10,7 +10,7 @@ import {
   Box,
 } from "@material-ui/core"
 import { AccountCircle, MoreVert, Menu as MenuIcon } from "@material-ui/icons"
-import { useHistory } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import Cookies from "js-cookie"
 import styled from "./styled"
@@ -69,7 +69,7 @@ const Topbar = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <Link to="/profile"><MenuItem onClick={handleMenuClose}>Profile</MenuItem></Link>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={handleLogout}>
         Logout
