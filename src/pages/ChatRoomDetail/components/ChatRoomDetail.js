@@ -27,9 +27,9 @@ const AdminDetail = () => {
   console.log(studentCare)
   const [open, setOpen] = useState(false)
   const [title] = useState({
-    problem_owner_name: <b>Nama Client</b>,
-    counselor_name: <b>Nama Konselor</b>,
-    counselor_gender: <b>Preferensi Konselor</b>,
+    problem_owner_name: <b>Nama Temhat</b>,
+    counselor_name: <b>Nama Pendengar</b>,
+    counselor_gender: <b>Preferensi Pendengar</b>,
     problem_owner: <b>Pemilik Masalah</b>,
     problem_category: <b>Kategori</b>,
     technical_handling: <b>Metode Penanganan</b>,
@@ -64,10 +64,10 @@ const AdminDetail = () => {
                   size="small"
                   className="edit-button"
                   variant="contained"
-                  color="secondary"
+                  color="primary"
                   onClick={handleEdit}
                 >
-                  Sunting
+                  Edit
                 </Button>
                 <Button
                   size="small"
@@ -83,13 +83,16 @@ const AdminDetail = () => {
             ) : (
               <>
                 <Button
+                  size="small"
                   variant="contained"
                   color="secondary"
+                  className="cancel-button"
                   onClick={handleEdit}
                 >
                   Batalkan
                 </Button>
                 <Button
+                  size="small"
                   className="button-top-tambah-kegiatan"
                   variant="contained"
                   color="primary"
@@ -119,7 +122,7 @@ const AdminDetail = () => {
                 </ListItem>
                 <ListItem button divider>
                   <ListItemText primary={title.technical_handling} />
-                  <p>{studentCare?.last_name}</p>
+                  <p>{studentCare?.technical_handling}</p>
                 </ListItem>
                 <ListItem button divider>
                   <ListItemText primary={title.problem_owner} />
@@ -127,7 +130,9 @@ const AdminDetail = () => {
                 </ListItem>
                 <ListItem button divider>
                   <ListItemText primary={title.createdAt} />
-                  <p>{moment(studentCare?.created_at).format("D MMM YYYY HH:mm")}</p>
+                  <p>
+                    {moment(studentCare?.created_at).format("D MMM YYYY HH:mm")}
+                  </p>
                 </ListItem>
                 <Divider light />
               </List>
@@ -154,7 +159,9 @@ const AdminDetail = () => {
                 </ListItem>
                 <ListItem button divider>
                   <ListItemText primary={title.updatedAt} />
-                  <p>{moment(studentCare?.updated_at).format("D MMM YYYY HH:mm")}</p>
+                  <p>
+                    {moment(studentCare?.updated_at).format("D MMM YYYY HH:mm")}
+                  </p>
                 </ListItem>
                 <Divider light />
               </List>

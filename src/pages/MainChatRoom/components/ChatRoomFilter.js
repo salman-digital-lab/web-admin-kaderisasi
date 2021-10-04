@@ -1,6 +1,5 @@
 import React, { useContext } from "react"
-import { Card, CardContent, TextField, Box, Button } from "@material-ui/core"
-import { Link } from "react-router-dom"
+import { Card, CardContent, TextField, Box } from "@material-ui/core"
 import { AdminChatRoomContext } from "../../../context/AdminChatRoomContext"
 
 const ChatRoomFilter = () => {
@@ -29,26 +28,10 @@ const ChatRoomFilter = () => {
       <Card>
         <CardContent className="filter-content">
           <Box pl={5} pr={5}>
-            <Link to="/register-admin">
-              <Button
-                variant="contained"
-                color="primary"
-                className="btn-tambah-kegiatan"
-              >
-                TAMBAH AKUN ADMIN
-              </Button>
-            </Link>
-          </Box>
-        </CardContent>
-      </Card>
-      <br />
-      <Card>
-        <CardContent className="filter-content">
-          <Box pl={5} pr={5}>
             <TextField
               id="filled-basic"
               size="small"
-              label="Cari Admin"
+              label="Cari ..."
               variant="outlined"
               className="filter-input"
               onKeyDown={handleKeyDown}

@@ -18,21 +18,16 @@ import {
 } from "../../../components/TableDesign"
 import LoadingAnimation from "../../../components/LoadingAnimation"
 import { AdminChatRoomContext } from "../../../context/AdminChatRoomContext"
-import {
-  StudentCareStatus,
-  HandlingSCStatus,
-} from "../../../components/Statuses"
+import { StudentCareStatus } from "../../../components/Statuses"
 
 const headCells = [
   { id: "no", numeric: true, label: "No." },
   { id: "user", numeric: false, label: "User" },
   { id: "problem_owner", numeric: false, label: "Pemilik Masalah" },
   { id: "problem_category", numeric: false, label: "Kategori" },
-  { id: "problem_category_desc", numeric: false, label: "Deskripsi" },
-  { id: "counselor", numeric: false, label: "Konselor" },
+  { id: "counselor", numeric: false, label: "Pendengar" },
   { id: "status", numeric: false, label: "Status" },
   { id: "technical_handling", numeric: false, label: "Penanganan" },
-  { id: "desc_handling", numeric: false, label: "Deskripsi Penanganan" },
   { id: "dibuat", numeric: false, label: "Dibuat" },
   { id: "view", numeric: false, label: "Action" },
 ]
@@ -175,19 +170,13 @@ const ChatRoomTable = () => {
                         {row.problem_category}
                       </TableCell>
                       <TableCell className="table-cell">
-                        {row.problem_category_desk}
-                      </TableCell>
-                      <TableCell className="table-cell">
                         {row.id_counselor}
                       </TableCell>
                       <TableCell className="table-cell">
+                        {row.technical_handling}
+                      </TableCell>
+                      <TableCell className="table-cell">
                         <StudentCareStatus status={row.status_handling} />
-                      </TableCell>
-                      <TableCell className="table-cell">
-                        <HandlingSCStatus status={row.technical_handling} />
-                      </TableCell>
-                      <TableCell className="table-cell">
-                        {row.desk_handling}
                       </TableCell>
                       <TableCell className="table-cell">
                         {moment(row.created_at).format("D MMM YYYY HH:mm")}
