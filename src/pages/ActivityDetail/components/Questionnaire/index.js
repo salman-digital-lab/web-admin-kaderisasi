@@ -63,15 +63,7 @@ const QuestionnaireForm = () => {
           </Grid>
           <br />
           <Grid container spacing={3}>
-            <Grid
-              item
-              xs={12}
-              md={10}
-              style={{
-                height: "100vh",
-                overflow: "auto",
-              }}
-            >
+            <Grid item xs>
               <TitleAndSubtitleForm />
               {data?.form &&
                 data.form.map(({ type }, index) => (
@@ -88,9 +80,9 @@ const QuestionnaireForm = () => {
                 ))}
               <AddQuestionButton />
             </Grid>
-            <Grid item md={2}>
+            {/* <Grid item md={2}>
               <QuestionNavigator />
-            </Grid>
+            </Grid> */}
           </Grid>
           <Snackbar
             open={openQuestionnaireSuccesSnackbar}
