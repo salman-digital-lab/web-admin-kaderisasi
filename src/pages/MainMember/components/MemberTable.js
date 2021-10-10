@@ -15,7 +15,7 @@ import {
   stableSort,
   getComparator,
 } from "../../../components/TableDesign"
-import LoadingAnimation from "../../../components/loading-animation"
+import LoadingAnimation from "../../../components/LoadingAnimation"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 
 const headCells = [
@@ -53,11 +53,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-let params = {
-  page: 1,
-  page_size: 5,
-}
-
 const MemberTable = () => {
   const classes = useStyles()
   const [order, setOrder] = useState("asc")
@@ -68,7 +63,10 @@ const MemberTable = () => {
   const { listMembers, members, filterMember, setFilterMember, functions } =
     useContext(AdminActivityContext)
   const { getMembers } = functions
-
+  let params = {
+    page: 1,
+    page_size: 5,
+  }
   if (listMembers.length < 1 && status) {
     getMembers(params)
     setStatus(false)
@@ -159,8 +157,8 @@ const MemberTable = () => {
                           {index + 1 + rowsPerPage * page}
                         </TableCell>
                         <TableCell className="table-cell">
-                          <Link to={`/member-detail/${row.id}`}>
-                            {row.name}
+                          <Link to={`/member/${row.id}`}>
+                            {row.name} ({row.gender})
                           </Link>
                         </TableCell>
                         <TableCell className="table-cell">
@@ -173,14 +171,14 @@ const MemberTable = () => {
                           {row.university}
                         </TableCell>
                         <TableCell className="table-cell">
-                          {row.jenjang}
+                          {row.role_name}
                         </TableCell>
                         <TableCell className="table-cell">
                           {row.ssc}
                           {row.lmd}
                         </TableCell>
                         <TableCell className="table-cell">
-                          <Link to={`/member-detail/${row.id}`}>View</Link>
+                          <Link to={`/member/${row.id}`}>View</Link>
                         </TableCell>
                       </TableRow>
                     )

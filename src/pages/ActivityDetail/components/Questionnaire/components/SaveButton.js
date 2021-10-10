@@ -6,15 +6,15 @@ import { AdminQuestionnaireContext } from "../../../../../context/AdminQuestionn
 export default function SaveButton() {
   const { id } = useParams()
   const { functions } = React.useContext(AdminQuestionnaireContext)
-  const { updateQuestionnaire, handleSaveQuestionnaire } = functions
+  const { REQUEST_PUT_QUESTIONNAIRE, SAVE_QUESTIONNAIRE } = functions
 
   return (
     <Box display="flex">
       <Box flexGrow={1} />
       <Button
-        // onClick={() => updateQuestionnaire(id)}
         onClick={() => {
-          handleSaveQuestionnaire()
+          // REQUEST_PUT_QUESTIONNAIRE({id})
+          SAVE_QUESTIONNAIRE()
         }}
         variant="contained"
         color="primary"

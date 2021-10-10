@@ -3,10 +3,11 @@ import { useParams, Link } from "react-router-dom"
 import { Block, ArrowBack, Close } from "@material-ui/icons"
 import { Button, Collapse, IconButton } from "@material-ui/core"
 import Alert from "@material-ui/lab/Alert"
-import LoadingAnimation from "../../../components/loading-animation"
+import LoadingAnimation from "../../../components/LoadingAnimation"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
+import { ConfirmationModal } from "./confirmation-modal"
 import profile from "../profile.png"
-/* eslint-disable */
+
 const MemberDetail = () => {
   const { id } = useParams()
   const [status, setStatus] = useState(true)
@@ -14,18 +15,24 @@ const MemberDetail = () => {
     useContext(AdminActivityContext)
   const [successBlockMember, setSuccessBlockMember] = useState(false)
   const [failedBlockMember, setFailedBlockMember] = useState(false)
+  const [blockMember, setBlockMember] = useState(false)
   const [loading, setLoading] = useState(false)
   const { getMemberDetail, blockMemberById } = functions
 
   let data = {}
   if (memberForm?.member?.length > 0) {
-    data = memberForm.member[0]
+    ;[data] = memberForm.member
   }
 
-  const handleBlockMember = (idx) => {
+  const handleBlockMember = () => {
     setLoading(true)
-    blockMemberById(idx)
+    blockMemberById(id)
     setStatus(true)
+    setBlockMember(false)
+  }
+
+  const handleCloseBlock = () => {
+    setBlockMember(false)
   }
 
   useEffect(() => {
@@ -81,7 +88,7 @@ const MemberDetail = () => {
       <div className="button-area">
         <div className="button-left">
           <Button size="small" className="back-button" variant="outlined">
-            <Link to={"/member"}>
+            <Link to="/member">
               <ArrowBack fontSize="inherit" />
               KEMBALI
             </Link>
@@ -101,7 +108,7 @@ const MemberDetail = () => {
             size="small"
             className="delete-button"
             variant="contained"
-            onClick={() => handleBlockMember(id)}
+            onClick={() => setBlockMember(true)}
             disabled={loading}
           >
             <Block fontSize="small" /> BLOKIR
@@ -289,6 +296,12 @@ const MemberDetail = () => {
         </div>
       </div>
       <br />
+      <ConfirmationModal
+        open={blockMember}
+        onClose={handleCloseBlock}
+        title={`Block ${data.name} sebagai member?`}
+        onSubmit={() => handleBlockMember()}
+      />
     </>
   ) : (
     <div className="loading-table">

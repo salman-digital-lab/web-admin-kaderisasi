@@ -9,7 +9,7 @@ const Login = () => {
   useEffect(() => {
     setTimeout(() => {
       setDisplay(false)
-    }, 3000)
+    }, 1000)
   }, [display, setDisplay])
 
   return (

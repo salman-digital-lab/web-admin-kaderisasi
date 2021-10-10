@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { TextField, Grid, Typography, IconButton, Box } from "@material-ui/core"
-import RadioButtonUncheckedIcon from "@material-ui/icons/RadioButtonUnchecked"
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown"
 import CloseIcon from "@material-ui/icons/Close"
 import { AdminQuestionnaireContext } from "../../../../../../context/AdminQuestionnaireContext"
 
@@ -25,7 +25,7 @@ const componentStyle = {
   },
 }
 
-export default function RadioForm(props) {
+export default function DropdownForm(props) {
   const { functions } = React.useContext(AdminQuestionnaireContext)
   const {
     SET_QUESTIONNAIRE_FORM_QUESTION,
@@ -58,7 +58,7 @@ export default function RadioForm(props) {
           GET_QUESTIONNAIRE_ANSWER_STRING_VALUE(id).map(({ label }, index) => (
             // eslint-disable-next-line
             <Box component="div" key={index} style={componentStyle.row}>
-              <RadioButtonUncheckedIcon style={componentStyle.icon} />
+              <ArrowDropDownIcon style={componentStyle.icon} />
               <TextField
                 onChange={(event) =>
                   SET_QUESTIONNAIRE_ANSWER_STRING_VALUE(
@@ -83,7 +83,7 @@ export default function RadioForm(props) {
           ))}
 
         <Box component="div" style={componentStyle.row}>
-          <RadioButtonUncheckedIcon style={componentStyle.icon} />
+          <ArrowDropDownIcon style={componentStyle.icon} />
           <Typography
             onClick={() => ADD_QUESTIONNAIRE_ANSWER_STRING_VALUE(id)}
             style={componentStyle.text}
@@ -96,6 +96,6 @@ export default function RadioForm(props) {
   )
 }
 
-RadioForm.propTypes = {
+DropdownForm.propTypes = {
   id: PropTypes.number.isRequired,
 }

@@ -1,7 +1,15 @@
-import ParagraphForm from "./ParagraphForm"
+import NumberForm from "./NumberForm"
 import CheckBoxForm from "./CheckBoxForm"
 import RadioForm from "./RadioForm"
-import ShortTextForm from "./ShortTextForm"
-import SliderForm from "./SliderForm"
+import TextForm from "./TextForm"
+import ScaleForm from "./ScaleForm"
+import DropdownForm from "./DropdownForm"
 
-export { ParagraphForm, CheckBoxForm, RadioForm, ShortTextForm, SliderForm }
+export {
+  NumberForm,
+  CheckBoxForm,
+  RadioForm,
+  TextForm,
+  ScaleForm,
+  DropdownForm,
+}

@@ -1,37 +1,50 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom"
 import Cookies from "js-cookie"
 import Login from "../pages/Login"
-import NavigationAdmin from "../components/NavigationAdmin"
-import KegiatanDanAktivis from "../pages/MainActivity"
-import KegiatanDetail from "../pages/ActivityDetail"
-import Dashboard from "../pages/Dashboard"
-import MemberSalman from "../pages/MainMember"
-import MemberSalmanDetail from "../pages/MemberDetail"
-import PerguruanTinggi from "../pages/PerguruanTinggi"
-import RuangCurhat from "../pages/RuangCurhat"
-import Setting from "../pages/Setting"
-import CategorySetting from "../pages/CategorySetting"
-import NotFound from "../pages/Error/NotFound"
+import AdminNavigation from "../components/AdminNavigation"
 import AdminProvider from "../context/AdminContext"
-import MainAdmin from "../pages/MainAdmin"
-import RegisterAdmin from "../pages/RegisterAdmin"
-import ListDetailAdmin from "../pages/DetailAdmin"
-import Formuniversitas from "../pages/PerguruanTinggi/components/form-universitas"
+import NotFound from "../pages/Error/NotFound"
+import data from "./data"
+
 /* eslint-disable */
 const Router = () => {
+  const token = Cookies.get("token")
+  let user
+  const [allowedList, setAllowedList] = useState([])
+
+  useEffect(() => {
+    if (token) {
+      user = JSON.parse(Cookies.get("user"))
+    }
+    if (allowedList.length < 1) {
+      filterByModul(user ? user.privileges : null)
+    }
+  }, [allowedList, token])
+
   const LoginRoute = ({ ...props }) => {
-    if (Cookies.get("token") !== undefined) {
+    if (token !== undefined) {
       return <Redirect to="/" />
     }
     return <Route {...props} />
   }
 
   const Routes = ({ ...props }) => {
-    if (Cookies.get("token") === undefined) {
+    if (token === undefined) {
       return <Redirect to="/login" />
     }
     return <Route {...props} />
+  }
+
+  const filterByModul = (privileges) => {
+    let allowed = ["dashboard"]
+    if (privileges) {
+      const priv = privileges.map(({ name }) => name)
+      allowed = [...allowed, ...priv]
+      setAllowedList(data.filter((x) => allowed.includes(x.modul)))
+    } else {
+      setAllowedList(data.filter((x) => allowed.includes(x.modul)))
+    }
   }
 
   return (
@@ -39,48 +52,21 @@ const Router = () => {
       <Switch>
         <LoginRoute exact path="/login" component={Login} />
         <AdminProvider>
-          <NavigationAdmin>
-            <Routes exact path="/" component={Dashboard} />
-            <Routes exact path="/activity" component={KegiatanDanAktivis} />
-            <Routes
-              exact
-              path="/activity-detail/:id"
-              component={KegiatanDetail}
-            />
-            <Routes exact path="/member" component={MemberSalman} />
-            <Routes
-              exact
-              path="/member-detail/:id"
-              component={MemberSalmanDetail}
-            />
-            <Routes exact path="/PerguruanTinggi" component={PerguruanTinggi} />
-            <Routes
-              exact
-              path="/PerguruanTinggi/form-universitas"
-              component={Formuniversitas}
-            />
-            <Routes
-              exact
-              path="/PerguruanTinggi/form-universitas/:id"
-              component={Formuniversitas}
-            />
-            <Routes exact path="/RuangCurhat" component={RuangCurhat} />
-            <Routes exact path="/Setting" component={Setting} />
-            <Routes
-              exact
-              path="/activity-setting"
-              component={CategorySetting}
-            />
-            <Routes exact path="/ListAkunAdmin" component={MainAdmin} />
-            <Routes
-              exact
-              path="/ListAkunAdmin/:name"
-              component={ListDetailAdmin}
-            />
-            <Routes exact path="/RegisterAkunAdmin" component={RegisterAdmin} />
-          </NavigationAdmin>
+          <AdminNavigation>
+            {allowedList?.map((x) => {
+              const RouteInner = x.component
+              return (
+                <Routes
+                  exact
+                  key={x.url}
+                  path={x.url}
+                  render={() => <RouteInner />}
+                />
+              )
+            })}
+          </AdminNavigation>
         </AdminProvider>
-        <Routes component={NotFound} />
+        <Routes render={() => <NotFound />} />
       </Switch>
     </BrowserRouter>
   )

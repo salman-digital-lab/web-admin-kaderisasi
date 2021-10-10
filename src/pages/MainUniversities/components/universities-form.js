@@ -3,7 +3,7 @@ import axios from "axios"
 import React, { useContext, useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router"
 import logo from "../../../assets/images/logo-header.png"
-import "../../../assets/scss/PerguruanTinggi.scss"
+import "../../../assets/scss/MainUniversities.scss"
 import {
   UniversitasContext,
   UniversitasProvider,
@@ -72,7 +72,7 @@ const CardFormUniversities = () => {
             name: "",
           })
 
-          history.push("/PerguruanTinggi")
+          history.push("/university")
         })
     } else if (idRef !== undefined) {
       axios
@@ -85,7 +85,7 @@ const CardFormUniversities = () => {
             name: "",
           })
 
-          history.push("/PerguruanTinggi")
+          history.push("/university")
         })
     }
   }

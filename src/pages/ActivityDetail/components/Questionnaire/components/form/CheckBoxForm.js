@@ -29,42 +29,54 @@ const componentStyle = {
 }
 
 export default function CheckBoxForm({ id }) {
-  const { data, functions } = React.useContext(AdminQuestionnaireContext)
+  const { functions } = React.useContext(AdminQuestionnaireContext)
   const {
-    handleChangeQuestionForm,
-    handleChangeAnswerForm,
-    handleDeleteAnswerForm,
-    handleAddAnswerForm,
-    handleAddRef,
+    SET_QUESTIONNAIRE_FORM_QUESTION,
+    SET_QUESTIONNAIRE_ANSWER_STRING_VALUE,
+    REMOVE_QUESTIONNAIRE_ANSWER_STRING_VALUE,
+    ADD_QUESTIONNAIRE_ANSWER_STRING_VALUE,
+    GET_QUESTIONNAIRE_FORM_QUESTION,
+    GET_QUESTIONNAIRE_ANSWER_STRING_VALUE,
+    ADD_QUESTIONNAIRE_REF,
   } = functions
 
   return (
     <Grid item xs={12} sm={8}>
       <TextField
-        onChange={(event) => handleChangeQuestionForm(id, event.target.value)}
-        value={data?.form[id]?.question && data.form[id].question}
-        inputRef={handleAddRef}
+        onChange={(event) =>
+          SET_QUESTIONNAIRE_FORM_QUESTION(id, event.target.value)
+        }
+        value={GET_QUESTIONNAIRE_FORM_QUESTION(id)}
+        inputRef={ADD_QUESTIONNAIRE_REF}
         label="Question"
         variant="outlined"
         multiline
         fullWidth
       />
 
-      {data?.form[id]?.answer &&
-        data.form[id].answer.map((value, index) => (
+      {GET_QUESTIONNAIRE_ANSWER_STRING_VALUE(id) &&
+        GET_QUESTIONNAIRE_ANSWER_STRING_VALUE(id).map(({ label }, index) => (
           // eslint-disable-next-line
           <Box key={index} component="div" style={componentStyle.row}>
             <CheckBoxOutlineBlankIcon style={componentStyle.icon} />
             <TextField
               onChange={(event) =>
-                handleChangeAnswerForm(id, index, event.target.value)
+                SET_QUESTIONNAIRE_ANSWER_STRING_VALUE(
+                  id,
+                  index,
+                  event.target.value
+                )
               }
               style={componentStyle.answerInput}
-              value={value}
+              value={label}
               multiline
               fullWidth
             />
-            <IconButton onClick={() => handleDeleteAnswerForm(id, index)}>
+            <IconButton
+              onClick={() =>
+                REMOVE_QUESTIONNAIRE_ANSWER_STRING_VALUE(id, index)
+              }
+            >
               <CloseIcon style={componentStyle.icon} />
             </IconButton>
           </Box>
@@ -73,7 +85,7 @@ export default function CheckBoxForm({ id }) {
       <Box style={componentStyle.row}>
         <CheckBoxOutlineBlankIcon style={componentStyle.icon} />
         <Typography
-          onClick={() => handleAddAnswerForm(id)}
+          onClick={() => ADD_QUESTIONNAIRE_ANSWER_STRING_VALUE(id)}
           style={componentStyle.text}
         >
           Tambahkan opsi

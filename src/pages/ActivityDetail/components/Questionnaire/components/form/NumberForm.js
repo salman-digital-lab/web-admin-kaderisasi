@@ -8,26 +8,31 @@ const componentStyle = {
     marginBottom: "1.5em",
   },
 }
-export default function ParagraphForm({ id }) {
-  const { data, functions } = React.useContext(AdminQuestionnaireContext)
-  const { handleChangeQuestionForm, handleAddRef } = functions
+export default function NumberForm({ id }) {
+  const { functions } = React.useContext(AdminQuestionnaireContext)
+  const {
+    SET_QUESTIONNAIRE_FORM_QUESTION,
+    ADD_QUESTIONNAIRE_REF,
+    GET_QUESTIONNAIRE_FORM_QUESTION,
+  } = functions
 
   return (
     <Grid item xs={12} sm={8}>
       <TextField
-        onChange={(event) => handleChangeQuestionForm(id, event.target.value)}
-        inputRef={handleAddRef}
+        onChange={(event) =>
+          SET_QUESTIONNAIRE_FORM_QUESTION(id, event.target.value)
+        }
+        inputRef={ADD_QUESTIONNAIRE_REF}
         label="Question"
         variant="outlined"
         style={componentStyle.input}
-        value={data?.form[id]?.question && data.form[id].question}
-        multiline
+        value={GET_QUESTIONNAIRE_FORM_QUESTION(id)}
         fullWidth
       />
     </Grid>
   )
 }
 
-ParagraphForm.propTypes = {
+NumberForm.propTypes = {
   id: PropTypes.number.isRequired,
 }

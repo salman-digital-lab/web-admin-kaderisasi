@@ -1,37 +1,144 @@
 import axios from "axios"
-import React from "react"
+import React, { useState, createContext } from "react"
+import Cookie from "js-cookie"
 
-export const AdminContext = React.createContext()
+export const AdminContext = createContext()
 /* eslint-disable */
 const AdminProvider = (props) => {
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     openDrawer: false,
     anchorEl: null,
     mobileMoreAnchorEl: null,
   })
+  const [filterUser, setFilterUser] = useState({
+    filter: false,
+    gender: "",
+    search_query: "",
+  })
+  const [users, setUsers] = useState(null)
+  const [listUsers, setListUsers] = useState([])
+  const [loading, setLoading] = useState(false)
+  const [isSubmitSucces, SetIsSubmitSuccess] = useState("")
+  const AxiosInterceptor = axios.interceptors.request.use((config) => {
+    if (Cookie.get("token")) {
+      config.headers.Authorization = `Bearer ${Cookie.get("token")}`
+      return config
+    } else {
+      window.location.href = "/login"
+    }
+  })
 
-  const getCookie = (name) => {
-    const matches = document.cookie.match(
-      new RegExp(
-        "(?:^|; )" +
-          name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
-          "=([^;]*)"
-      )
-    )
-    return matches ? decodeURIComponent(matches[1]) : undefined
+  /*
+    Get all Users
+  */
+  const getUsers = async (params) => {
+    setUsers({})
+    setLoading(true)
+    let paramsQuery = "?"
+    Object.keys(params).map((x, i) => {
+      i === Object.keys(params).length - 1
+        ? (paramsQuery += x + "=" + params[x].toString())
+        : (paramsQuery += x + "=" + params[x].toString() + "&")
+    })
+    let result = null
+
+    axios
+      .get(process.env.REACT_APP_BASE_URL + `/v1/users` + paramsQuery)
+      .then((res) => {
+        result = res.data.data.data
+        setListUsers(result)
+        setUsers(res.data)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }
 
-  const token = getCookie("token")
+  /*
+      @params
+      id: integer
+    
+      Get User where id = params.id
+    */
+  const getUserDetail = async (id) => {
+    setLoading(true)
+    axios
+      .get(process.env.REACT_APP_BASE_URL + `/v1/users/${id}`)
+      .then((res) => {
+        const result = res.data.data
+        setUsers(result)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.log(err)
+        return false
+      })
+  }
 
-  const AxiosInterceptor = axios.interceptors.request.use((config) => {
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
-  })
+  /*
+    @params
+    formData: object
+  
+    Create new user
+  */
+  const addUser = (formData) => {
+    axios
+      .post(process.env.REACT_APP_BASE_URL + `/v1/users`, formData)
+      .then((res) => {
+        const result = res.data.data
+        window.location.href = `/user/${result.id}`
+        setUsers(result)
+      })
+      .catch((err) => {
+        console.log(err)
+        SetIsSubmitSuccess("FAILED")
+      })
+  }
+
+  /*
+      @params
+      id: integer
+      formData: object
+    
+      Update user where id = params.id
+    */
+  const editUser = async (id, formData) => {
+    axios
+      .put(process.env.REACT_APP_BASE_URL + `/v1/users/${id}`, formData)
+      .then((res) => {
+        const result = res.data
+        SetIsSubmitSuccess(result.status)
+      })
+      .catch((err) => {
+        console.log(err)
+        return false
+      })
+  }
+
+  /*
+      @params
+      id: integer
+    
+      Delete user where id = params.id
+    */
+  const deleteUser = (id) => {
+    axios
+      .delete(process.env.REACT_APP_BASE_URL + `/v1/user/${id}`)
+      .then((res) => {
+        const result = res.data
+        SetIsSubmitSuccess(result.status)
+      })
+      .catch((err) => console.log(err))
+  }
 
   const functions = {
     AxiosInterceptor,
+    getUsers,
+    getUserDetail,
+    addUser,
+    editUser,
+    deleteUser,
   }
 
   return (
@@ -39,7 +146,13 @@ const AdminProvider = (props) => {
       value={{
         state,
         setState,
-        token,
+        users,
+        listUsers,
+        filterUser,
+        setFilterUser,
+        loading,
+        isSubmitSucces,
+        SetIsSubmitSuccess,
         functions,
       }}
     >

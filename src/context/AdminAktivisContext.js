@@ -88,7 +88,6 @@ export const AdminAktivisProvider = (props) => {
     axios
       .post(process.env.REACT_APP_BASE_URL + `/v1/activity`, formData)
       .then((res) => {
-        console.log(res)
         setState(null)
       })
       .catch((err) => console.log(err))
@@ -105,7 +104,6 @@ export const AdminAktivisProvider = (props) => {
     axios
       .put(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}`, formData)
       .then((res) => {
-        console.log(res)
         setState(null)
       })
       .catch((err) => console.log(err))
@@ -121,7 +119,6 @@ export const AdminAktivisProvider = (props) => {
     axios
       .delete(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}`)
       .then((res) => {
-        console.log(res)
         setState(null)
       })
       .catch((err) => console.log(err))

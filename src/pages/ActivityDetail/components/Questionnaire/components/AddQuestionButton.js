@@ -18,10 +18,10 @@ const buttonStyle = {
 
 export default function AddQuestionButton() {
   const { functions } = React.useContext(AdminQuestionnaireContext)
-  const { handleAddNewForm } = functions
+  const { ADD_QUESTIONNAIRE_FORM } = functions
   return (
     <Box component="div" style={buttonStyle.center}>
-      <Box component="span" onClick={handleAddNewForm}>
+      <Box component="span" onClick={ADD_QUESTIONNAIRE_FORM}>
         <IconButton>
           <AddCircleOutline style={buttonStyle.icon} />
         </IconButton>

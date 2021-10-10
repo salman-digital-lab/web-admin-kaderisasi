@@ -3,8 +3,13 @@ import { Card, CardContent, TextField } from "@material-ui/core"
 import { AdminQuestionnaireContext } from "../../../../../context/AdminQuestionnaireContext"
 
 export default function TitleAndSubtitleForm() {
-  const { data, functions } = React.useContext(AdminQuestionnaireContext)
-  const { handleChangeTitleForm, handleChangeSubtitleForm } = functions
+  const { functions } = React.useContext(AdminQuestionnaireContext)
+  const {
+    SET_QUESTIONNAIRE_FORM_TITLE,
+    SET_QUESTIONNAIRE_FORM_SUBTITLE,
+    GET_QUESTIONNAIRE_FORM_TITLE,
+    GET_QUESTIONNAIRE_FORM_SUBTITLE,
+  } = functions
 
   const componentStyle = {
     input: {
@@ -32,18 +37,20 @@ export default function TitleAndSubtitleForm() {
     >
       <CardContent style={componentStyle.cardContent}>
         <TextField
-          onChange={(event) => handleChangeTitleForm(event.target.value)}
+          onChange={(event) => SET_QUESTIONNAIRE_FORM_TITLE(event.target.value)}
           style={componentStyle.input}
-          value={data.title}
+          value={GET_QUESTIONNAIRE_FORM_TITLE()}
           variant="outlined"
           label="Title"
           fullWidth
           multiline
         />
         <TextField
-          onChange={(event) => handleChangeSubtitleForm(event.target.value)}
+          onChange={(event) =>
+            SET_QUESTIONNAIRE_FORM_SUBTITLE(event.target.value)
+          }
           style={componentStyle.input}
-          value={data.subtitle}
+          value={GET_QUESTIONNAIRE_FORM_SUBTITLE()}
           variant="outlined"
           label="Subtitle"
           fullWidth

@@ -27,10 +27,8 @@ const KegiatanFilter = () => {
     useContext(AdminActivityContext)
   const { getActivityCategory } = functions
   useEffect(() => {
-    if (categoryList.length < 1) {
-      getActivityCategory()
-    }
-  })
+    getActivityCategory()
+  }, [])
   const [open, setOpen] = useState(false)
 
   const handleOpen = () => {
@@ -119,13 +117,13 @@ const KegiatanFilter = () => {
                   value={6}
                   control={<StyledRadio />}
                   onChange={(e) => handleChangeRole(e.target.value)}
-                  label="Member"
+                  label="Kader"
                 />
                 <FormControlLabel
                   value={7}
                   control={<StyledRadio />}
                   onChange={(e) => handleChangeRole(e.target.value)}
-                  label="Member Lanjut"
+                  label="Kader Lanjut"
                 />
               </RadioGroup>
             </FormControl>
@@ -138,14 +136,14 @@ const KegiatanFilter = () => {
                   input={<Input />}
                   MenuProps={MenuProps}
                 >
-                  {categoryList.map((name) => (
+                  {categoryList.map((category) => (
                     <MenuItem
-                      key={`${name.value}`}
-                      value={name}
-                      label={name.label}
-                      style={getStyles(name, categoryList, theme)}
+                      key={`${category.value}`}
+                      value={category.value}
+                      label={category.label}
+                      style={getStyles(category, categoryList, theme)}
                     >
-                      {name.label}
+                      {category.label}
                     </MenuItem>
                   ))}
                 </Select>

@@ -15,18 +15,16 @@ import {
   stableSort,
   getComparator,
 } from "../../../components/TableDesign"
-import { PublishStatus, RegisterStatus } from "../../../components/Statuses"
 import LoadingAnimation from "../../../components/LoadingAnimation"
-import { AdminActivityContext } from "../../../context/AdminActivityContext"
+import { AdminContext } from "../../../context/AdminContext"
+import { AdminStatus } from "../../../components/Statuses"
 
 const headCells = [
   { id: "no", numeric: true, label: "No." },
-  { id: "judul", numeric: false, label: "Judul Aktivitas/Kegiatan" },
-  { id: "tgl_pendaftaran", numeric: false, label: "Tanggal Pendaftaran" },
-  { id: "jenjang", numeric: false, label: "Min. Jenjang" },
-  { id: "kategori", numeric: false, label: "Kategori" },
-  { id: "register", numeric: false, label: "Register" },
-  { id: "publish", numeric: false, label: "Publish" },
+  { id: "name", numeric: false, label: "Nama Jamaah" },
+  { id: "email", numeric: false, label: "Email" },
+  { id: "username", numeric: false, label: "Username" },
+  { id: "status", numeric: false, label: "Status" },
   { id: "view", numeric: false, label: "Action" },
 ]
 
@@ -47,7 +45,6 @@ const useStyles = makeStyles((theme) => ({
     height: 1,
     margin: -1,
     overflow: "hidden",
-    alignContent: "left",
     padding: 0,
     position: "absolute",
     top: 20,
@@ -55,55 +52,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const KegiatanTable = () => {
+const AdminTable = () => {
   const classes = useStyles()
   const [order, setOrder] = useState("asc")
   const [orderBy, setOrderBy] = useState("startDate")
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
-  const [status, setStatus] = useState(true)
-  const {
-    listActivity,
-    activity,
-    filterActivity,
-    setFilterActivity,
-    functions,
-  } = useContext(AdminActivityContext)
-  const { getActivity } = functions
-
+  // const [status, setStatus] = useState(true)
+  const { listUsers, users, filterUser, setFilterUser, loading, functions } =
+    useContext(AdminContext)
+  const { getUsers } = functions
   let params = {
     page: 1,
     perPage: 5,
   }
-
-  if (listActivity.length < 1 && status) {
-    getActivity(params)
-    setStatus(false)
-  }
+  useEffect(() => {
+    getUsers(params)
+  }, [])
 
   useEffect(() => {
-    if (filterActivity.filter) {
+    if (filterUser.filter) {
       params.page = 1
       setPage(0)
-      params = { ...params, ...filterActivity }
-      if (params.category_id === -1) {
-        delete params.category_id
-        delete params.filter
-      }
+      params = { ...params, ...filterUser }
       if (params.search === "") {
         delete params.search
         delete params.filter
       }
-      if (params.minimum_roles_id === -1) {
-        delete params.minimum_roles_id
+      if (params.gender === "") {
+        delete params.gender
         delete params.filter
       }
       if (Object.keys(params).length > 1) {
-        getActivity(params)
+        getUsers(params)
       }
-      setFilterActivity({ ...filterActivity, filter: false })
+      setFilterUser({ ...filterUser, filter: false })
     }
-  }, [filterActivity, setFilterActivity, getActivity])
+  }, [filterUser, setFilterUser, getUsers])
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc"
@@ -114,7 +99,7 @@ const KegiatanTable = () => {
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
     params.page = newPage + 1
-    getActivity(params)
+    getUsers(params)
   }
 
   const handleChangeRowsPerPage = (event) => {
@@ -122,15 +107,16 @@ const KegiatanTable = () => {
     setPage(0)
     params.page = 1
     params.perPage = parseInt(event.target.value, 10)
-    getActivity(params)
+    getUsers(params)
   }
+
   return (
-    <div className="tableactivity">
+    <div className="tableuser">
       <h1 className="headline" style={{ color: "#999999" }}>
-        Kegiatan dan Aktivitas
+        Admin
       </h1>
       <Paper>
-        {!activity.status ? (
+        {loading ? (
           <div className="loading-table">
             <LoadingAnimation table />
           </div>
@@ -149,41 +135,31 @@ const KegiatanTable = () => {
                   onRequestSort={handleRequestSort}
                   headCells={headCells}
                 />
-
                 <TableBody>
-                  {stableSort(listActivity, getComparator(order, orderBy)).map(
+                  {stableSort(listUsers, getComparator(order, orderBy)).map(
                     (row, index) => (
-                      <TableRow hover tabIndex={-1} key={row.id}>
+                      <TableRow hover tabIndex={-1} key={row.display_name}>
                         <TableCell
                           component="th"
                           scope="row"
-                          className="table-cell middle-cell"
+                          className="table-cell"
                         >
                           {index + 1 + rowsPerPage * page}
                         </TableCell>
                         <TableCell className="table-cell">
-                          <div className="text-ellipsis">
-                            <Link to={`/activity/${row.id}`}>{row.judul}</Link>
-                          </div>
+                          <Link to={`/user/${row.id}`}>{row.display_name}</Link>
                         </TableCell>
                         <TableCell className="table-cell">
-                          Start : {row.startDate} <br />
-                          End : {row.endDate}
+                          {row.email}
                         </TableCell>
                         <TableCell className="table-cell">
-                          {row.jenjang}
+                          {row.username}
                         </TableCell>
                         <TableCell className="table-cell">
-                          {row.kategori}
+                          <AdminStatus status={row.active} />
                         </TableCell>
                         <TableCell className="table-cell">
-                          <RegisterStatus status={row.register} />
-                        </TableCell>
-                        <TableCell className="table-cell">
-                          <PublishStatus status={row.publish} />
-                        </TableCell>
-                        <TableCell className="table-cell">
-                          <Link to={`/activity/${row.id}`}>View</Link>
+                          <Link to={`/user/${row.id}`}>View</Link>
                         </TableCell>
                       </TableRow>
                     )
@@ -194,7 +170,7 @@ const KegiatanTable = () => {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={activity?.data?.total}
+              count={users?.data?.total ? users?.data?.total : "Loading"}
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}
@@ -207,4 +183,4 @@ const KegiatanTable = () => {
   )
 }
 
-export default KegiatanTable
+export default AdminTable

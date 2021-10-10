@@ -14,11 +14,12 @@ import {
 import PropTypes from "prop-types"
 import DeleteIcon from "@material-ui/icons/Delete"
 import {
-  ShortTextForm,
-  ParagraphForm,
+  TextForm,
+  NumberForm,
   RadioForm,
   CheckBoxForm,
-  SliderForm,
+  ScaleForm,
+  DropdownForm,
 } from "./form"
 import { AdminQuestionnaireContext } from "../../../../../context/AdminQuestionnaireContext"
 
@@ -35,17 +36,22 @@ const formSelectorStyle = {
 }
 
 const formVariant = [
-  { id: 1, key: "short_text", label: "Short Text" },
-  { id: 2, key: "paragraph_text", label: "Paragraph" },
-  { id: 3, key: "radio_button", label: "Radio" },
-  { id: 4, key: "checkbox", label: "CheckBox" },
-  { id: 5, key: "slider", label: "Slider" },
+  { id: 1, key: "text", label: "Text" },
+  { id: 2, key: "number", label: "Number" },
+  { id: 3, key: "radio", label: "Radio" },
+  { id: 4, key: "option", label: "CheckBox" },
+  { id: 5, key: "scale", label: "Scale" },
+  { id: 6, key: "dropdown", label: "Dropdown" },
 ]
 
-export default function FormSelector({ id, variant = "short_text" }) {
-  const { data, functions } = React.useContext(AdminQuestionnaireContext)
-  const { handleChangeVariantForm, handleDeleteForm, handleRequiredForm } =
-    functions
+export default function FormSelector({ id, type = "text" }) {
+  const { functions } = React.useContext(AdminQuestionnaireContext)
+  const {
+    SET_QUESTIONNAIRE_FORM_TYPE,
+    REMOVE_QUESTIONNAIRE_FORM,
+    TOGGLE_QUESTIONNAIRE_FORM_REQUIRED,
+    GET_QUESTIONNAIRE_FORM_REQUIRED,
+  } = functions
 
   return (
     <Card style={formSelectorStyle.card} variant="outlined">
@@ -60,20 +66,21 @@ export default function FormSelector({ id, variant = "short_text" }) {
                 option.key === selected.key
               }
               onChange={(event, selected) => {
-                handleChangeVariantForm(id, selected.key)
+                SET_QUESTIONNAIRE_FORM_TYPE(id, selected.key)
               }}
-              value={formVariant.find((value) => variant === value.key)}
+              value={formVariant.find((value) => type === value.key)}
               renderInput={(params) => (
                 // eslint-disable-next-line
-                <TextField {...params} label="Combo box" variant="outlined" />
+                <TextField {...params} label="Type" variant="outlined" />
               )}
             />
           </Grid>
-          {variant === "short_text" && <ShortTextForm id={id} />}
-          {variant === "paragraph_text" && <ParagraphForm id={id} />}
-          {variant === "radio_button" && <RadioForm id={id} />}
-          {variant === "checkbox" && <CheckBoxForm id={id} />}
-          {variant === "slider" && <SliderForm id={id} />}
+          {type === "text" && <TextForm id={id} />}
+          {type === "number" && <NumberForm id={id} />}
+          {type === "radio" && <RadioForm id={id} />}
+          {type === "option" && <CheckBoxForm id={id} />}
+          {type === "scale" && <ScaleForm id={id} />}
+          {type === "dropdown" && <DropdownForm id={id} />}
         </Grid>
         <Divider />
         <br />
@@ -83,7 +90,7 @@ export default function FormSelector({ id, variant = "short_text" }) {
           alignItems="center"
           justifyContent="flex-end"
         >
-          <IconButton onClick={() => handleDeleteForm(id)}>
+          <IconButton onClick={() => REMOVE_QUESTIONNAIRE_FORM(id)}>
             <DeleteIcon style={{ color: "#d65672" }} />
           </IconButton>
           <Divider
@@ -94,8 +101,8 @@ export default function FormSelector({ id, variant = "short_text" }) {
           />
           <Typography>Required</Typography>
           <Switch
-            checked={data?.form[id]?.required && data.form[id].required}
-            onClick={() => handleRequiredForm(id)}
+            checked={GET_QUESTIONNAIRE_FORM_REQUIRED(id)}
+            onClick={() => TOGGLE_QUESTIONNAIRE_FORM_REQUIRED(id)}
             color="primary"
             inputProps={{ "aria-label": "primary checkbox" }}
           />
@@ -107,5 +114,5 @@ export default function FormSelector({ id, variant = "short_text" }) {
 
 FormSelector.propTypes = {
   id: PropTypes.number.isRequired,
-  variant: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
 }

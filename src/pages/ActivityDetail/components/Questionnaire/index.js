@@ -1,10 +1,9 @@
 import React, { useEffect, useContext, useState } from "react"
 import { useParams } from "react-router-dom"
-import { Grid, Box } from "@material-ui/core"
+import { Grid, Box, Avatar } from "@material-ui/core"
 import Skeleton from "@material-ui/lab/Skeleton"
 import Snackbar from "@material-ui/core/Snackbar"
 import MuiAlert from "@material-ui/lab/Alert"
-import axios from "axios"
 import {
   TitleAndSubtitleForm,
   AddQuestionButton,
@@ -34,45 +33,28 @@ const SkeletonLoading = () => (
 
 const QuestionnaireForm = () => {
   const { id } = useParams()
-  const { openSnackbar, functions, data, setData } = useContext(
-    AdminQuestionnaireContext
-  )
-  const [loading, setLoading] = useState(true)
+  const {
+    openQuestionnaireSuccesSnackbar,
+    functions,
+    data,
+    setData,
+    questionnaireLoading,
+  } = useContext(AdminQuestionnaireContext)
   const [reload, setReload] = useState(true)
-  const { handleSnackbar, handleResetStateDefault } = functions
+  const { TOGGLE_QUESTIONNAIRE_SNACKBAR, REQUEST_GET_QUESTIONNAIRE } = functions
 
   useEffect(() => {
     if (reload) {
       setReload(false)
-      axios
-        .get(`${process.env.REACT_APP_BASE_URL}/v1/activity/${id}`)
-        .then((res) => {
-          if (res.status === 200) {
-            const form = JSON.parse(res.data.data[0].form_data) ?? null
-            if (
-              Object.prototype.hasOwnProperty.call(form, "title") &&
-              Object.prototype.hasOwnProperty.call(form, "subtitle") &&
-              Object.prototype.hasOwnProperty.call(form, "form")
-            ) {
-              setData(form)
-            } else {
-              handleResetStateDefault()
-            }
-            setLoading(false)
-          }
-        })
-        .catch((err) => {
-          // eslint-disable-next-line
-          console.error(err);
-        })
+      REQUEST_GET_QUESTIONNAIRE({ id })
     }
     // eslint-disable-next-line
   }, [id, reload, data, setData])
 
   return (
     <>
-      {loading && <SkeletonLoading />}
-      {!loading && (
+      {questionnaireLoading && <SkeletonLoading />}
+      {!questionnaireLoading && (
         <>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
@@ -92,9 +74,17 @@ const QuestionnaireForm = () => {
             >
               <TitleAndSubtitleForm />
               {data?.form &&
-                data.form.map((value, index) => (
+                data.form.map(({ type }, index) => (
                   // eslint-disable-next-line
-                  <FormSelector id={index} key={index} variant={value.variant} />
+                  <Box key={index}>
+                    <Box component="div">
+                      <Avatar style={{ backgroundColor: "#1ed66b" }}>
+                        {index + 1}
+                      </Avatar>
+                    </Box>
+                    <br />
+                    <FormSelector id={index} type={type} />
+                  </Box>
                 ))}
               <AddQuestionButton />
             </Grid>
@@ -103,12 +93,12 @@ const QuestionnaireForm = () => {
             </Grid>
           </Grid>
           <Snackbar
-            open={openSnackbar}
+            open={openQuestionnaireSuccesSnackbar}
             autoHideDuration={4000}
             anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            onClose={handleSnackbar}
+            onClose={TOGGLE_QUESTIONNAIRE_SNACKBAR}
           >
-            <Alert severity="success" onClose={handleSnackbar}>
+            <Alert severity="success" onClose={TOGGLE_QUESTIONNAIRE_SNACKBAR}>
               Questionnaire berhasil disave
             </Alert>
           </Snackbar>

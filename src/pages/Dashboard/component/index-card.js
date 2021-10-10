@@ -16,7 +16,7 @@ const Card = () => {
     <>
       {data.map((e) => (
         <CardDashboard
-          key={e}
+          key={`${e.value}_${e.title}`}
           color={e.color}
           icon={e.icon}
           title={e.title}
