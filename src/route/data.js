@@ -13,7 +13,7 @@ import AdminSalmanDetail from "../pages/AdminDetail"
 import Questionnaire from "../pages/Questionnaire"
 import QuestionnaireForm from "../pages/Questionnaire/Form"
 import Formuniversitas from "../pages/MainUniversities/components/universities-form"
-import Profile from "../pages/Profile/Profile"
+import Profile from "../pages/Profile/index"
 
 const data = [
   {
