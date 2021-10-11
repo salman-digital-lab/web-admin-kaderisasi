@@ -336,7 +336,7 @@ const AdminDetail = () => {
                   ) : (
                     <>
                       <ListItemText primary={title.counselor_name} />
-                      <p>{studentCare?.counselor_name}</p>
+                      <p>{studentCare?.id_counselor}</p>
                     </>
                   )}
                 </ListItem>
