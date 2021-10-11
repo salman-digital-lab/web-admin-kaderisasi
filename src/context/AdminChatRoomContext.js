@@ -11,7 +11,7 @@ const AdminChatRoomProvider = (props) => {
     lmd: -1,
     search_query: "",
   })
-  const [studentCare, setStudentCare] = useState([])
+  const [studentCare, setStudentCare] = useState({})
   const [listStudentCare, setListStudentCare] = useState([])
   const [studentCareResp, setStudentCareResp] = useState({})
   const [loading, setLoading] = useState(false)
@@ -20,7 +20,6 @@ const AdminChatRoomProvider = (props) => {
     Get all Members
   */
   const getStudentCare = async (params) => {
-    setStudentCare({})
     setLoading(true)
     let paramsQuery = "?"
     Object.keys(params).forEach((x, i) => {
@@ -77,11 +76,13 @@ const AdminChatRoomProvider = (props) => {
     */
   const editStudentCare = (id, formData) => {
     setStudentCareResp({})
+    setLoading(true)
     axios
       .put(`${process.env.REACT_APP_BASE_URL}/v1/studentCare/${id}`, formData)
       .then((res) => {
         const { data } = res
         setStudentCareResp(data)
+        setLoading(false)
       })
       .catch((err) => {
         console.log(err)
@@ -127,6 +128,7 @@ const AdminChatRoomProvider = (props) => {
         filterStudentCare,
         setFilterStudentCare,
         studentCareResp,
+        setStudentCareResp,
         loading,
         functions,
       }}

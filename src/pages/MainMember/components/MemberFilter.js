@@ -125,7 +125,7 @@ const MemberFilter = () => {
               />
             </RadioGroup>
           </FormControl>
-          <FormControl className="select-dropdown">
+          <FormControl className="select-dropdown mt-15">
             <InputLabel id="demo-mutiple-name-label">
               Perguruan Tinggi
             </InputLabel>
