@@ -174,6 +174,23 @@ const AdminActivityProvider = (props) => {
   /*
     @params
     id: integer
+    formData: object
+  
+    Update activity where id = params.id
+  */
+  const uploadImageBanner = (formData) => {
+    axios
+      .put(process.env.REACT_APP_BASE_URL + `/v1/activity/banner`, formData)
+      .then((res) => {
+        const response = res.data
+        console.log(response)
+      })
+      .catch((err) => console.log(err))
+  }
+
+  /*
+    @params
+    id: integer
   
     Delete activity where id = params.id
   */
@@ -346,6 +363,7 @@ const AdminActivityProvider = (props) => {
     addActivity,
     editActivity,
     deleteActivity,
+    uploadImageBanner,
     getActivityCategory,
     getActivityCategoryDetail,
     addActivityCategory,
