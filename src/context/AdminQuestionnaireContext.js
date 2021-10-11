@@ -169,7 +169,7 @@ export default function AdminQuestionnaireProvider({ children }) {
     const { title, subtitle, form } = state
     const body = { title, subtitle, form }
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         `${process.env.REACT_APP_BASE_URL}/v1/activity/${id}/questionnaire`,
         {
           name: title,
