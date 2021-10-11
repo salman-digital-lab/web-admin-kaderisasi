@@ -146,15 +146,20 @@
 .back-button {
   color: transparent;
 }
-.MuiButton-root.edit-button {
-  background-color: #f0b137;
-  margin-right: 10px;
-  &:hover {
-    background-color: #ecb953;
+.MuiButton-root {
+  &.cancel-button {
+    margin-right: 10px;
   }
-}
-.MuiButton-root.delete-button:hover {
-  background-color: #ec3978;
+  &.delete-button:hover {
+    background-color: #ec3978;
+  }
+  &.edit-button {
+    background-color: #f0b137;
+    margin-right: 10px;
+    &:hover {
+      background-color: #ecb953;
+    }
+  }
 }
 
 // timeline styling

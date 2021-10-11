@@ -205,7 +205,7 @@ const Card = (props) => {
           onChange={(event) => handleForm(event.target.value, "group_id")}
         >
           <MenuItem value={1}>Admin</MenuItem>
-          <MenuItem value={2}>Konselor</MenuItem>
+          <MenuItem value={2}>Pendengar</MenuItem>
           <MenuItem value={3}>Kapro</MenuItem>
           <MenuItem value={4}>Manajer</MenuItem>
         </Select>

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import PropTypes from "prop-types"
-import { AdminActivityContext } from "../../../context/AdminActivityContext"
+import { AdminMemberContext } from "../../../context/AdminMemberContext"
 import LoadingAnimation from "../../../components/LoadingAnimation"
 import { RegistrantStatus } from "../../../components/Statuses/RegistrantStatus"
 
@@ -31,7 +31,7 @@ TimelineItem.propTypes = {
 
 const MemberTimeline = () => {
   const { id } = useParams()
-  const { memberActivities, functions } = useContext(AdminActivityContext)
+  const { memberActivities, functions } = useContext(AdminMemberContext)
   const { getMemberActivities } = functions
   useEffect(() => {
     if (!memberActivities) {

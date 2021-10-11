@@ -3,10 +3,10 @@ import { Card, Box, CardContent } from "@material-ui/core"
 import "../../assets/scss/MemberDetail.scss"
 import MemberDetail from "./components/MemberDetail"
 import MemberTimeline from "./components/MemberTimeline"
-import AdminActivityProvider from "../../context/AdminActivityContext"
+import AdminMemberProvider from "../../context/AdminMemberContext"
 
 const MemberSalmanDetail = () => (
-  <AdminActivityProvider>
+  <AdminMemberProvider>
     <div className="userdetail">
       <Card>
         <CardContent className="filter-content">
@@ -20,7 +20,7 @@ const MemberSalmanDetail = () => (
         </CardContent>
       </Card>
     </div>
-  </AdminActivityProvider>
+  </AdminMemberProvider>
 )
 
 export default MemberSalmanDetail
