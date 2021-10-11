@@ -159,7 +159,7 @@ const ChatRoomTable = () => {
                         {index + 1 + rowsPerPage * page}
                       </TableCell>
                       <TableCell className="table-cell">
-                        <Link to={`/member/${row.id}`}>
+                        <Link to={`/member/${row.member_id}`}>
                           {row.problem_owner_name} ({row.gender})
                         </Link>
                       </TableCell>
