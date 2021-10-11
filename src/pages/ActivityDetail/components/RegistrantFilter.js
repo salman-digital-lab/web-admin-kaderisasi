@@ -131,7 +131,7 @@ const PendaftarFilter = () => {
                 />
               </RadioGroup>
             </FormControl>
-            <FormControl className="select-dropdown">
+            <FormControl className="select-dropdown mt-15">
               <InputLabel id="demo-mutiple-name-label">Universitas</InputLabel>
               {universityList.length > 0 && (
                 <Select

@@ -4,7 +4,7 @@ import Dashboard from "../pages/Dashboard"
 import MemberSalman from "../pages/MainMember"
 import MemberSalmanDetail from "../pages/MemberDetail"
 import Universities from "../pages/MainUniversities"
-import ChatRoom from "../pages/ChatRoom"
+import ChatRoom from "../pages/MainChatRoom"
 import Setting from "../pages/Setting"
 import CategorySetting from "../pages/CategorySetting"
 import MainAdmin from "../pages/MainAdmin"
@@ -13,6 +13,7 @@ import AdminSalmanDetail from "../pages/AdminDetail"
 import Questionnaire from "../pages/Questionnaire"
 import QuestionnaireForm from "../pages/Questionnaire/Form"
 import Formuniversitas from "../pages/MainUniversities/components/universities-form"
+import ChatRoomDetail from "../pages/ChatRoomDetail"
 
 const data = [
   {
@@ -79,6 +80,11 @@ const data = [
     url: "/chat-room",
     modul: "student-care",
     component: ChatRoom,
+  },
+  {
+    url: "/chat-room/:id",
+    modul: "student-care",
+    component: ChatRoomDetail,
   },
   {
     url: "/settings",

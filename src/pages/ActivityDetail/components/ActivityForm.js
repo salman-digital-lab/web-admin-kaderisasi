@@ -165,12 +165,10 @@ const FormKegiatan = () => {
               <br />
               <div className="editor">
                 {!stateCanBeEdited ? (
-                  <Editor
-                    editorState={editorState}
-                    wrapperClassName="demo-wrapper"
-                    editorClassName="demo-editor"
-                    readOnly
-                    toolbarHidden
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: activityForm[0].description,
+                    }}
                   />
                 ) : (
                   <>

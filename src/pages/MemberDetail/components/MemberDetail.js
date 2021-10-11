@@ -4,7 +4,7 @@ import { Block, ArrowBack, Close } from "@material-ui/icons"
 import { Button, Collapse, IconButton } from "@material-ui/core"
 import Alert from "@material-ui/lab/Alert"
 import LoadingAnimation from "../../../components/LoadingAnimation"
-import { AdminActivityContext } from "../../../context/AdminActivityContext"
+import { AdminMemberContext } from "../../../context/AdminMemberContext"
 import { ConfirmationModal } from "./confirmation-modal"
 import profile from "../profile.png"
 
@@ -12,7 +12,7 @@ const MemberDetail = () => {
   const { id } = useParams()
   const [status, setStatus] = useState(true)
   const { memberForm, blockMemberResp, functions } =
-    useContext(AdminActivityContext)
+    useContext(AdminMemberContext)
   const [successBlockMember, setSuccessBlockMember] = useState(false)
   const [failedBlockMember, setFailedBlockMember] = useState(false)
   const [blockMember, setBlockMember] = useState(false)
