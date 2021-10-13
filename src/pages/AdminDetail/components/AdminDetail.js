@@ -101,21 +101,19 @@ const AdminDetail = () => {
               <ListItemText primary={title.firstname} />
               <p>{users?.first_name}</p>
             </ListItem>
-            <ListItem button>
+            <ListItem button divider>
               <ListItemText primary={title.lastname} />
               <p>{users?.last_name}</p>
             </ListItem>
-            <Divider light />
-            <ListItem button>
+            <ListItem button divider>
               <ListItemText primary={title.email} />
               <p>{users?.email}</p>
             </ListItem>
-            <ListItem button>
+            <ListItem button divider>
               <ListItemText primary={title.username} />
               <p>{users?.username}</p>
             </ListItem>
-            <Divider light />
-            <ListItem button>
+            <ListItem button divider>
               <ListItemText primary={title.status} />
               <AdminStatus status={users?.active} />
             </ListItem>

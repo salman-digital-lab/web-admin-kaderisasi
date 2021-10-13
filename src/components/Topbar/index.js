@@ -69,7 +69,7 @@ const Topbar = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <Link to="/profile"><MenuItem onClick={handleMenuClose}>Profile</MenuItem></Link>
+      <Link className="neutral-font" to="/profile"><MenuItem onClick={handleMenuClose}>Profile</MenuItem></Link>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={handleLogout}>
         Logout

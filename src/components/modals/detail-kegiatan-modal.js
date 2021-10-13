@@ -26,6 +26,7 @@ import {
   KeyboardDatePicker,
 } from "@material-ui/pickers"
 import moment from "moment"
+import FormData from "form-data"
 import { EnhancedTableHead, stableSort, getComparator } from "../TableDesign"
 import { AdminActivityContext } from "../../context/AdminActivityContext"
 import BaseImage from "./1056x816small.png"
@@ -129,7 +130,7 @@ export const DatePickerCustom = ({
 
 const DetailKegiatanModal = ({ open, onClose, data }) => {
   const { formTemplateList, functions } = useContext(AdminActivityContext)
-  const { editActivity, getAllFormTemplate } = functions
+  const { editActivity, getAllFormTemplate, uploadImageBanner } = functions
   const [rows, setRows] = useState(
     JSON.parse(localStorage.getItem(0)) &&
       JSON.parse(localStorage.getItem(0)).length > 0
@@ -282,9 +283,17 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
     setRows(tmp)
   }
 
-  const submitForm = (e) => {
+  const submitForm = async (e) => {
     e.preventDefault()
     if (document.getElementById("logo").files[0]) {
+      var data = new FormData()
+      data.append("activity_id", id)
+      data.append(
+        "banner_image",
+        document.getElementById("logo").files[0],
+        "image.png"
+      )
+      await uploadImageBanner(data)
       const file = URL.createObjectURL(document.getElementById("logo").files[0])
       const canvas = document.createElement("canvas")
       canvas.width = 1056
@@ -473,6 +482,7 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                   title="Tanggal Mulai Kegiatan"
                   value={beginDate}
                   onChange={handleStartActivityChange}
+                  error={errors.dateActivityValidity}
                 />
                 <DatePickerCustom
                   title="Tanggal Selesai Kegiatan"
@@ -487,6 +497,7 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                   title="Tanggal Mulai Registrasi"
                   value={registerBeginDate}
                   onChange={handleStartRegistrationChange}
+                  error={errors.dateRegistValidity}
                 />
                 <DatePickerCustom
                   title="Tanggal Selesai Registrasi"

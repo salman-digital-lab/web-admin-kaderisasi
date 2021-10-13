@@ -72,8 +72,8 @@ const KegiatanTable = () => {
   const { getActivity } = functions
 
   let params = {
-    page: 1,
-    perPage: 5,
+    page: page + 1,
+    perPage: rowsPerPage,
   }
 
   if (listActivity.length < 1 && status) {
@@ -192,9 +192,11 @@ const KegiatanTable = () => {
               </Table>
             </TableContainer>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
+              rowsPerPageOptions={[5, 10, 25, 50]}
               component="div"
-              count={activity?.data?.total}
+              count={
+                activity?.data?.total ? activity?.data?.total : "Loading..."
+              }
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}
