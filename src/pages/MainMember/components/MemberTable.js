@@ -64,8 +64,8 @@ const MemberTable = () => {
     useContext(AdminMemberContext)
   const { getMembers } = functions
   let params = {
-    page: 1,
-    page_size: 5,
+    page: page + 1,
+    page_size: rowsPerPage,
   }
   if (listMembers.length < 1 && status) {
     getMembers(params)
@@ -187,9 +187,9 @@ const MemberTable = () => {
               </Table>
             </TableContainer>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
+              rowsPerPageOptions={[5, 10, 25, 50]}
               component="div"
-              count={members?.data?.total ? members?.data?.total : "Loading"}
+              count={members?.data?.total ? members?.data?.total : "Loading..."}
               rowsPerPage={rowsPerPage}
               page={page}
               onChangePage={handleChangePage}

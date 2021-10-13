@@ -63,7 +63,7 @@ DatePickerCustom.propTypes = {
   helperText: PropTypes.string.isRequired,
   error: PropTypes.string.isRequired,
 }
-
+/* eslint-disable */
 export const KegiatanModal = ({ open, onClose }) => {
   const classes = styled()
   const [state, setState] = useState({
@@ -97,14 +97,14 @@ export const KegiatanModal = ({ open, onClose }) => {
     dateRegistErrorMsg = dateRegistrationCheck
       ? ""
       : `End registration date can't be before start registration date.`
-    dateRegistValidity = dateRegistrationCheck // true if error - end date before start date
-    formRegistValidity = dateRegistValidity // true if errors in the form
+    dateRegistValidity = dateRegistrationCheck ? false : true // true if error - end date before start date
+    formRegistValidity = dateRegistValidity ? false : true // true if errors in the form
 
     dateActivityErrorMsg = dateActivityCheck
       ? ""
       : `End activity date can't be before start activity date.`
-    dateActivityValidity = dateActivityCheck // true if error - end date before start date
-    formActivityValidity = dateActivityValidity // true if errors in the form
+    dateActivityValidity = dateActivityCheck ? false : true // true if error - end date before start date
+    formActivityValidity = dateActivityValidity ? false : true // true if errors in the form
 
     setErrors((prevState) => ({
       ...prevState,
@@ -203,6 +203,7 @@ export const KegiatanModal = ({ open, onClose }) => {
                   onChange={(event) =>
                     handleForm(moment(event).format("YYYY-MM-DD"), "begin_date")
                   }
+                  error={errors.dateActivityValidity}
                 />
                 <DatePickerCustom
                   title="Tanggal Selesai Kegiatan"
@@ -224,6 +225,7 @@ export const KegiatanModal = ({ open, onClose }) => {
                       "register_begin_date"
                     )
                   }
+                  error={errors.dateRegistValidity}
                 />
                 <DatePickerCustom
                   title="Tanggal Registrasi Selesai"

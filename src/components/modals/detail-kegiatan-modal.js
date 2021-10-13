@@ -482,6 +482,7 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                   title="Tanggal Mulai Kegiatan"
                   value={beginDate}
                   onChange={handleStartActivityChange}
+                  error={errors.dateActivityValidity}
                 />
                 <DatePickerCustom
                   title="Tanggal Selesai Kegiatan"
@@ -496,6 +497,7 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                   title="Tanggal Mulai Registrasi"
                   value={registerBeginDate}
                   onChange={handleStartRegistrationChange}
+                  error={errors.dateRegistValidity}
                 />
                 <DatePickerCustom
                   title="Tanggal Selesai Registrasi"

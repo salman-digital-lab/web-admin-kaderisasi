@@ -144,7 +144,7 @@ const AdminActivityProvider = (props) => {
       .post(process.env.REACT_APP_BASE_URL + `/v1/activity`, formData)
       .then((res) => {
         const form = res.data.data
-        window.location.href = `${process.env.ADMIN_APP_BASE_URL}/activity/${form[0].id}`
+        window.location.href = `/activity/${form[0].id}`
         setActivityForm(form)
       })
       .catch((err) => console.log(err))
