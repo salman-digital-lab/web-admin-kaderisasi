@@ -178,13 +178,12 @@ const AdminActivityProvider = (props) => {
   
     Get banner where id activity = params.id
   */
-  const getActivityBannerById = (id) => {
-    setActivityBanner({})
-    axios
+  const getActivityBannerById = async (id) => {
+    await axios
       .get(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}/banner`)
       .then((res) => {
-        const form = res.data.data
-        setActivityBanner(form)
+        const banner = res.data.data
+        setActivityBanner(banner)
       })
       .catch((err) => {
         console.log(err)
@@ -428,6 +427,7 @@ const AdminActivityProvider = (props) => {
         categoryList,
         universityList,
         formTemplateList,
+        activityBanner,
         functions,
       }}
     >
