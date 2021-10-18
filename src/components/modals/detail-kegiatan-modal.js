@@ -209,18 +209,12 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
   }
 
   useEffect(() => {
-    if (formTemplateList.length < 1) {
-      getAllFormTemplate()
-    }
     validateDates()
-  }, [
-    registerBeginDate,
-    registerEndDate,
-    beginDate,
-    endDate,
-    formTemplateList,
-    getAllFormTemplate,
-  ])
+  }, [registerBeginDate, registerEndDate, beginDate, endDate])
+
+  // useEffect(() => {
+  //   getAllFormTemplate()
+  // }, [])
 
   useEffect(() => {
     getActivityBannerById(id)
@@ -504,7 +498,7 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                   <MenuItem value={7}>Kader Lanjut</MenuItem>
                 </Select>
               </div>
-              <div className="select-form">
+              {/* <div className="select-form">
                 Kuisioner
                 <br />
                 <Select
@@ -518,7 +512,7 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                     </MenuItem>
                   ))}
                 </Select>
-              </div>
+              </div> */}
               <div className="button-bottom">
                 <Button
                   onClick={onClose}
