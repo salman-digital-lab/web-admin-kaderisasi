@@ -290,7 +290,7 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
       imgTemp.setAttribute("src", file)
       const ctx = canvas.getContext("2d")
       imgTemp.onload = async function () {
-        ctx.drawImage(imgTemp, 0, 0)
+        ctx.drawImage(imgTemp, 0, 0, canvas.width, canvas.height)
         const url = canvas.toDataURL("image/png")
         try {
           let formdata = new FormData()

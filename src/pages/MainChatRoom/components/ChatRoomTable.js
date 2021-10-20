@@ -73,8 +73,8 @@ const ChatRoomTable = () => {
   } = useContext(AdminChatRoomContext)
   const { getStudentCare } = functions
   let params = {
-    page: 1,
-    perPage: 5,
+    page: page + 1,
+    perPage: rowsPerPage,
   }
   useEffect(() => {
     getStudentCare(params)
@@ -160,7 +160,7 @@ const ChatRoomTable = () => {
                       </TableCell>
                       <TableCell className="table-cell">
                         <Link to={`/member/${row.member_id}`}>
-                          {row.problem_owner_name} ({row.gender})
+                          {row.problem_owner_name} ({row.member?.gender})
                         </Link>
                       </TableCell>
                       <TableCell className="table-cell">
@@ -170,7 +170,7 @@ const ChatRoomTable = () => {
                         {row.problem_category}
                       </TableCell>
                       <TableCell className="table-cell">
-                        {row.id_counselor}
+                        {row.counselor?.display_name}
                       </TableCell>
                       <TableCell className="table-cell">
                         {row.technical_handling}
