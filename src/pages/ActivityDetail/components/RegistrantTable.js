@@ -10,6 +10,7 @@ import {
   TableRow,
   Paper,
 } from "@material-ui/core"
+import { Female, Male } from "@mui/icons-material"
 import {
   EnhancedTableHead,
   EnhancedTableToolbar,
@@ -23,6 +24,7 @@ import { AdminActivityContext } from "../../../context/AdminActivityContext"
 const headCells = [
   { id: "no", numeric: true, label: "No." },
   { id: "name", numeric: false, label: "Nama Lengkap" },
+  { id: "jenjang", numeric: false, label: "Jenjang" },
   { id: "email", numeric: false, label: "Email & Whatsapp" },
   { id: "univ", numeric: false, label: "Perguruan Tinggi" },
   { id: "status", numeric: false, label: "Status Pendaftaran" },
@@ -71,8 +73,8 @@ const PendaftarTable = () => {
   } = useContext(AdminActivityContext)
   const { getActivityParticipants } = functions
   let params = {
-    page: 1,
-    perPage: 5,
+    page: page + 1,
+    perPage: rowsPerPage,
   }
   if (listParticipants.length < 1 && status) {
     getActivityParticipants(id, params)
@@ -177,18 +179,30 @@ const PendaftarTable = () => {
                         {index + 1 + rowsPerPage * page}
                       </TableCell>
                       <TableCell className="table-cell">
-                        <div className="text-ellipsis">
+                        <div className="text-ellipsis width-100">
                           <Link to={`/member/${row.id}`}>{row.name}</Link>
                         </div>
-                        {row.jenjang}
+                        <div>
+                          {row.gender === "F" ? (
+                            <span className="icon-text">
+                              <Female fontSize="small" /> Wanita
+                            </span>
+                          ) : (
+                            <span className="icon-text">
+                              <Male fontSize="small" /> Pria{" "}
+                            </span>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell className="table-cell">
+                        {row.role_name}
                       </TableCell>
                       <TableCell className="table-cell">
                         {row.email} <br />
                         {row.phone}
                       </TableCell>
                       <TableCell className="table-cell">
-                        {row.univ} <br />
-                        {row.jurusan}
+                        {row.university_name} / {row.faculty} / {row.major}
                       </TableCell>
                       <TableCell className="table-cell">
                         <RegistrantStatus status={row.status.toLowerCase()} />
