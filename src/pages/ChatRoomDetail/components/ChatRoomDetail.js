@@ -64,18 +64,24 @@ const AdminDetail = () => {
   ])
 
   const [payload, setPayload] = useState({})
-  const { studentCare, studentCareResp, setStudentCareResp, functions } =
+  const { listCounselors, studentCare, studentCareResp, setStudentCareResp, functions } =
     useContext(AdminChatRoomContext)
-  const { getStudentCareDetail, deleteStudentCare, editStudentCare } = functions
+  const { getStudentCareDetail, deleteStudentCare, editStudentCare, getCounselors } = functions
   useEffect(() => {
     getStudentCareDetail(id)
   }, [studentCareResp])
 
-  const { listUsers, functions: funcAdmin } = useContext(AdminContext)
-  const { getUsers } = funcAdmin
+  console.log(studentCare)
+
   useEffect(() => {
-    getUsers({})
+    getCounselors()
   }, [])
+
+  // const { listUsers, functions: funcAdmin } = useContext(AdminContext)
+  // const { getUsers } = funcAdmin
+  // useEffect(() => {
+  //   getUsers({})
+  // }, [])
 
   const [open, setOpen] = useState(false)
   const studentCareDelete = () => {
@@ -321,12 +327,12 @@ const AdminDetail = () => {
                         input={<Input />}
                         MenuProps={MenuProps}
                       >
-                        {listUsers.map((method) => (
+                        {listCounselors.map((method) => (
                           <MenuItem
                             key={`${method.id}`}
-                            value={method.id}
+                            value={method.user_id}
                             label={method.display_name}
-                            style={getStyles(method, listUsers, theme)}
+                            style={getStyles(method, listCounselors, theme)}
                           >
                             {method.display_name}
                           </MenuItem>
@@ -336,7 +342,7 @@ const AdminDetail = () => {
                   ) : (
                     <>
                       <ListItemText primary={title.counselor_name} />
-                      <p>{studentCare?.id_counselor}</p>
+                      <p>{studentCare?.counselor?.display_name}</p>
                     </>
                   )}
                 </ListItem>
@@ -431,7 +437,7 @@ const AdminDetail = () => {
               multiline
               fullWidth
               rows={5}
-              defaultValue={studentCare.problem_category_desk}
+              defaultValue={studentCare?.problem_category_desk}
               onChange={(event) =>
                 handleForm(event.target.value, "problem_category_desk")
               }
@@ -441,7 +447,7 @@ const AdminDetail = () => {
               <div className="input-form">Deskripsi Masalah</div>
               <br />
               <div className="editor">
-                <div>{studentCare.problem_category_desk}</div>
+                <div>{studentCare?.problem_category_desk}</div>
               </div>
             </>
           )}
@@ -454,7 +460,7 @@ const AdminDetail = () => {
               multiline
               fullWidth
               rows={5}
-              defaultValue={studentCare.desk_handling}
+              defaultValue={studentCare?.desk_handling}
               onChange={(event) =>
                 handleForm(event.target.value, "desk_handling")
               }
@@ -464,7 +470,7 @@ const AdminDetail = () => {
               <div className="input-form">Deskripsi Penanganan</div>
               <br />
               <div className="editor">
-                <div>{studentCare.desk_handling}</div>
+                <div>{studentCare?.desk_handling}</div>
               </div>
             </>
           )}

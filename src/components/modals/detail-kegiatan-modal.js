@@ -37,6 +37,7 @@ function createData(id, value, uploadedAt) {
 
 const headCells = [
   { id: "id", numeric: false, label: "ID" },
+  // { id: "name", numeric: false, label: "Filename" },
   // { id: 'uploadedAt', numeric: false, label: 'Uploaded At' },
   { id: "action", numeric: false, label: "Action" },
 ]
@@ -129,24 +130,17 @@ export const DatePickerCustom = ({
 )
 
 const DetailKegiatanModal = ({ open, onClose, data }) => {
-  const { formTemplateList, functions } = useContext(AdminActivityContext)
-  const { editActivity, getAllFormTemplate, uploadImageBanner } = functions
-  const [rows, setRows] = useState(
-    JSON.parse(localStorage.getItem(0)) &&
-      JSON.parse(localStorage.getItem(0)).length > 0
-      ? JSON.parse(localStorage.getItem(0)).map((x) =>
-          createData(x.id, x.value, x.uploadedAt)
-        )
-      : []
-  )
-  const [uploadedImage, setUploadImage] = useState(
-    JSON.parse(localStorage.getItem(0)) &&
-      JSON.parse(localStorage.getItem(0)).length > 0
-      ? JSON.parse(localStorage.getItem(0))[
-          JSON.parse(localStorage.getItem(0)).length - 1
-        ].value
-      : BaseImage
-  )
+  const { formTemplateList, activityBanner, functions } =
+    useContext(AdminActivityContext)
+  const {
+    editActivity,
+    getAllFormTemplate,
+    getActivityBannerById,
+    uploadImageBanner,
+    deleteBannerById,
+  } = functions
+  const [rows, setRows] = useState(activityBanner)
+  const [uploadedImage, setUploadImage] = useState(BaseImage)
   const [submitError, setSubmitError] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const classes = useStyles()
@@ -178,7 +172,7 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
   const [rowsPerPage, setRowsPerPage] = useState(5)
 
   const validateDates = () => {
-    // check dates via the dates{} state object, line 33
+    // check dates via the dates{} state object
     let dateRegistErrorMsg = ""
     let dateRegistValidity = false
     let formRegistValidity = false
@@ -215,18 +209,20 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
   }
 
   useEffect(() => {
-    if (formTemplateList.length < 1) {
-      getAllFormTemplate()
-    }
     validateDates()
-  }, [
-    registerBeginDate,
-    registerEndDate,
-    beginDate,
-    endDate,
-    formTemplateList,
-    getAllFormTemplate,
-  ])
+  }, [registerBeginDate, registerEndDate, beginDate, endDate])
+
+  // useEffect(() => {
+  //   getAllFormTemplate()
+  // }, [])
+
+  useEffect(() => {
+    getActivityBannerById(id)
+  }, [])
+
+  useEffect(() => {
+    setRows(activityBanner)
+  }, [activityBanner])
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc"
@@ -277,23 +273,15 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
     setIsPublished(event.target.checked)
   }
 
-  const handleRemoveImage = (id) => {
-    const tmp = JSON.parse(localStorage.getItem(0)).filter((x) => x.id !== id)
-    localStorage.setItem(0, JSON.stringify(tmp))
-    setRows(tmp)
+  const handleRemoveImage = (idx) => {
+    deleteBannerById(idx)
+    const newBanner = rows.filter((x) => x.id !== idx)
+    setRows(newBanner)
   }
 
   const submitForm = async (e) => {
     e.preventDefault()
     if (document.getElementById("logo").files[0]) {
-      var data = new FormData()
-      data.append("activity_id", id)
-      data.append(
-        "banner_image",
-        document.getElementById("logo").files[0],
-        "image.png"
-      )
-      await uploadImageBanner(data)
       const file = URL.createObjectURL(document.getElementById("logo").files[0])
       const canvas = document.createElement("canvas")
       canvas.width = 1056
@@ -301,26 +289,19 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
       const imgTemp = document.createElement("img")
       imgTemp.setAttribute("src", file)
       const ctx = canvas.getContext("2d")
-      imgTemp.onload = function () {
-        ctx.drawImage(imgTemp, 0, 0)
+      imgTemp.onload = async function () {
+        ctx.drawImage(imgTemp, 0, 0, canvas.width, canvas.height)
         const url = canvas.toDataURL("image/png")
-        const dataImage = JSON.parse(localStorage.getItem(0))
-          ? JSON.parse(localStorage.getItem(0))
-          : []
         try {
-          dataImage.push({
-            id: new Date().getTime(),
-            value: url,
-            uploadedAt: new Date(),
-          })
-          setUploadImage(url)
-          window.localStorage.setItem(0, JSON.stringify(dataImage))
-          setSubmitSuccess(true)
-          setRows(
-            JSON.parse(localStorage.getItem(0)).map((x) =>
-              createData(x.id, x.value, x.uploadedAt)
-            )
+          let formdata = new FormData()
+          formdata.append("activity_id", id)
+          formdata.append(
+            "banner_image",
+            document.getElementById("logo").files[0]
           )
+          await uploadImageBanner(formdata)
+          setUploadImage(url)
+          setSubmitSuccess(true)
         } catch (evt) {
           setUploadImage(BaseImage)
           setSubmitError(true)
@@ -360,7 +341,7 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
               </div>
               <div>
                 <br />
-                <Paper>
+                <Paper style={{ maxHeight: 300, overflow: "auto" }}>
                   <TableContainer>
                     <Table
                       aria-labelledby="tableTitle"
@@ -384,8 +365,11 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                             return (
                               <TableRow hover tabIndex={-1} key={index}>
                                 <TableCell className="table-cell">
-                                  {row.id.toString().slice(7, 13)}
+                                  {row.id}
                                 </TableCell>
+                                {/* <TableCell className="table-cell">
+                                  {row.filename}
+                                </TableCell> */}
                                 {/* <TableCell className="table-cell">{new Date(row.uploadedAt).toLocaleDateString()}</TableCell> */}
                                 <TableCell className="table-cell">
                                   <Button
@@ -448,15 +432,8 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                     variant="contained"
                     color="primary"
                     type="submit"
-                    disabled={
-                      JSON.parse(localStorage.getItem(0)) &&
-                      JSON.parse(localStorage.getItem(0)).length > 3
-                    }
                   >
-                    {JSON.parse(localStorage.getItem(0)) &&
-                    JSON.parse(localStorage.getItem(0)).length > 3
-                      ? "Max. Gambar hanya 4!"
-                      : "Upload Gambar"}
+                    Upload Gambar
                   </Button>
                 </form>
               </div>
@@ -521,7 +498,7 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                   <MenuItem value={7}>Kader Lanjut</MenuItem>
                 </Select>
               </div>
-              <div className="select-form">
+              {/* <div className="select-form">
                 Kuisioner
                 <br />
                 <Select
@@ -535,7 +512,7 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                     </MenuItem>
                   ))}
                 </Select>
-              </div>
+              </div> */}
               <div className="button-bottom">
                 <Button
                   onClick={onClose}

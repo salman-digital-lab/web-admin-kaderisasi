@@ -23,6 +23,7 @@ const AdminActivityProvider = (props) => {
   const [categoryList, setCategoryList] = useState([])
   const [formTemplateList, setFormTemplateList] = useState([])
   const [activityForm, setActivityForm] = useState([])
+  const [activityBanner, setActivityBanner] = useState([])
   const [universityList, setUniversityList] = useState([])
 
   /*
@@ -174,6 +175,24 @@ const AdminActivityProvider = (props) => {
   /*
     @params
     id: integer
+  
+    Get banner where id activity = params.id
+  */
+  const getActivityBannerById = async (id) => {
+    await axios
+      .get(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}/banner`)
+      .then((res) => {
+        const banner = res.data.data
+        setActivityBanner(banner)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  /*
+    @params
+    id: integer
     formData: object
   
     Update activity where id = params.id
@@ -184,6 +203,21 @@ const AdminActivityProvider = (props) => {
       .then((res) => {
         const response = res.data
         console.log(response)
+      })
+      .catch((err) => console.log(err))
+  }
+
+  /*
+    @params
+    id: integer
+  
+    Delete activity banner where id banner = params.id
+  */
+  const deleteBannerById = (id) => {
+    axios
+      .delete(process.env.REACT_APP_BASE_URL + `/v1/activity/banner/${id}`)
+      .then((res) => {
+        setState(null)
       })
       .catch((err) => console.log(err))
   }
@@ -363,7 +397,9 @@ const AdminActivityProvider = (props) => {
     addActivity,
     editActivity,
     deleteActivity,
+    getActivityBannerById,
     uploadImageBanner,
+    deleteBannerById,
     getActivityCategory,
     getActivityCategoryDetail,
     addActivityCategory,
@@ -391,6 +427,7 @@ const AdminActivityProvider = (props) => {
         categoryList,
         universityList,
         formTemplateList,
+        activityBanner,
         functions,
       }}
     >
