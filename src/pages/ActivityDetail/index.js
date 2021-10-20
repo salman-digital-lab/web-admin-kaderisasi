@@ -9,7 +9,7 @@ import PendaftarFilter from "./components/RegistrantFilter"
 import PendaftarTable from "./components/RegistrantTable"
 import FormKegiatan from "./components/ActivityForm"
 import AdminActivityProvider from "../../context/AdminActivityContext"
-import Questionnaire from "../Questionnaire"
+import Questionnaire from "./components/Questionnaire/index"
 
 const KegiatanDetail = () => {
   const theme = useTheme()

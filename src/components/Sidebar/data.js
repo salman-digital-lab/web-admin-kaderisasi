@@ -5,7 +5,6 @@ import GroupIcon from "@material-ui/icons/Group"
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer"
 import SchoolIcon from "@material-ui/icons/School"
 import SettingsIcon from "@material-ui/icons/Settings"
-import LibraryAddCheckIcon from "@material-ui/icons/LibraryAddCheck"
 
 const data = [
   {
@@ -31,13 +30,6 @@ const data = [
     icon: <GroupIcon />,
     url: "/member",
     modul: "members",
-  },
-  {
-    id: 4,
-    name: "Questionnaire",
-    icon: <LibraryAddCheckIcon />,
-    url: "/questionnaire",
-    modul: "activity",
   },
   {
     id: 5,

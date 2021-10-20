@@ -1,245 +1,255 @@
 import React from "react"
 import axios from "axios"
+import { SignalCellularNullRounded } from "@material-ui/icons"
 
-/* eslint-disable */
-export const AdminQuestionnaireContext = React.createContext()
-const AdminQuestionnaireProvider = (props) => {
-  const ref = []
-  const [state, setState] = React.useState({
+// eslint-disable-next-line
+export default function AdminQuestionnaireProvider({ children }) {
+  const initState = {
     title: "The Question",
     subtitle: "This question is about...",
-    form: [{ variant: "short_text", question: "", required: false }],
-  })
-  const [reload, setReload] = React.useState(true)
-  const [idDelete, setIdDelete] = React.useState(null)
-  const [openDeleteDialog, setOpenDeleteDialog] = React.useState(false)
-  const [openSnackbar, setOpenSnackbar] = React.useState(false)
+    form: [
+      {
+        type: "text",
+        label: "First question for you",
+        name: "",
+        required: false,
+      },
+    ],
+  }
 
-  const handleChangeTitleForm = (event) =>
-    setState({ ...state, title: event.target.value })
+  const ref = []
+  const [state, setState] = React.useState(initState)
+  const [questionnaireReload, setQuestionnaireReload] = React.useState(true)
+  const [questionnaireLoading, setQuestionnaireLoading] = React.useState(false)
+  const [openQuestionnaireSuccesSnackbar, setOpenQuestionnaireSuccessSnackbar] =
+    React.useState(false)
 
-  const handleChangeSubtitleForm = (event) =>
-    setState({ ...state, subtitle: event.target.value })
+  const RESET_QUESTIONNAIRE = () => setState(initState)
 
-  const handleChangeVariantForm = (id, event) => {
-    const variant = event.target.value
-    const form = state.form
-    form[id] = {
-      ...state.form[id],
-      variant: variant,
-    }
+  const SET_QUESTIONNAIRE_FORM_TITLE = (value) => {
+    setState({ ...state, title: value })
+  }
+
+  const GET_QUESTIONNAIRE_FORM_TITLE = () => state?.title ?? "Default Title"
+
+  const SET_QUESTIONNAIRE_FORM_SUBTITLE = (value) => {
+    setState({ ...state, subtitle: value })
+  }
+
+  const GET_QUESTIONNAIRE_FORM_SUBTITLE = () =>
+    state?.subtitle ?? "Default Subtitle"
+
+  const SET_QUESTIONNAIRE_FORM_TYPE = (id, variant) => {
+    const { form } = state
+    form[id].type = variant
     if (variant === "radio_button" || variant === "checkbox") {
-      form[id] = {
-        ...state.form[id],
-        answer: ["Yes of course"],
-      }
+      form[id].data = [
+        {
+          label: "Yes of course",
+          value: "yes_of_course",
+          name: "",
+        },
+      ]
     }
     if (variant === "slider") {
-      form[id] = {
-        ...state.form[id],
-        minValue: 0,
-        maxValue: 100,
+      form[id].data = {
+        min: 0,
+        max: 100,
       }
     }
     setState({ ...state, form })
   }
 
-  const handleChangeQuestionForm = (id, event) => {
-    const form = state.form
-    form[id] = {
-      ...state.form[id],
-      question: event.target.value,
-    }
+  const SET_QUESTIONNAIRE_FORM_QUESTION = (id, value) => {
+    const { form } = state
+    form[id].label = value
     setState({ ...state, form })
   }
 
-  const handleChangeMinValueForm = (id, event) => {
-    const minValue = event.target.value
-    const maxValue = state.form[id].maxValue
+  const GET_QUESTIONNAIRE_FORM_QUESTION = (id) =>
+    state?.form[id]?.label ?? "Default Question"
+
+  const SET_QUESTIONNAIRE_ANSWER_MIN_VALUE = (id, value) => {
+    const { form } = state
+    const minValue = value
+    const maxValue = form[id].data.max
     if (!(minValue >= maxValue)) {
-      const form = state.form
-      form[id] = {
-        ...state.form[id],
-        minValue,
+      form[id].data = {
+        ...form[id].data,
+        min: minValue,
       }
       setState({ ...state, form })
     }
   }
 
-  const handleChangeMaxValueForm = (id, event) => {
-    const maxValue = event.target.value
-    const minValue = state.form[id].minValue
+  const GET_QUESTIONNAIRE_ANSWER_MIN_VALUE = (id) =>
+    state?.form[id]?.data.min ?? 0
+
+  const SET_QUESTIONNAIRE_ANSWER_MAX_VALUE = (id, value) => {
+    const { form } = state
+    const maxValue = value
+    const minValue = form[id].data.min
     if (!(maxValue <= minValue)) {
-      const form = state.form
-      form[id] = {
-        ...state.form[id],
-        maxValue: event.target.value,
+      form[id].data = {
+        ...form[id].data,
+        max: maxValue,
       }
       setState({ ...state, form })
     }
   }
 
-  const handleChangeAnswerForm = (id, index, event) => {
-    const form = state.form
-    const answer = state.form[id].answer
-    const currentValue = event.target.value
-    answer[index] = currentValue
-    form[id] = { ...form[id], answer }
+  const GET_QUESTIONNAIRE_ANSWER_MAX_VALUE = (id) =>
+    state?.form[id]?.data.max ?? 100
+
+  const SET_QUESTIONNAIRE_ANSWER_STRING_VALUE = (id, index, value) => {
+    const { form } = state
+    form[id].data[index] = {
+      label: value,
+      value: value.toLowerCase().split(" ").join("_"),
+    }
     setState({ ...state, form })
   }
 
-  const handleAddAnswerForm = (id) => {
-    const form = state.form
-    const answer = state.form[id].answer
-    answer.push("Yes of course")
-    form[id] = { ...form[id], answer }
-    setState({ ...state, form })
-  }
+  const GET_QUESTIONNAIRE_ANSWER_STRING_VALUE = (id) =>
+    state?.form[id]?.data ?? null
 
-  const handleDeleteAnswerForm = (id, index) => {
-    const form = state.form
-    let answer = state.form[id].answer
-    answer = answer.filter((value, indexFilter) => index !== indexFilter)
-    form[id] = { ...form[id], answer }
-    setState({ ...state, form })
-  }
-
-  const handleSaveQuestionnaire = () => {
-    console.log(state)
-  }
-
-  const handleAddNewForm = () =>
-    setState({
-      ...state,
-      form: [
-        ...state.form,
-        {
-          variant: "short_text",
-          question: "",
-          required: false,
-        },
-      ],
+  const ADD_QUESTIONNAIRE_ANSWER_STRING_VALUE = (id) => {
+    const { form } = state
+    form[id].data.push({
+      label: "Yes of course",
+      value: "yes_of_course",
     })
-
-  const handleDeleteForm = (id) => {
-    let form = state.form
-    form = form.filter((value, index) => id !== index)
     setState({ ...state, form })
   }
 
-  const handleRequiredForm = (id) => {
-    const form = state.form
-    const required = state.form[id].required
-    form[id] = { ...form[id], required: !required }
+  const REMOVE_QUESTIONNAIRE_ANSWER_STRING_VALUE = (id, index) => {
+    const { form } = state
+    form[id].data = form[id].data.filter(
+      (value, indexFilter) => index !== indexFilter
+    )
     setState({ ...state, form })
   }
 
-  const handleAddRef = (element) => {
+  const SAVE_QUESTIONNAIRE = () => {
+    setOpenQuestionnaireSuccessSnackbar(true)
+    // console.log(state)
+  }
+
+  const ADD_QUESTIONNAIRE_FORM = () => {
+    const { form } = state
+    form.push(initState.form[0])
+    setState({ ...state, form })
+  }
+
+  const REMOVE_QUESTIONNAIRE_FORM = (id) => {
+    const { form } = state
+    setState({ ...state, form: form.filter((value, index) => id !== index) })
+  }
+
+  const TOGGLE_QUESTIONNAIRE_FORM_REQUIRED = (id) => {
+    const { form } = state
+    const { required } = form[id]
+    form[id].required = !required
+    setState({ ...state, form })
+  }
+
+  const GET_QUESTIONNAIRE_FORM_REQUIRED = (id) =>
+    state?.form[id]?.required ?? false
+
+  const ADD_QUESTIONNAIRE_REF = (element) => {
     ref.push(element)
   }
 
-  const getAllQuestionnaire = (callback) => {
-    axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template`)
-      .then((res) => callback(res))
-      .catch((err) => console.log(err))
-  }
-
-  const getQuestionnaire = (id, callback) => {
-    axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template/${id}`)
-      .then((res) => {
-        const { title, subtitle, form } = JSON.parse(res.data.data.data)
-        setState({
-          ...state,
-          title,
-          subtitle,
-          form,
-        })
-        callback()
-      })
-      .catch((err) => console.log(err))
-  }
-
-  const createQuestionnaire = () => {
+  const REQUEST_PUT_QUESTIONNAIRE = async ({
+    id,
+    resolve = () => null,
+    reject = () => null,
+    final = () => null,
+  }) => {
+    // eslint-disable-next-line
     const { title, subtitle, form } = state
-    const body = { title, subtitle, form }
-    axios
-      .post(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template`, {
-        name: title,
-        body: JSON.stringify(body),
-      })
-      .then((res) => {
-        setOpenSnackbar(true)
-      })
-      .catch((err) => console.log(err))
-  }
-
-  const updateQuestionnaire = (id) => {
-    const { title, subtitle, form } = state
-    const body = { title, subtitle, form }
-    axios
-      .put(
-        process.env.REACT_APP_BASE_URL + `/v1/activity-form-template/${id}`,
-        {
-          name: title,
-          body: JSON.stringify(body),
-        }
+    try {
+      const response = await axios.put(
+        `${process.env.REACT_APP_BASE_URL}/v1/activity/${id}/questionnaire`,
+        form
       )
-      .then((res) => {
-        setOpenSnackbar(true)
-      })
-      .catch((err) => console.log(err))
+      if (response.status === 200) {
+        setOpenQuestionnaireSuccessSnackbar(true)
+        resolve()
+      }
+      reject()
+    } catch (error) {
+      reject()
+    }
+    final()
   }
 
-  const handleOpenDeleteDialog = () => {
-    setOpenDeleteDialog(!openDeleteDialog)
+  const TOGGLE_QUESTIONNAIRE_SNACKBAR = () => {
+    setOpenQuestionnaireSuccessSnackbar(!openQuestionnaireSuccesSnackbar)
   }
 
-  const deleteQuestionnaire = (id) => {
-    axios
-      .delete(
-        process.env.REACT_APP_BASE_URL + `/v1/activity-form-template/${id}`
+  const REQUEST_GET_QUESTIONNAIRE = async ({
+    id,
+    resolve = () => null,
+    reject = () => null,
+    final = () => null,
+  }) => {
+    try {
+      setQuestionnaireLoading(true)
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/v1/activity/${id}/questionnaire`
       )
-      .then((res) => {
-        setOpenSnackbar(true)
-        setReload(true)
-      })
-      .catch((err) => console.log(err))
-    handleOpenDeleteDialog()
+      // console.log(response)
+      if (response.status === 200) {
+        const form = response.data.data ?? SignalCellularNullRounded
+        // console.log(response.data.data)
+        setState({ ...state, form })
+        // if (
+        //   Object.prototype.hasOwnProperty.call(form, "title") &&
+        //   Object.prototype.hasOwnProperty.call(form, "subtitle") &&
+        //   Object.prototype.hasOwnProperty.call(form, "form")
+        // ) {
+        //   RESET_QUESTIONNAIRE()
+        // } else {
+        //   RESET_QUESTIONNAIRE()
+        // }
+        resolve()
+      }
+      reject()
+    } catch (error) {
+      reject()
+    }
+    setQuestionnaireLoading(false)
+    final()
   }
 
-  const agreeToDeleteQuestionnaire = () => {
-    deleteQuestionnaire(idDelete)
-  }
-
-  const handleSnackbar = () => {
-    setOpenSnackbar(!openSnackbar)
-  }
-
+  // function map
   const functions = {
-    handleChangeTitleForm,
-    handleChangeSubtitleForm,
-    handleChangeQuestionForm,
-    handleChangeMinValueForm,
-    handleChangeMaxValueForm,
-    handleChangeVariantForm,
-    handleChangeAnswerForm,
-    handleAddAnswerForm,
-    handleDeleteAnswerForm,
-    handleSaveQuestionnaire,
-    handleAddNewForm,
-    handleDeleteForm,
-    handleRequiredForm,
-    handleAddRef,
-    getAllQuestionnaire,
-    getQuestionnaire,
-    createQuestionnaire,
-    updateQuestionnaire,
-    deleteQuestionnaire,
-    handleOpenDeleteDialog,
-    agreeToDeleteQuestionnaire,
-    handleSnackbar,
+    ADD_QUESTIONNAIRE_ANSWER_STRING_VALUE,
+    ADD_QUESTIONNAIRE_FORM,
+    ADD_QUESTIONNAIRE_REF,
+    GET_QUESTIONNAIRE_FORM_TITLE,
+    GET_QUESTIONNAIRE_FORM_SUBTITLE,
+    GET_QUESTIONNAIRE_FORM_QUESTION,
+    GET_QUESTIONNAIRE_ANSWER_MIN_VALUE,
+    GET_QUESTIONNAIRE_ANSWER_MAX_VALUE,
+    GET_QUESTIONNAIRE_ANSWER_STRING_VALUE,
+    GET_QUESTIONNAIRE_FORM_REQUIRED,
+    SET_QUESTIONNAIRE_FORM_TITLE,
+    SET_QUESTIONNAIRE_FORM_SUBTITLE,
+    SET_QUESTIONNAIRE_FORM_QUESTION,
+    SET_QUESTIONNAIRE_ANSWER_MIN_VALUE,
+    SET_QUESTIONNAIRE_ANSWER_MAX_VALUE,
+    SET_QUESTIONNAIRE_FORM_TYPE,
+    SET_QUESTIONNAIRE_ANSWER_STRING_VALUE,
+    REMOVE_QUESTIONNAIRE_ANSWER_STRING_VALUE,
+    REMOVE_QUESTIONNAIRE_FORM,
+    RESET_QUESTIONNAIRE,
+    REQUEST_GET_QUESTIONNAIRE,
+    REQUEST_PUT_QUESTIONNAIRE,
+    SAVE_QUESTIONNAIRE,
+    TOGGLE_QUESTIONNAIRE_FORM_REQUIRED,
+    TOGGLE_QUESTIONNAIRE_SNACKBAR,
   }
 
   return (
@@ -247,18 +257,16 @@ const AdminQuestionnaireProvider = (props) => {
       value={{
         data: state,
         setData: setState,
-        openDeleteDialog,
-        openSnackbar,
-        idDelete,
-        setIdDelete,
-        reload,
-        setReload,
+        openQuestionnaireSuccesSnackbar,
+        questionnaireReload,
+        setQuestionnaireReload,
+        questionnaireLoading,
         ref,
         functions,
       }}
     >
-      {props.children}
+      {children}
     </AdminQuestionnaireContext.Provider>
   )
 }
-export default AdminQuestionnaireProvider
+export const AdminQuestionnaireContext = React.createContext()

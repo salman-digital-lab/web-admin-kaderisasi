@@ -10,8 +10,6 @@ import CategorySetting from "../pages/CategorySetting"
 import MainAdmin from "../pages/MainAdmin"
 import AdminCard from "../pages/AdminCard"
 import AdminSalmanDetail from "../pages/AdminDetail"
-import Questionnaire from "../pages/Questionnaire"
-import QuestionnaireForm from "../pages/Questionnaire/Form"
 import Formuniversitas from "../pages/MainUniversities/components/universities-form"
 import Profile from "../pages/Profile/index"
 import ChatRoomDetail from "../pages/ChatRoomDetail"
@@ -21,21 +19,6 @@ const data = [
     url: "/",
     modul: "dashboard",
     component: Dashboard,
-  },
-  {
-    url: "/questionnaire",
-    modul: "activity",
-    component: Questionnaire,
-  },
-  {
-    url: "/detail-questionnaire/:id",
-    modul: "activity",
-    component: QuestionnaireForm,
-  },
-  {
-    url: "/new-questionnaire",
-    modul: "activity",
-    component: QuestionnaireForm,
   },
   {
     url: "/activity",
