@@ -6,6 +6,7 @@ import { AdminQuestionnaireContext } from "../../../../../context/AdminQuestionn
 export default function SaveButton() {
   const { id } = useParams()
   const { functions } = React.useContext(AdminQuestionnaireContext)
+  // eslint-disable-next-line
   const { REQUEST_PUT_QUESTIONNAIRE, SAVE_QUESTIONNAIRE } = functions
 
   return (
@@ -13,8 +14,8 @@ export default function SaveButton() {
       <Box flexGrow={1} />
       <Button
         onClick={() => {
-          // REQUEST_PUT_QUESTIONNAIRE({id})
-          SAVE_QUESTIONNAIRE()
+          REQUEST_PUT_QUESTIONNAIRE({ id })
+          // SAVE_QUESTIONNAIRE()
         }}
         variant="contained"
         color="primary"

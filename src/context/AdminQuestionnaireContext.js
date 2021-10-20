@@ -166,15 +166,12 @@ export default function AdminQuestionnaireProvider({ children }) {
     reject = () => null,
     final = () => null,
   }) => {
+    // eslint-disable-next-line
     const { title, subtitle, form } = state
-    const body = { title, subtitle, form }
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_BASE_URL}/v1/activity/${id}/questionnaire`,
-        {
-          name: title,
-          body: JSON.stringify(body),
-        }
+        form
       )
       if (response.status === 200) {
         setOpenQuestionnaireSuccessSnackbar(true)
