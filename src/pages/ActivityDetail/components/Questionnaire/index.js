@@ -4,13 +4,7 @@ import { Grid, Box, Avatar } from "@material-ui/core"
 import Skeleton from "@material-ui/lab/Skeleton"
 import Snackbar from "@material-ui/core/Snackbar"
 import MuiAlert from "@material-ui/lab/Alert"
-import {
-  TitleAndSubtitleForm,
-  AddQuestionButton,
-  FormSelector,
-  SaveButton,
-  QuestionNavigator,
-} from "./components"
+import { AddQuestionButton, FormSelector, SaveButton } from "./components"
 import AdminQuestionnaireProvider, {
   AdminQuestionnaireContext,
 } from "../../../../context/AdminQuestionnaireContext"
@@ -64,7 +58,7 @@ const QuestionnaireForm = () => {
           <br />
           <Grid container spacing={3}>
             <Grid item xs>
-              <TitleAndSubtitleForm />
+              {/* <TitleAndSubtitleForm /> */}
               {data?.form &&
                 data.form.map(({ type }, index) => (
                   // eslint-disable-next-line
