@@ -22,6 +22,7 @@ export const AdminLoginProvider = (props) => {
     })
       .then((res) => {
         if (res.data.status === "SUCCESS") {
+          console.log(res)
           const token = res.data.token.token
           const user = res.data.user
           Cookies.set("token", token, { expires: 1 })

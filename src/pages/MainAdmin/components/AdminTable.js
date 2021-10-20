@@ -63,8 +63,8 @@ const AdminTable = () => {
     useContext(AdminContext)
   const { getUsers } = functions
   let params = {
-    page: 1,
-    perPage: 5,
+    page: page + 1,
+    page_size: rowsPerPage,
   }
   useEffect(() => {
     getUsers(params)

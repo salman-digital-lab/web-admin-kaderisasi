@@ -11,6 +11,7 @@ import MainAdmin from "../pages/MainAdmin"
 import AdminCard from "../pages/AdminCard"
 import AdminSalmanDetail from "../pages/AdminDetail"
 import Formuniversitas from "../pages/MainUniversities/components/universities-form"
+import Profile from "../pages/Profile/index"
 import ChatRoomDetail from "../pages/ChatRoomDetail"
 
 const data = [
@@ -93,6 +94,11 @@ const data = [
     url: "/edit-admin/:id",
     modul: "users",
     component: AdminCard,
+  },
+  {
+    url: "/profile",
+    modul: "users",
+    component: Profile,
   },
 ]
 export default data

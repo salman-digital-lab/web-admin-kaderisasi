@@ -12,9 +12,28 @@ const AdminChatRoomProvider = (props) => {
     search_query: "",
   })
   const [studentCare, setStudentCare] = useState({})
+  const [listCounselors, setCounselors] = useState([])
   const [listStudentCare, setListStudentCare] = useState([])
   const [studentCareResp, setStudentCareResp] = useState({})
   const [loading, setLoading] = useState(false)
+
+
+  /*
+    Get all Counselor
+  */
+    const getCounselors = async () => {
+      setLoading(true)
+      axios
+        .get(process.env.REACT_APP_BASE_URL + `/v1/student-care/counselors`)
+        .then((res) => {
+          let result = res.data.data
+          setCounselors(result)
+          setLoading(false)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
 
   /*
     Get all Members
@@ -32,10 +51,10 @@ const AdminChatRoomProvider = (props) => {
     let result = null
 
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/v1/studentCare${paramsQuery}`)
+      .get(`${process.env.REACT_APP_BASE_URL}/v1/student-care${paramsQuery}`)
       .then((res) => {
         result = res.data.data
-        setListStudentCare(result)
+        setListStudentCare(result.data)
         setStudentCare(res.data)
         setLoading(false)
       })
@@ -53,11 +72,11 @@ const AdminChatRoomProvider = (props) => {
   const getStudentCareDetail = async (id) => {
     setLoading(true)
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/v1/studentCare/${id}`)
+      .get(`${process.env.REACT_APP_BASE_URL}/v1/student-care/${id}`)
       .then((res) => {
-        const data = res.data.data
-        if (data.length > 0){
-          setStudentCare(data[0])
+        const rp = res.data
+        if (rp.status === "SUCCESS") {
+          setStudentCare(rp.data)
         } else {
           setStudentCare(null)
         }
@@ -78,7 +97,7 @@ const AdminChatRoomProvider = (props) => {
     setStudentCareResp({})
     setLoading(true)
     axios
-      .put(`${process.env.REACT_APP_BASE_URL}/v1/studentCare/${id}`, formData)
+      .put(`${process.env.REACT_APP_BASE_URL}/v1/student-care/${id}`, formData)
       .then((res) => {
         const { data } = res
         setStudentCareResp(data)
@@ -89,33 +108,34 @@ const AdminChatRoomProvider = (props) => {
       })
   }
 
-    /*
+  /*
       @params
       id: integer
     
       unblock member where id = params.id
     */
-      const deleteStudentCare = (id) => {
-        setStudentCareResp({})
-        axios
-          .delete(`${process.env.REACT_APP_BASE_URL}/v1/studentCare/${id}`)
-          .then((res) => {
-            const { data } = res
-            setStudentCareResp(data)
-            setTimeout(() => {
-              window.location.href = "/chat-room"
-            }, 1000)
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      }
+  const deleteStudentCare = (id) => {
+    setStudentCareResp({})
+    axios
+      .delete(`${process.env.REACT_APP_BASE_URL}/v1/student-care/${id}`)
+      .then((res) => {
+        const { data } = res
+        setStudentCareResp(data)
+        setTimeout(() => {
+          window.location.href = "/chat-room"
+        }, 1000)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   const functions = {
+    getCounselors,
     getStudentCare,
     getStudentCareDetail,
     editStudentCare,
-    deleteStudentCare
+    deleteStudentCare,
   }
 
   return (
@@ -123,6 +143,7 @@ const AdminChatRoomProvider = (props) => {
       value={{
         data: state,
         setData: setState,
+        listCounselors,
         studentCare,
         listStudentCare,
         filterStudentCare,
