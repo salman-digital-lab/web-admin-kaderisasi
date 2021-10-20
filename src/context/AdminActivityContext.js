@@ -87,22 +87,7 @@ const AdminActivityProvider = (props) => {
       )
       .then((res) => {
         result = res.data.data.data
-        const list = []
-        if (result.length > 0) {
-          result.forEach((x) => {
-            list.push({
-              id: x.id,
-              name: x.name,
-              email: x.email,
-              phone: x.phone,
-              jenjang: x.role_name,
-              jurusan: x.major,
-              univ: x.university_name,
-              status: x.status,
-            })
-          })
-        }
-        setListParticipants(list)
+        setListParticipants(result)
         setActivityParticipants(res.data)
       })
       .catch((err) => {

@@ -19,11 +19,13 @@
     display: flex;
     flex-direction: row;
     .tableuser {
-        max-width: 950px;
         margin: auto;
+        width: 91%;
         .table-cell{
-            text-align: center;
             word-wrap: break-word;
+            &.middle-cell{
+                text-align: center;
+            }
         }
     }
 }

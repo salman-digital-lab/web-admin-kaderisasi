@@ -162,7 +162,7 @@ const KegiatanTable = () => {
                           {index + 1 + rowsPerPage * page}
                         </TableCell>
                         <TableCell className="table-cell">
-                          <div className="text-ellipsis">
+                          <div className="text-ellipsis width-250">
                             <Link to={`/activity/${row.id}`}>{row.judul}</Link>
                           </div>
                         </TableCell>

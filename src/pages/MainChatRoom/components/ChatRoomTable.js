@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core"
 import { Link } from "react-router-dom"
 import moment from "moment"
+import { Female, Male } from "@mui/icons-material"
 import {
   EnhancedTableHead,
   stableSort,
@@ -159,9 +160,20 @@ const ChatRoomTable = () => {
                         {index + 1 + rowsPerPage * page}
                       </TableCell>
                       <TableCell className="table-cell">
-                        <Link to={`/member/${row.member_id}`}>
-                          {row.problem_owner_name} ({row.member?.gender})
-                        </Link>
+                        <div className="text-ellipsis width-100">
+                          <Link to={`/member/${row.member_id}`}>
+                            {row.problem_owner_name}
+                          </Link>
+                        </div>
+                        {row.gender === "F" ? (
+                          <span className="icon-text">
+                            <Female fontSize="small" /> Wanita
+                          </span>
+                        ) : (
+                          <span className="icon-text">
+                            <Male fontSize="small" /> Pria{" "}
+                          </span>
+                        )}
                       </TableCell>
                       <TableCell className="table-cell">
                         {row.problem_owner}

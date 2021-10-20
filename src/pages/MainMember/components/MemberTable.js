@@ -10,6 +10,7 @@ import {
   Paper,
 } from "@material-ui/core"
 import { Link } from "react-router-dom"
+import { Female, Male } from "@mui/icons-material"
 import {
   EnhancedTableHead,
   stableSort,
@@ -152,14 +153,25 @@ const MemberTable = () => {
                         <TableCell
                           component="th"
                           scope="row"
-                          className="table-cell"
+                          className="table-cell middle-cell"
                         >
                           {index + 1 + rowsPerPage * page}
                         </TableCell>
                         <TableCell className="table-cell">
-                          <Link to={`/member/${row.id}`}>
-                            {row.name} ({row.gender})
-                          </Link>
+                          <div className="text-ellipsis width-100">
+                            <Link to={`/member/${row.id}`}>{row.name}</Link>
+                          </div>
+                          <div>
+                            {row.gender === "F" ? (
+                              <span className="icon-text">
+                                <Female fontSize="small" /> Wanita
+                              </span>
+                            ) : (
+                              <span className="icon-text">
+                                <Male fontSize="small" /> Pria{" "}
+                              </span>
+                            )}
+                          </div>
                         </TableCell>
                         <TableCell className="table-cell">
                           {row.email}
