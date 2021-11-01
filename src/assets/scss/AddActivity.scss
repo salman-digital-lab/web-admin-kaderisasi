@@ -16,7 +16,7 @@
 .container-button-kegiatan {
   display: flex;
   flex-direction: column;
-
+  margin: 10px;
   .button-kegiatan {
     b {
       font-size: 15px;
@@ -29,6 +29,7 @@
 .button-bottom {
   display: flex;
   width: 100%;
+  margin: 15px;
   .button-bottoms-kegiatan {
     margin: 5px;
   }

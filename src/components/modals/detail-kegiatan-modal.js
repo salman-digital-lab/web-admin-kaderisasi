@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react"
+import React, { useState, useContext, useEffect, useRef } from "react"
 import { useParams } from "react-router"
 import { makeStyles } from "@material-ui/core/styles"
 import {
@@ -31,9 +31,6 @@ import { EnhancedTableHead, stableSort, getComparator } from "../TableDesign"
 import { AdminActivityContext } from "../../context/AdminActivityContext"
 import BaseImage from "./1056x816small.png"
 /* eslint-disable */
-function createData(id, value, uploadedAt) {
-  return { id, value, uploadedAt }
-}
 
 const headCells = [
   { id: "id", numeric: false, label: "ID" },
@@ -130,11 +127,10 @@ export const DatePickerCustom = ({
 )
 
 const DetailKegiatanModal = ({ open, onClose, data }) => {
-  const { formTemplateList, activityBanner, functions } =
-    useContext(AdminActivityContext)
+  const ref = useRef()
+  const { activityBanner, functions } = useContext(AdminActivityContext)
   const {
     editActivity,
-    getAllFormTemplate,
     getActivityBannerById,
     uploadImageBanner,
     deleteBannerById,
@@ -167,9 +163,7 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
   const [errors, setErrors] = useState(initialErrors)
 
   const [order, setOrder] = useState("asc")
-  const [orderBy, setOrderBy] = useState("uploadedAt")
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [orderBy, setOrderBy] = useState("id")
 
   const validateDates = () => {
     // check dates via the dates{} state object
@@ -211,10 +205,6 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
   useEffect(() => {
     validateDates()
   }, [registerBeginDate, registerEndDate, beginDate, endDate])
-
-  // useEffect(() => {
-  //   getAllFormTemplate()
-  // }, [])
 
   useEffect(() => {
     getActivityBannerById(id)
@@ -279,10 +269,25 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
     setRows(newBanner)
   }
 
-  const submitForm = async (e) => {
-    e.preventDefault()
-    if (document.getElementById("logo").files[0]) {
-      const file = URL.createObjectURL(document.getElementById("logo").files[0])
+  const showBanner = (banner_url) => {
+    const canvas = document.createElement("canvas")
+    canvas.width = 1056
+    canvas.height = 816
+    const imgTemp = document.createElement("img")
+    imgTemp.setAttribute("src", banner_url)
+    imgTemp.setAttribute("alt", "logo")
+    imgTemp.setAttribute("className", "img-fluid")
+    imgTemp.setAttribute("crossOrigin", "Anonymous")
+    const ctx = canvas.getContext("2d")
+    imgTemp.onload = async function () {
+      ctx.drawImage(imgTemp, 0, 0, canvas.width, canvas.height)
+      const url = canvas.toDataURL("image/png")
+      setUploadImage(url)
+    }
+  }
+  const onImageChange = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = URL.createObjectURL(event.target.files[0])
       const canvas = document.createElement("canvas")
       canvas.width = 1056
       canvas.height = 816
@@ -292,20 +297,27 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
       imgTemp.onload = async function () {
         ctx.drawImage(imgTemp, 0, 0, canvas.width, canvas.height)
         const url = canvas.toDataURL("image/png")
-        try {
-          let formdata = new FormData()
-          formdata.append("activity_id", id)
-          formdata.append(
-            "banner_image",
-            document.getElementById("logo").files[0]
-          )
-          await uploadImageBanner(formdata)
-          setUploadImage(url)
-          setSubmitSuccess(true)
-        } catch (evt) {
-          setUploadImage(BaseImage)
-          setSubmitError(true)
-        }
+        setUploadImage(url)
+      }
+    }
+  }
+  const submitForm = async (e) => {
+    e.preventDefault()
+    if (document.getElementById("logo").files[0]) {
+      try {
+        let formdata = new FormData()
+        formdata.append("activity_id", id)
+        formdata.append(
+          "banner_image",
+          document.getElementById("logo").files[0]
+        )
+        await uploadImageBanner(formdata)
+        setSubmitSuccess(true)
+        getActivityBannerById(id)
+        ref.current.value = ""
+      } catch (err) {
+        setUploadImage(BaseImage)
+        setSubmitError(true)
       }
     } else {
       setUploadImage(BaseImage)
@@ -356,12 +368,8 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                         headCells={headCells}
                       />
                       <TableBody>
-                        {stableSort(rows, getComparator(order, orderBy))
-                          .slice(
-                            page * rowsPerPage,
-                            page * rowsPerPage + rowsPerPage
-                          )
-                          .map((row, index) => {
+                        {stableSort(rows, getComparator(order, orderBy)).map(
+                          (row, index) => {
                             return (
                               <TableRow hover tabIndex={-1} key={index}>
                                 <TableCell className="table-cell">
@@ -375,7 +383,7 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                                   <Button
                                     color="primary"
                                     size="small"
-                                    onClick={() => setUploadImage(row.value)}
+                                    onClick={() => showBanner(row.filename)}
                                   >
                                     <Visibility fontSize="small" />
                                   </Button>
@@ -389,7 +397,8 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                                 </TableCell>
                               </TableRow>
                             )
-                          })}
+                          }
+                        )}
                       </TableBody>
                     </Table>
                   </TableContainer>
@@ -426,6 +435,8 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                     type="file"
                     name="logo"
                     id="logo"
+                    ref={ref}
+                    onChange={onImageChange}
                   />
                   <Button
                     className="button-kegiatan"
@@ -436,24 +447,23 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                     Upload Gambar
                   </Button>
                 </form>
+                <div>
+                  <Checkbox
+                    checked={isPublished}
+                    color="primary"
+                    onChange={handlePublished}
+                    inputProps={{ "aria-label": "primary checkbox" }}
+                  />{" "}
+                  Published
+                  <Checkbox
+                    checked={status}
+                    color="primary"
+                    onChange={handleStatus}
+                    inputProps={{ "aria-label": "primary checkbox" }}
+                  />{" "}
+                  Opened Registration
+                </div>
               </div>
-              <div>
-                <Checkbox
-                  checked={isPublished}
-                  color="primary"
-                  onChange={handlePublished}
-                  inputProps={{ "aria-label": "primary checkbox" }}
-                />{" "}
-                Published
-                <Checkbox
-                  checked={status}
-                  color="primary"
-                  onChange={handleStatus}
-                  inputProps={{ "aria-label": "primary checkbox" }}
-                />{" "}
-                Opened Registration
-              </div>
-              <br />
               <div className="detail-activity">
                 <DatePickerCustom
                   title="Tanggal Mulai Kegiatan"

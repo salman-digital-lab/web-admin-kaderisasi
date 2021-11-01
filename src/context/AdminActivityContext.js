@@ -182,9 +182,9 @@ const AdminActivityProvider = (props) => {
   
     Update activity where id = params.id
   */
-  const uploadImageBanner = (formData) => {
-    axios
-      .put(process.env.REACT_APP_BASE_URL + `/v1/activity/banner`, formData)
+  const uploadImageBanner = async(formData) => {
+    await axios
+      .post(process.env.REACT_APP_BASE_URL + `/v1/activity/banner`, formData)
       .then((res) => {
         const response = res.data
         console.log(response)
