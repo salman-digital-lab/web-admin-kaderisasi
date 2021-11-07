@@ -14,12 +14,18 @@ import {
   getComparator,
 } from "../../../components/TableDesign"
 import { UniversitasContext } from "../../../context/AdminUniversitasContext"
+import AlertToast from "../../../components/Alert"
 /* eslint-disable */
 const UniversitiesTable = () => {
-  const { universitiesState, rows, setRows, functions } =
-    useContext(UniversitasContext)
+  const {
+    universitiesState,
+    rows,
+    setRows,
+    openAlert,
+    setOpenAlert,
+    functions,
+  } = useContext(UniversitasContext)
   const { getUniversities, headCells, useStyles, Action } = functions
-
   useEffect(() => {
     if (universitiesState.tmp === null) {
       getUniversities()
@@ -49,6 +55,9 @@ const UniversitiesTable = () => {
 
   return (
     <div className="tableuser">
+      <h1 className="headline" style={{ color: "#999999" }}>
+        Daftar Universitas
+      </h1>
       <Paper>
         <TableContainer>
           <Table
@@ -100,6 +109,12 @@ const UniversitiesTable = () => {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
+      <AlertToast
+        isOpen={openAlert}
+        status="success"
+        message="Universitas berhasil dihapus."
+        onClose={() => setOpenAlert(false)}
+      />
     </div>
   )
 }

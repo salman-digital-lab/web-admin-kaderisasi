@@ -25,6 +25,7 @@ const AdminActivityProvider = (props) => {
   const [activityForm, setActivityForm] = useState([])
   const [activityBanner, setActivityBanner] = useState([])
   const [universityList, setUniversityList] = useState([])
+  const [openAlert, setOpenAlert] = useState(false)
 
   /*
     Get all activity
@@ -147,12 +148,11 @@ const AdminActivityProvider = (props) => {
     axios
       .put(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}`, formData)
       .then((res) => {
-        const form = res.data.data
-        form[0].description =
-          form[0].description === null
-            ? "Description cannot be null"
-            : form[0].description
-        setActivityForm(form)
+        if (res.data.status === "SUCCESS") {
+          const form = res.data.data
+          setOpenAlert(true)
+          setActivityForm(form)
+        }
       })
       .catch((err) => console.log(err))
   }
@@ -182,7 +182,7 @@ const AdminActivityProvider = (props) => {
   
     Update activity where id = params.id
   */
-  const uploadImageBanner = async(formData) => {
+  const uploadImageBanner = async (formData) => {
     await axios
       .post(process.env.REACT_APP_BASE_URL + `/v1/activity/banner`, formData)
       .then((res) => {
@@ -413,6 +413,8 @@ const AdminActivityProvider = (props) => {
         universityList,
         formTemplateList,
         activityBanner,
+        openAlert,
+        setOpenAlert,
         functions,
       }}
     >

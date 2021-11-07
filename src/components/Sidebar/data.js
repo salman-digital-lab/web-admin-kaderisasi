@@ -35,7 +35,7 @@ const data = [
     id: 5,
     name: "Perguruan Tinggi",
     icon: <SchoolIcon />,
-    url: "/university",
+    url: "/universities",
     modul: "university",
   },
   {

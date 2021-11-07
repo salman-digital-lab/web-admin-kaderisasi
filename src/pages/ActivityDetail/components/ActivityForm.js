@@ -10,9 +10,10 @@ import embed from "embed-video"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 import DetailKegiatanModal from "../../../components/Modals/detail-kegiatan-modal"
 import LoadingAnimation from "../../../components/LoadingAnimation"
+import AlertToast from "../../../components/Alert"
 
 const FormKegiatan = () => {
-  const { activityForm, categoryList, functions } =
+  const { activityForm, categoryList, openAlert, setOpenAlert, functions } =
     useContext(AdminActivityContext)
   const { getActivityCategory, getActivityDetail, editActivity } = functions
   const stateEdit = EditorState.createEmpty()
@@ -168,7 +169,9 @@ const FormKegiatan = () => {
                 {!stateCanBeEdited ? (
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: activityForm[0].description,
+                      __html: activityForm[0].description
+                        ? activityForm[0].description
+                        : "Please describe this activity ...",
                     }}
                   />
                 ) : (
@@ -208,6 +211,12 @@ const FormKegiatan = () => {
           </div>
         )}
       </div>
+      <AlertToast
+        isOpen={openAlert}
+        status="success"
+        message="Kegiatan berhasil dirubah."
+        onClose={() => setOpenAlert(false)}
+      />
     </>
   )
 }

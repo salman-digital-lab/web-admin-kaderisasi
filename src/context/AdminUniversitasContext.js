@@ -36,6 +36,7 @@ export const UniversitasProvider = (props) => {
   const headCells = [
     { id: "no", numeric: true, label: "ID." },
     { id: "universitas", numeric: false, label: "Universitas" },
+    { id: "action", numeric: false, label: "Action" },
   ]
 
   const createData = (id, universitas) => {
@@ -43,6 +44,8 @@ export const UniversitasProvider = (props) => {
   }
 
   const [rows, setRows] = useState([])
+  const [openAlert, setOpenAlert] = useState(false)
+  console.log(openAlert)
   const [universitiesState, setUniversitiesState] = useState({
     tmp: null,
   })
@@ -77,57 +80,6 @@ export const UniversitasProvider = (props) => {
         }
       })
     }
-
-    // const tmp = "University of Zizavu"
-    // const respons = ""
-    rows.forEach((e) => {
-      if (e.universitas === "University of Zizavu") {
-        // let nameUniv = e.universitas
-        // let res = nameUniv.toLowerCase()
-        // console.log(res.length)
-        // console.log(tmp.length)
-        // for (let i = 0; i < res.length; i++) {
-        //     for (let j = 0; j < tmp.length; j++) {
-        //         if (res[i] === tmp[j]) {
-        //             respons.push(res[i])
-        //         }
-        //     }
-        // }
-      }
-    })
-
-    // let tmpObj = [
-    //     { id: 1, universitas: "University of Calmugibs" },
-    //     { id: 2, universitas: "Kertapati" },
-    // ]
-
-    // function linearSearch(arr, val) {
-    //     let data = []
-    //     for (let i = 0; i < arr.length; i++) {
-    //         for (let j = 0; j < val.length; j++) {
-    //             if (val[j] === arr[i]) {
-    //                 data.push(val[j])
-    //             }
-    //         }
-    //     }
-    //     let res = data.join('').toString()
-    //     console.log(res)
-    //     return -1;
-    // }
-
-    // tmpObj.forEach((e) => {
-    //     if (e.universitas === "University of Calmugibs") {
-    //         let nameUniv = e.universitas
-    //         let res = nameUniv.toLowerCase()
-    //         console.log(res.length)
-    //         console.log(tmp.length)
-    //         linearSearch(res, tmp)
-    //         // for (let i = 0; i < res.length; i++) {
-    //         //     console.log(`${res[i]}`)
-    //         // }
-    //         console.log(e.id)
-    //     }
-    // })
   })
   const Action = ({ Id }) => {
     const handleDelete = (event) => {
@@ -142,6 +94,7 @@ export const UniversitasProvider = (props) => {
             return e.id !== Id
           })
           setRows([...dataBaru])
+          setOpenAlert(true)
         })
     }
 
@@ -153,7 +106,7 @@ export const UniversitasProvider = (props) => {
           variant="contained"
           color="secondary"
         >
-          <Link to={`/university/university-form/${Id}`} className="edit">
+          <Link to={`/university/${Id}`} className="edit">
             Edit
           </Link>
         </Button>
@@ -188,6 +141,8 @@ export const UniversitasProvider = (props) => {
         setUniversitiesState,
         filterActivity,
         setFilterActivity,
+        openAlert,
+        setOpenAlert,
         functions,
       }}
     >
