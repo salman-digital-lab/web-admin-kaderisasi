@@ -46,17 +46,17 @@ const data = [
     component: MemberSalmanDetail,
   },
   {
-    url: "/university",
+    url: "/universities",
     modul: "university",
     component: Universities,
   },
   {
-    url: "/university/university-form",
+    url: "/university",
     modul: "university",
     component: Formuniversitas,
   },
   {
-    url: "/university/university-form/:id",
+    url: "/university/:id",
     modul: "university",
     component: Formuniversitas,
   },

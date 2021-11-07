@@ -1,5 +1,6 @@
 import React, { useContext } from "react"
-import { Card, CardContent, TextField, Box } from "@material-ui/core"
+import { Card, CardContent, TextField, Box, Button } from "@material-ui/core"
+import { Link } from "react-router-dom"
 import "../../../assets/scss/AddActivity.scss"
 import { UniversitasContext } from "../../../context/AdminUniversitasContext"
 
@@ -18,7 +19,23 @@ const UniversitiesFillter = () => {
 
   return (
     <>
-      <Card className="card-filter">
+      <Card>
+        <CardContent className="filter-content">
+          <Box pl={5} pr={5}>
+            <Link to="/university">
+              <Button
+                variant="contained"
+                color="primary"
+                className="btn-tambah-kegiatan"
+              >
+                TAMBAH UNIVERSITAS
+              </Button>
+            </Link>
+          </Box>
+        </CardContent>
+      </Card>
+      <br />
+      <Card>
         <CardContent className="filter-content">
           <Box pl={5} pr={5}>
             <TextField
@@ -29,7 +46,6 @@ const UniversitiesFillter = () => {
               className="filter-input"
               onKeyDown={handleKeyDown}
             />
-            {/* <Button variant="contained" color="primary" className="btn-filter"  >Cari</Button> */}
           </Box>
         </CardContent>
       </Card>

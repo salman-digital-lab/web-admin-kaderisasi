@@ -1,6 +1,6 @@
+import React, { useContext, useEffect, useState } from "react"
 import { Button, TextField } from "@material-ui/core"
 import axios from "axios"
-import React, { useContext, useEffect, useState } from "react"
 import { useHistory, useParams } from "react-router"
 import logo from "../../../assets/images/logo-header.png"
 import "../../../assets/scss/MainUniversities.scss"
@@ -8,22 +8,17 @@ import {
   UniversitasContext,
   UniversitasProvider,
 } from "../../../context/AdminUniversitasContext"
-/* eslint-disable */
-// const text = (
-//   <p className="helpertext">Password yang digunakan minimal 6 digit</p>
-// )
+import AlertToast from "../../../components/Alert"
 
-// function createData(id, universitas) {
-//   return { id, universitas }
-// }
+/* eslint-disable */
 
 const CardFormUniversities = () => {
   const formRef = React.useRef()
   const history = useHistory()
+  const { rows, setRows, openAlert, setOpenAlert } =
+    useContext(UniversitasContext)
   const { id } = useParams()
   const [idRef] = useState(id)
-
-  const { rows, setRows } = useContext(UniversitasContext)
 
   const [NameState, setNameState] = useState({
     name: "",
@@ -33,7 +28,7 @@ const CardFormUniversities = () => {
     axios
       .get(`https://admin-api-kaderisasi-dev.salmanitb.com/v1/universities`)
       .then((res) => {
-        const data = res.data.data
+        const { data } = res.data
         data.forEach((e) => {
           if (Number(e.id) === Number(idRef)) {
             setNameState({
@@ -59,7 +54,7 @@ const CardFormUniversities = () => {
     event.preventDefault()
     formRef.current.reportValidity()
 
-    const name = NameState.name
+    const { name } = NameState
 
     if (idRef === undefined) {
       axios
@@ -68,11 +63,10 @@ const CardFormUniversities = () => {
           { name }
         )
         .then(() => {
-          setNameState({
-            name: "",
-          })
-
-          history.push("/university")
+          setOpenAlert(true)
+          setTimeout(() => {
+            history.push("/universities")
+          }, 4000)
         })
     } else if (idRef !== undefined) {
       axios
@@ -81,11 +75,10 @@ const CardFormUniversities = () => {
           { name }
         )
         .then(() => {
-          setNameState({
-            name: "",
-          })
-
-          history.push("/university")
+          setOpenAlert(true)
+          setTimeout(() => {
+            history.push("/universities")
+          }, 4000)
         })
     }
   }
@@ -113,22 +106,32 @@ const CardFormUniversities = () => {
           className="btn-register"
           onClick={handleAdd}
         >
-          Tambah Universitas
+          {id ? "Rubah" : "Tambah"} Universitas
         </Button>
       </form>
+      <AlertToast
+        isOpen={openAlert}
+        status="success"
+        message={`Universitas berhasil di ${id ? "rubah." : "tambah."}`}
+        onClose={() => {
+          setOpenAlert(false)
+          history.push("/universities")
+        }}
+      />
     </div>
   )
 }
 
-const Formuniversitas = () => (
-  <UniversitasProvider>
-    <div className="container-register-universitas">
-      <h1 style={{ color: "#999999" }}>Form Universities</h1>
-      <div className="content-register-universitas">
-        <CardFormUniversities />
+const Formuniversitas = () => {
+  return (
+    <UniversitasProvider>
+      <div className="container-register-universitas">
+        <div className="content-register-universitas">
+          <CardFormUniversities />
+        </div>
       </div>
-    </div>
-  </UniversitasProvider>
-)
+    </UniversitasProvider>
+  )
+}
 
 export default Formuniversitas
