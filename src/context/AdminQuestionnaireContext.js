@@ -1,6 +1,11 @@
 import React from "react"
 import axios from "axios"
-import { SignalCellularNullRounded } from "@material-ui/icons"
+
+function slug(Text) {
+  return `${Text.toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^\w-]+/g, "")}${new Date().getTime()}`
+}
 
 // eslint-disable-next-line
 export default function AdminQuestionnaireProvider({ children }) {
@@ -11,7 +16,7 @@ export default function AdminQuestionnaireProvider({ children }) {
       {
         type: "text",
         label: "First question for you",
-        name: "",
+        name: slug("text"),
         required: false,
       },
     ],
@@ -168,10 +173,17 @@ export default function AdminQuestionnaireProvider({ children }) {
   }) => {
     // eslint-disable-next-line
     const { title, subtitle, form } = state
+
+    // prepare property name before send request
+    const payload = state.form.map((value, index) => ({
+      ...value,
+      name: `${slug(value.label)}${index}`,
+    }))
+
     try {
       const response = await axios.put(
         `${process.env.REACT_APP_BASE_URL}/v1/activity/${id}/questionnaire`,
-        form
+        payload
       )
       if (response.status === 200) {
         setOpenQuestionnaireSuccessSnackbar(true)
@@ -201,7 +213,7 @@ export default function AdminQuestionnaireProvider({ children }) {
       )
       // console.log(response)
       if (response.status === 200) {
-        const form = response.data.data ?? SignalCellularNullRounded
+        const form = response.data.data ?? null
         // console.log(response.data.data)
         setState({ ...state, form })
         // if (
