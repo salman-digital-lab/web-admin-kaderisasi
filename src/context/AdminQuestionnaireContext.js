@@ -47,7 +47,7 @@ export default function AdminQuestionnaireProvider({ children }) {
   const SET_QUESTIONNAIRE_FORM_TYPE = (id, variant) => {
     const { form } = state
     form[id].type = variant
-    if (variant === "radio_button" || variant === "checkbox") {
+    if (variant === "radio" || variant === "option") {
       form[id].data = [
         {
           label: "Yes of course",
@@ -56,11 +56,13 @@ export default function AdminQuestionnaireProvider({ children }) {
         },
       ]
     }
-    if (variant === "slider") {
-      form[id].data = {
-        min: 0,
-        max: 100,
-      }
+    if (variant === "scale") {
+      form[id].data = [
+        {
+          min: 0,
+          max: 100,
+        },
+      ]
     }
     setState({ ...state, form })
   }
@@ -77,34 +79,28 @@ export default function AdminQuestionnaireProvider({ children }) {
   const SET_QUESTIONNAIRE_ANSWER_MIN_VALUE = (id, value) => {
     const { form } = state
     const minValue = value
-    const maxValue = form[id].data.max
+    const maxValue = form[id].data[0].max
     if (!(minValue >= maxValue)) {
-      form[id].data = {
-        ...form[id].data,
-        min: minValue,
-      }
+      form[id].data[0].min = minValue
       setState({ ...state, form })
     }
   }
 
   const GET_QUESTIONNAIRE_ANSWER_MIN_VALUE = (id) =>
-    state?.form[id]?.data.min ?? 0
+    state?.form[id]?.data?.[0]?.min ?? 0
 
   const SET_QUESTIONNAIRE_ANSWER_MAX_VALUE = (id, value) => {
     const { form } = state
     const maxValue = value
-    const minValue = form[id].data.min
-    if (!(maxValue <= minValue)) {
-      form[id].data = {
-        ...form[id].data,
-        max: maxValue,
-      }
+    const minValue = form[id].data[0].min
+    if (maxValue >= minValue) {
+      form[id].data[0].max = maxValue
       setState({ ...state, form })
     }
   }
 
   const GET_QUESTIONNAIRE_ANSWER_MAX_VALUE = (id) =>
-    state?.form[id]?.data.max ?? 100
+    state?.form[id]?.data?.[0]?.max ?? 100
 
   const SET_QUESTIONNAIRE_ANSWER_STRING_VALUE = (id, index, value) => {
     const { form } = state
@@ -120,6 +116,7 @@ export default function AdminQuestionnaireProvider({ children }) {
 
   const ADD_QUESTIONNAIRE_ANSWER_STRING_VALUE = (id) => {
     const { form } = state
+    // console.log(form[id])
     form[id].data.push({
       label: "Yes of course",
       value: "yes_of_course",
