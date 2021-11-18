@@ -177,7 +177,7 @@ export default function AdminQuestionnaireProvider({ children }) {
     // prepare property name before send request
     const payload = state.form.map((value, index) => ({
       ...value,
-      name: `${slug(value.label)}${index}`,
+      name: value.name ? value.name : `${slug(value.type)}${index}`,
     }))
 
     try {
