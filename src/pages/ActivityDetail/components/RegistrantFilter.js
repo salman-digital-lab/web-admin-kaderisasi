@@ -14,8 +14,8 @@ import {
 } from "@material-ui/core"
 import { useTheme } from "@material-ui/core/styles"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
-import { MenuProps, getStyles } from "../../../components/Select"
-import StyledRadio from "../../../components/RadioButton"
+import { MenuProps, getStyles } from "../../../components/select"
+import StyledRadio from "../../../components/radio-button"
 
 const PendaftarFilter = () => {
   const theme = useTheme()

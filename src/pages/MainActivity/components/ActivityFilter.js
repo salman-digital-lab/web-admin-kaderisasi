@@ -15,11 +15,11 @@ import {
   Input,
 } from "@material-ui/core"
 import { useTheme } from "@material-ui/core/styles"
-import StyledRadio from "../../../components/RadioButton"
+import StyledRadio from "../../../components/radio-button"
 import { KegiatanModal } from "./ActivityModal"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 import "../../../assets/scss/AddActivity.scss"
-import { MenuProps, getStyles } from "../../../components/Select"
+import { MenuProps, getStyles } from "../../../components/select"
 
 const KegiatanFilter = () => {
   const theme = useTheme()

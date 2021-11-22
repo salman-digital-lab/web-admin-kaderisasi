@@ -15,8 +15,8 @@ import {
 } from "@material-ui/core"
 import { useTheme } from "@material-ui/core/styles"
 import { AdminMemberContext } from "../../../context/AdminMemberContext"
-import StyledRadio from "../../../components/RadioButton"
-import { MenuProps, getStyles } from "../../../components/Select"
+import StyledRadio from "../../../components/radio-button"
+import { MenuProps, getStyles } from "../../../components/select"
 
 const MemberFilter = () => {
   const theme = useTheme()

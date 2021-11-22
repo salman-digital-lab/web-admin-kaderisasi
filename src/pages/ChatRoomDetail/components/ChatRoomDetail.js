@@ -23,9 +23,9 @@ import Alert from "@material-ui/lab/Alert"
 import ModalAdmin from "./AdminModal"
 import { AdminChatRoomContext } from "../../../context/AdminChatRoomContext"
 import { AdminContext } from "../../../context/AdminContext"
-import { StudentCareStatus } from "../../../components/Statuses"
+import { StudentCareStatus } from "../../../components/statuses"
 import { ConfirmationModal } from "./confirmation-modal"
-import { MenuProps, getStyles } from "../../../components/Select"
+import { MenuProps, getStyles } from "../../../components/select"
 
 const AdminDetail = () => {
   const { id } = useParams()

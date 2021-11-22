@@ -1,8 +1,8 @@
 import React from "react"
 import { CssBaseline } from "@material-ui/core/"
-import Topbar from "./Topbar"
-import Sidebar from "./Sidebar"
-import Content from "./Content"
+import Topbar from "./topbar"
+import Sidebar from "./sidebar"
+import Content from "./content"
 /* eslint-disable */
 const AdminNavigation = (props) => (
   <div style={{ display: "flex" }}>

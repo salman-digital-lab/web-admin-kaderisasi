@@ -16,10 +16,10 @@ import {
   EnhancedTableHead,
   stableSort,
   getComparator,
-} from "../../../components/TableDesign"
-import LoadingAnimation from "../../../components/LoadingAnimation"
+} from "../../../components/table-design"
+import LoadingAnimation from "../../../components/loading-animation"
 import { AdminChatRoomContext } from "../../../context/AdminChatRoomContext"
-import { StudentCareStatus } from "../../../components/Statuses"
+import { StudentCareStatus } from "../../../components/statuses"
 
 const headCells = [
   { id: "no", numeric: true, label: "No." },

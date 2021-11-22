@@ -14,7 +14,7 @@ import { Link } from "react-router-dom"
 import Alert from "@material-ui/lab/Alert"
 import PropTypes from "prop-types"
 import logo from "../../../assets/images/logo-header.png"
-import LoadingAnimation from "../../../components/LoadingAnimation"
+import LoadingAnimation from "../../../components/loading-animation"
 import { AdminContext } from "../../../context/AdminContext"
 
 const text = (

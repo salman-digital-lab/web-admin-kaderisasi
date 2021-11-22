@@ -11,7 +11,7 @@ import { ArrowBack, AccountCircle } from "@material-ui/icons"
 import { useParams, Link } from "react-router-dom"
 import ModalAdmin from "./AdminModal"
 import { AdminContext } from "../../../context/AdminContext"
-import { AdminStatus } from "../../../components/Statuses"
+import { AdminStatus } from "../../../components/statuses"
 
 const AdminDetail = () => {
   const { id } = useParams()

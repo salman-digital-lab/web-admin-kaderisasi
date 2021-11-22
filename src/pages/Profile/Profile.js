@@ -9,7 +9,7 @@ import {
   IconButton,
 } from "@material-ui/core"
 import { ArrowBack, AccountCircle } from "@material-ui/icons"
-import { AdminStatus } from "../../components/Statuses"
+import { AdminStatus } from "../../components/statuses"
 import Cookies from "js-cookie"
 import "../../assets/scss/Profile.scss"
 import { ProfileContext } from "context/ProfileContext"

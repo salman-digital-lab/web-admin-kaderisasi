@@ -14,10 +14,10 @@ import {
   EnhancedTableHead,
   stableSort,
   getComparator,
-} from "../../../components/TableDesign"
-import LoadingAnimation from "../../../components/LoadingAnimation"
+} from "../../../components/table-design"
+import LoadingAnimation from "../../../components/loading-animation"
 import { AdminContext } from "../../../context/AdminContext"
-import { AdminStatus } from "../../../components/Statuses"
+import { AdminStatus } from "../../../components/statuses"
 
 const headCells = [
   { id: "no", numeric: true, label: "No." },

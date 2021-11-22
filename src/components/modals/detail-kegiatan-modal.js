@@ -27,7 +27,7 @@ import {
 } from "@material-ui/pickers"
 import moment from "moment"
 import FormData from "form-data"
-import { EnhancedTableHead, stableSort, getComparator } from "../TableDesign"
+import { EnhancedTableHead, stableSort, getComparator } from "../table-design"
 import { AdminActivityContext } from "../../context/AdminActivityContext"
 import BaseImage from "./1056x816small.png"
 /* eslint-disable */

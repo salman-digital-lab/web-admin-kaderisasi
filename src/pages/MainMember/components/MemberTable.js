@@ -15,8 +15,8 @@ import {
   EnhancedTableHead,
   stableSort,
   getComparator,
-} from "../../../components/TableDesign"
-import LoadingAnimation from "../../../components/LoadingAnimation"
+} from "../../../components/table-design"
+import LoadingAnimation from "../../../components/loading-animation"
 import { AdminMemberContext } from "../../../context/AdminMemberContext"
 
 const headCells = [

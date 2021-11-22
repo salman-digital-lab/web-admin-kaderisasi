@@ -16,7 +16,7 @@ import {
   EnhancedTableHead,
   stableSort,
   getComparator,
-} from "../../../components/TableDesign"
+} from "../../../components/table-design"
 import { KategoriModal } from "./kategori-modal"
 import { ConfirmationModal } from "./confirmation-modal"
 /* eslint-disable */

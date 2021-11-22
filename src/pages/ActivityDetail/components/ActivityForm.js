@@ -9,8 +9,8 @@ import { useParams } from "react-router"
 import embed from "embed-video"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 import DetailKegiatanModal from "../../../components/modals/detail-kegiatan-modal"
-import LoadingAnimation from "../../../components/LoadingAnimation"
-import AlertToast from "../../../components/Alert"
+import LoadingAnimation from "../../../components/loading-animation"
+import AlertToast from "../../../components/alert"
 
 const FormKegiatan = () => {
   const { activityForm, categoryList, openAlert, setOpenAlert, functions } =

@@ -14,9 +14,9 @@ import {
   EnhancedTableHead,
   stableSort,
   getComparator,
-} from "../../../components/TableDesign"
-import { PublishStatus, RegisterStatus } from "../../../components/Statuses"
-import LoadingAnimation from "../../../components/LoadingAnimation"
+} from "../../../components/table-design"
+import { PublishStatus, RegisterStatus } from "../../../components/statuses"
+import LoadingAnimation from "../../../components/loading-animation"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 
 const headCells = [

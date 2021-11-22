@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import PropTypes from "prop-types"
 import { AdminMemberContext } from "../../../context/AdminMemberContext"
-import LoadingAnimation from "../../../components/LoadingAnimation"
-import { RegistrantStatus } from "../../../components/Statuses/RegistrantStatus"
+import LoadingAnimation from "../../../components/loading-animation"
+import { RegistrantStatus } from "../../../components/statuses/RegistrantStatus"
 
 const TimelineItem = ({ status, beginDate, name }) => (
   <div className="timeline-item">

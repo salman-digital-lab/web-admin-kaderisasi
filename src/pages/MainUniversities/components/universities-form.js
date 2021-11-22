@@ -8,7 +8,7 @@ import {
   UniversitasContext,
   UniversitasProvider,
 } from "../../../context/AdminUniversitasContext"
-import AlertToast from "../../../components/Alert"
+import AlertToast from "../../../components/alert"
 
 /* eslint-disable */
 

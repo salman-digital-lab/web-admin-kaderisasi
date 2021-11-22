@@ -12,9 +12,9 @@ import {
   EnhancedTableHead,
   stableSort,
   getComparator,
-} from "../../../components/TableDesign"
+} from "../../../components/table-design"
 import { UniversitasContext } from "../../../context/AdminUniversitasContext"
-import AlertToast from "../../../components/Alert"
+import AlertToast from "../../../components/alert"
 /* eslint-disable */
 const UniversitiesTable = () => {
   const {
