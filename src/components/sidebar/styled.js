@@ -31,8 +31,13 @@ const styled = makeStyles((theme) => ({
   listItemActive: {
     backgroundColor: "rgba(255, 255, 255, 0.25)",
   },
-  nested: {
+  nestedListItem: {
     paddingLeft: theme.spacing(4),
+    marginTop: "10px",
+    borderRadius: "8px",
+    "&:hover": {
+      backgroundColor: "rgba(255, 255, 255, 0.25)",
+    },
   },
   icon: {
     color: "#e8e8e8",

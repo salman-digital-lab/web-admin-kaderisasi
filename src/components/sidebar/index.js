@@ -104,6 +104,7 @@ const Sidebar = () => {
                   className={classes.drawerList}
                   key={value.id.toString()}
                 >
+                  {console.log(location)}
                   <ListItem
                     button
                     onClick={
@@ -112,7 +113,13 @@ const Sidebar = () => {
                         : null
                     }
                     className={clsx(classes.listItem, {
-                      [classes.listItemActive]: location.pathname === value.url,
+                      [classes.listItemActive]: value.children
+                        ? Boolean(
+                            value.children.find((child) =>
+                              location.pathname.match(child.parent)
+                            )
+                          )
+                        : location.pathname === value.url,
                     })}
                   >
                     <ListItemIcon className={classes.icon}>
@@ -138,7 +145,11 @@ const Sidebar = () => {
                           allowedList.includes(child.modul) && (
                             <ListItem
                               button
-                              className={classes.nested}
+                              // className={clsx(classes.nestedListItem, {
+                              //   [classes.listItemActive]:
+                              //     location.pathname === child.url,
+                              // })}
+                              className={clsx(classes.nestedListItem)}
                               key={child.id.toString()}
                               onClick={() => handleRoute(child.url)}
                             >
