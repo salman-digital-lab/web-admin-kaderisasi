@@ -1,19 +1,22 @@
 import React, { useState, useContext, useEffect } from "react"
-import { Link, useHistory } from "react-router-dom"
+import { Link, useHistory, useLocation } from "react-router-dom"
 import {
   Drawer,
   List,
-  IconButton,
   ListItem,
   ListItemIcon,
   ListItemText,
   Collapse,
+  Box,
 } from "@material-ui/core/"
-import { ChevronLeft, ExpandLess, ExpandMore } from "@material-ui/icons"
+import { ExpandLess, ExpandMore } from "@material-ui/icons"
 import Cookies from "js-cookie"
+import clsx from "clsx"
 import { AdminContext } from "../../context/AdminContext"
+import logo from "../../assets/images/logo-header-2.png"
 import styled from "./styled"
 import data from "./data"
+
 /* eslint-disable */
 const Sidebar = () => {
   const token = Cookies.get("token")
@@ -21,7 +24,9 @@ const Sidebar = () => {
   if (token) {
     user = JSON.parse(Cookies.get("user"))
   }
+  const location = useLocation()
   const history = useHistory()
+  const [firstTimeCall, setFirstTimeCall] = useState(true)
   const { state, setState } = useContext(AdminContext)
   const [openCollapse, setOpenCollapse] = useState({})
   const [allowedList, setAllowedList] = useState([])
@@ -32,7 +37,6 @@ const Sidebar = () => {
       ...openCollapse,
       [index.toString()]: !openCollapse[index],
     })
-  const handleDrawerClose = () => setState({ ...state, openDrawer: false })
   const handleRoute = (url) => history.push(url)
   const filterByModul = (privileges) => {
     let allowed = ["dashboard", "setting"]
@@ -44,6 +48,16 @@ const Sidebar = () => {
       setAllowedList(allowed)
     }
   }
+
+  useEffect(() => {
+    if (firstTimeCall) {
+      setFirstTimeCall(false)
+      setTimeout(() => {
+        setState({ ...state, openDrawer: true })
+      }, 1000)
+    }
+  }, [firstTimeCall])
+
   useEffect(() => {
     if (listDrawer === null || listDrawer.length < 1) {
       filterByModul(user?.privileges)
@@ -65,17 +79,22 @@ const Sidebar = () => {
       open={state.openDrawer}
       classes={{ paper: classes.drawerPaper }}
     >
-      <div className={classes.drawerHeader}>
-        <IconButton className={classes.icon} onClick={handleDrawerClose}>
-          <ChevronLeft />
-        </IconButton>
-      </div>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        padding="4em 2em"
+      >
+        <img src={logo} alt="" style={{ height: "3.5em", width: "auto" }} />
+      </Box>
       <List>
         {listDrawer &&
           listDrawer.map((value, index) => {
             let child
             if (value.children) {
-              child = value.children.filter((x) => allowedList.includes(x.modul))
+              child = value.children.filter((x) =>
+                allowedList.includes(x.modul)
+              )
             }
             return (
               (allowedList.includes(value.modul) ||
@@ -92,6 +111,9 @@ const Sidebar = () => {
                         ? () => handleCollapseToggle(index)
                         : null
                     }
+                    className={clsx(classes.listItem, {
+                      [classes.listItemActive]: location.pathname === value.url,
+                    })}
                   >
                     <ListItemIcon className={classes.icon}>
                       {value.icon}

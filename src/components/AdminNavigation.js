@@ -5,7 +5,7 @@ import Sidebar from "./sidebar"
 import Content from "./content"
 /* eslint-disable */
 const AdminNavigation = (props) => (
-  <div style={{ display: "flex" }}>
+  <div style={{ display: "flex", backgroundColor: "#F3F9FE" }}>
     <CssBaseline />
     <Topbar />
     <Sidebar />

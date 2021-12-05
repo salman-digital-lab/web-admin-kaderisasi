@@ -10,16 +10,14 @@ import {
   Box,
 } from "@material-ui/core"
 import { AccountCircle, MoreVert, Menu as MenuIcon } from "@material-ui/icons"
-import { Link, useHistory } from "react-router-dom"
+import { Link } from "react-router-dom"
 import CircularProgress from "@material-ui/core/CircularProgress"
 import Cookies from "js-cookie"
 import styled from "./styled"
-import logo from "../../assets/images/logo-header.png"
 import { AdminContext } from "../../context/AdminContext"
 
 /* eslint-disable */
 const Topbar = (props) => {
-  let history = useHistory()
   const classes = styled()
   const token = Cookies.get("token")
   let user
@@ -32,23 +30,29 @@ const Topbar = (props) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(
     Boolean(state.mobileMoreAnchorEl)
   )
+
   const menuId = "primary-search-account-menu"
   const mobileMenuId = "primary-search-account-menu-mobile"
   const handleProfileMenuOpen = (event) => {
     setIsMenuOpen(true)
     setState({ ...state, anchorEl: event.currentTarget })
   }
+
   const handleMobileMenuClose = () => {
     setIsMenuOpen(false)
     setIsMobileMenuOpen(false)
     setState({ ...state, mobileMoreAnchorEl: null, anchorEl: null })
   }
+
   const handleMenuClose = () => handleMobileMenuClose()
   const handleMobileMenuOpen = (event) => {
     setIsMobileMenuOpen(true)
     setState({ ...state, mobileMoreAnchorEl: event.currentTarget })
   }
-  const handleDrawerOpen = () => setState({ ...state, openDrawer: true })
+
+  const handleToggleDrawer = () =>
+    setState({ ...state, openDrawer: !state.openDrawer })
+
   const handleLogout = () => {
     setTimeout(() => {
       handleMenuClose()
@@ -69,7 +73,9 @@ const Topbar = (props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <Link className="neutral-font" to="/profile"><MenuItem onClick={handleMenuClose}>Profile</MenuItem></Link>
+      <Link className="neutral-font" to="/profile">
+        <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      </Link>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={handleLogout}>
         Logout
@@ -119,35 +125,29 @@ const Topbar = (props) => {
       >
         <Toolbar>
           <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
+            color="primary"
+            onClick={handleToggleDrawer}
             edge="start"
-            className={clsx(
-              classes.menuButton,
-              state.openDrawer && classes.hide
-            )}
+            className={clsx(classes.menuButton)}
           >
             <MenuIcon className={classes.icon} />
           </IconButton>
-          <img src={logo} alt="" style={{ height: "3.5em", width: "auto" }} />
           <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <Typography className={classes.text} component="div">
-              <Box lineHeight={3} m={1}>
-                Hello, {user?.username}!
-              </Box>
-            </Typography>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-            >
-              <AccountCircle className={classes.icon} fontSize="large" />
-            </IconButton>
-          </div>
+          <Typography className={classes.text} component="div">
+            <Box lineHeight={3} m={1}>
+              Hello, {user?.username}!
+            </Box>
+          </Typography>
+          <IconButton
+            edge="end"
+            aria-label="account of current user"
+            aria-controls={menuId}
+            aria-haspopup="true"
+            onClick={handleProfileMenuOpen}
+            style={{ padding: "5px" }}
+          >
+            <AccountCircle className={classes.icon} fontSize="large" />
+          </IconButton>
           <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
