@@ -133,21 +133,21 @@ const Topbar = (props) => {
             <MenuIcon className={classes.icon} />
           </IconButton>
           <div className={classes.grow} />
-          <Typography className={classes.text} component="div">
-            <Box lineHeight={3} m={1}>
-              Hello, {user?.username}!
-            </Box>
-          </Typography>
           <IconButton
             edge="end"
             aria-label="account of current user"
             aria-controls={menuId}
             aria-haspopup="true"
             onClick={handleProfileMenuOpen}
-            style={{ padding: "5px" }}
+            style={{ padding: "5px", marginRight: "5px" }}
           >
             <AccountCircle className={classes.icon} fontSize="large" />
           </IconButton>
+          <Typography className={classes.text} component="div">
+            <Box lineHeight={3} m={1}>
+              Hello, {user?.username}!
+            </Box>
+          </Typography>
           <div className={classes.sectionMobile}>
             <IconButton
               aria-label="show more"
