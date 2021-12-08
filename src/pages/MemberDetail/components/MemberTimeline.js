@@ -47,9 +47,9 @@ const MemberTimeline = () => {
           {memberActivities.map((data) => (
             <TimelineItem
               status={data.status}
-              beginDate={data.begin_date}
+              beginDate={new Date(data.begin_date)}
               name={data.name}
-              key={data}
+              key={`${data.name}_${data.begin_date}`}
             />
           ))}
         </div>

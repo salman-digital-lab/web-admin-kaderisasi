@@ -1,35 +1,35 @@
-import React, { useState, useContext } from "react"
+import React, { useContext } from "react"
 import {
   Card,
   CardContent,
-  InputLabel,
+  // InputLabel,
   TextField,
   Box,
   FormControl,
-  Select,
+  // Select,
   FormLabel,
   RadioGroup,
-  MenuItem,
-  Input,
+  // MenuItem,
+  // Input,
   FormControlLabel,
 } from "@material-ui/core"
-import { useTheme } from "@material-ui/core/styles"
+// import { useTheme } from "@material-ui/core/styles"
 import { AdminMemberContext } from "../../../context/AdminMemberContext"
 import StyledRadio from "../../../components/radio-button"
-import { MenuProps, getStyles } from "../../../components/select"
+// import { MenuProps, getStyles } from "../../../components/select"
 
 const MemberFilter = () => {
-  const theme = useTheme()
+  // const theme = useTheme()
   const { filterMember, setFilterMember } = useContext(AdminMemberContext)
-  const [univName, setUnivName] = useState("all")
-  const names = [
-    { value: "all", label: "Semua Perguruan Tinggi" },
-    { value: "TelU", label: "Telkom University" },
-    { value: "ITB", label: "Institut Teknologi Bandung" },
-    { value: "Unikom", label: "Universitas Komputer" },
-    { value: "Unisba", label: "Universitas Islam Bandung" },
-    { value: "Polban", label: "Politeknik Bandung" },
-  ]
+  // const [univName, setUnivName] = useState("all")
+  // const names = [
+  //   { value: "all", label: "Semua Perguruan Tinggi" },
+  //   { value: "TelU", label: "Telkom University" },
+  //   { value: "ITB", label: "Institut Teknologi Bandung" },
+  //   { value: "Unikom", label: "Universitas Komputer" },
+  //   { value: "Unisba", label: "Universitas Islam Bandung" },
+  //   { value: "Polban", label: "Politeknik Bandung" },
+  // ]
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -41,9 +41,9 @@ const MemberFilter = () => {
     }
   }
 
-  const handleChange = (s) => {
-    setUnivName(s)
-  }
+  // const handleChange = (s) => {
+  //   setUnivName(s)
+  // }
 
   const handleChangeGender = (s) => {
     setFilterMember({
@@ -125,7 +125,7 @@ const MemberFilter = () => {
               />
             </RadioGroup>
           </FormControl>
-          <FormControl className="select-dropdown mt-15">
+          {/* <FormControl className="select-dropdown mt-15">
             <InputLabel id="demo-mutiple-name-label">
               Perguruan Tinggi
             </InputLabel>
@@ -146,7 +146,7 @@ const MemberFilter = () => {
                 </MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </FormControl> */}
         </Box>
       </CardContent>
     </Card>
