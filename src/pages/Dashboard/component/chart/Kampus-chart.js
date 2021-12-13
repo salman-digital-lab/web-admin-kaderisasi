@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react"
-import { Bar } from "react-chartjs-2"
+import { HorizontalBar } from "react-chartjs-2"
 import { AdminDashboardContext } from "../../../../context/AdminDashboardContext"
 
 const KampusChart = () => {
@@ -71,11 +71,10 @@ const KampusChart = () => {
   return (
     <>
       <div className="container-chart">
-        <Bar
+        <HorizontalBar
           data={KampusBar}
           id="chart"
           base={10}
-          aria-orientation="horizontal"
           options={{
             layout: {
               margin: {
