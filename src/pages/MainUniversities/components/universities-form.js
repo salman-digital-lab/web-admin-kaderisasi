@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Button, TextField } from "@material-ui/core"
 import axios from "axios"
-import { useHistory, useParams } from "react-router"
+import { useParams } from "react-router"
 import logo from "../../../assets/images/logo-header.png"
 import "../../../assets/scss/MainUniversities.scss"
 import {
@@ -14,7 +14,6 @@ import AlertToast from "../../../components/alert"
 
 const CardFormUniversities = () => {
   const formRef = React.useRef()
-  const history = useHistory()
   const { rows, setRows, openAlert, setOpenAlert } =
     useContext(UniversitasContext)
   const { id } = useParams()
@@ -26,7 +25,7 @@ const CardFormUniversities = () => {
 
   useEffect(() => {
     axios
-      .get(`https://admin-api-kaderisasi-dev.salmanitb.com/v1/universities`)
+      .get(process.env.REACT_APP_BASE_URL + `/v1/universities`)
       .then((res) => {
         const { data } = res.data
         data.forEach((e) => {
@@ -59,25 +58,25 @@ const CardFormUniversities = () => {
     if (idRef === undefined) {
       axios
         .post(
-          `https://admin-api-kaderisasi-dev.salmanitb.com/v1/universities`,
+          process.env.REACT_APP_BASE_URL + `/v1/universities`,
           { name }
         )
         .then(() => {
           setOpenAlert(true)
           setTimeout(() => {
-            history.push("/universities")
+            window.location.href = '/universites'
           }, 4000)
         })
     } else if (idRef !== undefined) {
       axios
         .put(
-          `https://admin-api-kaderisasi-dev.salmanitb.com/v1/universities/${id}`,
+          process.env.REACT_APP_BASE_URL + `/v1/universities/${id}`,
           { name }
         )
         .then(() => {
           setOpenAlert(true)
           setTimeout(() => {
-            history.push("/universities")
+            window.location.href = '/universites'
           }, 4000)
         })
     }
@@ -115,7 +114,7 @@ const CardFormUniversities = () => {
         message={`Universitas berhasil di ${id ? "rubah." : "tambah."}`}
         onClose={() => {
           setOpenAlert(false)
-          history.push("/universities")
+          window.location.href = '/universites'
         }}
       />
     </div>
