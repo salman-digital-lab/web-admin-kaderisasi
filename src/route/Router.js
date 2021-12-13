@@ -25,8 +25,10 @@ const Router = () => {
   const LoginRoute = ({ ...props }) => {
     if (token !== undefined) {
       return <Redirect to="/" />
+    }else
+    {
+      return <Route {...props} />
     }
-    return <Route {...props} />
   }
 
   const Routes = ({ ...props }) => {
@@ -71,4 +73,3 @@ const Router = () => {
     </BrowserRouter>
   )
 }
-export default Router
