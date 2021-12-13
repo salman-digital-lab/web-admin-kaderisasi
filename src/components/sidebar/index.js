@@ -13,7 +13,7 @@ import { ExpandLess, ExpandMore } from "@material-ui/icons"
 import Cookies from "js-cookie"
 import clsx from "clsx"
 import { AdminContext } from "../../context/AdminContext"
-import logo from "../../assets/images/logo-header-2.png"
+import logo from "../../assets/images/logo-header.png"
 import styled from "./styled"
 import data from "./data"
 
