@@ -75,7 +75,6 @@ const KampusChart = () => {
           data={KampusBar}
           id="chart"
           base={10}
-          // aria-orientation="horizontal"
           options={{
             layout: {
               margin: {
