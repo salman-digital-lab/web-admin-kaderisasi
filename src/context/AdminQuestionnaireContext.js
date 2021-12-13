@@ -116,7 +116,6 @@ export default function AdminQuestionnaireProvider({ children }) {
 
   const ADD_QUESTIONNAIRE_ANSWER_STRING_VALUE = (id) => {
     const { form } = state
-    // console.log(form[id])
     form[id].data.push({
       label: "Yes of course",
       value: "yes_of_course",
@@ -134,7 +133,6 @@ export default function AdminQuestionnaireProvider({ children }) {
 
   const SAVE_QUESTIONNAIRE = () => {
     setOpenQuestionnaireSuccessSnackbar(true)
-    // console.log(state)
   }
 
   const ADD_QUESTIONNAIRE_FORM = () => {
@@ -208,10 +206,9 @@ export default function AdminQuestionnaireProvider({ children }) {
       const response = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/v1/activity/${id}/questionnaire`
       )
-      // console.log(response)
+
       if (response.status === 200) {
         const form = response.data.data ?? null
-        // console.log(response.data.data)
         setState({ ...state, form })
         // if (
         //   Object.prototype.hasOwnProperty.call(form, "title") &&

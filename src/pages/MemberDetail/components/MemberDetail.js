@@ -127,38 +127,30 @@ const MemberDetail = () => {
         </div>
         <div className="head-right">
           <div className="head-aktivis-data">
-            <div className="input-group-title-head" id="basic-addon1">
-              Nama Jamaah
-            </div>
-            <div className="input-group-text-head" id="basic-addon1">
-              <span className="editable">{data.name}</span>
+            <div className="input-group-title-head">Nama Jamaah</div>
+            <div className="input-group-text-head">
+              <span>{data.name}</span>
             </div>
           </div>
           <div className="head-aktivis-data">
-            <div className="input-group-title-head" id="basic-addon1">
-              Jenis Kelamin
-            </div>
-            <div className="input-group-text-head" id="basic-addon1">
-              <span className="editable">{data.gender}</span>
+            <div className="input-group-title-head">Jenis Kelamin</div>
+            <div className="input-group-text-head">
+              <span>{data.gender}</span>
             </div>
           </div>
           <div className="head-aktivis-data">
-            <div className="input-group-title-head" id="basic-addon1">
-              Tempat, Tanggal Lahir
-            </div>
-            <div className="input-group-text-head" id="basic-addon1">
-              <span className="editable">
+            <div className="input-group-title-head">Tempat, Tanggal Lahir</div>
+            <div className="input-group-text-head">
+              <span>
                 {data.city_of_birth},{" "}
                 {new Date(data.date_of_birthday).toLocaleDateString()}
               </span>
             </div>
           </div>
           <div className="head-aktivis-data">
-            <div className="input-group-title-head" id="basic-addon1">
-              Phone/Whatsapp
-            </div>
-            <div className="input-group-text-head" id="basic-addon1">
-              <span className="editable">{data.phone}</span>
+            <div className="input-group-title-head">Phone/Whatsapp</div>
+            <div className="input-group-text-head">
+              <span>{data.phone}</span>
             </div>
           </div>
         </div>
@@ -167,131 +159,99 @@ const MemberDetail = () => {
       <h3>Detail Member</h3>
       <div className="body-aktivis">
         <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            Email
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.email}</span>
+          <div className="input-group-title-body">Email</div>
+          <div className="input-group-text-body">
+            <span>{data.email}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            ID Line
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.line_id}</span>
+          <div className="input-group-title-body">ID Line</div>
+          <div className="input-group-text-body">
+            <span>{data.line_id}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            Perguruan Tinggi/Univ
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.university}</span>
+          <div className="input-group-title-body">Perguruan Tinggi/Univ</div>
+          <div className="input-group-text-body">
+            <span>{data.university}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            Fakultas
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.faculty}</span>
+          <div className="input-group-title-body">Fakultas</div>
+          <div className="input-group-text-body">
+            <span>{data.faculty}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            Jurusan
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.major}</span>
+          <div className="input-group-title-body">Jurusan</div>
+          <div className="input-group-text-body">
+            <span>{data.major}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            NIM
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.student_id}</span>
+          <div className="input-group-title-body">NIM</div>
+          <div className="input-group-text-body">
+            <span>{data.student_id}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            Angkatan
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.intake_year}</span>
+          <div className="input-group-title-body">Angkatan</div>
+          <div className="input-group-text-body">
+            <span>{data.intake_year}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            Jenjang
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.role_name}</span>
+          <div className="input-group-title-body">Jenjang</div>
+          <div className="input-group-text-body">
+            <span>{data.role_name}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            Ikut Serta Kegiatan
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.kegiatan}</span>
+          <div className="input-group-title-body">Ikut Serta Kegiatan</div>
+          <div className="input-group-text-body">
+            <span>{data.kegiatan}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            Alamat Sesuai KTP
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.from_address}</span>
+          <div className="input-group-title-body">Alamat Sesuai KTP</div>
+          <div className="input-group-text-body">
+            <span>{data.from_address}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            Alamat Sekarang
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.current_address}</span>
+          <div className="input-group-title-body">Alamat Sekarang</div>
+          <div className="input-group-text-body">
+            <span>{data.current_address}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            Provinsi
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.province_name}</span>
+          <div className="input-group-title-body">Provinsi</div>
+          <div className="input-group-text-body">
+            <span>{data.province_name}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            Kota/Kabupaten
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.district_name}</span>
+          <div className="input-group-title-body">Kota/Kabupaten</div>
+          <div className="input-group-text-body">
+            <span>{data.district_name}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            Kecamatan
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.village_name}</span>
+          <div className="input-group-title-body">Kecamatan</div>
+          <div className="input-group-text-body">
+            <span>{data.village_name}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            Kelurahan
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.regency_name}</span>
+          <div className="input-group-title-body">Kelurahan</div>
+          <div className="input-group-text-body">
+            <span>{data.regency_name}</span>
           </div>
         </div>
         <div className="body-aktivis-data">
-          <div className="input-group-title-body" id="basic-addon1">
-            Tanggal Mendaftar
-          </div>
-          <div className="input-group-text-body" id="basic-addon1">
-            <span className="editable">{data.intake_year}</span>
+          <div className="input-group-title-body">Tanggal Mendaftar</div>
+          <div className="input-group-text-body">
+            <span>{data.intake_year}</span>
           </div>
         </div>
       </div>

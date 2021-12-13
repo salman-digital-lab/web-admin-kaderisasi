@@ -187,7 +187,7 @@ const AdminActivityProvider = (props) => {
       .post(process.env.REACT_APP_BASE_URL + `/v1/activity/banner`, formData)
       .then((res) => {
         const response = res.data
-        console.log(response)
+        // console.log(response)
       })
       .catch((err) => console.log(err))
   }

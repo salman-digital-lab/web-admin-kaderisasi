@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useContext, useEffect } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import {
@@ -19,7 +20,7 @@ import {
 } from "../../../components/table-design"
 import { KategoriModal } from "./kategori-modal"
 import { ConfirmationModal } from "./confirmation-modal"
-/* eslint-disable */
+
 const headCells = [
   { id: "no", numeric: true, label: "No." },
   { id: "name", numeric: false, label: "Nama Kategori" },
@@ -77,11 +78,6 @@ const CategoryTable = () => {
     }
   })
 
-  const handleAddCategory = () => {
-    setDataEdit({})
-    setOpen(true)
-  }
-
   const handleEditCategory = (id, name) => {
     setDataEdit({ id, name })
     setOpen(true)
@@ -118,14 +114,6 @@ const CategoryTable = () => {
       <h1 className="headline" style={{ color: "#999999" }}>
         Pengaturan Kategori Kegiatan
       </h1>
-      <Button
-        color="primary"
-        size="small"
-        variant="contained"
-        onClick={() => handleAddCategory()}
-      >
-        TAMBAH
-      </Button>
       <Paper>
         <TableContainer>
           <Table
@@ -170,7 +158,7 @@ const CategoryTable = () => {
                         >
                           <Edit fontSize="small" />
                         </Button>
-                        <Button
+                        {/* <Button
                           color="secondary"
                           size="small"
                           className="delete-button"
@@ -178,7 +166,7 @@ const CategoryTable = () => {
                           onClick={() => handleDeleteCategory(row.value)}
                         >
                           <Delete fontSize="small" />
-                        </Button>
+                        </Button> */}
                       </TableCell>
                     </TableRow>
                   )

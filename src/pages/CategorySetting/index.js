@@ -1,6 +1,7 @@
 import React from "react"
 import "../../assets/scss/Member.scss"
 import CategoryTable from "./components/category-table"
+import CategoryFilter from "./components/category-filter"
 import AdminActivityProvider from "../../context/AdminActivityContext"
 /* eslint-disable */
 const CategorySetting = () => {
@@ -8,7 +9,12 @@ const CategorySetting = () => {
     <AdminActivityProvider>
       <div className="userlist">
         <div className="flex-container">
-          <CategoryTable />
+          <div className="flex-left">
+            <CategoryTable />
+          </div>
+          <div className="flex-right">
+            <CategoryFilter />
+          </div>
         </div>
       </div>
     </AdminActivityProvider>

@@ -45,7 +45,6 @@ export const UniversitasProvider = (props) => {
 
   const [rows, setRows] = useState([])
   const [openAlert, setOpenAlert] = useState(false)
-  console.log(openAlert)
   const [universitiesState, setUniversitiesState] = useState({
     tmp: null,
   })

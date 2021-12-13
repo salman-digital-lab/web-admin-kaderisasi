@@ -71,8 +71,6 @@ const AdminDetail = () => {
     getStudentCareDetail(id)
   }, [studentCareResp])
 
-  console.log(studentCare)
-
   useEffect(() => {
     getCounselors()
   }, [])

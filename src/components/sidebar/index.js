@@ -21,7 +21,7 @@ import data from "./data"
 const Sidebar = () => {
   const token = Cookies.get("token")
   let user
-  if (token) {
+  if (token && Cookies.get("user")) {
     user = JSON.parse(Cookies.get("user"))
   }
   const location = useLocation()
@@ -104,7 +104,6 @@ const Sidebar = () => {
                   className={classes.drawerList}
                   key={value.id.toString()}
                 >
-                  {console.log(location)}
                   <ListItem
                     button
                     onClick={

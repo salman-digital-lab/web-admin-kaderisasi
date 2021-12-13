@@ -14,7 +14,7 @@ const Router = () => {
   const [allowedList, setAllowedList] = useState([])
 
   useEffect(() => {
-    if (token) {
+    if (token && Cookies.get("user")) {
       user = JSON.parse(Cookies.get("user"))
     }
     if (allowedList.length < 1) {

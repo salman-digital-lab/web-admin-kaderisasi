@@ -32,8 +32,6 @@ const GenderChart = () => {
           const filterResult = result.filter((e) => {
             return e.gender !== null
           })
-          // console.log(filterResult)
-          console.log(result)
           setMyJSONData(filterResult)
         })
         .catch((error) => {

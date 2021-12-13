@@ -86,7 +86,6 @@ export const AdminDashboardProvider = (props) => {
       )
       .then((res) => {
         const data = res.data.data
-        console.log(data)
         const tmp = {
           jumlah: 0,
           aktivis: 0,

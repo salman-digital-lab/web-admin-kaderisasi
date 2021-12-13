@@ -21,7 +21,7 @@ const Topbar = (props) => {
   const classes = styled()
   const token = Cookies.get("token")
   let user
-  if (token) {
+  if (token && Cookies.get("user")) {
     user = JSON.parse(Cookies.get("user"))
   }
   const { state, setState } = React.useContext(AdminContext)

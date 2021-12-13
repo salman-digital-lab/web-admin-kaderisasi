@@ -15,7 +15,10 @@ import "../../assets/scss/Profile.scss"
 import { ProfileContext } from "context/ProfileContext"
 
 const Profile = () => {
-  const { id } = JSON.parse(Cookies.get("user"))
+  let id
+  if (Cookies.get("user")) {
+    id = JSON.parse(Cookies.get("user")).id
+  }
   const { users, functions } = useContext(ProfileContext)
   const { getUserDetail } = functions
   useEffect(() => {
@@ -31,11 +34,9 @@ const Profile = () => {
     status: <b>Status</b>,
   })
 
-
   return (
     <>
       <div className="container-detail-profile">
-
         <div className="left-detail-profile">
           <IconButton
             edge="end"
@@ -49,8 +50,7 @@ const Profile = () => {
         </div>
         <div className="right-detail-profile">
           <div className="nav-detail-profile">
-            <div className="button-group">
-            </div>
+            <div className="button-group"></div>
           </div>
           <div className="content-detail-profile">
             <List
@@ -88,7 +88,6 @@ const Profile = () => {
           </div>
         </div>
       </div>
-
     </>
   )
 }
