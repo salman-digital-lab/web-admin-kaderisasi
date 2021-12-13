@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core"
 
-const drawerWidth = 240
+const drawerWidth = 300
 const styled = makeStyles((theme) => ({
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
@@ -8,7 +8,7 @@ const styled = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     background: "white",
-    boxShadow: "0 3px 5px 2px rgba(33, 203, 243, .2)",
+    boxShadow: "none",
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -20,9 +20,6 @@ const styled = makeStyles((theme) => ({
   },
   menuButton: {
     marginRight: theme.spacing(2),
-  },
-  hide: {
-    display: "none",
   },
   grow: {
     flexGrow: 1,
