@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react"
-import CardDashboard from "./card-dashboard"
+import CardDashboard from "./CardDashboard"
 import { AdminDashboardContext } from "../../../context/AdminDashboardContext"
+import { Grid } from "@material-ui/core"
 
 const Card = () => {
   const { valueMapping, functions } = useContext(AdminDashboardContext)
@@ -10,21 +11,22 @@ const Card = () => {
     if (valueMapping.status === null) {
       GetAllMember()
     }
-  }, [])
+  })
 
   return (
-    <>
+    <Grid container spacing={4} style={{ display: "flex", padding: "30px 0" }}>
       {data.map((e) => (
-        <CardDashboard
-          key={`${e.value}_${e.title}`}
-          color={e.color}
-          icon={e.icon}
-          title={e.title}
-          text={e.text}
-          value={e.value}
-        />
+        <Grid item xs={12} md={6} lg={3} key={`${e.value}_${e.title}`}>
+          <CardDashboard
+            color={e.color}
+            icon={e.icon}
+            title={e.title}
+            text={e.text}
+            value={e.value}
+          />
+        </Grid>
       ))}
-    </>
+    </Grid>
   )
 }
 
