@@ -1,12 +1,12 @@
 import React from "react"
 import { Chip } from "@material-ui/core"
-/* eslint-disable */
+
 export const RegisterStatus = (props) => {
   switch (props.status) {
     case "closed":
       return <Chip className="error" label={props.status} />
     default:
-      return <Chip color="primary" label={props.status} />
+      return <Chip className="primary" label={props.status} />
   }
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from "react"
-import { useParams } from "react-router"
+import { useParams } from "react-router-dom"
 import { makeStyles } from "@material-ui/core/styles"
 import {
   Button,
@@ -534,9 +534,8 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                 </Button>
                 <Button
                   onClick={handleSubmit}
-                  className="button-bottoms-kegiatan"
+                  className="button-bottoms-kegiatan primary-button"
                   variant="contained"
-                  color="primary"
                   disabled={
                     !errors.formActivityValidity || !errors.formRegistValidity
                   }
