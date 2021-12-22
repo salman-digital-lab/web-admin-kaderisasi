@@ -133,9 +133,8 @@ const FormKegiatan = () => {
                       Edit
                     </Button>
                     <Button
-                      className="button-top-tambah-kegiatan"
+                      className="button-top-tambah-kegiatan primary-button"
                       variant="contained"
-                      color="primary"
                       onClick={handleOpen}
                     >
                       Tambah Detail

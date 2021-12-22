@@ -24,8 +24,7 @@ const UniversitiesFillter = () => (
           <Link to="/university">
             <Button
               variant="contained"
-              color="primary"
-              className="btn-tambah-kegiatan"
+              className="btn-tambah-kegiatan primary-button"
             >
               TAMBAH UNIVERSITAS
             </Button>

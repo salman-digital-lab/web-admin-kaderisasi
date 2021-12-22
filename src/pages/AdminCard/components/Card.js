@@ -211,8 +211,7 @@ const Card = (props) => {
         </Select>
         <Button
           variant="contained"
-          color="primary"
-          className="btn-register"
+          className="btn-register primary-button"
           onClick={() => handleSubmit()}
         >
           {id ? "Edit Admin Account" : "Register Admin Account"}

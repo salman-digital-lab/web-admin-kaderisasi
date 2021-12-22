@@ -101,8 +101,7 @@ const CardFormUniversities = () => {
         />
         <Button
           variant="contained"
-          color="primary"
-          className="btn-register"
+          className="btn-register primary-button"
           onClick={handleAdd}
         >
           {id ? "Rubah" : "Tambah"} Universitas

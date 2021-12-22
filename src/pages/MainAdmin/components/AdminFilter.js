@@ -32,8 +32,7 @@ const AdminFilter = () => {
             <Link to="/register-admin">
               <Button
                 variant="contained"
-                color="primary"
-                className="btn-tambah-kegiatan"
+                className="btn-tambah-kegiatan primary-button"
               >
                 TAMBAH AKUN ADMIN
               </Button>

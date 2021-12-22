@@ -439,9 +439,8 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                     onChange={onImageChange}
                   />
                   <Button
-                    className="button-kegiatan"
+                    className="button-kegiatan primary-button"
                     variant="contained"
-                    color="primary"
                     type="submit"
                   >
                     Upload Gambar
