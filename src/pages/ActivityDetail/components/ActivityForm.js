@@ -5,7 +5,7 @@ import { EditorState, convertToRaw, ContentState } from "draft-js"
 import draftToHtml from "draftjs-to-html"
 import htmlToDraft from "html-to-draftjs"
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
-import { useParams } from "react-router"
+import { useParams } from "react-router-dom"
 import embed from "embed-video"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 import DetailKegiatanModal from "../../../components/modals/detail-kegiatan-modal"
@@ -13,6 +13,7 @@ import LoadingAnimation from "../../../components/loading-animation"
 import AlertToast from "../../../components/alert"
 
 const FormKegiatan = () => {
+  const { id } = useParams()
   const { activityForm, categoryList, openAlert, setOpenAlert, functions } =
     useContext(AdminActivityContext)
   const { getActivityCategory, getActivityDetail, editActivity } = functions
@@ -22,7 +23,6 @@ const FormKegiatan = () => {
   const [open, setOpen] = useState(false)
   const [formData, setFormData] = useState({})
   const [check, setCheck] = useState(true)
-  const { id } = useParams()
 
   const handleOpen = () => {
     setOpen(true)
@@ -133,9 +133,8 @@ const FormKegiatan = () => {
                       Edit
                     </Button>
                     <Button
-                      className="button-top-tambah-kegiatan"
+                      className="button-top-tambah-kegiatan primary-button"
                       variant="contained"
-                      color="primary"
                       onClick={handleOpen}
                     >
                       Tambah Detail

@@ -20,8 +20,7 @@ const UniversitiesFillter = () => {
         <CardContent className="filter-content">
           <Box pl={5} pr={5}>
             <Button
-              color="primary"
-              className="btn-tambah-kegiatan"
+              className="btn-tambah-kegiatan primary-button"
               variant="contained"
               onClick={() => handleAddCategory()}
             >

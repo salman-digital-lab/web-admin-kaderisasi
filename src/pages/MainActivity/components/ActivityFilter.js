@@ -67,8 +67,7 @@ const KegiatanFilter = () => {
           <Box pl={5} pr={5}>
             <Button
               variant="contained"
-              color="primary"
-              className="btn-tambah-kegiatan"
+              className="btn-tambah-kegiatan primary-button"
               onClick={handleOpen}
             >
               TAMBAH KEGIATAN

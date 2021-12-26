@@ -70,9 +70,8 @@ export const KategoriModal = ({ open, onClose, data }) => {
                 </Button>
                 <Button
                   onClick={handleSubmit}
-                  className="button-bottoms-kegiatan"
+                  className="button-bottoms-kegiatan primary-button"
                   variant="contained"
-                  color="primary"
                 >
                   Simpan
                 </Button>

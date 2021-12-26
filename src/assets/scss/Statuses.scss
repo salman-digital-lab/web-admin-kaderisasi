@@ -1,7 +1,11 @@
 .MuiChip-root{
     &.success {
         color: white;
-        background-color: #3cd024;
+        background-color: #51c53f;
+    }
+    &.primary {
+        color: white;
+        background-color: #1F99CC;
     }
     &.error {
         color: white;

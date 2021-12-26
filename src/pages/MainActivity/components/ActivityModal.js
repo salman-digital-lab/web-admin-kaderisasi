@@ -251,9 +251,9 @@ export const KegiatanModal = ({ open, onClose }) => {
                 </Button>
                 <Button
                   onClick={handleSubmit}
-                  className="button-bottoms-kegiatan"
+                  className="button-bottoms-kegiatan primary-button"
                   variant="contained"
-                  color="primary"
+                  // color="primary"
                   disabled={
                     !errors.formActivityValidity || !errors.formRegistValidity
                   }

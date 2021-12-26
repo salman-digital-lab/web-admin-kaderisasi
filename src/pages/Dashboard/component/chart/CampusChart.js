@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react"
 import { HorizontalBar } from "react-chartjs-2"
 import { AdminDashboardContext } from "../../../../context/AdminDashboardContext"
 
-const KampusChart = () => {
+export default function CampusChart() {
   const { KampusState, functions, KampusBar, setKampusBar } = useContext(
     AdminDashboardContext
   )
@@ -33,6 +33,7 @@ const KampusChart = () => {
     if (KampusBar.status === null) {
       GetKampus()
     }
+    // eslint-disable-next-line
   }, [])
 
   if (KampusState !== undefined) {
@@ -70,48 +71,44 @@ const KampusChart = () => {
   }
   return (
     <>
-      <div className="container-chart">
-        <HorizontalBar
-          data={KampusBar}
-          id="chart"
-          base={10}
-          options={{
-            layout: {
-              margin: {
-                left: 50,
-                right: 0,
-                top: 0,
-                bottom: 500,
-              },
+      <HorizontalBar
+        data={KampusBar}
+        id="chart"
+        base={10}
+        options={{
+          layout: {
+            margin: {
+              left: 50,
+              right: 0,
+              top: 0,
+              bottom: 500,
             },
-            title: {
-              display: true,
-              text: "Trend Persebaran Data Kampus",
-              fontSize: 25,
-              padding: 20,
-            },
-            responsive: true,
-            maintainAspectRatio: false,
-            legend: {
-              onClick: (e) => e.stopPropagation(),
-            },
-            scales: {
-              xAxes: [
-                {
-                  ticks: {
-                    beginAtZero: true,
-                    min: 0,
-                    callback: (value) => value.toLocaleString(),
-                  },
+          },
+          title: {
+            display: true,
+            text: "Trend Persebaran Data Kampus",
+            fontSize: 25,
+            padding: 20,
+          },
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: {
+            onClick: (e) => e.stopPropagation(),
+          },
+          scales: {
+            xAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                  min: 0,
+                  callback: (value) => value.toLocaleString(),
                 },
-              ],
-            },
-            skipNull: true,
-          }}
-        />
-      </div>
+              },
+            ],
+          },
+          skipNull: true,
+        }}
+      />
     </>
   )
 }
-
-export default KampusChart

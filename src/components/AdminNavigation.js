@@ -1,5 +1,5 @@
 import React from "react"
-import { CssBaseline } from "@material-ui/core/"
+import { CssBaseline, Container } from "@material-ui/core/"
 import Topbar from "./topbar"
 import Sidebar from "./sidebar"
 import Content from "./content"

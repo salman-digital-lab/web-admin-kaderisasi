@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react"
 import { Button, TextField } from "@material-ui/core"
 import axios from "axios"
-import { useParams } from "react-router"
+import { useParams } from "react-router-dom"
 import logo from "../../../assets/images/logo-header.png"
 import "../../../assets/scss/MainUniversities.scss"
 import {
@@ -101,8 +101,7 @@ const CardFormUniversities = () => {
         />
         <Button
           variant="contained"
-          color="primary"
-          className="btn-register"
+          className="btn-register primary-button"
           onClick={handleAdd}
         >
           {id ? "Rubah" : "Tambah"} Universitas

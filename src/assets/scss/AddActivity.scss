@@ -25,13 +25,36 @@
     margin: 10px;
   }
 }
+.MuiButton-root {
+  &.cancel-button {
+    margin-right: 10px;
+  }
+  &.delete-button:hover {
+    background-color: #ec3978;
+  }
+  &.edit-button {
+    background-color: #f0b137;
+    margin-right: 10px;
+    color: white;
+    &:hover {
+      background-color: #ecb953;
+    }
+  }
+  &.primary-button {
+    background-color: #1F99CC;
+    color: white;
+    &:hover {
+      background-color: #2186b1;
+    }
+  }
+}
 
 .button-bottom {
   display: flex;
   width: 100%;
   margin: 15px;
   .button-bottoms-kegiatan {
-    margin: 5px;
+    margin: 5px;    
   }
 }
 

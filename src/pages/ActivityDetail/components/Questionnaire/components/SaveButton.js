@@ -18,7 +18,7 @@ export default function SaveButton() {
           // SAVE_QUESTIONNAIRE()
         }}
         variant="contained"
-        color="primary"
+        className="primary-button"
         disableElevation
       >
         Save Question
