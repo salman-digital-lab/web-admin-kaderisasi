@@ -71,7 +71,7 @@ const PendaftarTable = () => {
     setFilterParticipantsActivity,
     functions,
   } = useContext(AdminActivityContext)
-  const { getActivityParticipants } = functions
+  const { getActivityParticipants, exportActivityParticipants } = functions
   let params = {
     page: page + 1,
     perPage: rowsPerPage,
@@ -147,7 +147,7 @@ const PendaftarTable = () => {
           <>
             <EnhancedTableToolbar
               exportButton
-              exportLink={`${process.env.REACT_APP_BASE_URL}/v1/activity/${id}/participant/export`}
+              exportLink={() => exportActivityParticipants(id)}
               fileName="Pendaftar Kegiatan"
               data={listParticipants}
             />

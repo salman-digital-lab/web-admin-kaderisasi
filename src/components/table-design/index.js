@@ -11,6 +11,7 @@ import {
   Toolbar,
   Tooltip,
   IconButton,
+  Button,
 } from "@material-ui/core"
 import PrintIcon from "@material-ui/icons/Print"
 /* eslint-disable */
@@ -98,11 +99,11 @@ export const EnhancedTableToolbar = (props) => {
     return (
       <Toolbar className="toolbar-table">
         <Tooltip title="Export CSV">
-          <a href={props.exportLink} download={props.fileName}>
+          <Button onClick={props.exportLink}>
             <IconButton aria-label="Export CSV">
               <PrintIcon />
             </IconButton>
-          </a>
+          </Button>
         </Tooltip>
       </Toolbar>
     )
@@ -112,7 +113,7 @@ export const EnhancedTableToolbar = (props) => {
 
 EnhancedTableToolbar.propTypes = {
   exportButton: PropTypes.bool.isRequired,
-  exportLink: PropTypes.string,
+  exportLink: PropTypes.func,
   fileName: PropTypes.string,
   headCells: PropTypes.array,
   data: PropTypes.array,
