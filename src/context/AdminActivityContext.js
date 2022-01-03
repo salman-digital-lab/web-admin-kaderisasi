@@ -1,5 +1,7 @@
 import React, { createContext, useState } from "react"
 import axios from "axios"
+import { saveAs } from "file-saver"
+
 /* eslint-disable */
 export const AdminActivityContext = createContext()
 const AdminActivityProvider = (props) => {
@@ -90,6 +92,29 @@ const AdminActivityProvider = (props) => {
         result = res.data.data.data
         setListParticipants(result)
         setActivityParticipants(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  /*
+    Get export all activity participants
+  */
+  const exportActivityParticipants = async (activityId) => {
+    axios
+      .get(
+        process.env.REACT_APP_BASE_URL +
+          `/v1/activity/${activityId}/participant/export`,
+        {
+          responseType: "blob",
+        }
+      )
+      .then((res) => {
+        saveAs(
+          res.data,
+          `data-activity-${activityId}-participant-${new Date().getTime()}.xlsx`
+        )
       })
       .catch((err) => {
         console.log(err)
@@ -392,6 +417,7 @@ const AdminActivityProvider = (props) => {
     deleteActivityCategory,
     getAllUniversities,
     getAllFormTemplate,
+    exportActivityParticipants,
   }
 
   return (
