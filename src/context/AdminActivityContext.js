@@ -15,8 +15,6 @@ const AdminActivityProvider = (props) => {
   const [filterParticipantsActivity, setFilterParticipantsActivity] = useState({
     filter: false,
     status: -1,
-    role_id: -1,
-    university_id: -1,
   })
   const [activity, setActivity] = useState([])
   const [listActivity, setListActivity] = useState([])

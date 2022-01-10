@@ -26,7 +26,7 @@ const headCells = [
   { id: "phone", numeric: false, label: "Phone/WA" },
   { id: "univ", numeric: false, label: "Perguruan Tinggi/Univ" },
   { id: "jengjang", numeric: false, label: "Jenjang" },
-  { id: "activity", numeric: false, label: "SSC, LMD & SPC" },
+  { id: "activity", numeric: false, label: "SSC & LMD" },
   { id: "view", numeric: false, label: "Action" },
 ]
 

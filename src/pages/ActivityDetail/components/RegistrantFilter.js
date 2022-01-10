@@ -1,13 +1,10 @@
-import React, { useContext, useEffect } from "react"
+import React, { useContext } from "react"
 import {
   Card,
   CardContent,
-  FormControlLabel,
   Box,
   FormControl,
   InputLabel,
-  FormLabel,
-  RadioGroup,
   MenuItem,
   Select,
   Input,
@@ -15,22 +12,11 @@ import {
 import { useTheme } from "@material-ui/core/styles"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 import { MenuProps, getStyles } from "../../../components/select"
-import StyledRadio from "../../../components/radio-button"
 
 const PendaftarFilter = () => {
   const theme = useTheme()
-  const {
-    filterParticipantsActivity,
-    setFilterParticipantsActivity,
-    universityList,
-    functions,
-  } = useContext(AdminActivityContext)
-  const { getAllUniversities } = functions
-  useEffect(() => {
-    if (universityList.length < 1) {
-      getAllUniversities()
-    }
-  })
+  const { filterParticipantsActivity, setFilterParticipantsActivity } =
+    useContext(AdminActivityContext)
 
   const statusList = [
     { value: -1, label: "Semua" },
@@ -41,26 +27,10 @@ const PendaftarFilter = () => {
     { value: "REJECTED", label: "Rejected" },
   ]
 
-  const handleUniversityChange = (s) => {
-    setFilterParticipantsActivity({
-      ...filterParticipantsActivity,
-      university_id: Number(s),
-      filter: true,
-    })
-  }
-
   const handleStatusChange = (s) => {
     setFilterParticipantsActivity({
       ...filterParticipantsActivity,
       status: s,
-      filter: true,
-    })
-  }
-
-  const filterByJenjang = (s) => {
-    setFilterParticipantsActivity({
-      ...filterParticipantsActivity,
-      role_id: Number(s),
       filter: true,
     })
   }
@@ -85,67 +55,6 @@ const PendaftarFilter = () => {
                       value={name.value}
                       label={name.label}
                       style={getStyles(name, statusList, theme)}
-                    >
-                      {name.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              )}
-            </FormControl>
-            <FormControl component="fieldset" className="radio-button jenkel">
-              <FormLabel component="legend">Min. Jenjang</FormLabel>
-              <RadioGroup
-                value={filterParticipantsActivity.role_id}
-                aria-label="activity"
-                name="customized-radios"
-              >
-                <FormControlLabel
-                  value={-1}
-                  control={<StyledRadio />}
-                  onChange={(e) => filterByJenjang(e.target.value)}
-                  label="Semua"
-                />
-                <FormControlLabel
-                  value={4}
-                  control={<StyledRadio />}
-                  onChange={(e) => filterByJenjang(e.target.value)}
-                  label="Jamaah"
-                />
-                <FormControlLabel
-                  value={5}
-                  control={<StyledRadio />}
-                  onChange={(e) => filterByJenjang(e.target.value)}
-                  label="Aktivis"
-                />
-                <FormControlLabel
-                  value={6}
-                  control={<StyledRadio />}
-                  onChange={(e) => filterByJenjang(e.target.value)}
-                  label="Kader"
-                />
-                <FormControlLabel
-                  value={7}
-                  control={<StyledRadio />}
-                  onChange={(e) => filterByJenjang(e.target.value)}
-                  label="Kader Lanjut"
-                />
-              </RadioGroup>
-            </FormControl>
-            <FormControl className="select-dropdown mt-15">
-              <InputLabel id="demo-mutiple-name-label">Universitas</InputLabel>
-              {universityList.length > 0 && (
-                <Select
-                  value={filterParticipantsActivity.university_id}
-                  onChange={(e) => handleUniversityChange(e.target.value)}
-                  input={<Input />}
-                  MenuProps={MenuProps}
-                >
-                  {universityList.map((name) => (
-                    <MenuItem
-                      key={name}
-                      value={name.value}
-                      label={name.label}
-                      style={getStyles(name, universityList, theme)}
                     >
                       {name.label}
                     </MenuItem>

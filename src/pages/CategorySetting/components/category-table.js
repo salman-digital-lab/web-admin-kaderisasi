@@ -73,10 +73,8 @@ const CategoryTable = () => {
   const { categoryList, functions } = useContext(AdminActivityContext)
   const { getActivityCategory, deleteActivityCategory } = functions
   useEffect(() => {
-    if (categoryList.length < 1) {
-      getActivityCategory()
-    }
-  })
+    getActivityCategory()
+  }, [])
 
   const handleEditCategory = (id, name) => {
     setDataEdit({ id, name })

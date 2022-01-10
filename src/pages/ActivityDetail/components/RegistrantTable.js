@@ -86,16 +86,8 @@ const PendaftarTable = () => {
       params.page = 1
       setPage(0)
       params = { ...params, ...filterParticipantsActivity }
-      if (params.university_id === -1) {
-        delete params.university_id
-        delete params.filter
-      }
       if (params.status === -1) {
         delete params.status
-        delete params.filter
-      }
-      if (params.role_id === -1) {
-        delete params.role_id
         delete params.filter
       }
       if (Object.keys(params).length > 1) {
