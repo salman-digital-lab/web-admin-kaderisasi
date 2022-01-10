@@ -98,6 +98,7 @@ const AdminMemberProvider = (props) => {
       .then((res) => {
         const { data } = res
         setBlockMemberResp(data)
+        getMemberDetail(id)
       })
       .catch((err) => {
         console.log(err)
@@ -112,12 +113,13 @@ const AdminMemberProvider = (props) => {
       unblock member where id = params.id
     */
   const unblockMemberById = (id) => {
-    setUnblockMemberResp({})
+    setBlockMemberResp({})
     axios
       .patch(`${process.env.REACT_APP_BASE_URL}/v1/member/${id}/unblock`)
       .then((res) => {
         const { data } = res
-        setUnblockMemberResp(data)
+        setBlockMemberResp(data)
+        getMemberDetail(id)
       })
       .catch((err) => {
         console.log(err)

@@ -78,7 +78,7 @@ const data = [
       },
       {
         id: 8.2,
-        name: "List Kategori Kegiatan",
+        name: "Kategori Kegiatan",
         url: "/category-setting",
         modul: "activity",
         parent: "setting",
