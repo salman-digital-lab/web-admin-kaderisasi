@@ -162,8 +162,8 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
   )
   const [errors, setErrors] = useState(initialErrors)
 
-  const [order, setOrder] = useState("asc")
-  const [orderBy, setOrderBy] = useState("id")
+  const [order, setOrder] = useState("desc")
+  const [orderBy, setOrderBy] = useState("created_at")
 
   const validateDates = () => {
     // check dates via the dates{} state object
@@ -215,8 +215,8 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
   }, [activityBanner])
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc"
-    setOrder(isAsc ? "desc" : "asc")
+    const isAsc = orderBy === property && order === "desc"
+    setOrder(isAsc ? "desc" : "desc")
     setOrderBy(property)
   }
 

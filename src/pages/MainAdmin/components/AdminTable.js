@@ -52,20 +52,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+let params = {
+  page: 1,
+  perPage: 5,
+}
+
 const AdminTable = () => {
   const classes = useStyles()
-  const [order, setOrder] = useState("asc")
-  const [orderBy, setOrderBy] = useState("startDate")
+  const [order, setOrder] = useState("desc")
+  const [orderBy, setOrderBy] = useState("created_at")
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
-  // const [status, setStatus] = useState(true)
   const { listUsers, users, filterUser, setFilterUser, loading, functions } =
     useContext(AdminContext)
   const { getUsers } = functions
-  let params = {
-    page: page + 1,
-    page_size: rowsPerPage,
-  }
+
   useEffect(() => {
     getUsers(params)
   }, [])
@@ -91,8 +92,8 @@ const AdminTable = () => {
   }, [filterUser, setFilterUser, getUsers])
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc"
-    setOrder(isAsc ? "desc" : "asc")
+    const isAsc = orderBy === property && order === "desc"
+    setOrder(isAsc ? "desc" : "desc")
     setOrderBy(property)
   }
 

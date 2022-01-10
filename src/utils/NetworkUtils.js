@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const NetworkUtils = axios.create({
-  baseURL: "https://admin-api-kaderisasi-dev.salmanitb.com/",
+  baseURL: process.env.REACT_APP_BASE_URL,
 })
 
 export default NetworkUtils

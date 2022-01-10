@@ -1,39 +1,38 @@
-import React from "react"
+import React, { useState } from "react"
 import { Card, CardContent, Box, Button } from "@material-ui/core"
 import { Link } from "react-router-dom"
+import { UniversitiesModal } from "./universities-modal"
 import "../../../assets/scss/AddActivity.scss"
 // import { UniversitasContext } from "../../../context/AdminUniversitasContext"
 
-const UniversitiesFillter = () => (
-  // const { filterActivity, setFilterActivity } = useContext(UniversitasContext)
+const UniversitiesFillter = () => {
+  const [open, setOpen] = useState(false)
+  const [dataEdit, setDataEdit] = useState({})
+  const handleClose = () => {
+    setOpen(false)
+  }
 
-  // const handleKeyDown = (event) => {
-  //   if (event.key === "Enter") {
-  //     setFilterActivity({
-  //       ...filterActivity,
-  //       search: event.target.value,
-  //       filter: true,
-  //     })
-  //   }
-  // }
-
-  <>
-    <Card>
-      <CardContent className="filter-content">
-        <Box pl={5} pr={5}>
-          <Link to="/university">
+  const handleAddUniversity = () => {
+    setDataEdit({})
+    setOpen(true)
+  }
+  return (
+    <>
+      <Card>
+        <CardContent className="filter-content">
+          <Box pl={5} pr={5}>
             <Button
-              variant="contained"
               className="btn-tambah-kegiatan primary-button"
+              variant="contained"
+              onClick={() => handleAddUniversity()}
             >
               TAMBAH UNIVERSITAS
             </Button>
-          </Link>
-        </Box>
-      </CardContent>
-    </Card>
-    <br />
-    {/* <Card>
+          </Box>
+        </CardContent>
+      </Card>
+      <br />
+      {/* <Card>
         <CardContent className="filter-content">
           <Box pl={5} pr={5}>
             <TextField
@@ -47,7 +46,9 @@ const UniversitiesFillter = () => (
           </Box>
         </CardContent>
       </Card> */}
-  </>
-)
+      <UniversitiesModal open={open} onClose={handleClose} data={dataEdit} />
+    </>
+  )
+}
 
 export default UniversitiesFillter

@@ -7,8 +7,8 @@ const AdminMemberProvider = (props) => {
   const [filterMember, setFilterMember] = useState({
     filter: false,
     gender: "",
-    ssc: -1,
-    lmd: -1,
+    ssc: "",
+    lmd: "",
     search_query: "",
   })
   const [members, setMembers] = useState([])

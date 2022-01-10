@@ -2,16 +2,15 @@ import React, { useState, useEffect, useContext } from "react"
 import { Button, Modal, Fade, Backdrop, TextField } from "@material-ui/core"
 import "../../../assets/scss/AddActivity.scss"
 import styled from "./styled"
-import { AdminActivityContext } from "../../../context/AdminActivityContext"
+import { UniversitasContext } from "../../../context/AdminUniversitasContext"
 /* eslint-disable */
-export const KategoriModal = ({ open, onClose, data }) => {
+export const UniversitiesModal = ({ open, onClose, data }) => {
   const classes = styled()
   const [state, setState] = useState({
     name: "",
   })
-  const { functions } = useContext(AdminActivityContext)
-  const { addActivityCategory, editActivityCategory } =
-    functions
+  const { functions } = useContext(UniversitasContext)
+  const { addUniversity, editUniversity } = functions
 
   const handleForm = (value, type) => {
     setState({ ...state, [type]: value })
@@ -19,8 +18,8 @@ export const KategoriModal = ({ open, onClose, data }) => {
 
   const handleSubmit = async () => {
     data.id
-      ? await editActivityCategory(data.id, { name: state.name })
-      : await addActivityCategory({ name: state.name })
+      ? await editUniversity(data.id, { name: state.name })
+      : await addUniversity({ name: state.name })
     setState({ name: "" })
     onClose()
   }
@@ -44,7 +43,7 @@ export const KategoriModal = ({ open, onClose, data }) => {
             <div>
               <div className="detail-activity">
                 <div className="input-form">
-                  Nama Kategori
+                  Nama Universitas
                   <br />
                   <TextField
                     className="form-modal"

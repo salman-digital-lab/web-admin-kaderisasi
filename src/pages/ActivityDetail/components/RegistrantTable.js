@@ -56,11 +56,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+let params = {
+  page: 1,
+  perPage: 5,
+}
+
 const PendaftarTable = () => {
   const classes = useStyles()
   const { id } = useParams()
-  const [order, setOrder] = useState("asc")
-  const [orderBy, setOrderBy] = useState("startDate")
+  const [order, setOrder] = useState("desc")
+  const [orderBy, setOrderBy] = useState("created_at")
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [status, setStatus] = useState(true)
@@ -72,10 +77,7 @@ const PendaftarTable = () => {
     functions,
   } = useContext(AdminActivityContext)
   const { getActivityParticipants, exportActivityParticipants } = functions
-  let params = {
-    page: page + 1,
-    perPage: rowsPerPage,
-  }
+
   if (listParticipants.length < 1 && status) {
     getActivityParticipants(id, params)
     setStatus(false)
@@ -106,8 +108,8 @@ const PendaftarTable = () => {
   ])
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc"
-    setOrder(isAsc ? "desc" : "asc")
+    const isAsc = orderBy === property && order === "desc"
+    setOrder(isAsc ? "desc" : "desc")
     setOrderBy(property)
   }
 

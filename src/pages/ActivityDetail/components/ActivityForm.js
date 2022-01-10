@@ -54,12 +54,12 @@ const FormKegiatan = () => {
   }
 
   useEffect(() => {
-    if (activityForm.length < 1 && categoryList.length < 1) {
+    if (activityForm.length < 1 && !categoryList?.status) {
       getActivityDetail(id)
-      getActivityCategory()
+      getActivityCategory({ page: 1, perPage: 100 })
     }
     if (activityForm.length > 0 && check) {
-      const contentBlock = htmlToDraft(activityForm[0].description)
+      const contentBlock = htmlToDraft(activityForm[0].description ?? "")
       setEditorState(
         EditorState.createWithContent(
           ContentState.createFromBlockArray(contentBlock.contentBlocks)
@@ -73,7 +73,7 @@ const FormKegiatan = () => {
   return (
     <>
       <div className="tambah-kegiatan">
-        {activityForm.length === 1 && categoryList.length > 1 ? (
+        {activityForm.length === 1 && categoryList?.status === "SUCCESS" ? (
           <>
             <div className="top-bar-kegiatan">
               <div className="detail-activity">
@@ -94,9 +94,9 @@ const FormKegiatan = () => {
                   {!stateCanBeEdited ? (
                     <TextField
                       value={
-                        categoryList.filter(
-                          (x) => x.value === activityForm[0].category_id
-                        )[0].label
+                        categoryList?.data?.data?.filter(
+                          (x) => x.id === activityForm[0].category_id
+                        )[0]?.name
                       }
                       InputProps={{
                         readOnly: true,
@@ -110,11 +110,11 @@ const FormKegiatan = () => {
                         handleForm(event.target.value, "category_id")
                       }
                     >
-                      {categoryList
-                        .filter((x) => x.value !== -1)
+                      {categoryList?.data?.data
+                        ?.filter(({ id }) => id !== -1)
                         .map((value) => (
-                          <MenuItem key={value} value={value.value}>
-                            {value.label}
+                          <MenuItem key={value} value={value.id}>
+                            {value.name}
                           </MenuItem>
                         ))}
                     </Select>

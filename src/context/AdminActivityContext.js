@@ -131,10 +131,6 @@ const AdminActivityProvider = (props) => {
       .get(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}`)
       .then((res) => {
         const form = res.data.data
-        form[0].description =
-          form[0].description === null
-            ? "Description cannot be null"
-            : form[0].description
         setActivityForm(form)
       })
       .catch((err) => {
@@ -248,22 +244,25 @@ const AdminActivityProvider = (props) => {
   /*
     Get all activity category
   */
-  const getActivityCategory = () => {
-    const categories = []
-    setCategoryList(categories)
-    categories.push({ value: -1, label: "Loading..." })
+  const getActivityCategory = (params) => {
+    let paramsQuery = "?"
+    if (params) {
+      Object.keys(params).map((x, i) => {
+        i === Object.keys(params).length - 1
+          ? (paramsQuery += x + "=" + params[x].toString())
+          : (paramsQuery += x + "=" + params[x].toString() + "&")
+      })
+    }
     axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/activity-category`)
+      .get(
+        process.env.REACT_APP_BASE_URL + `/v1/activity-category` + paramsQuery
+      )
       .then((res) => {
-        const response = res.data.data
-        categories.push({ value: -1, label: "Semua Kategori" })
-        response.map((x) => categories.push({ value: x.id, label: x.name }))
-        setCategoryList(categories.slice(1, categories.length))
+        res.data.data.data.unshift({ id: -1, name: "Pilih Kategori..." })
+        setCategoryList(res.data)
       })
       .catch((err) => {
         console.log(err)
-        categories.push({ value: -1, label: "Kategori Tidak Ditemukan." })
-        setCategoryList(categories.slice(1, categories.length))
       })
   }
 
@@ -298,7 +297,7 @@ const AdminActivityProvider = (props) => {
     axios
       .post(process.env.REACT_APP_BASE_URL + `/v1/activity-category`, formData)
       .then((res) => {
-        getActivityCategory()
+        getActivityCategory({ page: 1, perPage: 5 })
         result = res
         return result
       })
@@ -323,7 +322,7 @@ const AdminActivityProvider = (props) => {
         formData
       )
       .then((res) => {
-        getActivityCategory()
+        getActivityCategory({ page: 1, perPage: 5 })
         result = res
         return result
       })
@@ -344,7 +343,7 @@ const AdminActivityProvider = (props) => {
     axios
       .delete(process.env.REACT_APP_BASE_URL + `/v1/activity-category/${id}`)
       .then((res) => {
-        getActivityCategory()
+        getActivityCategory({ page: 1, perPage: 5 })
         result = res
         return result
       })
