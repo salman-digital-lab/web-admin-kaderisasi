@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react"
+import React, { useState, useContext } from "react"
 import { Button, Modal, Fade, Backdrop, TextField } from "@material-ui/core"
 import "../../../assets/scss/AddActivity.scss"
 import styled from "./styled"
