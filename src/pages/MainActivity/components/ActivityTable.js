@@ -85,6 +85,7 @@ const KegiatanTable = () => {
     if (filterActivity.filter) {
       params.page = 1
       setPage(0)
+      // eslint-disable-next-line
       params = { ...params, ...filterActivity }
       if (params.category_id === -1) {
         delete params.category_id
@@ -126,9 +127,6 @@ const KegiatanTable = () => {
   }
   return (
     <div className="tableactivity">
-      <h1 className="headline" style={{ color: "#999999" }}>
-        Kegiatan dan Aktivitas
-      </h1>
       <Paper>
         {!activity.status ? (
           <div className="loading-table">

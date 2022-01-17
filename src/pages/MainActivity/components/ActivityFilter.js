@@ -20,6 +20,25 @@ import { KegiatanModal } from "./ActivityModal"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 import "../../../assets/scss/AddActivity.scss"
 import { MenuProps, getStyles } from "../../../components/select"
+import AddIcon from "@material-ui/icons/Add"
+import styled from "styled-components"
+
+const StyledTextField = styled(TextField)`
+  label.Mui-focused {
+    color: #1f99cc;
+  }
+  .MuiOutlinedInput-root {
+    fieldset {
+      border-color: #1f99cc;
+    }
+    &:hover fieldset {
+      border-color: #1f99cc;
+    }
+    &.Mui-focused fieldset {
+      border-color: #1f99cc;
+    }
+  }
+`
 
 const KegiatanFilter = () => {
   const theme = useTheme()
@@ -63,14 +82,23 @@ const KegiatanFilter = () => {
   return (
     <>
       <Card>
-        <CardContent className="filter-content">
-          <Box pl={5} pr={5}>
+        <CardContent>
+          <Box component="div" display="flex" justifyContent="space-between">
+            <StyledTextField
+              id="filled-basic"
+              size="small"
+              label="Cari Kegiatan"
+              variant="outlined"
+              className="filter-input"
+              onKeyDown={handleKeyDown}
+            />
             <Button
+              startIcon={<AddIcon />}
               variant="contained"
-              className="btn-tambah-kegiatan primary-button"
               onClick={handleOpen}
+              style={{ backgroundColor: "#1F99CC", color: "#fff" }}
             >
-              TAMBAH KEGIATAN
+              Tambah Kegiatan
             </Button>
           </Box>
         </CardContent>
@@ -79,14 +107,6 @@ const KegiatanFilter = () => {
       <Card>
         <CardContent className="filter-content">
           <Box pl={5} pr={5}>
-            <TextField
-              id="filled-basic"
-              size="small"
-              label="Cari Kegiatan"
-              variant="outlined"
-              className="filter-input"
-              onKeyDown={handleKeyDown}
-            />
             <FormControl component="fieldset" className="radio-button jenkel">
               <FormLabel component="legend">Min. Jenjang</FormLabel>
               <RadioGroup
