@@ -59,7 +59,7 @@ export function EnhancedTableHead(props) {
             {headCell.id !== "no" && headCell.id !== "action" ? (
               <TableSortLabel
                 active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : "asc"}
+                direction={orderBy === headCell.id ? order : "desc"}
                 onClick={createSortHandler(headCell.id)}
               >
                 {headCell.label}
@@ -84,7 +84,7 @@ export function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
+  order: PropTypes.oneOf(["desc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
   headCells: PropTypes.array.isRequired,
 }

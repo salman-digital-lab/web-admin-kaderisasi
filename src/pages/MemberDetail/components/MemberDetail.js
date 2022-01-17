@@ -17,7 +17,7 @@ const MemberDetail = () => {
   const [failedBlockMember, setFailedBlockMember] = useState(false)
   const [blockMember, setBlockMember] = useState(false)
   const [loading, setLoading] = useState(false)
-  const { getMemberDetail, blockMemberById } = functions
+  const { getMemberDetail, blockMemberById, unblockMemberById } = functions
 
   let data = {}
   if (memberForm?.member?.length > 0) {
@@ -27,7 +27,12 @@ const MemberDetail = () => {
   const handleBlockMember = () => {
     setLoading(true)
     blockMemberById(id)
-    setStatus(true)
+    setBlockMember(false)
+  }
+
+  const handleUnblockMember = () => {
+    setLoading(true)
+    unblockMemberById(id)
     setBlockMember(false)
   }
 
@@ -42,6 +47,15 @@ const MemberDetail = () => {
     }
     if (blockMemberResp.status === "SUCCESS") {
       setSuccessBlockMember(true)
+      setTimeout(() => {
+        setSuccessBlockMember(false)
+      }, 3000)
+      setLoading(false)
+    } else if (blockMemberResp.status === "FAILED") {
+      setFailedBlockMember(true)
+      setTimeout(() => {
+        setFailedBlockMember(false)
+      }, 3000)
       setLoading(false)
     }
   }, [blockMemberResp, memberForm, status])
@@ -63,7 +77,7 @@ const MemberDetail = () => {
             </IconButton>
           }
         >
-          Close me!
+          {blockMemberResp.message}
         </Alert>
       </Collapse>
       <Collapse in={failedBlockMember}>
@@ -82,7 +96,7 @@ const MemberDetail = () => {
             </IconButton>
           }
         >
-          Close me!
+          {blockMemberResp.message}
         </Alert>
       </Collapse>
       <div className="button-area">
@@ -103,16 +117,29 @@ const MemberDetail = () => {
           >
             SUNTING
           </Button>
-          <Button
-            color="secondary"
-            size="small"
-            className="delete-button"
-            variant="contained"
-            onClick={() => setBlockMember(true)}
-            disabled={loading}
-          >
-            <Block fontSize="small" /> BLOKIR
-          </Button>
+          {data.is_active ? (
+            <Button
+              color="secondary"
+              size="small"
+              className="delete-button"
+              variant="contained"
+              onClick={() => setBlockMember(true)}
+              disabled={loading}
+            >
+              <Block fontSize="small" /> BLOKIR
+            </Button>
+          ) : (
+            <Button
+              color="primary"
+              size="small"
+              className="delete-button"
+              variant="contained"
+              onClick={() => setBlockMember(true)}
+              disabled={loading}
+            >
+              AKTIFKAN
+            </Button>
+          )}
         </div>
       </div>
       <div className="head-aktivis">
@@ -259,8 +286,16 @@ const MemberDetail = () => {
       <ConfirmationModal
         open={blockMember}
         onClose={handleCloseBlock}
-        title={`Block ${data.name} sebagai member?`}
-        onSubmit={() => handleBlockMember()}
+        title={
+          data.is_active
+            ? `Block ${data.name} sebagai member?`
+            : `Aktifkan ${data.name} sebagai member?`
+        }
+        onSubmit={
+          data.is_active
+            ? () => handleBlockMember()
+            : () => handleUnblockMember()
+        }
       />
     </>
   ) : (

@@ -132,7 +132,7 @@ function EnhancedTableHead(props) {
           >
             <TableSortLabel
               active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
+              direction={orderBy === headCell.id ? order : "desc"}
               onClick={createSortHandler(headCell.id)}
             >
               <span className={classess.title}>{headCell.label}</span>
@@ -152,7 +152,7 @@ function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
+  order: PropTypes.oneOf(["desc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
 }
@@ -183,14 +183,14 @@ const useStyles = makeStyles((theme) => ({
 
 export const Example = () => {
   const classes = useStyles()
-  const [order, setOrder] = React.useState("asc")
+  const [order, setOrder] = React.useState("desc")
   const [orderBy, setOrderBy] = React.useState("name")
   const [page, setPage] = React.useState(0)
   const [rowsPerPage, setRowsPerPage] = React.useState(5)
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc"
-    setOrder(isAsc ? "desc" : "asc")
+    const isAsc = orderBy === property && order === "desc"
+    setOrder(isAsc ? "desc" : "desc")
     setOrderBy(property)
   }
 

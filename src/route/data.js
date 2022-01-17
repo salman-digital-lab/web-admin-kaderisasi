@@ -10,7 +10,6 @@ import CategorySetting from "../pages/CategorySetting"
 import MainAdmin from "../pages/MainAdmin"
 import AdminCard from "../pages/AdminCard"
 import AdminSalmanDetail from "../pages/AdminDetail"
-import Formuniversitas from "../pages/MainUniversities/components/universities-form"
 import Profile from "../pages/Profile/index"
 import ChatRoomDetail from "../pages/ChatRoomDetail"
 
@@ -49,16 +48,6 @@ const data = [
     url: "/universities",
     modul: "university",
     component: Universities,
-  },
-  {
-    url: "/university",
-    modul: "university",
-    component: Formuniversitas,
-  },
-  {
-    url: "/university/:id",
-    modul: "university",
-    component: Formuniversitas,
   },
   {
     url: "/chat-room",

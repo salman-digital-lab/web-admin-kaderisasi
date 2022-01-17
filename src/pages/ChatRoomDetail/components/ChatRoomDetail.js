@@ -32,7 +32,7 @@ const AdminDetail = () => {
   const theme = useTheme()
   const [isOpen, setIsOpen] = useState(false)
   const [stateCanBeEdited, setStateCanBeEdited] = useState(false)
-
+  const [success, setSuccess] = useState(false)
   const [title] = useState({
     problem_owner_name: <b>Nama Temhat</b>,
     counselor_name: <b>Nama Pendengar</b>,
@@ -69,6 +69,12 @@ const AdminDetail = () => {
   const { getStudentCareDetail, deleteStudentCare, editStudentCare, getCounselors } = functions
   useEffect(() => {
     getStudentCareDetail(id)
+    if (studentCareResp.status === "SUCCESS") {
+      setSuccess(true)
+      setTimeout(() => {
+        setSuccess(false)
+      }, 3000)
+    }
   }, [studentCareResp])
 
   useEffect(() => {
@@ -159,7 +165,7 @@ const AdminDetail = () => {
             )}
           </div>
         </div>
-        <Collapse in={studentCareResp.status === "SUCCESS"}>
+        <Collapse in={success}>
           <Alert
             className="alert-popup"
             action={
@@ -168,14 +174,14 @@ const AdminDetail = () => {
                 color="inherit"
                 size="small"
                 onClick={() => {
-                  setStudentCareResp({})
+                  setSuccess(false)
                 }}
               >
                 <Close fontSize="inherit" />
               </IconButton>
             }
           >
-            Berhasil Menyimpan Data!
+            {studentCareResp.message}
           </Alert>
         </Collapse>
         <div className="container-detail-chatroom">
