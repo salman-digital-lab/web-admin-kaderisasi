@@ -15,6 +15,7 @@ import {
   Backdrop,
   Select,
   MenuItem,
+  TextField,
 } from "@material-ui/core"
 import Alert from "@material-ui/lab/Alert"
 import { Delete, Visibility } from "@material-ui/icons"
@@ -126,7 +127,7 @@ export const DatePickerCustom = ({
   </div>
 )
 
-const DetailKegiatanModal = ({ open, onClose, data }) => {
+const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
   const ref = useRef()
   const { activityBanner, functions } = useContext(AdminActivityContext)
   const {
@@ -142,6 +143,8 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
   const classes = useStyles()
   const [formStyle] = useState(getformStyle)
   const [jenjang, setJenjang] = useState(data.minimum_role_id)
+  const [title, setTitle] = useState(data.name)
+  const [categoryId, setCategoryId] = useState(data.category_id)
   const [isPublished, setIsPublished] = useState(
     data.is_published === 1 ? true : false
   )
@@ -224,6 +227,11 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
     setFormData({ ...formData, [type]: value })
   }
 
+  const handleTitleChange = (data) => {
+    handleForm(data, "name")
+    setTitle(data)
+  }
+
   const handleStartRegistrationChange = (date) => {
     handleForm(moment(date).format("YYYY-MM-DD"), "register_begin_date")
     setStartDate(date)
@@ -249,8 +257,9 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
     setJenjang(event.target.value)
   }
 
-  const handleKuisioner = (event) => {
-    handleForm(event.target.value, "form_id")
+  const handleCategoryChange = (event) => {
+    handleForm(event.target.value, "category_id")
+    setCategoryId(event.target.value)
   }
 
   const handleStatus = (event) => {
@@ -446,22 +455,50 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                     Upload Gambar
                   </Button>
                 </form>
-                <div>
-                  <Checkbox
-                    checked={isPublished}
-                    color="primary"
-                    onChange={handlePublished}
-                    inputProps={{ "aria-label": "primary checkbox" }}
-                  />{" "}
-                  Published
-                  <Checkbox
-                    checked={status}
-                    color="primary"
-                    onChange={handleStatus}
-                    inputProps={{ "aria-label": "primary checkbox" }}
-                  />{" "}
-                  Opened Registration
+              </div>
+              <div className="detail-activity">
+                <div className="input-form">
+                  <TextField
+                    className="form-modal"
+                    required
+                    label="Nama Kegiatan"
+                    fullWidth
+                    placeholder="Nama Kegiatan"
+                    value={title}
+                    onChange={handleTitleChange}
+                  />
                 </div>
+              </div>
+              <div className="select-form">
+                Kategori Kegiatan
+                <br />
+                {categoryList?.status === "SUCCESS" && (
+                  <Select
+                    className="select-input-form"
+                    value={categoryId}
+                    onChange={handleCategoryChange}
+                  >
+                    {categoryList?.data?.data?.map((category) => (
+                      <MenuItem key={category} value={category.id}>
+                        {category.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              </div>
+              <div className="select-form">
+                Jenjang Minimal
+                <br />
+                <Select
+                  className="select-input-form"
+                  value={jenjang}
+                  onChange={handleJenjangChange}
+                >
+                  <MenuItem value={4}>Jamaah</MenuItem>
+                  <MenuItem value={5}>Aktivis</MenuItem>
+                  <MenuItem value={6}>Kader</MenuItem>
+                  <MenuItem value={7}>Kader Lanjut</MenuItem>
+                </Select>
               </div>
               <div className="detail-activity">
                 <DatePickerCustom
@@ -493,20 +530,27 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                   helperText={errors.dateRegistErrorMsg}
                 />
               </div>
-              <div className="select-form">
-                Jenjang Minimal
-                <br />
-                <Select
-                  className="select-input-form"
-                  value={jenjang}
-                  onChange={handleJenjangChange}
-                >
-                  <MenuItem value={4}>Jamaah</MenuItem>
-                  <MenuItem value={5}>Aktivis</MenuItem>
-                  <MenuItem value={6}>Kader</MenuItem>
-                  <MenuItem value={7}>Kader Lanjut</MenuItem>
-                </Select>
+              <div className="detail-activity">
+                <span>
+                  <Checkbox
+                    checked={isPublished}
+                    color="primary"
+                    onChange={handlePublished}
+                    inputProps={{ "aria-label": "primary checkbox" }}
+                  />{" "}
+                  Published
+                </span>
+                <span>
+                  <Checkbox
+                    checked={status}
+                    color="primary"
+                    onChange={handleStatus}
+                    inputProps={{ "aria-label": "primary checkbox" }}
+                  />{" "}
+                  Opened Registration
+                </span>
               </div>
+
               {/* <div className="select-form">
                 Kuisioner
                 <br />
@@ -529,7 +573,7 @@ const DetailKegiatanModal = ({ open, onClose, data }) => {
                   variant="contained"
                   color="secondary"
                 >
-                  Batalkan
+                  Batal
                 </Button>
                 <Button
                   onClick={handleSubmit}

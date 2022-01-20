@@ -258,7 +258,7 @@ const AdminActivityProvider = (props) => {
         process.env.REACT_APP_BASE_URL + `/v1/activity-category` + paramsQuery
       )
       .then((res) => {
-        res.data.data.data.unshift({ id: -1, name: "Pilih Kategori..." })
+        res.data.data.data.unshift({ id: -1, name: "-- Pilih Kategori Kegiatan --" })
         setCategoryList(res.data)
       })
       .catch((err) => {

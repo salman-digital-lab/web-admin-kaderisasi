@@ -79,24 +79,30 @@ const MemberFilter = () => {
               />
             </RadioGroup>
           </FormControl>
-          <TextField
-            id="filled-basic"
-            size="small"
-            label="SSC"
-            variant="outlined"
-            className="filter-input"
-            name="SSC"
-            onKeyDown={handleKeyDown}
-          />
-          <TextField
-            id="filled-basic"
-            size="small"
-            label="LMD"
-            variant="outlined"
-            className="filter-input"
-            name="LMD"
-            onKeyDown={handleKeyDown}
-          />
+          <div className="row mt-10">
+            <div className="col-6">
+              <TextField
+                id="filled-basic"
+                size="small"
+                label="SSC"
+                variant="outlined"
+                className="filter-input"
+                name="SSC"
+                onKeyDown={handleKeyDown}
+              />
+            </div>
+            <div className="col-6">
+              <TextField
+                id="filled-basic"
+                size="small"
+                label="LMD"
+                variant="outlined"
+                className="filter-input"
+                name="LMD"
+                onKeyDown={handleKeyDown}
+              />
+            </div>
+          </div>
         </Box>
       </CardContent>
     </Card>

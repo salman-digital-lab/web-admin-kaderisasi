@@ -122,3 +122,63 @@
     }
   }
 }
+
+.rounded-circle {
+  border-radius: 50% !important;
+  clip-path: circle();
+}
+
+.font-grey {
+  color: #9f9f9f;
+}
+
+.horizontal-line {
+  color: #1f99cc;
+  padding-top: 1.5px;
+  opacity: 1;
+}
+
+.mt-10 {
+  margin-top: 10px !important;
+}
+
+.mt-20 {
+  margin-top: 20px !important;
+}
+
+.py-5 {
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+.py-10 {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.px-15 {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+.pb-35 {
+  padding-bottom: 35px !important;
+}
+.pr-0 {
+  padding-right: 0 !important;
+}
+.pl-0 {
+  padding-left: 0 !important;
+}
+.pb-0 {
+  padding-bottom: 0 !important;
+}
+.pb-10 {
+  padding-bottom: 10px !important;
+}
+.pl-60 {
+  padding-left: 60px !important;
+}
+.pb-85 {
+  padding-bottom: 85px !important;
+}

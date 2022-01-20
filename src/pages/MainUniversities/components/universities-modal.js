@@ -59,7 +59,7 @@ export const UniversitiesModal = ({ open, onClose, data }) => {
                   variant="contained"
                   color="secondary"
                 >
-                  Batalkan
+                  Batal
                 </Button>
                 <Button
                   onClick={handleSubmit}

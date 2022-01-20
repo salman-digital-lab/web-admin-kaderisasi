@@ -21,22 +21,15 @@ const data = [
     children: [
       {
         id: 2.1,
-        name: "Text 1",
+        name: "Data Kegiatan",
         url: "/activity",
         modul: "activity",
         parent: "activity",
       },
       {
         id: 2.2,
-        name: "Text 2",
-        url: "/activity-2",
-        modul: "activity",
-        parent: "activity",
-      },
-      {
-        id: 2.3,
-        name: "Text 3",
-        url: "/activity-3",
+        name: "Kategori Kegiatan",
+        url: "/category-setting",
         modul: "activity",
         parent: "activity",
       },
@@ -74,13 +67,6 @@ const data = [
         icon: <GroupIcon />,
         url: "/user",
         modul: "users",
-        parent: "setting",
-      },
-      {
-        id: 8.2,
-        name: "Kategori Kegiatan",
-        url: "/category-setting",
-        modul: "activity",
         parent: "setting",
       },
       {

@@ -5,6 +5,8 @@ const styled = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    overflowY: "auto",
+    overflowX: "hidden",
   },
   formControl: {
     margin: theme.spacing(1),

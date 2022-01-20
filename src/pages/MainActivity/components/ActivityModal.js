@@ -7,6 +7,7 @@ import {
   Select,
   TextField,
   MenuItem,
+  Checkbox,
 } from "@material-ui/core"
 import moment from "moment"
 import DateFnsUtils from "@date-io/date-fns"
@@ -15,6 +16,11 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker,
 } from "@material-ui/pickers"
+import { EditorState } from "draft-js"
+import RichEditor, {
+  getPlainText,
+  getContentString,
+} from "../../../components/rich-text-editor"
 import "../../../assets/scss/AddActivity.scss"
 import styled from "./styled"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
@@ -63,7 +69,7 @@ DatePickerCustom.propTypes = {
   helperText: PropTypes.string.isRequired,
   error: PropTypes.string.isRequired,
 }
-/* eslint-disable */
+
 export const KegiatanModal = ({ open, onClose }) => {
   const classes = styled()
   const [state, setState] = useState({
@@ -72,12 +78,14 @@ export const KegiatanModal = ({ open, onClose }) => {
     end_date: moment().format("YYYY-MM-DD"),
     register_begin_date: moment().format("YYYY-MM-DD"),
     register_end_date: moment().format("YYYY-MM-DD"),
-    category_id: 1,
-    minimum_role_id: 4,
+    category_id: -1,
+    minimum_role_id: -1,
   })
   const { categoryList, functions } = useContext(AdminActivityContext)
   const { getActivityCategory, addActivity } = functions
   const [errors, setErrors] = useState(initialErrors)
+  const stateEdit = EditorState.createEmpty()
+  const [editorState, setEditorState] = useState(stateEdit)
 
   const validateDates = () => {
     // check dates via the dates{} state object, line 33
@@ -116,16 +124,20 @@ export const KegiatanModal = ({ open, onClose }) => {
       formActivityValidity,
     }))
   }
-
   useEffect(() => {
-    if (categoryList.length < 1) {
-      getActivityCategory()
-    }
+    getActivityCategory()
+  }, [])
+  useEffect(() => {
     validateDates()
-  }, [state, categoryList])
+  }, [state])
 
   const handleForm = (value, type) => {
     setState({ ...state, [type]: value })
+  }
+
+  const setEditor = (content) => {
+    setEditorState(content)
+    handleForm(getContentString(content), "description")
   }
 
   const handleSubmit = async () => {
@@ -143,8 +155,6 @@ export const KegiatanModal = ({ open, onClose }) => {
       BackdropProps={{
         timeout: 500,
       }}
-      aria-labelledby="simple-modal-title"
-      aria-describedby="simple-modal-description"
     >
       <Fade in={open}>
         <div className={classes.paper}>
@@ -152,10 +162,12 @@ export const KegiatanModal = ({ open, onClose }) => {
             <div>
               <div className="detail-activity">
                 <div className="input-form">
-                  Nama Kegiatan
-                  <br />
                   <TextField
                     className="form-modal"
+                    required
+                    label="Nama Kegiatan"
+                    fullWidth
+                    placeholder="Nama Kegiatan"
                     value={state.name}
                     onChange={(event) => handleForm(event.target.value, "name")}
                   />
@@ -164,7 +176,7 @@ export const KegiatanModal = ({ open, onClose }) => {
               <div className="select-form">
                 Kategori Kegiatan
                 <br />
-                {categoryList.length > 0 && (
+                {categoryList?.status === "SUCCESS" && (
                   <Select
                     className="select-input-form"
                     value={state.category_id}
@@ -172,9 +184,9 @@ export const KegiatanModal = ({ open, onClose }) => {
                       handleForm(event.target.value, "category_id")
                     }
                   >
-                    {categoryList.map((name) => (
-                      <MenuItem key={name} value={name.value}>
-                        {name.label}
+                    {categoryList?.data?.data?.map((category) => (
+                      <MenuItem key={category} value={category.id}>
+                        {category.name}
                       </MenuItem>
                     ))}
                   </Select>
@@ -190,6 +202,7 @@ export const KegiatanModal = ({ open, onClose }) => {
                     handleForm(event.target.value, "minimum_role_id")
                   }
                 >
+                  <MenuItem value={-1}>-- Pilih Minimum Jenjang --</MenuItem>
                   <MenuItem value={4}>Jamaah</MenuItem>
                   <MenuItem value={5}>Aktivis</MenuItem>
                   <MenuItem value={6}>Kader</MenuItem>
@@ -240,6 +253,40 @@ export const KegiatanModal = ({ open, onClose }) => {
                   helperText={errors.dateRegistErrorMsg}
                 />
               </div>
+              <div className="detail-activity">
+                <span>
+                  <Checkbox
+                    color="primary"
+                    onChange={(event) =>
+                      handleForm(
+                        event.target.checked ? "1" : "0",
+                        "is_published"
+                      )
+                    }
+                    inputProps={{ "aria-label": "primary checkbox" }}
+                  />{" "}
+                  Published
+                </span>
+                <span>
+                  <Checkbox
+                    color="primary"
+                    onChange={(event) =>
+                      handleForm(
+                        event.target.checked ? "OPENED" : "CLOSED",
+                        "status"
+                      )
+                    }
+                    inputProps={{ "aria-label": "primary checkbox" }}
+                  />{" "}
+                  Opened Registration
+                </span>
+              </div>
+              <div className="detail-activity">
+                <RichEditor
+                  onEditorStateChange={setEditor}
+                  editorState={editorState}
+                />
+              </div>
               <div className="button-bottom">
                 <Button
                   onClick={onClose}
@@ -247,13 +294,12 @@ export const KegiatanModal = ({ open, onClose }) => {
                   variant="contained"
                   color="secondary"
                 >
-                  Batalkan
+                  Batal
                 </Button>
                 <Button
                   onClick={handleSubmit}
                   className="button-bottoms-kegiatan primary-button"
                   variant="contained"
-                  // color="primary"
                   disabled={
                     !errors.formActivityValidity || !errors.formRegistValidity
                   }

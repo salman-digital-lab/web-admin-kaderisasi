@@ -27,7 +27,7 @@ const headCells = [
   { id: "phone", numeric: false, label: "Phone/WA" },
   { id: "univ", numeric: false, label: "Perguruan Tinggi/Univ" },
   { id: "jengjang", numeric: false, label: "Jenjang" },
-  { id: "activity", numeric: false, label: "SSC & LMD" },
+  { id: "activity", numeric: false, label: "SSC, LMD & SPC" },
   { id: "view", numeric: false, label: "Action" },
 ]
 
@@ -190,14 +190,21 @@ const MemberTable = () => {
                         </TableCell>
                         <TableCell className="table-cell">
                           <span>
-                            <Chip
-                              className="primary"
-                              label={`SSC-${row.ssc}`}
-                            />
-                            <Chip
-                              className="waiting"
-                              label={`LMD-${row.lmd}`}
-                            />
+                            {row.ssc ? (
+                              <Chip label={`SSC~${row.ssc}`} size="small" />
+                            ) : (
+                              ""
+                            )}
+                            {row.lmd ? (
+                              <Chip label={`LMD~${row.lmd}`} size="small" />
+                            ) : (
+                              ""
+                            )}
+                            {row.spectra ? (
+                              <Chip label={`SPC~${row.spectra}`} size="small" />
+                            ) : (
+                              ""
+                            )}
                           </span>
                         </TableCell>
                         <TableCell className="table-cell">

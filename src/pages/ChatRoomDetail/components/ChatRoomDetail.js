@@ -150,7 +150,7 @@ const AdminDetail = () => {
                   className="cancel-button"
                   onClick={handleEdit}
                 >
-                  Batalkan
+                  Batal
                 </Button>
                 <Button
                   size="small"

@@ -41,7 +41,7 @@ export const ConfirmationModal = ({
                   variant="contained"
                   color="secondary"
                 >
-                  Batalkan
+                  Batal
                 </Button>
                 <Button
                   onClick={onSubmit}

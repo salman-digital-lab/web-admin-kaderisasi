@@ -1,0 +1,27 @@
+.form-control.fw:focus-within {
+  color: #495057;
+  outline: 0;
+  background-color: #fbfcfc;
+  border-color: rgba(0, 123, 255, 0.6);
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.2);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.2);
+}
+
+.form-control.fw.is-invalid:focus-within {
+  background-color: #fef9fe;
+  border-color: rgba(220, 53, 69, 0.25);
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.16);
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.16);
+}
+.h-min-content {
+  height: min-content !important;
+}
+.demo-editor.form-control.fw {
+  height: unset !important;
+  min-height: unset !important;
+}
+.demo-editor.form-control.fw > div {
+  min-height: 200px !important;
+  background-color: #FBFCFC;
+  padding: 10px;
+}
