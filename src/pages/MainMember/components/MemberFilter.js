@@ -44,11 +44,10 @@ const MemberFilter = () => {
       <CardContent className="filter-content">
         <Box pl={5} pr={5}>
           <TextField
-            id="filled-basic"
-            size="small"
+            className="input-register"
             label="Cari Member"
-            variant="outlined"
-            className="filter-input"
+            fullWidth
+            size="small"
             name="search_query"
             onKeyDown={handleKeyDown}
           />
@@ -79,25 +78,23 @@ const MemberFilter = () => {
               />
             </RadioGroup>
           </FormControl>
-          <div className="row mt-10">
+          <div className="row">
             <div className="col-6">
               <TextField
-                id="filled-basic"
-                size="small"
+                className="input-register"
                 label="SSC"
-                variant="outlined"
-                className="filter-input"
+                fullWidth
+                size="small"
                 name="SSC"
                 onKeyDown={handleKeyDown}
               />
             </div>
             <div className="col-6">
               <TextField
-                id="filled-basic"
-                size="small"
+                className="input-register"
                 label="LMD"
-                variant="outlined"
-                className="filter-input"
+                fullWidth
+                size="small"
                 name="LMD"
                 onKeyDown={handleKeyDown}
               />

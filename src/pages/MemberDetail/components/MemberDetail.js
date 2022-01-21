@@ -5,6 +5,7 @@ import { Button, Collapse, IconButton, Chip } from "@material-ui/core"
 import Alert from "@material-ui/lab/Alert"
 import moment from "moment"
 import LoadingAnimation from "../../../components/loading-animation"
+import EditMemberModal from "../../../components/modals/edit-member-modal"
 import { AdminMemberContext } from "../../../context/AdminMemberContext"
 import { ConfirmationModal } from "./confirmation-modal"
 import profile from "../profile.png"
@@ -19,10 +20,19 @@ const MemberDetail = () => {
   const [blockMember, setBlockMember] = useState(false)
   const [loading, setLoading] = useState(false)
   const { getMemberDetail, blockMemberById, unblockMemberById } = functions
+  const [open, setOpen] = useState(false)
 
   let data = {}
-  if (memberForm?.member?.length > 0) {
-    ;[data] = memberForm.member
+  if (memberForm?.member?.id) {
+    data = memberForm.member
+  }
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
   }
 
   const handleBlockMember = () => {
@@ -61,7 +71,7 @@ const MemberDetail = () => {
     }
   }, [blockMemberResp, memberForm, status])
 
-  return memberForm?.member?.length > 0 ? (
+  return memberForm?.member?.id ? (
     <>
       <Collapse in={successBlockMember}>
         <Alert
@@ -111,12 +121,13 @@ const MemberDetail = () => {
         </div>
         <div className="button-right">
           <Button
-            color="secondary"
-            size="small"
             className="edit-button"
             variant="contained"
+            color="primary"
+            size="small"
+            onClick={handleOpen}
           >
-            SUNTING
+            Edit
           </Button>
           {data.is_active ? (
             <Button
@@ -292,7 +303,7 @@ const MemberDetail = () => {
           </div>
         </div>
       </div>
-      <br />
+      <EditMemberModal open={open} onClose={handleClose} data={data} />
       <ConfirmationModal
         open={blockMember}
         onClose={handleCloseBlock}

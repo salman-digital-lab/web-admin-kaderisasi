@@ -112,7 +112,6 @@ const MemberTable = () => {
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
     params.page = newPage + 1
-    console.log(params)
     getMembers(params)
   }
 
@@ -222,8 +221,8 @@ const MemberTable = () => {
               count={members?.data?.total ? members?.data?.total : 0}
               rowsPerPage={rowsPerPage}
               page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </>
         )}

@@ -262,8 +262,8 @@ export const Example = () => {
           count={rows.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
     </div>

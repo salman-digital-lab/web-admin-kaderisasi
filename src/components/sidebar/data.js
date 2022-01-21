@@ -69,13 +69,6 @@ const data = [
         modul: "users",
         parent: "setting",
       },
-      {
-        id: 8.3,
-        name: "Text 3",
-        url: "/setting",
-        modul: "setting",
-        parent: "setting",
-      },
     ],
   },
 ]

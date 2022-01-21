@@ -19,7 +19,7 @@ import {
 } from "@material-ui/core"
 import Alert from "@material-ui/lab/Alert"
 import { Delete, Visibility } from "@material-ui/icons"
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
+import { EditorState } from "draft-js"
 import "../../assets/scss/AddActivity.scss"
 import DateFnsUtils from "@date-io/date-fns"
 import {
@@ -28,67 +28,20 @@ import {
 } from "@material-ui/pickers"
 import moment from "moment"
 import FormData from "form-data"
+import RichEditor, {
+  getEditorContent,
+  getContentString,
+} from "../rich-text-editor"
 import { EnhancedTableHead, stableSort, getComparator } from "../table-design"
 import { AdminActivityContext } from "../../context/AdminActivityContext"
 import BaseImage from "./1056x816small.png"
+import styled from "./styled"
 /* eslint-disable */
 
 const headCells = [
   { id: "id", numeric: false, label: "ID" },
-  // { id: "name", numeric: false, label: "Filename" },
-  // { id: 'uploadedAt', numeric: false, label: 'Uploaded At' },
   { id: "action", numeric: false, label: "Action" },
 ]
-
-const useStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-  paper: {
-    position: "absolute",
-    width: 900,
-    height: 650,
-    backgroundColor: theme.palette.background.paper,
-    // border: '2px solid white',
-    outline: "none",
-    // boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-
-  root: {
-    width: "100%",
-  },
-  table: {
-    minWidth: 750,
-  },
-  visuallyHidden: {
-    border: 0,
-    clip: "rect(0 0 0 0)",
-    height: 1,
-    margin: -1,
-    overflow: "hidden",
-    alignContent: "left",
-    padding: 0,
-    position: "absolute",
-    top: 20,
-    width: 1,
-  },
-}))
-
-function getformStyle() {
-  const top = 50
-  const left = 50
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  }
-}
 
 const initialErrors = {
   formRegistValidity: false, // flip to true if form incorrect
@@ -129,6 +82,7 @@ export const DatePickerCustom = ({
 
 const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
   const ref = useRef()
+  const classes = styled()
   const { activityBanner, functions } = useContext(AdminActivityContext)
   const {
     editActivity,
@@ -140,8 +94,6 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
   const [uploadedImage, setUploadImage] = useState(BaseImage)
   const [submitError, setSubmitError] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
-  const classes = useStyles()
-  const [formStyle] = useState(getformStyle)
   const [jenjang, setJenjang] = useState(data.minimum_role_id)
   const [title, setTitle] = useState(data.name)
   const [categoryId, setCategoryId] = useState(data.category_id)
@@ -164,9 +116,12 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
     moment(data.end_date).format("YYYY-MM-DD")
   )
   const [errors, setErrors] = useState(initialErrors)
-
   const [order, setOrder] = useState("desc")
   const [orderBy, setOrderBy] = useState("created_at")
+  const stateEdit = EditorState.createEmpty()
+  const [editorState, setEditorState] = useState(
+    getEditorContent(data?.description ?? "")
+  )
 
   const validateDates = () => {
     // check dates via the dates{} state object
@@ -227,9 +182,14 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
     setFormData({ ...formData, [type]: value })
   }
 
-  const handleTitleChange = (data) => {
-    handleForm(data, "name")
-    setTitle(data)
+  const handleTitleChange = (event) => {
+    handleForm(event.target.value, "name")
+    setTitle(event.target.value)
+  }
+
+  const setEditor = (content) => {
+    setEditorState(content)
+    handleForm(getContentString(content), "description")
   }
 
   const handleStartRegistrationChange = (date) => {
@@ -343,6 +303,7 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
 
   return (
     <Modal
+      className={classes.modal}
       open={open}
       onClose={onClose}
       closeAfterTransition
@@ -350,11 +311,9 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
       BackdropProps={{
         timeout: 500,
       }}
-      aria-labelledby="simple-modal-title"
-      aria-describedby="simple-modal-description"
     >
       <Fade in={open}>
-        <div style={formStyle} className={classes.paper}>
+        <div className={classes.paper}>
           <div className="form-flex">
             <div className="left-form">
               <div className="container-gambar-detail">
@@ -464,7 +423,7 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
                     label="Nama Kegiatan"
                     fullWidth
                     placeholder="Nama Kegiatan"
-                    value={title}
+                    defaultValue={title}
                     onChange={handleTitleChange}
                   />
                 </div>
@@ -551,21 +510,12 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
                 </span>
               </div>
 
-              {/* <div className="select-form">
-                Kuisioner
-                <br />
-                <Select
-                  className="select-input-form"
-                  defaultValue={-1}
-                  onChange={handleKuisioner}
-                >
-                  {formTemplateList.map((value, index) => (
-                    <MenuItem key={index} value={value.value}>
-                      {value.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </div> */}
+              <div className="detail-activity">
+                <RichEditor
+                  onEditorStateChange={setEditor}
+                  editorState={editorState}
+                />
+              </div>
               <div className="button-bottom">
                 <Button
                   onClick={onClose}

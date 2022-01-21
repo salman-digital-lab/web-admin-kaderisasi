@@ -29,11 +29,10 @@ const ChatRoomFilter = () => {
         <CardContent className="filter-content">
           <Box pl={5} pr={5}>
             <TextField
-              id="filled-basic"
+              className="input-register"
+              fullWidth
               size="small"
-              label="Cari ..."
-              variant="outlined"
-              className="filter-input"
+              label="Cari Curhatan"
               onKeyDown={handleKeyDown}
             />
             {/* <FormControl component="fieldset" className="radio-button activity">

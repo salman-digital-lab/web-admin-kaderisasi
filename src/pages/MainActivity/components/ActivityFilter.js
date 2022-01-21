@@ -80,11 +80,10 @@ const KegiatanFilter = () => {
         <CardContent className="filter-content">
           <Box pl={5} pr={5}>
             <TextField
-              id="filled-basic"
-              size="small"
+              className="input-register"
               label="Cari Kegiatan"
-              variant="outlined"
-              className="filter-input"
+              fullWidth
+              size="small"
               onKeyDown={handleKeyDown}
             />
             <FormControl component="fieldset" className="radio-button jenkel">
@@ -126,7 +125,7 @@ const KegiatanFilter = () => {
                 />
               </RadioGroup>
             </FormControl>
-            <FormControl className="select-dropdown mt-15">
+            <FormControl className="select-dropdown mt-10">
               <InputLabel id="demo-mutiple-name-label">Kategori</InputLabel>
               {categoryList?.status === "SUCCESS" && (
                 <Select

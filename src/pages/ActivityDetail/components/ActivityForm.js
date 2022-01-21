@@ -8,7 +8,7 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
 import { useParams } from "react-router-dom"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 import { PublishStatus, RegisterStatus } from "../../../components/statuses"
-import DetailKegiatanModal from "../../../components/modals/detail-kegiatan-modal"
+import DetailKegiatanModal from "../../../components/modals/activity-detail-modal"
 import LoadingAnimation from "../../../components/loading-animation"
 import AlertToast from "../../../components/alert"
 
@@ -40,34 +40,11 @@ const FormKegiatan = () => {
     setFormData({ ...formData, [type]: value })
   }
 
-  const handleEditor = (value) => {
-    setEditorState(value)
-    handleForm(
-      draftToHtml(convertToRaw(editorState.getCurrentContent())),
-      "description"
-    )
-  }
-
-  const handleSubmit = () => {
-    editActivity(id, formData)
-    handleEdit()
-  }
-
   useEffect(() => {
     if (activityForm.length < 1 && !categoryList?.status) {
       getActivityDetail(id)
       getActivityCategory({ page: 1, perPage: 100 })
     }
-    if (activityForm.length > 0 && check) {
-      const contentBlock = htmlToDraft(activityForm[0].description ?? "")
-      setEditorState(
-        EditorState.createWithContent(
-          ContentState.createFromBlockArray(contentBlock.contentBlocks)
-        )
-      )
-      setCheck(false)
-    }
-    // eslint-disable-next-line
   }, [activityForm])
 
   return (

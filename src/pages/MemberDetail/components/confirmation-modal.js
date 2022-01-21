@@ -23,8 +23,8 @@ export const ConfirmationModal = ({
       BackdropProps={{
         timeout: 500,
       }}
-      aria-labelledby="simple-modal-title"
-      aria-describedby="simple-modal-description"
+      
+      
     >
       <Fade in={open}>
         <div className={classes.paper}>

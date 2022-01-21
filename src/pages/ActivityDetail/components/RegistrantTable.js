@@ -9,6 +9,7 @@ import {
   TablePagination,
   TableRow,
   Paper,
+  Button,
 } from "@material-ui/core"
 import { Female, Male } from "@mui/icons-material"
 import {
@@ -20,6 +21,7 @@ import {
 import { RegistrantStatus } from "../../../components/statuses/RegistrantStatus"
 import LoadingAnimation from "../../../components/loading-animation"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
+import RegistrantQuestionnaireModal from "../../../components/modals/registrant-questionnaire-modal"
 
 const headCells = [
   { id: "no", numeric: true, label: "No." },
@@ -68,12 +70,15 @@ const PendaftarTable = () => {
   const [orderBy, setOrderBy] = useState("created_at")
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [open, setOpen] = useState(false)
+  const [registrantId, setRegistrantId] = useState(-1)
   const [status, setStatus] = useState(true)
   const {
     listParticipants,
     activityParticipants,
     filterParticipantsActivity,
     setFilterParticipantsActivity,
+    setRegistrantQuestionnaire,
     functions,
   } = useContext(AdminActivityContext)
   const { getActivityParticipants, exportActivityParticipants } = functions
@@ -106,6 +111,16 @@ const PendaftarTable = () => {
     getActivityParticipants,
     id,
   ])
+
+  const handleOpen = (registrantId) => {
+    setRegistrantId(registrantId)
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setRegistrantQuestionnaire(null)
+    setOpen(false)
+  }
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "desc"
@@ -202,7 +217,14 @@ const PendaftarTable = () => {
                         <RegistrantStatus status={row.status.toLowerCase()} />
                       </TableCell>
                       <TableCell className="table-cell">
-                        <Link to={`/member/${row.id}`}>View</Link>
+                        <Button
+                          className="edit-button"
+                          variant="contained"
+                          color="primary"
+                          onClick={() => handleOpen(row.id)}
+                        >
+                          View
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -215,9 +237,16 @@ const PendaftarTable = () => {
               count={activityParticipants?.data?.total}
               rowsPerPage={rowsPerPage}
               page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
             />
+            {open && (
+              <RegistrantQuestionnaireModal
+                open={open}
+                onClose={handleClose}
+                registrantId={registrantId}
+              />
+            )}
           </>
         )}
       </Paper>

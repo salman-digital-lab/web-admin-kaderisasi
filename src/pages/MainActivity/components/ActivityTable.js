@@ -197,8 +197,8 @@ const KegiatanTable = () => {
               count={activity?.data?.total ? activity?.data?.total : 0}
               rowsPerPage={rowsPerPage}
               page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </>
         )}

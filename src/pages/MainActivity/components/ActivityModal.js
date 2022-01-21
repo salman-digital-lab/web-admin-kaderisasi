@@ -66,8 +66,8 @@ DatePickerCustom.propTypes = {
   title: PropTypes.string.isRequired,
   value: PropTypes.instanceOf(Date).isRequired,
   onChange: PropTypes.func.isRequired,
-  helperText: PropTypes.string.isRequired,
-  error: PropTypes.string.isRequired,
+  helperText: PropTypes.string,
+  error: PropTypes.bool.isRequired,
 }
 
 export const KegiatanModal = ({ open, onClose }) => {
@@ -80,6 +80,8 @@ export const KegiatanModal = ({ open, onClose }) => {
     register_end_date: moment().format("YYYY-MM-DD"),
     category_id: -1,
     minimum_role_id: -1,
+    is_published: "0",
+    status: "CLOSED",
   })
   const { categoryList, functions } = useContext(AdminActivityContext)
   const { getActivityCategory, addActivity } = functions
@@ -212,7 +214,7 @@ export const KegiatanModal = ({ open, onClose }) => {
               <div className="detail-activity">
                 <DatePickerCustom
                   title="Tanggal Mulai Kegiatan"
-                  value={state.begin_date}
+                  value={new Date(state.begin_date)}
                   onChange={(event) =>
                     handleForm(moment(event).format("YYYY-MM-DD"), "begin_date")
                   }
@@ -220,7 +222,7 @@ export const KegiatanModal = ({ open, onClose }) => {
                 />
                 <DatePickerCustom
                   title="Tanggal Selesai Kegiatan"
-                  value={state.end_date}
+                  value={new Date(state.end_date)}
                   onChange={(event) =>
                     handleForm(moment(event).format("YYYY-MM-DD"), "end_date")
                   }
@@ -231,7 +233,7 @@ export const KegiatanModal = ({ open, onClose }) => {
               <div className="detail-activity">
                 <DatePickerCustom
                   title="Tanggal Mulai Registrasi"
-                  value={state.register_begin_date}
+                  value={new Date(state.register_begin_date)}
                   onChange={(event) =>
                     handleForm(
                       moment(event).format("YYYY-MM-DD"),
@@ -242,7 +244,7 @@ export const KegiatanModal = ({ open, onClose }) => {
                 />
                 <DatePickerCustom
                   title="Tanggal Registrasi Selesai"
-                  value={state.register_end_date}
+                  value={new Date(state.register_end_date)}
                   onChange={(event) =>
                     handleForm(
                       moment(event).format("YYYY-MM-DD"),
@@ -317,5 +319,5 @@ export const KegiatanModal = ({ open, onClose }) => {
 
 KegiatanModal.propTypes = {
   open: PropTypes.bool.isRequired,
-  onClose: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 }

@@ -2,8 +2,6 @@ import { makeStyles } from "@material-ui/core/styles"
 
 const styled = makeStyles((theme) => ({
   modal: {
-    alignItems: "center",
-    justifyContent: "center",
     position: "absolute",
     top: "10%",
     left: "10%",
@@ -20,7 +18,7 @@ const styled = makeStyles((theme) => ({
   },
   paper: {
     position: "absolute",
-    width: 700,
+    width: 900,
     backgroundColor: theme.palette.background.paper,
     outline: "none",
     padding: theme.spacing(2, 4, 3),
