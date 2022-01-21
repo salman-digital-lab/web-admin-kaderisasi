@@ -5,7 +5,7 @@ const styled = makeStyles((theme) => ({
     position: "absolute",
     overflow: "scroll",
     height: "100%",
-    display: "block",
+    display: "flex",
   },
   formControl: {
     margin: theme.spacing(1),
