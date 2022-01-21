@@ -2,11 +2,7 @@ import { makeStyles } from "@material-ui/core/styles"
 
 const styled = makeStyles((theme) => ({
   modal: {
-    alignItems: "center",
-    justifyContent: "center",
     position: "absolute",
-    top: "10%",
-    left: "10%",
     overflow: "scroll",
     height: "100%",
     display: "block",
@@ -19,7 +15,7 @@ const styled = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
   },
   paper: {
-    position: "absolute",
+    margin: "auto",
     width: 700,
     backgroundColor: theme.palette.background.paper,
     outline: "none",
