@@ -88,6 +88,10 @@ const MemberTable = () => {
         delete params.lmd
         delete params.filter
       }
+      if (params.spectra === "") {
+        delete params.spectra
+        delete params.filter
+      }
       if (params.search_query === "") {
         delete params.search_query
         delete params.filter

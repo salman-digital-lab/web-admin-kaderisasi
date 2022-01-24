@@ -29,13 +29,26 @@ const RegistrantQuestionnaireModal = ({ open, onClose, registrantId }) => {
         <div className={classes.paper}>
           <div className="form-flex flex-column">
             {registrantQuestionnaire?.status === "SUCCESS" ? (
-              <div className="row flex-column align-items-center text-center">
-                {registrantQuestionnaire?.data?.map((x) => (
-                  <span className="font-grey">
-                    {x.label} : {x.answer}
-                  </span>
-                ))}
-              </div>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Pertanyaan</th>
+                    <th scope="col">Jawaban</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {registrantQuestionnaire?.data?.map((x) => (
+                    <tr className="tbrow">
+                      <td>{x.label}</td>
+                      <td>
+                        {typeof x.answer === "string"
+                          ? x.answer
+                          : x.answer.join()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             ) : (
               ""
             )}

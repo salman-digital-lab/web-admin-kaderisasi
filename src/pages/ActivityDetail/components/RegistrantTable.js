@@ -218,7 +218,7 @@ const PendaftarTable = () => {
                       </TableCell>
                       <TableCell className="table-cell">
                         <Button
-                          className="edit-button"
+                          className="transparent-button"
                           variant="contained"
                           color="primary"
                           onClick={() => handleOpen(row.id)}

@@ -27,6 +27,9 @@ const MemberFilter = () => {
       if (event.target.name === "LMD") {
         data.lmd = event.target.value
       }
+      if (event.target.name === "spectra") {
+        data.spectra = event.target.value
+      }
       setFilterMember(data)
     }
   }
@@ -74,12 +77,12 @@ const MemberFilter = () => {
                 value="F"
                 control={<StyledRadio />}
                 onChange={(e) => handleChangeGender(e.target.value)}
-                label="Perempuan"
+                label="Wanita"
               />
             </RadioGroup>
           </FormControl>
           <div className="row">
-            <div className="col-6">
+            <div className="col-4">
               <TextField
                 className="input-register"
                 label="SSC"
@@ -89,13 +92,23 @@ const MemberFilter = () => {
                 onKeyDown={handleKeyDown}
               />
             </div>
-            <div className="col-6">
+            <div className="col-4">
               <TextField
                 className="input-register"
                 label="LMD"
                 fullWidth
                 size="small"
                 name="LMD"
+                onKeyDown={handleKeyDown}
+              />
+            </div>
+            <div className="col-4">
+              <TextField
+                className="input-register"
+                label="SPC"
+                fullWidth
+                size="small"
+                name="spectra"
                 onKeyDown={handleKeyDown}
               />
             </div>

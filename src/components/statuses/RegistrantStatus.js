@@ -7,7 +7,7 @@ export const RegistrantStatus = (props) => {
       return (
         <Chip
           className="error"
-          label={props.status.toLowerCase()}
+          label={props.status?.toLowerCase()}
           size="small"
         />
       )
@@ -15,7 +15,7 @@ export const RegistrantStatus = (props) => {
       return (
         <Chip
           className="secondary"
-          label={props.status.toLowerCase()}
+          label={props.status?.toLowerCase()}
           size="small"
         />
       )
@@ -23,7 +23,7 @@ export const RegistrantStatus = (props) => {
       return (
         <Chip
           className="waiting"
-          label={props.status.toLowerCase()}
+          label={props.status?.toLowerCase()}
           size="small"
         />
       )
@@ -31,13 +31,13 @@ export const RegistrantStatus = (props) => {
       return (
         <Chip
           className="success"
-          label={props.status.toLowerCase()}
+          label={props.status?.toLowerCase()}
           size="small"
         />
       )
     default:
       return (
-        <Chip color="primary" label={props.status.toLowerCase()} size="small" />
+        <Chip color="primary" label={props.status?.toLowerCase()} size="small" />
       )
   }
 }

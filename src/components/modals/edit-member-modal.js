@@ -1,12 +1,90 @@
 import React, { useState, useContext, useEffect } from "react"
-import { Modal, Fade, Backdrop, Button, TextField } from "@material-ui/core"
+import { useParams } from "react-router-dom"
+import {
+  Modal,
+  Fade,
+  Backdrop,
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  Input,
+  TextareaAutosize,
+  Chip,
+} from "@material-ui/core"
+import { useTheme } from "@material-ui/core/styles"
+import DateFnsUtils from "@date-io/date-fns"
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from "@material-ui/pickers"
 import moment from "moment"
 import { AdminMemberContext } from "../../context/AdminMemberContext"
+import { MenuProps, getStyles } from "../select"
 import styled from "./styled"
 /* eslint-disable */
 
+export const DatePickerCustom = ({
+  title: titleProps,
+  value: valueProps,
+  onChange: onChangeProps,
+  helperText: helperTextProps,
+  error: errorProps,
+}) => (
+  <div className="input-form">
+    <span className="font-grey">{titleProps}</span>
+    <br />
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <KeyboardDatePicker
+        className="form-modal"
+        maxDate={new Date()}
+        format="dd/MM/yyyy"
+        margin="normal"
+        value={valueProps}
+        onChange={onChangeProps}
+        KeyboardButtonProps={{
+          "aria-label": "change date",
+        }}
+        helperText={helperTextProps}
+        error={errorProps}
+      />
+    </MuiPickersUtilsProvider>
+  </div>
+)
+
 const EditMemberModal = ({ open, onClose, data }) => {
   const classes = styled()
+  const theme = useTheme()
+  const [payload, setPayload] = useState({ ...data })
+  const { id } = useParams()
+  const { updateMemberResp, functions } = useContext(AdminMemberContext)
+  const { updateMemberById } = functions
+  const handleBirthDate = (date) => {
+    setPayload({
+      ...payload,
+      date_of_birthday: moment(date).format("YYYY-MM-DD"),
+    })
+  }
+
+  useEffect(() => {
+    if (data) {
+      setPayload({ ...data })
+    }
+  }, [data])
+
+  const handleSubmit = () => {
+    delete payload.province_name
+    delete payload.district_name
+    delete payload.regency_name
+    delete payload.village_name
+    delete payload.komprof
+    delete payload.intake_year
+    delete payload.student_id
+    delete payload.university
+    delete payload.role_name
+    updateMemberById(id, payload)
+    onClose()
+  }
 
   return (
     <Modal
@@ -21,30 +99,128 @@ const EditMemberModal = ({ open, onClose, data }) => {
     >
       <Fade in={open}>
         <div className={classes.paper}>
-          <div className="row flex-column align-items-center text-center">
-            {/* <img
+          {/* <div className="row flex-column align-items-center text-center">
+            <img
               className="profile-image rounded-circle"
               src={data.file_image ? data.file_image : profile}
               width="160px"
               height="160px"
               alt="profile"
-            /> */}
-            <h5 className="mt-20">
-              <strong>{data.name}</strong>
-            </h5>
-            <span className="font-grey">{data.role_name}</span>
-            <span className="font-grey mt-10">{data.university}</span>
-            <span className="font-grey">
-              {data.gender === "M" ? "Laki-laki" : "Perempuan"}
-            </span>
-            <span className="font-grey">
-              {data.city_of_birth},{" "}
-              {moment(data.date_of_birthday).format("D MMMM YYYY")}
-            </span>
-          </div>
+            />
+          </div> */}
           <h3 className="mt-20">Detail Member</h3>
           <div className="row">
             <div className="col-12 col-sm-6">
+              <div className="row mt-10">
+                <div className="col-12 d-flex flex-column py-5 px-15">
+                  <h5 className="font-grey">
+                    <strong>Data Umum</strong>
+                  </h5>
+                  <TextField
+                    className="input-register"
+                    label="Nama"
+                    fullWidth
+                    size="small"
+                    defaultValue={payload?.name}
+                    onChange={(e) =>
+                      setPayload({ ...payload, name: e.target.value })
+                    }
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 d-flex flex-column py-5 px-15">
+                  <span className="font-grey">Jenjang</span>{" "}
+                  <Select
+                    value={payload?.role_id}
+                    onChange={(e) =>
+                      setPayload({ ...payload, role_id: e.target.value })
+                    }
+                    input={<Input />}
+                    MenuProps={MenuProps}
+                  >
+                    {[
+                      { label: "Jamaah", value: 4 },
+                      { label: "Aktivis", value: 5 },
+                      { label: "Kader", value: 6 },
+                    ].map((jenjang) => (
+                      <MenuItem
+                        key={`${jenjang.value}`}
+                        value={jenjang.value}
+                        label={jenjang.label}
+                        style={getStyles(
+                          jenjang,
+                          [
+                            { label: "Jamaah", value: 4 },
+                            { label: "Aktivis", value: 5 },
+                            { label: "Kader", value: 6 },
+                          ],
+                          theme
+                        )}
+                      >
+                        {jenjang.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 d-flex flex-column py-5 px-15">
+                  <span className="font-grey">Jenis Kelamin</span>{" "}
+                  <Select
+                    value={payload?.gender}
+                    onChange={(e) =>
+                      setPayload({ ...payload, gender: e.target.value })
+                    }
+                    input={<Input />}
+                    MenuProps={MenuProps}
+                  >
+                    {[
+                      { label: "Pria", value: "M" },
+                      { label: "Wanita", value: "F" },
+                    ].map((gender) => (
+                      <MenuItem
+                        key={`${gender.value}`}
+                        value={gender.value}
+                        label={gender.label}
+                        style={getStyles(
+                          gender,
+                          [
+                            { label: "Pria", value: "M" },
+                            { label: "Wanita", value: "F" },
+                          ],
+                          theme
+                        )}
+                      >
+                        {gender.label}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 d-flex flex-column py-5 px-15">
+                  <DatePickerCustom
+                    title="Tanggal Lahir"
+                    value={payload?.date_of_birthday}
+                    onChange={handleBirthDate}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 d-flex flex-column py-5 px-15">
+                  <TextField
+                    className="input-register"
+                    label="Tempat Lahir"
+                    fullWidth
+                    size="small"
+                    defaultValue={payload?.city_of_birth}
+                    onChange={(e) =>
+                      setPayload({ ...payload, city_of_birth: e.target.value })
+                    }
+                  />
+                </div>
+              </div>
               <div className="row mt-10">
                 <div className="col-12 d-flex flex-column py-5 px-15">
                   <h5 className="font-grey">
@@ -55,7 +231,10 @@ const EditMemberModal = ({ open, onClose, data }) => {
                     label="Email"
                     fullWidth
                     size="small"
-                    defaultValue={data?.email}
+                    defaultValue={payload?.email}
+                    onChange={(e) =>
+                      setPayload({ ...payload, email: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -66,7 +245,10 @@ const EditMemberModal = ({ open, onClose, data }) => {
                     label="ID Line"
                     fullWidth
                     size="small"
-                    defaultValue={data?.line_id}
+                    defaultValue={payload?.line_id}
+                    onChange={(e) =>
+                      setPayload({ ...payload, line_id: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -77,7 +259,10 @@ const EditMemberModal = ({ open, onClose, data }) => {
                     label="Whatsapp"
                     fullWidth
                     size="small"
-                    defaultValue={data?.phone}
+                    defaultValue={payload?.phone}
+                    onChange={(e) =>
+                      setPayload({ ...payload, phone: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -88,40 +273,46 @@ const EditMemberModal = ({ open, onClose, data }) => {
                     <strong>Data Perguruan Tinggi</strong>
                   </h5>
                   <span>Perguruan Tinggi</span>{" "}
-                  <span className="font-grey">{data?.university}</span>
+                  <span className="font-grey">{payload?.university}</span>
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
-                  <TextField
+                  {/* <TextField
                     className="input-register"
                     label="Fakultas"
                     fullWidth
                     size="small"
-                    defaultValue={data?.faculty}
-                  />
+                    defaultValue={payload?.faculty}
+                  /> */}
+                  <span>Fakultas</span>{" "}
+                  <span className="font-grey">{payload?.faculty}</span>
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
-                  <TextField
+                  {/* <TextField
                     className="input-register"
                     label="Jurusan"
                     fullWidth
                     size="small"
-                    defaultValue={data?.major}
-                  />
+                    defaultValue={payload?.major}
+                  /> */}
+                  <span>Jurusan</span>{" "}
+                  <span className="font-grey">{payload?.major}</span>
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
-                  <TextField
+                  {/* <TextField
                     className="input-register"
                     label="Angkatan"
                     fullWidth
                     size="small"
-                    defaultValue={data?.intake_year}
-                  />
+                    defaultValue={payload?.intake_year}
+                  /> */}
+                  <span>Angkatan</span>{" "}
+                  <span className="font-grey">{payload?.intake_year}</span>
                 </div>
               </div>
             </div>
@@ -132,67 +323,84 @@ const EditMemberModal = ({ open, onClose, data }) => {
                   <h5 className="font-grey">
                     <strong>Alamat</strong>
                   </h5>
-                  <TextField
-                    className="input-register"
-                    label="Alamat Sekarang"
-                    fullWidth
-                    size="small"
-                    defaultValue={data?.current_address}
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-12 d-flex flex-column py-5 px-15">
-                  <TextField
-                    className="input-register"
-                    label="Alamat Sesuai KTP"
-                    fullWidth
-                    size="small"
-                    defaultValue={data?.from_address}
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-12 d-flex flex-column py-5 px-15">
-                  <TextField
-                    className="input-register"
-                    label="Kelurahan"
-                    fullWidth
-                    size="small"
-                    defaultValue={data?.regency_name}
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-12 d-flex flex-column py-5 px-15">
-                  <TextField
-                    className="input-register"
-                    label="Kecamatan"
-                    fullWidth
-                    size="small"
-                    defaultValue={data?.village_name}
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-12 d-flex flex-column py-5 px-15">
-                  <TextField
-                    className="input-register"
-                    label="Kota/Kabupaten"
-                    fullWidth
-                    size="small"
-                    defaultValue={data?.district_name}
-                  />
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-12 d-flex flex-column py-5 px-15">
-                  <TextField
+                  {/* <TextField
                     className="input-register"
                     label="Provinsi"
                     fullWidth
                     size="small"
-                    defaultValue={data?.province_name}
+                    defaultValue={payload?.province_name}
+                  /> */}
+                  <span>Provinsi</span>{" "}
+                  <span className="font-grey">{payload?.province_name}</span>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 d-flex flex-column py-5 px-15">
+                  {/* <TextField
+                    className="input-register"
+                    label="Kota/Kabupaten"
+                    fullWidth
+                    size="small"
+                    defaultValue={payload?.district_name}
+                  /> */}
+                  <span>Kota/Kabupaten</span>{" "}
+                  <span className="font-grey">{payload?.district_name}</span>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 d-flex flex-column py-5 px-15">
+                  {/* <TextField
+                    className="input-register"
+                    label="Kecamatan"
+                    fullWidth
+                    size="small"
+                    defaultValue={payload?.village_name}
+                  /> */}
+                  <span>Kecamatan</span>{" "}
+                  <span className="font-grey">{payload?.village_name}</span>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 d-flex flex-column py-5 px-15">
+                  {/* <TextField
+                    className="input-register"
+                    label="Kelurahan"
+                    fullWidth
+                    size="small"
+                    defaultValue={payload?.regency_name}
+                  /> */}
+                  <span>Kelurahan</span>{" "}
+                  <span className="font-grey">{payload?.regency_name}</span>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 d-flex flex-column py-5 px-15">
+                  <span className="font-grey">Alamat Sekarang</span>{" "}
+                  <TextareaAutosize
+                    maxRows={4}
+                    minRows={4}
+                    placeholder="Alamat Sekarang"
+                    defaultValue={payload?.current_address}
+                    onChange={(e) =>
+                      setPayload({
+                        ...payload,
+                        current_address: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 d-flex flex-column py-5 px-15">
+                  <span className="font-grey">Alamat Sesuai KTP</span>{" "}
+                  <TextareaAutosize
+                    maxRows={4}
+                    minRows={4}
+                    placeholder="Alamat Sesuai KTP"
+                    defaultValue={payload?.from_address}
+                    onChange={(e) =>
+                      setPayload({ ...payload, from_address: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -203,7 +411,7 @@ const EditMemberModal = ({ open, onClose, data }) => {
                     <strong>Keanggotaan</strong>
                   </h5>
                   <span>Tahun Mendaftar</span>{" "}
-                  <span className="font-grey">{data?.intake_year}</span>
+                  <span className="font-grey">{payload?.intake_year}</span>
                 </div>
               </div>
               <div className="row">
@@ -240,7 +448,7 @@ const EditMemberModal = ({ open, onClose, data }) => {
               Batal
             </Button>
             <Button
-              // onClick={handleSubmit}
+              onClick={handleSubmit}
               className="button-bottoms-kegiatan primary-button"
               variant="contained"
             >

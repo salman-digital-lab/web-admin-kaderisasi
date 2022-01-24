@@ -4,13 +4,13 @@ import { Chip } from "@material-ui/core"
 export const StudentCareStatus = (props) => {
   switch (props.status) {
     case "Belum Ditangani":
-      return <Chip className="secondary" label={props.status.toLowerCase()} />
+      return <Chip className="secondary" label={props.status?.toLowerCase()} />
     case "Sedang Ditangani":
-      return <Chip className="waiting" label={props.status.toLowerCase()} />
+      return <Chip className="waiting" label={props.status?.toLowerCase()} />
     case "Sudah Ditangani":
-      return <Chip className="success" label={props.status.toLowerCase()} />
+      return <Chip className="success" label={props.status?.toLowerCase()} />
     default:
-      return <Chip color="primary" label={props.status.toLowerCase()} />
+      return <Chip color="primary" label={props.status?.toLowerCase()} />
   }
 }
 
@@ -20,7 +20,7 @@ export const HandlingSCStatus = (props) => {
       return (
         <Chip
           className="secondary"
-          label={props.status.toLowerCase()}
+          label={props.status?.toLowerCase()}
           size="small"
         />
       )
@@ -28,13 +28,13 @@ export const HandlingSCStatus = (props) => {
       return (
         <Chip
           className="success"
-          label={props.status.toLowerCase()}
+          label={props.status?.toLowerCase()}
           size="small"
         />
       )
     default:
       return (
-        <Chip color="primary" label={props.status.toLowerCase()} size="small" />
+        <Chip color="primary" label={props.status?.toLowerCase()} size="small" />
       )
   }
 }

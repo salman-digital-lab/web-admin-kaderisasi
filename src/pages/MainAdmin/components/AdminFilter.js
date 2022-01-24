@@ -107,7 +107,7 @@ const AdminFilter = () => {
                   value="F"
                   control={<StyledRadio />}
                   onChange={(e) => handleChangeGender(e.target.value)}
-                  label="Perempuan"
+                  label="Wanita"
                 />
               </RadioGroup>
             </FormControl> */}

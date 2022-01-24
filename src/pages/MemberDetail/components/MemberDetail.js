@@ -6,6 +6,7 @@ import Alert from "@material-ui/lab/Alert"
 import moment from "moment"
 import LoadingAnimation from "../../../components/loading-animation"
 import EditMemberModal from "../../../components/modals/edit-member-modal"
+import AlertToast from "../../../components/alert"
 import { AdminMemberContext } from "../../../context/AdminMemberContext"
 import { ConfirmationModal } from "./confirmation-modal"
 import profile from "../profile.png"
@@ -13,8 +14,13 @@ import profile from "../profile.png"
 const MemberDetail = () => {
   const { id } = useParams()
   const [status, setStatus] = useState(true)
-  const { memberForm, blockMemberResp, functions } =
-    useContext(AdminMemberContext)
+  const {
+    memberForm,
+    blockMemberResp,
+    updateMemberResp,
+    setUpdateMemberResp,
+    functions,
+  } = useContext(AdminMemberContext)
   const [successBlockMember, setSuccessBlockMember] = useState(false)
   const [failedBlockMember, setFailedBlockMember] = useState(false)
   const [blockMember, setBlockMember] = useState(false)
@@ -50,6 +56,14 @@ const MemberDetail = () => {
   const handleCloseBlock = () => {
     setBlockMember(false)
   }
+
+  useEffect(() => {
+    if (updateMemberResp?.status === "SUCCESS") {
+      setTimeout(() => {
+        setUpdateMemberResp({})
+      }, 3000)
+    }
+  }, [updateMemberResp])
 
   useEffect(() => {
     if (status) {
@@ -168,7 +182,7 @@ const MemberDetail = () => {
         <span className="font-grey">{data.role_name}</span>
         <span className="font-grey mt-10">{data.university}</span>
         <span className="font-grey">
-          {data.gender === "M" ? "Laki-laki" : "Perempuan"}
+          {data.gender === "M" ? "Laki-laki" : "Wanita"}
         </span>
         <span className="font-grey">
           {data.city_of_birth},{" "}
@@ -298,12 +312,34 @@ const MemberDetail = () => {
                 ) : (
                   ""
                 )}
+                {data.komprof && data.komprof.length > 0 ? (
+                  <>
+                    <span className="font-grey">Komprof :</span>
+                    <ol className="font-grey">
+                      {data.komprof.map((x) => (
+                        <li className="font-grey">{x}</li>
+                      ))}
+                    </ol>
+                  </>
+                ) : (
+                  ""
+                )}
               </span>
             </div>
           </div>
         </div>
       </div>
-      <EditMemberModal open={open} onClose={handleClose} data={data} />
+      <EditMemberModal
+        open={open}
+        onClose={handleClose}
+        data={memberForm?.member}
+      />
+      <AlertToast
+        isOpen={updateMemberResp?.status === "SUCCESS"}
+        status="success"
+        message="Data member berhasil dirubah."
+        onClose={() => setUpdateMemberResp({})}
+      />
       <ConfirmationModal
         open={blockMember}
         onClose={handleCloseBlock}

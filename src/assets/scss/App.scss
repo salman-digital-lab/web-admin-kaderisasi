@@ -123,6 +123,16 @@
   }
 }
 
+.tbrow {
+  background: black;
+}
+.tbrow:nth-child(odd) {
+  background: #f3f9fe;
+}
+.tbrow:nth-child(even) {
+  background: white;
+}
+
 .rounded-circle {
   border-radius: 50% !important;
   clip-path: circle();
@@ -136,6 +146,10 @@
   color: #1f99cc;
   padding-top: 1.5px;
   opacity: 1;
+}
+
+.mb-0 {
+  margin-bottom: 0px !important;
 }
 
 .mt-10 {

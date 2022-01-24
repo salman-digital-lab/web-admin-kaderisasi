@@ -9,6 +9,7 @@ const AdminMemberProvider = (props) => {
     gender: "",
     ssc: "",
     lmd: "",
+    spectra: "",
     search_query: "",
   })
   const [members, setMembers] = useState([])
@@ -16,7 +17,7 @@ const AdminMemberProvider = (props) => {
   const [memberForm, setMemberForm] = useState({})
   const [memberActivities, setMemberActivities] = useState(null)
   const [blockMemberResp, setBlockMemberResp] = useState({})
-  const [unblockMemberResp, setUnblockMemberResp] = useState({})
+  const [updateMemberResp, setUpdateMemberResp] = useState({})
 
   /*
     Get all Members
@@ -110,6 +111,28 @@ const AdminMemberProvider = (props) => {
       @params
       id: integer
     
+      update member where id = params.id
+    */
+  const updateMemberById = (id, formData) => {
+    setUpdateMemberResp({})
+    axios
+      .put(`${process.env.REACT_APP_BASE_URL}/v1/member/${id}`, formData)
+      .then((res) => {
+        const { data } = res
+        console.log(data)
+        setUpdateMemberResp(data)
+        getMemberDetail(id)
+      })
+      .catch((err) => {
+        console.log(err)
+        return false
+      })
+  }
+
+  /*
+      @params
+      id: integer
+    
       unblock member where id = params.id
     */
   const unblockMemberById = (id) => {
@@ -133,6 +156,7 @@ const AdminMemberProvider = (props) => {
     getMemberActivities,
     blockMemberById,
     unblockMemberById,
+    updateMemberById,
   }
 
   return (
@@ -147,7 +171,8 @@ const AdminMemberProvider = (props) => {
         filterMember,
         setFilterMember,
         blockMemberResp,
-        unblockMemberResp,
+        updateMemberResp,
+        setUpdateMemberResp,
         functions,
       }}
     >

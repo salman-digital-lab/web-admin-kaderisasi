@@ -7,7 +7,7 @@ export const RegisterStatus = (props) => {
       return (
         <Chip
           className="error"
-          label={props.status.toLowerCase()}
+          label={props.status?.toLowerCase()}
           size="small"
         />
       )
@@ -15,7 +15,7 @@ export const RegisterStatus = (props) => {
       return (
         <Chip
           className="success"
-          label={props.status.toLowerCase()}
+          label={props.status?.toLowerCase()}
           size="small"
         />
       )
@@ -28,7 +28,7 @@ export const PublishStatus = (props) => {
       return (
         <Chip
           className="waiting"
-          label={props.status.toLowerCase()}
+          label={props.status?.toLowerCase()}
           size="small"
         />
       )
@@ -36,7 +36,7 @@ export const PublishStatus = (props) => {
       return (
         <Chip
           className="success"
-          label={props.status.toLowerCase()}
+          label={props.status?.toLowerCase()}
           size="small"
         />
       )
