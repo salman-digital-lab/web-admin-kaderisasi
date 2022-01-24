@@ -289,8 +289,6 @@ const MemberDetail = () => {
               <h5 className="font-grey">
                 <strong>Keanggotaan</strong>
               </h5>
-              <span>Tahun Mendaftar</span>{" "}
-              <span className="font-grey">{data?.intake_year}</span>
             </div>
           </div>
           <div className="row">

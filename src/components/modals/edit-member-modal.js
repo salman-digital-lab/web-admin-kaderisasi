@@ -78,7 +78,6 @@ const EditMemberModal = ({ open, onClose, data }) => {
     delete payload.regency_name
     delete payload.village_name
     delete payload.komprof
-    delete payload.intake_year
     delete payload.student_id
     delete payload.university
     delete payload.role_name
@@ -278,41 +277,44 @@ const EditMemberModal = ({ open, onClose, data }) => {
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
-                  {/* <TextField
+                  <TextField
                     className="input-register"
                     label="Fakultas"
                     fullWidth
                     size="small"
                     defaultValue={payload?.faculty}
-                  /> */}
-                  <span>Fakultas</span>{" "}
-                  <span className="font-grey">{payload?.faculty}</span>
+                    onChange={(e) =>
+                      setPayload({ ...payload, faculty: e.target.value })
+                    }
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
-                  {/* <TextField
+                  <TextField
                     className="input-register"
                     label="Jurusan"
                     fullWidth
                     size="small"
                     defaultValue={payload?.major}
-                  /> */}
-                  <span>Jurusan</span>{" "}
-                  <span className="font-grey">{payload?.major}</span>
+                    onChange={(e) =>
+                      setPayload({ ...payload, major: e.target.value })
+                    }
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
-                  {/* <TextField
+                  <TextField
                     className="input-register"
                     label="Angkatan"
                     fullWidth
                     size="small"
                     defaultValue={payload?.intake_year}
-                  /> */}
-                  <span>Angkatan</span>{" "}
-                  <span className="font-grey">{payload?.intake_year}</span>
+                    onChange={(e) =>
+                      setPayload({ ...payload, intake_year: e.target.value })
+                    }
+                  />
                 </div>
               </div>
             </div>
@@ -410,30 +412,49 @@ const EditMemberModal = ({ open, onClose, data }) => {
                   <h5 className="font-grey">
                     <strong>Keanggotaan</strong>
                   </h5>
-                  <span>Tahun Mendaftar</span>{" "}
-                  <span className="font-grey">{payload?.intake_year}</span>
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
                   <span>Ikut Serta Kegiatan</span>{" "}
-                  <span>
-                    {data.ssc ? (
-                      <Chip label={`SSC~${data.ssc}`} size="small" />
-                    ) : (
-                      ""
-                    )}
-                    {data.lmd ? (
-                      <Chip label={`LMD~${data.lmd}`} size="small" />
-                    ) : (
-                      ""
-                    )}
-                    {data.spectra ? (
-                      <Chip label={`SPC~${data.spectra}`} size="small" />
-                    ) : (
-                      ""
-                    )}
-                  </span>
+                  <div className="row">
+                    <div className="col-4 d-flex flex-column py-5 px-15">
+                      <TextField
+                        className="input-register"
+                        label="SSC"
+                        fullWidth
+                        size="small"
+                        defaultValue={payload?.ssc}
+                        onChange={(e) =>
+                          setPayload({ ...payload, ssc: e.target.value })
+                        }
+                      />
+                    </div>
+                    <div className="col-4 d-flex flex-column py-5 px-15">
+                      <TextField
+                        className="input-register"
+                        label="LMD"
+                        fullWidth
+                        size="small"
+                        defaultValue={payload?.lmd}
+                        onChange={(e) =>
+                          setPayload({ ...payload, lmd: e.target.value })
+                        }
+                      />
+                    </div>
+                    <div className="col-4 d-flex flex-column py-5 px-15">
+                      <TextField
+                        className="input-register"
+                        label="SPC"
+                        fullWidth
+                        size="small"
+                        defaultValue={payload?.spectra}
+                        onChange={(e) =>
+                          setPayload({ ...payload, spectra: e.target.value })
+                        }
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
