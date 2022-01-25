@@ -9,6 +9,7 @@ import {
   TablePagination,
   TableRow,
   Paper,
+  Button,
 } from "@material-ui/core"
 import { Female, Male } from "@mui/icons-material"
 import {
@@ -20,6 +21,7 @@ import {
 import { RegistrantStatus } from "../../../components/statuses/RegistrantStatus"
 import LoadingAnimation from "../../../components/loading-animation"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
+import RegistrantQuestionnaireModal from "../../../components/modals/registrant-questionnaire-modal"
 
 const headCells = [
   { id: "no", numeric: true, label: "No." },
@@ -56,26 +58,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+let params = {
+  page: 1,
+  perPage: 5,
+}
+
 const PendaftarTable = () => {
   const classes = useStyles()
   const { id } = useParams()
-  const [order, setOrder] = useState("asc")
-  const [orderBy, setOrderBy] = useState("startDate")
+  const [order, setOrder] = useState("desc")
+  const [orderBy, setOrderBy] = useState("created_at")
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
+  const [open, setOpen] = useState(false)
+  const [registrantId, setRegistrantId] = useState(-1)
   const [status, setStatus] = useState(true)
   const {
     listParticipants,
     activityParticipants,
     filterParticipantsActivity,
     setFilterParticipantsActivity,
+    setRegistrantQuestionnaire,
     functions,
   } = useContext(AdminActivityContext)
   const { getActivityParticipants, exportActivityParticipants } = functions
-  let params = {
-    page: page + 1,
-    perPage: rowsPerPage,
-  }
+
   if (listParticipants.length < 1 && status) {
     getActivityParticipants(id, params)
     setStatus(false)
@@ -86,16 +93,8 @@ const PendaftarTable = () => {
       params.page = 1
       setPage(0)
       params = { ...params, ...filterParticipantsActivity }
-      if (params.university_id === -1) {
-        delete params.university_id
-        delete params.filter
-      }
       if (params.status === -1) {
         delete params.status
-        delete params.filter
-      }
-      if (params.role_id === -1) {
-        delete params.role_id
         delete params.filter
       }
       if (Object.keys(params).length > 1) {
@@ -113,9 +112,19 @@ const PendaftarTable = () => {
     id,
   ])
 
+  const handleOpen = (registrantId) => {
+    setRegistrantId(registrantId)
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setRegistrantQuestionnaire(null)
+    setOpen(false)
+  }
+
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc"
-    setOrder(isAsc ? "desc" : "asc")
+    const isAsc = orderBy === property && order === "desc"
+    setOrder(isAsc ? "desc" : "desc")
     setOrderBy(property)
   }
 
@@ -208,7 +217,14 @@ const PendaftarTable = () => {
                         <RegistrantStatus status={row.status.toLowerCase()} />
                       </TableCell>
                       <TableCell className="table-cell">
-                        <Link to={`/member/${row.id}`}>View</Link>
+                        <Button
+                          className="transparent-button"
+                          variant="contained"
+                          color="primary"
+                          onClick={() => handleOpen(row.id)}
+                        >
+                          View
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -221,9 +237,16 @@ const PendaftarTable = () => {
               count={activityParticipants?.data?.total}
               rowsPerPage={rowsPerPage}
               page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
             />
+            {open && (
+              <RegistrantQuestionnaireModal
+                open={open}
+                onClose={handleClose}
+                registrantId={registrantId}
+              />
+            )}
           </>
         )}
       </Paper>

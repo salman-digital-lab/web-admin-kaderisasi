@@ -55,10 +55,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+let params = {
+  page: 1,
+  perPage: 5,
+}
+
 const KegiatanTable = () => {
   const classes = useStyles()
-  const [order, setOrder] = useState("asc")
-  const [orderBy, setOrderBy] = useState("startDate")
+  const [order, setOrder] = useState("desc")
+  const [orderBy, setOrderBy] = useState("created_at")
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [status, setStatus] = useState(true)
@@ -70,11 +75,6 @@ const KegiatanTable = () => {
     functions,
   } = useContext(AdminActivityContext)
   const { getActivity } = functions
-
-  let params = {
-    page: page + 1,
-    perPage: rowsPerPage,
-  }
 
   if (listActivity.length < 1 && status) {
     getActivity(params)
@@ -106,8 +106,8 @@ const KegiatanTable = () => {
   }, [filterActivity, setFilterActivity, getActivity])
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc"
-    setOrder(isAsc ? "desc" : "asc")
+    const isAsc = orderBy === property && order === "desc"
+    setOrder(isAsc ? "desc" : "desc")
     setOrderBy(property)
   }
 
@@ -194,13 +194,11 @@ const KegiatanTable = () => {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, 50]}
               component="div"
-              count={
-                activity?.data?.total ? activity?.data?.total : "Loading..."
-              }
+              count={activity?.data?.total ? activity?.data?.total : 0}
               rowsPerPage={rowsPerPage}
               page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </>
         )}

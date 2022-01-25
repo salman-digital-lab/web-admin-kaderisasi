@@ -34,7 +34,7 @@ const AdminFilter = () => {
                 variant="contained"
                 className="btn-tambah-kegiatan primary-button"
               >
-                TAMBAH AKUN ADMIN
+                TAMBAH ADMIN
               </Button>
             </Link>
           </Box>
@@ -45,11 +45,10 @@ const AdminFilter = () => {
         <CardContent className="filter-content">
           <Box pl={5} pr={5}>
             <TextField
-              id="filled-basic"
-              size="small"
+              className="input-register"
               label="Cari Admin"
-              variant="outlined"
-              className="filter-input"
+              fullWidth
+              size="small"
               onKeyDown={handleKeyDown}
             />
             {/* <FormControl component="fieldset" className="radio-button activity">
@@ -108,7 +107,7 @@ const AdminFilter = () => {
                   value="F"
                   control={<StyledRadio />}
                   onChange={(e) => handleChangeGender(e.target.value)}
-                  label="Perempuan"
+                  label="Wanita"
                 />
               </RadioGroup>
             </FormControl> */}

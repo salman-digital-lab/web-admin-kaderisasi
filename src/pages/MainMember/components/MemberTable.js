@@ -8,6 +8,7 @@ import {
   TablePagination,
   TableRow,
   Paper,
+  Chip,
 } from "@material-ui/core"
 import { Link } from "react-router-dom"
 import { Female, Male } from "@mui/icons-material"
@@ -53,21 +54,22 @@ const useStyles = makeStyles((theme) => ({
     width: 1,
   },
 }))
+let params = {
+  page: 1,
+  page_size: 5,
+}
 
 const MemberTable = () => {
   const classes = useStyles()
-  const [order, setOrder] = useState("asc")
-  const [orderBy, setOrderBy] = useState("startDate")
+  const [order, setOrder] = useState("desc")
+  const [orderBy, setOrderBy] = useState("created_at")
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [status, setStatus] = useState(true)
   const { listMembers, members, filterMember, setFilterMember, functions } =
     useContext(AdminMemberContext)
   const { getMembers } = functions
-  let params = {
-    page: page + 1,
-    page_size: rowsPerPage,
-  }
+
   if (listMembers.length < 1 && status) {
     getMembers(params)
     setStatus(false)
@@ -78,12 +80,16 @@ const MemberTable = () => {
       params.page = 1
       setPage(0)
       params = { ...params, ...filterMember }
-      if (params.ssc === -1) {
+      if (params.ssc === "") {
         delete params.ssc
         delete params.filter
       }
-      if (params.lmd === -1) {
+      if (params.lmd === "") {
         delete params.lmd
+        delete params.filter
+      }
+      if (params.spectra === "") {
+        delete params.spectra
         delete params.filter
       }
       if (params.search_query === "") {
@@ -102,8 +108,8 @@ const MemberTable = () => {
   }, [filterMember, setFilterMember, getMembers])
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc"
-    setOrder(isAsc ? "desc" : "asc")
+    const isAsc = orderBy === property && order === "desc"
+    setOrder(isAsc ? "desc" : "desc")
     setOrderBy(property)
   }
 
@@ -186,8 +192,23 @@ const MemberTable = () => {
                           {row.role_name}
                         </TableCell>
                         <TableCell className="table-cell">
-                          {row.ssc}
-                          {row.lmd}
+                          <span>
+                            {row.ssc ? (
+                              <Chip label={`SSC~${row.ssc}`} size="small" />
+                            ) : (
+                              ""
+                            )}
+                            {row.lmd ? (
+                              <Chip label={`LMD~${row.lmd}`} size="small" />
+                            ) : (
+                              ""
+                            )}
+                            {row.spectra ? (
+                              <Chip label={`SPC~${row.spectra}`} size="small" />
+                            ) : (
+                              ""
+                            )}
+                          </span>
                         </TableCell>
                         <TableCell className="table-cell">
                           <Link to={`/member/${row.id}`}>View</Link>
@@ -201,11 +222,11 @@ const MemberTable = () => {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, 50]}
               component="div"
-              count={members?.data?.total ? members?.data?.total : "Loading..."}
+              count={members?.data?.total ? members?.data?.total : 0}
               rowsPerPage={rowsPerPage}
               page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </>
         )}

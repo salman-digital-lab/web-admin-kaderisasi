@@ -7,8 +7,9 @@ const AdminMemberProvider = (props) => {
   const [filterMember, setFilterMember] = useState({
     filter: false,
     gender: "",
-    ssc: -1,
-    lmd: -1,
+    ssc: "",
+    lmd: "",
+    spectra: "",
     search_query: "",
   })
   const [members, setMembers] = useState([])
@@ -16,7 +17,7 @@ const AdminMemberProvider = (props) => {
   const [memberForm, setMemberForm] = useState({})
   const [memberActivities, setMemberActivities] = useState(null)
   const [blockMemberResp, setBlockMemberResp] = useState({})
-  const [unblockMemberResp, setUnblockMemberResp] = useState({})
+  const [updateMemberResp, setUpdateMemberResp] = useState({})
 
   /*
     Get all Members
@@ -53,7 +54,7 @@ const AdminMemberProvider = (props) => {
     */
   const getMemberDetail = async (id) => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/v1/member/${id}`)
+      .get(`${process.env.REACT_APP_BASE_URL}/v1/members/${id}`)
       .then((res) => {
         const form = res.data.data
         setMemberForm(form)
@@ -73,7 +74,7 @@ const AdminMemberProvider = (props) => {
     */
   const getMemberActivities = async (id) => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/v1/member/${id}/activities`)
+      .get(`${process.env.REACT_APP_BASE_URL}/v1/members/${id}/activities`)
       .then((res) => {
         const form = res.data.data.activities
         setMemberActivities(form)
@@ -94,10 +95,33 @@ const AdminMemberProvider = (props) => {
   const blockMemberById = (id) => {
     setBlockMemberResp({})
     axios
-      .patch(`${process.env.REACT_APP_BASE_URL}/v1/member/${id}/block`)
+      .patch(`${process.env.REACT_APP_BASE_URL}/v1/members/${id}/block`)
       .then((res) => {
         const { data } = res
         setBlockMemberResp(data)
+        getMemberDetail(id)
+      })
+      .catch((err) => {
+        console.log(err)
+        return false
+      })
+  }
+
+  /*
+      @params
+      id: integer
+    
+      update member where id = params.id
+    */
+  const updateMemberById = (id, formData) => {
+    setUpdateMemberResp({})
+    axios
+      .put(`${process.env.REACT_APP_BASE_URL}/v1/members/${id}`, formData)
+      .then((res) => {
+        const { data } = res
+        console.log(data)
+        setUpdateMemberResp(data)
+        getMemberDetail(id)
       })
       .catch((err) => {
         console.log(err)
@@ -112,12 +136,13 @@ const AdminMemberProvider = (props) => {
       unblock member where id = params.id
     */
   const unblockMemberById = (id) => {
-    setUnblockMemberResp({})
+    setBlockMemberResp({})
     axios
-      .patch(`${process.env.REACT_APP_BASE_URL}/v1/member/${id}/unblock`)
+      .patch(`${process.env.REACT_APP_BASE_URL}/v1/members/${id}/unblock`)
       .then((res) => {
         const { data } = res
-        setUnblockMemberResp(data)
+        setBlockMemberResp(data)
+        getMemberDetail(id)
       })
       .catch((err) => {
         console.log(err)
@@ -131,6 +156,7 @@ const AdminMemberProvider = (props) => {
     getMemberActivities,
     blockMemberById,
     unblockMemberById,
+    updateMemberById,
   }
 
   return (
@@ -145,7 +171,8 @@ const AdminMemberProvider = (props) => {
         filterMember,
         setFilterMember,
         blockMemberResp,
-        unblockMemberResp,
+        updateMemberResp,
+        setUpdateMemberResp,
         functions,
       }}
     >

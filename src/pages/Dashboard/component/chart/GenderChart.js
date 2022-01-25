@@ -13,11 +13,8 @@ export default function GenderChart({
 
   useEffect(() => {
     axios
-      .get(
-        "https://admin-api-kaderisasi-dev.salmanitb.com/v1/dashboard/get/all/gender"
-      )
+      .get(process.env.REACT_APP_BASE_URL + "/v1/dashboard/get/all/gender")
       .then((res) => {
-        console.log(res.data.data)
         const result = res?.data?.data ?? []
         const male = result.find((value) => value.gender === "M").jumlah
         const female = result.find((value) => value.gender === "F").jumlah

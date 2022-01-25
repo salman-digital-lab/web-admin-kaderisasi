@@ -1,14 +1,14 @@
 import React, { useState, useContext, useEffect } from "react"
-import { Button, Select, MenuItem, TextField } from "@material-ui/core"
-import { Editor } from "react-draft-wysiwyg"
+import { Button } from "@material-ui/core"
 import { EditorState, convertToRaw, ContentState } from "draft-js"
 import draftToHtml from "draftjs-to-html"
 import htmlToDraft from "html-to-draftjs"
+import moment from "moment"
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
 import { useParams } from "react-router-dom"
-import embed from "embed-video"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
-import DetailKegiatanModal from "../../../components/modals/detail-kegiatan-modal"
+import { PublishStatus, RegisterStatus } from "../../../components/statuses"
+import DetailKegiatanModal from "../../../components/modals/activity-detail-modal"
 import LoadingAnimation from "../../../components/loading-animation"
 import AlertToast from "../../../components/alert"
 
@@ -40,168 +40,134 @@ const FormKegiatan = () => {
     setFormData({ ...formData, [type]: value })
   }
 
-  const handleEditor = (value) => {
-    setEditorState(value)
-    handleForm(
-      draftToHtml(convertToRaw(editorState.getCurrentContent())),
-      "description"
-    )
-  }
-
-  const handleSubmit = () => {
-    editActivity(id, formData)
-    handleEdit()
-  }
-
   useEffect(() => {
-    if (activityForm.length < 1 && categoryList.length < 1) {
+    if (activityForm.length < 1 && !categoryList?.status) {
       getActivityDetail(id)
-      getActivityCategory()
+      getActivityCategory({ page: 1, perPage: 100 })
     }
-    if (activityForm.length > 0 && check) {
-      const contentBlock = htmlToDraft(activityForm[0].description)
-      setEditorState(
-        EditorState.createWithContent(
-          ContentState.createFromBlockArray(contentBlock.contentBlocks)
-        )
-      )
-      setCheck(false)
-    }
-    // eslint-disable-next-line
   }, [activityForm])
 
   return (
     <>
       <div className="tambah-kegiatan">
-        {activityForm.length === 1 && categoryList.length > 1 ? (
+        {activityForm.length === 1 && categoryList?.status === "SUCCESS" ? (
           <>
             <div className="top-bar-kegiatan">
-              <div className="detail-activity">
-                <div className="input-form">
-                  Judul
-                  <br />
-                  <TextField
-                    defaultValue={activityForm[0].name}
-                    InputProps={{
-                      readOnly: !stateCanBeEdited,
-                    }}
-                    onChange={(event) => handleForm(event.target.value, "name")}
-                  />
-                </div>
-                <div className="input-form">
-                  Kategori Kegiatan
-                  <br />
-                  {!stateCanBeEdited ? (
-                    <TextField
-                      value={
-                        categoryList.filter(
-                          (x) => x.value === activityForm[0].category_id
-                        )[0].label
-                      }
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                    />
-                  ) : (
-                    <Select
-                      className="select-input-form"
-                      defaultValue={activityForm[0].category_id}
-                      onChange={(event) =>
-                        handleForm(event.target.value, "category_id")
-                      }
-                    >
-                      {categoryList
-                        .filter((x) => x.value !== -1)
-                        .map((value) => (
-                          <MenuItem key={value} value={value.value}>
-                            {value.label}
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  )}
-                </div>
-              </div>
               <div className="button-tambah-kegiatan">
-                {!stateCanBeEdited ? (
-                  <>
-                    <Button
-                      className="edit-button"
-                      variant="contained"
-                      color="primary"
-                      onClick={handleEdit}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      className="button-top-tambah-kegiatan primary-button"
-                      variant="contained"
-                      onClick={handleOpen}
-                    >
-                      Tambah Detail
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={handleEdit}
-                    >
-                      Batalkan
-                    </Button>
-                    <Button
-                      className="button-top-tambah-kegiatan"
-                      variant="contained"
-                      color="primary"
-                      onClick={handleSubmit}
-                    >
-                      Simpan
-                    </Button>
-                  </>
-                )}
+                <Button
+                  className="edit-button"
+                  variant="contained"
+                  color="primary"
+                  onClick={handleOpen}
+                >
+                  Edit
+                </Button>
               </div>
             </div>
-            <div className="content-tambah-kegiatan">
-              <div className="input-form">Deskripsi</div>
-              <br />
-              <div className="editor">
-                {!stateCanBeEdited ? (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: activityForm[0].description
-                        ? activityForm[0].description
-                        : "Please describe this activity ...",
-                    }}
-                  />
-                ) : (
-                  <>
-                    <Editor
-                      editorState={editorState}
-                      wrapperClassName="demo-wrapper"
-                      editorClassName="demo-editor"
-                      onEditorStateChange={handleEditor}
-                      toolbar={{
-                        link: {
-                          linkCallback: (params) => ({ ...params }),
-                        },
-                        embedded: {
-                          embedCallback: (link) => {
-                            const detectedSrc = /<iframe.*? src="(.*?)"/.exec(
-                              embed(link)
-                            )
-                            return (detectedSrc && detectedSrc[1]) || link
-                          },
-                        },
-                      }}
-                    />
-                  </>
-                )}
+            <div className="row">
+              <div className="col-6">
+                <div className="row">
+                  <div className="col-12 d-flex flex-column py-5 px-15">
+                    <strong>Nama Kegiatan</strong>{" "}
+                    <span>{activityForm[0]?.name}</span>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12 d-flex flex-column py-5 px-15">
+                    <strong>Kategori Kegiatan</strong>{" "}
+                    <span>{activityForm[0]?.activityCategory?.name}</span>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12 d-flex flex-column py-5 px-15">
+                    <strong>Minimum Jenjang</strong>{" "}
+                    <span>{activityForm[0]?.minimumRole?.name}</span>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12 d-flex flex-column py-5 px-15">
+                    <strong>Status Publikasi</strong>{" "}
+                    <span>
+                      <PublishStatus
+                        status={
+                          activityForm[0]?.is_published
+                            ? "published"
+                            : "unpublished"
+                        }
+                      />
+                    </span>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12 d-flex flex-column py-5 px-15">
+                    <strong>Status Registrasi</strong>{" "}
+                    <span>
+                      <RegisterStatus status={activityForm[0]?.status} />
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="col-6">
+                <div className="row">
+                  <div className="col-12 d-flex flex-column py-5 px-15">
+                    <strong>Tanggal Mulai Registrasi</strong>{" "}
+                    <span>
+                      {moment(activityForm[0].register_begin_date).format(
+                        "D MMMM YYYY, h:mm"
+                      )}
+                    </span>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12 d-flex flex-column py-5 px-15">
+                    <strong>Tanggal Selesai Registrasi</strong>{" "}
+                    <span>
+                      {moment(activityForm[0].register_end_date).format(
+                        "D MMMM YYYY, h:mm"
+                      )}
+                    </span>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12 d-flex flex-column py-5 px-15">
+                    <strong>Tanggal Mulai Kegiatan</strong>{" "}
+                    <span>
+                      {moment(activityForm[0].begin_date).format(
+                        "D MMMM YYYY, h:mm"
+                      )}
+                    </span>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12 d-flex flex-column py-5 px-15">
+                    <strong>Tanggal Selesai Kegiatan</strong>{" "}
+                    <span>
+                      {moment(activityForm[0].end_date).format(
+                        "D MMMM YYYY, h:mm"
+                      )}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr className="horizontal-line" />
+            <div className="row">
+              <div className="col-12 d-flex flex-column py-5 px-15">
+                <strong>Deskripsi</strong>
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: activityForm[0].description
+                      ? activityForm[0].description
+                      : "Please describe this activity ...",
+                  }}
+                />
               </div>
             </div>
             <DetailKegiatanModal
               open={open}
               onClose={handleClose}
               data={activityForm[0]}
+              categoryList={categoryList}
             />
           </>
         ) : (

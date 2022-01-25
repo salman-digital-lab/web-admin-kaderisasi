@@ -80,11 +80,10 @@ const KegiatanFilter = () => {
         <CardContent className="filter-content">
           <Box pl={5} pr={5}>
             <TextField
-              id="filled-basic"
-              size="small"
+              className="input-register"
               label="Cari Kegiatan"
-              variant="outlined"
-              className="filter-input"
+              fullWidth
+              size="small"
               onKeyDown={handleKeyDown}
             />
             <FormControl component="fieldset" className="radio-button jenkel">
@@ -126,23 +125,27 @@ const KegiatanFilter = () => {
                 />
               </RadioGroup>
             </FormControl>
-            <FormControl className="select-dropdown mt-15">
+            <FormControl className="select-dropdown mt-10">
               <InputLabel id="demo-mutiple-name-label">Kategori</InputLabel>
-              {categoryList.length > 0 && (
+              {categoryList?.status === "SUCCESS" && (
                 <Select
                   value={filterActivity.category_id}
                   onChange={(e) => handleCategoryChange(e.target.value)}
                   input={<Input />}
                   MenuProps={MenuProps}
                 >
-                  {categoryList.map((category) => (
+                  {categoryList?.data?.data?.map((category) => (
                     <MenuItem
-                      key={`${category.value}`}
-                      value={category.value}
-                      label={category.label}
-                      style={getStyles(category, categoryList, theme)}
+                      key={`${category.id}`}
+                      value={category.id}
+                      label={category.name}
+                      style={getStyles(
+                        category,
+                        categoryList?.data?.data,
+                        theme
+                      )}
                     >
-                      {category.label}
+                      {category.name}
                     </MenuItem>
                   ))}
                 </Select>

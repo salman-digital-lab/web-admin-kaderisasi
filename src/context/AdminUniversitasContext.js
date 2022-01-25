@@ -1,5 +1,5 @@
 import axios from "axios"
-import React, { createContext, useEffect, useState } from "react"
+import React, { createContext, useState } from "react"
 import { makeStyles } from "@material-ui/core/styles"
 import { Link } from "react-router-dom"
 import { Button } from "@material-ui/core"
@@ -34,7 +34,7 @@ export const UniversitasProvider = (props) => {
   }))
 
   const headCells = [
-    { id: "no", numeric: true, label: "ID." },
+    { id: "no", numeric: true, label: "No." },
     { id: "universitas", numeric: false, label: "Universitas" },
     { id: "action", numeric: false, label: "Action" },
   ]
@@ -56,38 +56,95 @@ export const UniversitasProvider = (props) => {
     search: "",
   })
 
-  const getUniversities = () => {
+  const getUniversities = (params) => {
+    let paramsQuery = "?"
+    if (params) {
+      Object.keys(params).map((x, i) => {
+        i === Object.keys(params).length - 1
+          ? (paramsQuery += x + "=" + params[x].toString())
+          : (paramsQuery += x + "=" + params[x].toString() + "&")
+      })
+    }
     axios
-      .get(`https://admin-api-kaderisasi-dev.salmanitb.com/v1/universities`)
+      .get(process.env.REACT_APP_BASE_URL + `/v1/universities` + paramsQuery)
       .then((res) => {
-        const data = res.data.data
-        data.forEach((e) => {
-          rows.push(createData(e.id, e.name))
-        })
-        setUniversitiesState({ ...universitiesState, id: "notNull" })
+        setUniversitiesState(res.data)
       })
       .catch((err) => {
         console.log(err)
       })
   }
 
-  useEffect(() => {
-    if (filterActivity.filter === true) {
-      rows.forEach((e) => {
-        if (e.universitas === filterActivity.search) {
-          setRows(createData(e.id, e.name))
-        }
+  /*
+    @params
+    formData: object
+  
+    Create new activity category
+  */
+  const addUniversity = (formData) => {
+    let result = null
+    axios
+      .post(process.env.REACT_APP_BASE_URL + `/v1/universities`, formData)
+      .then((res) => {
+        getUniversities({ page: 1, perPage: 5 })
+        result = res
+        return result
       })
-    }
-  })
+      .catch((err) => {
+        console.log(err)
+        return result
+      })
+  }
+
+  /*
+      @params
+      id: integer
+      formData: object
+    
+      Update activity category where id = params.id
+    */
+  const editUniversity = (id, formData) => {
+    let result = null
+    axios
+      .put(process.env.REACT_APP_BASE_URL + `/v1/universities/${id}`, formData)
+      .then((res) => {
+        getUniversities({ page: 1, perPage: 5 })
+        result = res
+        return result
+      })
+      .catch((err) => {
+        console.log(err)
+        return result
+      })
+  }
+
+  /*
+      @params
+      id: integer
+    
+      Delete activity category where id = params.id
+    */
+  const deleteUniversity = (id) => {
+    let result = null
+    axios
+      .delete(process.env.REACT_APP_BASE_URL + `/v1/universities/${id}`)
+      .then((res) => {
+        getUniversities({ page: 1, perPage: 5 })
+        result = res
+        return result
+      })
+      .catch((err) => {
+        console.log(err)
+        return result
+      })
+  }
+
   const Action = ({ Id }) => {
     const handleDelete = (event) => {
       event.preventDefault()
 
       axios
-        .delete(
-          `https://admin-api-kaderisasi-dev.salmanitb.com/v1/universities/${Id}`
-        )
+        .delete(process.env.REACT_APP_BASE_URL + `/v1/universities/${Id}`)
         .then((res) => {
           const dataBaru = rows.filter((e) => {
             return e.id !== Id
@@ -125,6 +182,9 @@ export const UniversitasProvider = (props) => {
 
   const functions = {
     getUniversities,
+    addUniversity,
+    editUniversity,
+    deleteUniversity,
     createData,
     headCells,
     useStyles,

@@ -81,9 +81,7 @@ export const AdminDashboardProvider = (props) => {
 
   const GetAllMember = () => {
     axios
-      .get(
-        "https://admin-api-kaderisasi-dev.salmanitb.com/v1/dashboard/get/all/member"
-      )
+      .get(process.env.REACT_APP_BASE_URL + "/v1/dashboard/get/all/member")
       .then((res) => {
         const data = res.data.data
         const tmp = {
@@ -121,9 +119,7 @@ export const AdminDashboardProvider = (props) => {
 
   const GetAktivis = () => {
     axios
-      .get(
-        `https://admin-api-kaderisasi-dev.salmanitb.com/v1/dashboard/get/all/provinces`
-      )
+      .get(process.env.REACT_APP_BASE_URL + `/v1/dashboard/get/all/provinces`)
       .then((res) => {
         const result = res.data.data
 
@@ -137,7 +133,7 @@ export const AdminDashboardProvider = (props) => {
   const GetKampus = () => {
     axios
       .get(
-        "https://admin-api-kaderisasi-dev.salmanitb.com/v1/dashboard/get/all/universities"
+        process.env.REACT_APP_BASE_URL + "/v1/dashboard/get/all/universities"
       )
       .then((res) => {
         const result = res.data.data
@@ -151,9 +147,7 @@ export const AdminDashboardProvider = (props) => {
 
   const GetJoin = () => {
     axios
-      .get(
-        "https://admin-api-kaderisasi-dev.salmanitb.com/v1/dashboard/get/all/years"
-      )
+      .get(process.env.REACT_APP_BASE_URL + "/v1/dashboard/get/all/years")
       .then((res) => {
         let result = res.data.data
         setJoinState(result)

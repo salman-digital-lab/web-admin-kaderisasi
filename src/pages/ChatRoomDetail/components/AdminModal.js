@@ -18,8 +18,8 @@ const AdminModal = ({ open, onClose }) => {
         <Modal
           open={open}
           onClose={onClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
+          
+          
           className={classes.modal}
         >
           <div className={classes.paper}>

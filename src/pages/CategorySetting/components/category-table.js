@@ -20,6 +20,7 @@ import {
 } from "../../../components/table-design"
 import { KategoriModal } from "./kategori-modal"
 import { ConfirmationModal } from "./confirmation-modal"
+import LoadingAnimation from "../../../components/loading-animation"
 
 const headCells = [
   { id: "no", numeric: true, label: "No." },
@@ -51,10 +52,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+let params = {
+  page: 1,
+  perPage: 5,
+}
+
 const CategoryTable = () => {
   const classes = useStyles()
-  const [order, setOrder] = useState("asc")
-  const [orderBy, setOrderBy] = useState("calories")
+  const [order, setOrder] = useState("desc")
+  const [orderBy, setOrderBy] = useState("created_at")
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [dataEdit, setDataEdit] = useState({})
@@ -72,11 +78,9 @@ const CategoryTable = () => {
 
   const { categoryList, functions } = useContext(AdminActivityContext)
   const { getActivityCategory, deleteActivityCategory } = functions
-  useEffect(() => {
-    if (categoryList.length < 1) {
-      getActivityCategory()
-    }
-  })
+  if (!categoryList.status) {
+    getActivityCategory(params)
+  }
 
   const handleEditCategory = (id, name) => {
     setDataEdit({ id, name })
@@ -95,18 +99,23 @@ const CategoryTable = () => {
   }
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "asc"
-    setOrder(isAsc ? "desc" : "asc")
+    const isAsc = orderBy === property && order === "desc"
+    setOrder(isAsc ? "desc" : "desc")
     setOrderBy(property)
   }
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
+    params.page = newPage + 1
+    getActivityCategory(params)
   }
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10))
     setPage(0)
+    params.page = 1
+    params.perPage = parseInt(event.target.value, 10)
+    getActivityCategory(params)
   }
 
   return (
@@ -115,50 +124,52 @@ const CategoryTable = () => {
         Pengaturan Kategori Kegiatan
       </h1>
       <Paper>
-        <TableContainer>
-          <Table
-            aria-labelledby="tableTitle"
-            size={"medium"}
-            aria-label="enhanced table"
-          >
-            <EnhancedTableHead
-              classes={classes}
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-              rowCount={categoryList.filter((x) => x.value !== -1).length}
-              headCells={headCells}
-            />
-            <TableBody>
-              {stableSort(
-                categoryList.filter((x) => x.value !== -1),
-                getComparator(order, orderBy)
-              )
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  return (
-                    <TableRow hover tabIndex={-1} key={row.value}>
-                      <TableCell
-                        component="th"
-                        scope="row"
-                        className="table-cell"
-                      >
-                        {index + 1 + rowsPerPage * page}
-                      </TableCell>
-                      <TableCell className="table-cell">{row.label}</TableCell>
-                      <TableCell className="table-cell">
-                        <Button
-                          color="secondary"
-                          size="small"
-                          className="edit-button"
-                          variant="contained"
-                          onClick={() =>
-                            handleEditCategory(row.value, row.label)
-                          }
+        {!categoryList.status ? (
+          <div className="loading-table">
+            <LoadingAnimation table />
+          </div>
+        ) : (
+          <>
+            <TableContainer>
+              <Table
+                aria-labelledby="tableTitle"
+                size={"medium"}
+                aria-label="enhanced table"
+              >
+                <EnhancedTableHead
+                  classes={classes}
+                  order={order}
+                  orderBy={orderBy}
+                  onRequestSort={handleRequestSort}
+                  rowCount={categoryList?.data?.total}
+                  headCells={headCells}
+                />
+                <TableBody>
+                  {stableSort(
+                    categoryList?.data?.data?.filter(({ id }) => id !== -1),
+                    getComparator(order, orderBy)
+                  ).map((row, index) => {
+                    return (
+                      <TableRow hover tabIndex={-1} key={row.id}>
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          className="table-cell"
                         >
-                          <Edit fontSize="small" />
-                        </Button>
-                        {/* <Button
+                          {index + 1 + rowsPerPage * page}
+                        </TableCell>
+                        <TableCell className="table-cell">{row.name}</TableCell>
+                        <TableCell className="table-cell">
+                          <Button
+                            color="secondary"
+                            size="small"
+                            className="edit-button"
+                            variant="contained"
+                            onClick={() => handleEditCategory(row.id, row.name)}
+                          >
+                            <Edit fontSize="small" />
+                          </Button>
+                          {/* <Button
                           color="secondary"
                           size="small"
                           className="delete-button"
@@ -167,22 +178,24 @@ const CategoryTable = () => {
                         >
                           <Delete fontSize="small" />
                         </Button> */}
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={categoryList.filter((x) => x.value !== -1).length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
+                        </TableCell>
+                      </TableRow>
+                    )
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={categoryList?.data?.total}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </>
+        )}
       </Paper>
       <KategoriModal open={open} onClose={handleClose} data={dataEdit} />
       <ConfirmationModal
