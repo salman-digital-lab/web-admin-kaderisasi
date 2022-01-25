@@ -56,7 +56,7 @@ export const UniversitasProvider = (props) => {
     search: "",
   })
 
-  const getUniversities = (params) => {
+  const getUniversities = async (params) => {
     let paramsQuery = "?"
     if (params) {
       Object.keys(params).map((x, i) => {
@@ -65,7 +65,7 @@ export const UniversitasProvider = (props) => {
           : (paramsQuery += x + "=" + params[x].toString() + "&")
       })
     }
-    axios
+    await axios
       .get(process.env.REACT_APP_BASE_URL + `/v1/universities` + paramsQuery)
       .then((res) => {
         setUniversitiesState(res.data)
