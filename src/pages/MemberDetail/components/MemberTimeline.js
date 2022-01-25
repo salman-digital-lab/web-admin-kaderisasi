@@ -39,12 +39,12 @@ const MemberTimeline = () => {
     }
   }, [])
 
-  return memberActivities?.length > 0 ? (
+  return memberActivities?.status === "SUCCESS" ? (
     <div>
       <h3>Timeline Member</h3>
       <div className="member-timeline-container">
         <div className="timeline-container">
-          {memberActivities.map((data) => (
+          {memberActivities?.data?.activities?.map((data) => (
             <TimelineItem
               status={data.status}
               beginDate={new Date(data.begin_date)}

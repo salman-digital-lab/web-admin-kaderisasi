@@ -262,19 +262,19 @@ const MemberDetail = () => {
           <div className="row">
             <div className="col-12 d-flex flex-column py-5 px-15">
               <span>Kelurahan</span>{" "}
-              <span className="font-grey">{data?.regency_name}</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-12 d-flex flex-column py-5 px-15">
-              <span>Kecamatan</span>{" "}
               <span className="font-grey">{data?.village_name}</span>
             </div>
           </div>
           <div className="row">
             <div className="col-12 d-flex flex-column py-5 px-15">
-              <span>Kota/Kabupaten</span>{" "}
+              <span>Kecamatan</span>{" "}
               <span className="font-grey">{data?.district_name}</span>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12 d-flex flex-column py-5 px-15">
+              <span>Kota/Kabupaten</span>{" "}
+              <span className="font-grey">{data?.regency_name}</span>
             </div>
           </div>
           <div className="row">
