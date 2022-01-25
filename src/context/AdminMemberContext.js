@@ -76,7 +76,7 @@ const AdminMemberProvider = (props) => {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}/v1/members/${id}/activities`)
       .then((res) => {
-        const form = res.data.data.activities
+        const form = res.data
         setMemberActivities(form)
         return form
       })

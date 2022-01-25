@@ -10,7 +10,6 @@ import {
   MenuItem,
   Input,
   TextareaAutosize,
-  Chip,
 } from "@material-ui/core"
 import { useTheme } from "@material-ui/core/styles"
 import DateFnsUtils from "@date-io/date-fns"
@@ -20,7 +19,15 @@ import {
 } from "@material-ui/pickers"
 import moment from "moment"
 import { AdminMemberContext } from "../../context/AdminMemberContext"
+import { AdminRegionContext } from "../../context/AdminRegionContext"
 import { MenuProps, getStyles } from "../select"
+import {
+  SelectUniversity,
+  SelectProvince,
+  SelectRegency,
+  SelectDistrict,
+  SelectVillage,
+} from "../selector"
 import styled from "./styled"
 /* eslint-disable */
 
@@ -57,12 +64,54 @@ const EditMemberModal = ({ open, onClose, data }) => {
   const theme = useTheme()
   const [payload, setPayload] = useState({ ...data })
   const { id } = useParams()
-  const { updateMemberResp, functions } = useContext(AdminMemberContext)
+  const { functions } = useContext(AdminMemberContext)
   const { updateMemberById } = functions
+
+  const { functions: regionFunctions } = useContext(AdminRegionContext)
+  const { getRegencies, getDistricts, getVillages } = regionFunctions
+
   const handleBirthDate = (date) => {
     setPayload({
       ...payload,
       date_of_birthday: moment(date).format("YYYY-MM-DD"),
+    })
+  }
+
+  const handleUniversity = (university_id) => {
+    setPayload({
+      ...payload,
+      university_id,
+    })
+  }
+
+  const handleProvince = (province_id) => {
+    setPayload({
+      ...payload,
+      province_id,
+    })
+    getRegencies(province_id)
+  }
+
+  const handleRegency = (regency_id) => {
+    setPayload({
+      ...payload,
+      regency_id,
+    })
+    getDistricts(regency_id)
+  }
+
+  const handleDistrict = (district_id) => {
+    setPayload({
+      ...payload,
+      district_id,
+    })
+    getVillages(district_id)
+  }
+
+  const handleVillage = (village_id) => {
+    setPayload({
+      ...payload,
+      village_id,
     })
   }
 
@@ -81,6 +130,10 @@ const EditMemberModal = ({ open, onClose, data }) => {
     delete payload.student_id
     delete payload.university
     delete payload.role_name
+    delete payload.file_image
+    if (!payload.university_id) {
+      delete payload.university_id
+    }
     updateMemberById(id, payload)
     onClose()
   }
@@ -271,8 +324,13 @@ const EditMemberModal = ({ open, onClose, data }) => {
                   <h5 className="font-grey">
                     <strong>Data Perguruan Tinggi</strong>
                   </h5>
-                  <span>Perguruan Tinggi</span>{" "}
-                  <span className="font-grey">{payload?.university}</span>
+                  <SelectUniversity
+                    data={{
+                      id: payload?.university_id,
+                      name: payload?.university,
+                    }}
+                    handleSelect={handleUniversity}
+                  />
                 </div>
               </div>
               <div className="row">
@@ -325,54 +383,49 @@ const EditMemberModal = ({ open, onClose, data }) => {
                   <h5 className="font-grey">
                     <strong>Alamat</strong>
                   </h5>
-                  {/* <TextField
-                    className="input-register"
-                    label="Provinsi"
-                    fullWidth
-                    size="small"
-                    defaultValue={payload?.province_name}
-                  /> */}
-                  <span>Provinsi</span>{" "}
-                  <span className="font-grey">{payload?.province_name}</span>
+                  <SelectProvince
+                    data={{
+                      id: payload?.province_id,
+                      name: payload?.province_name,
+                    }}
+                    handleSelect={handleProvince}
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
-                  {/* <TextField
-                    className="input-register"
-                    label="Kota/Kabupaten"
-                    fullWidth
-                    size="small"
-                    defaultValue={payload?.district_name}
-                  /> */}
-                  <span>Kota/Kabupaten</span>{" "}
-                  <span className="font-grey">{payload?.district_name}</span>
+                  <SelectRegency
+                    provinceId={payload?.province_id}
+                    data={{
+                      id: payload?.regency_id,
+                      name: payload?.regency_name,
+                    }}
+                    handleSelect={handleRegency}
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
-                  {/* <TextField
-                    className="input-register"
-                    label="Kecamatan"
-                    fullWidth
-                    size="small"
-                    defaultValue={payload?.village_name}
-                  /> */}
-                  <span>Kecamatan</span>{" "}
-                  <span className="font-grey">{payload?.village_name}</span>
+                  <SelectDistrict
+                    regencyId={payload?.regency_id}
+                    data={{
+                      id: payload?.district_id,
+                      name: payload?.district_name,
+                    }}
+                    handleSelect={handleDistrict}
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
-                  {/* <TextField
-                    className="input-register"
-                    label="Kelurahan"
-                    fullWidth
-                    size="small"
-                    defaultValue={payload?.regency_name}
-                  /> */}
-                  <span>Kelurahan</span>{" "}
-                  <span className="font-grey">{payload?.regency_name}</span>
+                  <SelectVillage
+                    districtId={payload?.district_id}
+                    data={{
+                      id: payload?.village_id,
+                      name: payload?.village_name,
+                    }}
+                    handleSelect={handleVillage}
+                  />
                 </div>
               </div>
               <div className="row">
