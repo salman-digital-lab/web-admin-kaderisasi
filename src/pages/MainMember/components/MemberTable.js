@@ -27,7 +27,7 @@ const headCells = [
   { id: "phone", numeric: false, label: "Phone/WA" },
   { id: "univ", numeric: false, label: "Perguruan Tinggi/Univ" },
   { id: "jengjang", numeric: false, label: "Jenjang" },
-  { id: "activity", numeric: false, label: "SSC & LMD" },
+  { id: "activity", numeric: false, label: "SSC, LMD & SPC" },
   { id: "view", numeric: false, label: "Action" },
 ]
 
@@ -88,6 +88,10 @@ const MemberTable = () => {
         delete params.lmd
         delete params.filter
       }
+      if (params.spectra === "") {
+        delete params.spectra
+        delete params.filter
+      }
       if (params.search_query === "") {
         delete params.search_query
         delete params.filter
@@ -112,7 +116,6 @@ const MemberTable = () => {
   const handleChangePage = (event, newPage) => {
     setPage(newPage)
     params.page = newPage + 1
-    console.log(params)
     getMembers(params)
   }
 
@@ -190,14 +193,21 @@ const MemberTable = () => {
                         </TableCell>
                         <TableCell className="table-cell">
                           <span>
-                            <Chip
-                              className="primary"
-                              label={`SSC-${row.ssc}`}
-                            />
-                            <Chip
-                              className="waiting"
-                              label={`LMD-${row.lmd}`}
-                            />
+                            {row.ssc ? (
+                              <Chip label={`SSC~${row.ssc}`} size="small" />
+                            ) : (
+                              ""
+                            )}
+                            {row.lmd ? (
+                              <Chip label={`LMD~${row.lmd}`} size="small" />
+                            ) : (
+                              ""
+                            )}
+                            {row.spectra ? (
+                              <Chip label={`SPC~${row.spectra}`} size="small" />
+                            ) : (
+                              ""
+                            )}
                           </span>
                         </TableCell>
                         <TableCell className="table-cell">
@@ -215,8 +225,8 @@ const MemberTable = () => {
               count={members?.data?.total ? members?.data?.total : 0}
               rowsPerPage={rowsPerPage}
               page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </>
         )}

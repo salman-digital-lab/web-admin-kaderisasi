@@ -25,6 +25,7 @@ const AdminActivityProvider = (props) => {
   const [activityForm, setActivityForm] = useState([])
   const [activityBanner, setActivityBanner] = useState([])
   const [universityList, setUniversityList] = useState([])
+  const [registrantQuestionnaire, setRegistrantQuestionnaire] = useState(null)
   const [openAlert, setOpenAlert] = useState(false)
 
   /*
@@ -113,6 +114,23 @@ const AdminActivityProvider = (props) => {
           res.data,
           `data-activity-${activityId}-participant-${new Date().getTime()}.xlsx`
         )
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  /*
+    Get all activity participants
+  */
+  const getRegistrantQuestionnaire = async (registrantId) => {
+    axios
+      .get(
+        process.env.REACT_APP_BASE_URL +
+          `/v1/activity/participant/${registrantId}/questionnaire`
+      )
+      .then((res) => {
+        setRegistrantQuestionnaire(res.data)
       })
       .catch((err) => {
         console.log(err)
@@ -258,7 +276,10 @@ const AdminActivityProvider = (props) => {
         process.env.REACT_APP_BASE_URL + `/v1/activity-category` + paramsQuery
       )
       .then((res) => {
-        res.data.data.data.unshift({ id: -1, name: "Pilih Kategori..." })
+        res.data.data.data.unshift({
+          id: -1,
+          name: "-- Pilih Kategori Kegiatan --",
+        })
         setCategoryList(res.data)
       })
       .catch((err) => {
@@ -415,6 +436,7 @@ const AdminActivityProvider = (props) => {
     getAllUniversities,
     getAllFormTemplate,
     exportActivityParticipants,
+    getRegistrantQuestionnaire,
   }
 
   return (
@@ -430,6 +452,8 @@ const AdminActivityProvider = (props) => {
         setFilterActivity,
         listParticipants,
         activityParticipants,
+        registrantQuestionnaire,
+        setRegistrantQuestionnaire,
         filterParticipantsActivity,
         setFilterParticipantsActivity,
         categoryList,

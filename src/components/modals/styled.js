@@ -16,7 +16,7 @@ const styled = makeStyles((theme) => ({
   },
   paper: {
     margin: "auto",
-    width: 700,
+    width: 900,
     backgroundColor: theme.palette.background.paper,
     outline: "none",
     padding: theme.spacing(2, 4, 3),

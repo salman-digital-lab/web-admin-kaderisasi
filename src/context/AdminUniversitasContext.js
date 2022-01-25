@@ -144,9 +144,7 @@ export const UniversitasProvider = (props) => {
       event.preventDefault()
 
       axios
-        .delete(
-          `https://admin-api-kaderisasi-dev.salmanitb.com/v1/universities/${Id}`
-        )
+        .delete(process.env.REACT_APP_BASE_URL + `/v1/universities/${Id}`)
         .then((res) => {
           const dataBaru = rows.filter((e) => {
             return e.id !== Id

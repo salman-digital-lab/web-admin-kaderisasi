@@ -54,7 +54,7 @@ const AdminDetail = () => {
   ])
   const [counselorGenderList] = useState([
     { value: "Laki-laki", label: "Laki-laki" },
-    { value: "Perempuan", label: "Perempuan" },
+    { value: "Perempuan", label: "Wanita" },
     { value: "Keduanya", label: "Keduanya" },
   ])
   const [statusHandlingList] = useState([
@@ -64,9 +64,19 @@ const AdminDetail = () => {
   ])
 
   const [payload, setPayload] = useState({})
-  const { listCounselors, studentCare, studentCareResp, setStudentCareResp, functions } =
-    useContext(AdminChatRoomContext)
-  const { getStudentCareDetail, deleteStudentCare, editStudentCare, getCounselors } = functions
+  const {
+    listCounselors,
+    studentCare,
+    studentCareResp,
+    setStudentCareResp,
+    functions,
+  } = useContext(AdminChatRoomContext)
+  const {
+    getStudentCareDetail,
+    deleteStudentCare,
+    editStudentCare,
+    getCounselors,
+  } = functions
   useEffect(() => {
     getStudentCareDetail(id)
     if (studentCareResp.status === "SUCCESS") {
@@ -150,7 +160,7 @@ const AdminDetail = () => {
                   className="cancel-button"
                   onClick={handleEdit}
                 >
-                  Batalkan
+                  Batal
                 </Button>
                 <Button
                   size="small"
@@ -207,7 +217,7 @@ const AdminDetail = () => {
                   ) : (
                     <>
                       <ListItemText primary={title.problem_owner_name} />
-                      <p>{studentCare?.problem_owner_name}</p>
+                      <p className="mb-0">{studentCare?.problem_owner_name}</p>
                     </>
                   )}
                 </ListItem>
@@ -226,7 +236,7 @@ const AdminDetail = () => {
                   ) : (
                     <>
                       <ListItemText primary={title.problem_category} />
-                      <p>{studentCare?.problem_category}</p>
+                      <p className="mb-0">{studentCare?.problem_category}</p>
                     </>
                   )}
                 </ListItem>
@@ -263,7 +273,7 @@ const AdminDetail = () => {
                   ) : (
                     <>
                       <ListItemText primary={title.technical_handling} />
-                      <p>{studentCare?.technical_handling}</p>
+                      <p className="mb-0">{studentCare?.technical_handling}</p>
                     </>
                   )}
                 </ListItem>
@@ -296,13 +306,13 @@ const AdminDetail = () => {
                   ) : (
                     <>
                       <ListItemText primary={title.problem_owner} />
-                      <p>{studentCare?.problem_owner}</p>
+                      <p className="mb-0">{studentCare?.problem_owner}</p>
                     </>
                   )}
                 </ListItem>
                 <ListItem button divider>
                   <ListItemText primary={title.createdAt} />
-                  <p>
+                  <p className="mb-0">
                     {moment(studentCare?.created_at).format("D MMM YYYY HH:mm")}
                   </p>
                 </ListItem>
@@ -346,7 +356,9 @@ const AdminDetail = () => {
                   ) : (
                     <>
                       <ListItemText primary={title.counselor_name} />
-                      <p>{studentCare?.counselor?.display_name}</p>
+                      <p className="mb-0">
+                        {studentCare?.counselor?.display_name}
+                      </p>
                     </>
                   )}
                 </ListItem>
@@ -383,7 +395,7 @@ const AdminDetail = () => {
                   ) : (
                     <>
                       <ListItemText primary={title.counselor_gender} />
-                      <p>{studentCare?.counselor_gender}</p>
+                      <p className="mb-0">{studentCare?.counselor_gender}</p>
                     </>
                   )}
                 </ListItem>
@@ -424,7 +436,7 @@ const AdminDetail = () => {
                 </ListItem>
                 <ListItem button divider>
                   <ListItemText primary={title.updatedAt} />
-                  <p>
+                  <p className="mb-0">
                     {moment(studentCare?.updated_at).format("D MMM YYYY HH:mm")}
                   </p>
                 </ListItem>

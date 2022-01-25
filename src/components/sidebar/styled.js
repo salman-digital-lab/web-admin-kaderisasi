@@ -20,6 +20,9 @@ const styled = makeStyles((theme) => ({
   drawerList: {
     textDecoration: "none",
     color: "#e8e8e8",
+    "&:hover": {
+      color: "#e8e8e8",
+    },
   },
   listItem: {
     marginTop: "10px",

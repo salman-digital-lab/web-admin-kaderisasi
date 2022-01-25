@@ -27,6 +27,9 @@ const MemberFilter = () => {
       if (event.target.name === "LMD") {
         data.lmd = event.target.value
       }
+      if (event.target.name === "spectra") {
+        data.spectra = event.target.value
+      }
       setFilterMember(data)
     }
   }
@@ -44,11 +47,10 @@ const MemberFilter = () => {
       <CardContent className="filter-content">
         <Box pl={5} pr={5}>
           <TextField
-            id="filled-basic"
-            size="small"
+            className="input-register"
             label="Cari Member"
-            variant="outlined"
-            className="filter-input"
+            fullWidth
+            size="small"
             name="search_query"
             onKeyDown={handleKeyDown}
           />
@@ -75,28 +77,42 @@ const MemberFilter = () => {
                 value="F"
                 control={<StyledRadio />}
                 onChange={(e) => handleChangeGender(e.target.value)}
-                label="Perempuan"
+                label="Wanita"
               />
             </RadioGroup>
           </FormControl>
-          <TextField
-            id="filled-basic"
-            size="small"
-            label="SSC"
-            variant="outlined"
-            className="filter-input"
-            name="SSC"
-            onKeyDown={handleKeyDown}
-          />
-          <TextField
-            id="filled-basic"
-            size="small"
-            label="LMD"
-            variant="outlined"
-            className="filter-input"
-            name="LMD"
-            onKeyDown={handleKeyDown}
-          />
+          <div className="row">
+            <div className="col-4">
+              <TextField
+                className="input-register"
+                label="SSC"
+                fullWidth
+                size="small"
+                name="SSC"
+                onKeyDown={handleKeyDown}
+              />
+            </div>
+            <div className="col-4">
+              <TextField
+                className="input-register"
+                label="LMD"
+                fullWidth
+                size="small"
+                name="LMD"
+                onKeyDown={handleKeyDown}
+              />
+            </div>
+            <div className="col-4">
+              <TextField
+                className="input-register"
+                label="SPC"
+                fullWidth
+                size="small"
+                name="spectra"
+                onKeyDown={handleKeyDown}
+              />
+            </div>
+          </div>
         </Box>
       </CardContent>
     </Card>
