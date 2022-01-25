@@ -1,5 +1,5 @@
 import React from "react"
-import { Chip } from "@material-ui/core"
+import { Chip } from "@mui/material"
 
 export const RegisterStatus = (props) => {
   switch (props.status) {
@@ -8,7 +8,8 @@ export const RegisterStatus = (props) => {
         <Chip
           className="error"
           label={props.status?.toLowerCase()}
-          size="small"
+          size="large"
+          sx={{ borderRadius: "5px" }}
         />
       )
     default:
@@ -16,7 +17,8 @@ export const RegisterStatus = (props) => {
         <Chip
           className="success"
           label={props.status?.toLowerCase()}
-          size="small"
+          size="large"
+          sx={{ borderRadius: "5px" }}
         />
       )
   }
@@ -29,7 +31,8 @@ export const PublishStatus = (props) => {
         <Chip
           className="waiting"
           label={props.status?.toLowerCase()}
-          size="small"
+          size="large"
+          sx={{ borderRadius: "5px" }}
         />
       )
     default:
@@ -37,7 +40,8 @@ export const PublishStatus = (props) => {
         <Chip
           className="success"
           label={props.status?.toLowerCase()}
-          size="small"
+          size="large"
+          sx={{ borderRadius: "5px" }}
         />
       )
   }
