@@ -96,7 +96,10 @@ const KegiatanFilter = () => {
               />
             </Grid>
           </Grid>
-          <Divider />
+          <Divider
+            orientation="vertical"
+            sx={{ height: "5px", backgroundColor: "#1F99CC" }}
+          />
           <Box>
             <Stack direction="row" spacing={3}>
               <FormControl size="small" sx={{ width: "15em" }}>
