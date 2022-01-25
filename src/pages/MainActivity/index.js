@@ -3,7 +3,6 @@ import "../../assets/scss/Kegiatan.scss"
 import KegiatanFilter from "./components/ActivityFilter"
 import KegiatanTable from "./components/ActivityTable"
 import AdminActivityProvider from "../../context/AdminActivityContext"
-import { Box, Grid } from "@material-ui/core"
 import { Stack } from "@mui/material"
 
 export default function KegiatanDanAktivitas() {
@@ -18,14 +17,6 @@ export default function KegiatanDanAktivitas() {
         <KegiatanFilter />
         <KegiatanTable />
       </Stack>
-      {/* <Grid container spacing={5}>
-        <Grid item xs>
-          <Box component="div">
-            
-          </Box>
-        </Grid>
-        <Grid item xs></Grid>
-      </Grid> */}
     </AdminActivityProvider>
   )
 }
