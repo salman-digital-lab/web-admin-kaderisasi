@@ -25,6 +25,7 @@ const Card = (props) => {
   const { users, loading, isSubmitSucces, SetIsSubmitSuccess, functions } =
     useContext(AdminContext)
   const [isUpdate] = useState(id ? true : false)
+  const [error, setError] = useState({})
   const [payload, setPayload] = useState(
     id
       ? {
@@ -75,6 +76,30 @@ const Card = (props) => {
   }, [users])
 
   const handleSubmit = async () => {
+    if (!payload?.display_name) {
+      setError({ ...error, display_name: true })
+      return
+    }
+    if (!payload?.first_name) {
+      setError({ ...error, first_name: true })
+      return
+    }
+    if (!payload?.last_name) {
+      setError({ ...error, last_name: true })
+      return
+    }
+    if (!payload?.email) {
+      setError({ ...error, email: true })
+      return
+    }
+    if (!payload?.username) {
+      setError({ ...error, username: true })
+      return
+    }
+    if (!id && (!payload?.password || payload?.password.length < 6)) {
+      setError({ ...error, password: true })
+      return
+    }
     if (isUpdate) {
       payload.active = 1
       await editUser(id, payload)
@@ -85,6 +110,7 @@ const Card = (props) => {
 
   const handleForm = (value, type) => {
     setPayload({ ...payload, [type]: value })
+    setError({ ...error, [type]: false })
   }
   if (loading) {
     return <LoadingAnimation />
@@ -94,7 +120,7 @@ const Card = (props) => {
     <div className="card-register-admin">
       <Collapse in={isSubmitSucces === "SUCCESS"}>
         <Alert
-        className="alert-popup"
+          className="alert-popup"
           action={
             <IconButton
               aria-label="close"
@@ -144,6 +170,10 @@ const Card = (props) => {
           className="input-register"
           required
           label="Display Name"
+          error={error?.display_name}
+          helperText={
+            error?.display_name && "Mohon untuk mengisi data display name!"
+          }
           fullWidth
           placeholder="Display Name"
           defaultValue={payload?.display_name}
@@ -153,6 +183,10 @@ const Card = (props) => {
           className="input-register"
           required
           label="First Name"
+          error={error?.first_name}
+          helperText={
+            error?.first_name && "Mohon untuk mengisi data awalan nama!"
+          }
           fullWidth
           placeholder="First Name"
           defaultValue={payload?.first_name}
@@ -162,6 +196,10 @@ const Card = (props) => {
           className="input-register"
           required
           label="Last Name"
+          error={error?.last_name}
+          helperText={
+            error?.last_name && "Mohon untuk mengisi data akhiran nama!"
+          }
           fullWidth
           placeholder="Last Name"
           defaultValue={payload?.last_name}
@@ -171,6 +209,8 @@ const Card = (props) => {
           className="input-register"
           required
           label="Email"
+          error={error?.email}
+          helperText={error?.email && "Mohon untuk mengisi data email!"}
           fullWidth
           placeholder="Email"
           defaultValue={payload?.email}
@@ -180,23 +220,15 @@ const Card = (props) => {
           className="input-register"
           required
           label="Username"
+          error={error?.username}
+          helperText={error?.username && "Mohon untuk mengisi data username!"}
           fullWidth
           placeholder="Username"
           defaultValue={payload?.username}
           onChange={(event) => handleForm(event.target.value, "username")}
         />
-        <TextField
-          className="input-register"
-          required
-          label="Password"
-          type="password"
-          helperText={text}
-          fullWidth
-          placeholder="Password"
-          onChange={(event) => handleForm(event.target.value, "password")}
-        />
         <Select
-          className="input-register"
+          className="mt-20"
           required
           fullWidth
           label="Group"
@@ -209,6 +241,19 @@ const Card = (props) => {
           <MenuItem value={3}>Kapro</MenuItem>
           <MenuItem value={4}>Manajer</MenuItem>
         </Select>
+        {!id && (
+          <TextField
+            className="input-register"
+            required
+            label="Password"
+            type="password"
+            error={error?.password}
+            helperText={error?.password && text}
+            fullWidth
+            placeholder="Password"
+            onChange={(event) => handleForm(event.target.value, "password")}
+          />
+        )}
         <Button
           variant="contained"
           className="btn-register primary-button"

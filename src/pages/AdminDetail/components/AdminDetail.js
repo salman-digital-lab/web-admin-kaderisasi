@@ -47,7 +47,7 @@ const AdminDetail = () => {
           <AccountCircle fontSize="large" className="logo-detail-admin" />
         </IconButton>
         <p className="heading-admin">{users?.username}</p>
-        <p>Admin</p>
+        <p>{users?.group?.name}</p>
       </div>
       <div className="right-detail-admin">
         <div className="nav-detail-admin">
