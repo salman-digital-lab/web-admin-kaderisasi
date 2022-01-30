@@ -9,7 +9,7 @@ import EditMemberModal from "../../../components/modals/edit-member-modal"
 import AlertToast from "../../../components/alert"
 import { AdminMemberContext } from "../../../context/AdminMemberContext"
 import { ConfirmationModal } from "./confirmation-modal"
-import profile from "../profile.png"
+import profile from "../../../assets/images/profile.png"
 
 const MemberDetail = () => {
   const { id } = useParams()

@@ -236,10 +236,12 @@ const Card = (props) => {
           value={payload?.group_id ? payload.group_id : 1}
           onChange={(event) => handleForm(event.target.value, "group_id")}
         >
-          <MenuItem value={1}>Admin</MenuItem>
-          <MenuItem value={2}>Pendengar</MenuItem>
-          <MenuItem value={3}>Kapro</MenuItem>
-          <MenuItem value={4}>Manajer</MenuItem>
+          <MenuItem value={1}>Developer</MenuItem>
+          <MenuItem value={2}>Administrator</MenuItem>
+          <MenuItem value={51}>Operator</MenuItem>
+          <MenuItem value={52}>Operator Pendaftaran</MenuItem>
+          <MenuItem value={53}>Konselor</MenuItem>
+          <MenuItem value={54}>Programmer</MenuItem>
         </Select>
         {!id && (
           <TextField
