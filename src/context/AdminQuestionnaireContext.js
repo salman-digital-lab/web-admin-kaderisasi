@@ -47,7 +47,7 @@ export default function AdminQuestionnaireProvider({ children }) {
   const SET_QUESTIONNAIRE_FORM_TYPE = (id, variant) => {
     const { form } = state
     form[id].type = variant
-    if (variant === "radio" || variant === "option") {
+    if (variant === "radio" || variant === "option" || variant === "dropdown") {
       form[id].data = [
         {
           label: "Yes of course",
@@ -116,7 +116,7 @@ export default function AdminQuestionnaireProvider({ children }) {
 
   const ADD_QUESTIONNAIRE_ANSWER_STRING_VALUE = (id) => {
     const { form } = state
-    form[id].data.push({
+    form[id]?.data?.push({
       label: "Yes of course",
       value: "yes_of_course",
     })
