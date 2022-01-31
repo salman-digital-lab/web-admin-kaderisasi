@@ -38,8 +38,8 @@ export const SelectDistrict = ({ regencyId, data, handleSelect }) => {
       getOptionLabel={(option) => option.name}
       options={options}
       loading={loading}
-      defaultValue={data}
-      onChange={(e, value) => handleSelect(value?.id)}
+      value={data}
+      onChange={(e, value) => handleSelect(value)}
       renderInput={(params) => (
         <TextField
           {...params}

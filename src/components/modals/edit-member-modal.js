@@ -88,30 +88,40 @@ const EditMemberModal = ({ open, onClose, data }) => {
     setPayload({
       ...payload,
       province_id,
+      regency_name: "",
+      district_name: "",
+      village_name: "",
     })
     getRegencies(province_id)
   }
 
-  const handleRegency = (regency_id) => {
+  const handleRegency = (value) => {
+    console.log(value)
     setPayload({
       ...payload,
-      regency_id,
+      regency_id: value?.id,
+      regency_name: value?.name,
+      district_name: "",
+      village_name: "",
     })
-    getDistricts(regency_id)
+    getDistricts(value?.id)
   }
 
-  const handleDistrict = (district_id) => {
+  const handleDistrict = (value) => {
     setPayload({
       ...payload,
-      district_id,
+      district_id: value?.id,
+      district_name: value?.name,
+      village_name: "",
     })
-    getVillages(district_id)
+    getVillages(value?.id)
   }
 
-  const handleVillage = (village_id) => {
+  const handleVillage = (value) => {
     setPayload({
       ...payload,
-      village_id,
+      village_id: value?.id,
+      village_name: value?.name,
     })
   }
 
