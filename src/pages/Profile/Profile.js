@@ -1,18 +1,13 @@
 /* eslint-disable */
 import React, { useState, useContext, useEffect } from "react"
-import {
-  Button,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  IconButton,
-} from "@material-ui/core"
-import { ArrowBack, AccountCircle } from "@material-ui/icons"
+import { Button, List, ListItem, ListItemText } from "@material-ui/core"
+import { ArrowBack } from "@material-ui/icons"
+import { Link } from "react-router-dom"
 import { AdminStatus } from "../../components/statuses"
 import Cookies from "js-cookie"
-import "../../assets/scss/Profile.scss"
+// import "../../assets/scss/Profile.scss"
 import { ProfileContext } from "../../context/ProfileContext"
+import profile from "../../assets/images/profile.png"
 
 const Profile = () => {
   let id
@@ -35,60 +30,84 @@ const Profile = () => {
   })
 
   return (
-    <>
-      <div className="container-detail-profile">
-        <div className="left-detail-profile">
-          <IconButton
-            edge="end"
-            aria-label="account of current user"
-            aria-haspopup="true"
-          >
-            <AccountCircle fontSize="large" className="logo-detail-profile" />
-          </IconButton>
-          <p className="heading-profile">{users?.username}</p>
-          <p>Admin</p>
-        </div>
-        <div className="right-detail-profile">
-          <div className="nav-detail-profile">
-            <div className="button-group"></div>
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-4 margin-auto">
+          <div className="row flex-column align-items-center text-center">
+            <img
+              className="profile-image rounded-circle"
+              src={profile}
+              width="160px"
+              height="160px"
+              alt="profile"
+            />
+            <h5 className="mt-20">
+              <strong>
+                {users?.first_name} {users?.last_name}
+              </strong>
+            </h5>
+            <span className="font-grey">{users?.username}</span>
+            <span className="font-grey mt-10">{users?.group?.name}</span>
           </div>
-          <div className="content-detail-profile">
+        </div>
+        <div className="col-8">
+          <div className="button-area">
+            <div className="button-left">
+              <Button size="small" className="back-button" variant="outlined">
+                <Link to="/">
+                  <ArrowBack fontSize="inherit" />
+                  KEMBALI
+                </Link>
+              </Button>
+            </div>
+            <div className="button-right">
+              <Button
+                size="small"
+                className="edit-button"
+                variant="contained"
+                color="secondary"
+              >
+                <Link className="text-white" to={`/edit-admin/${users?.id}`}>
+                  Edit
+                </Link>
+              </Button>
+            </div>
+          </div>
+          <div className="content-detail-admin">
             <List
               component="nav"
-              className="detail-profile"
+              className="detail-admin"
               aria-label="mailbox folders"
             >
-              <ListItem button>
+              <ListItem button divider>
                 <ListItemText primary={title.displayname} />
-                <p>{users?.display_name}</p>
+                {users?.display_name}
               </ListItem>
-              <Divider />
               <ListItem button divider>
                 <ListItemText primary={title.firstname} />
-                <p>{users?.first_name}</p>
+                {users?.first_name}
               </ListItem>
               <ListItem button divider>
                 <ListItemText primary={title.lastname} />
-                <p>{users?.last_name}</p>
+                {users?.last_name}
               </ListItem>
               <ListItem button divider>
                 <ListItemText primary={title.email} />
-                <p>{users?.email}</p>
+                {users?.email}
               </ListItem>
               <ListItem button divider>
                 <ListItemText primary={title.username} />
-                <p>{users?.username}</p>
+                {users?.username}
               </ListItem>
               <ListItem button divider>
                 <ListItemText primary={title.status} />
                 <AdminStatus status={users?.active} />
               </ListItem>
-              <Divider light />
             </List>
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

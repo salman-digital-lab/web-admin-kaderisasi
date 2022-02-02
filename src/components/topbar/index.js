@@ -76,7 +76,6 @@ const Topbar = (props) => {
       <Link className="neutral-font" to="/profile">
         <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       </Link>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
       <MenuItem onClick={handleLogout}>
         Logout
         {loading ? (
@@ -133,16 +132,6 @@ const Topbar = (props) => {
             <MenuIcon className={classes.icon} />
           </IconButton>
           <div className={classes.grow} />
-          <IconButton
-            edge="end"
-            aria-label="account of current user"
-            aria-controls={menuId}
-            aria-haspopup="true"
-            onClick={handleProfileMenuOpen}
-            style={{ padding: "5px", marginRight: "5px" }}
-          >
-            <AccountCircle className={classes.icon} fontSize="large" />
-          </IconButton>
           <Typography className={classes.text} component="div">
             <Box lineHeight={3} m={1}>
               Hello, {user?.username}!
@@ -158,6 +147,16 @@ const Topbar = (props) => {
               <MoreVert className={classes.icon} />
             </IconButton>
           </div>
+          <IconButton
+            edge="end"
+            aria-label="account of current user"
+            aria-controls={menuId}
+            aria-haspopup="true"
+            onClick={handleProfileMenuOpen}
+            style={{ padding: "5px", marginRight: "5px" }}
+          >
+            <AccountCircle className={classes.icon} fontSize="large" />
+          </IconButton>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

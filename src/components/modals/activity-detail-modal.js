@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from "react"
 import { useParams } from "react-router-dom"
-import { makeStyles } from "@material-ui/core/styles"
 import {
   Button,
   Checkbox,
@@ -320,21 +319,27 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
                 <img alt="logo" src={uploadedImage} className="img-fluid" />
               </div>
               <form onSubmit={submitForm}>
-                <input
-                  className="button-kegiatan mt-20"
-                  type="file"
-                  name="logo"
-                  id="logo"
-                  ref={ref}
-                  onChange={onImageChange}
-                />
-                <Button
-                  className="button-kegiatan primary-button mt-10"
-                  variant="contained"
-                  type="submit"
-                >
-                  Upload Gambar
-                </Button>
+                <div className="row mt-20">
+                  <div className="col-8 margin-auto">
+                    <input
+                      className="button-kegiatan"
+                      type="file"
+                      name="logo"
+                      id="logo"
+                      ref={ref}
+                      onChange={onImageChange}
+                    />
+                  </div>
+                  <div className="col-4">
+                    <Button
+                      className="button-kegiatan primary-button"
+                      variant="contained"
+                      type="submit"
+                    >
+                      Upload
+                    </Button>
+                  </div>
+                </div>
               </form>
               <div>
                 <br />
