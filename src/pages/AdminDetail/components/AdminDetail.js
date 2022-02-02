@@ -7,11 +7,12 @@ import {
   ListItemText,
   IconButton,
 } from "@material-ui/core"
-import { ArrowBack, AccountCircle } from "@material-ui/icons"
+import { ArrowBack } from "@material-ui/icons"
 import { useParams, Link } from "react-router-dom"
 import ModalAdmin from "./AdminModal"
 import { AdminContext } from "../../../context/AdminContext"
 import { AdminStatus } from "../../../components/statuses"
+import profile from "../../../assets/images/profile.png"
 
 const AdminDetail = () => {
   const { id } = useParams()
@@ -37,28 +38,38 @@ const AdminDetail = () => {
     setOpen(false)
   }
   return (
-    <>
-      <div className="left-detail-admin">
-        <IconButton
-          edge="end"
-          aria-label="account of current user"
-          aria-haspopup="true"
-        >
-          <AccountCircle fontSize="large" className="logo-detail-admin" />
-        </IconButton>
-        <p className="heading-admin">{users?.username}</p>
-        <p>Admin</p>
-      </div>
-      <div className="right-detail-admin">
-        <div className="nav-detail-admin">
-          <Button size="small" className="back-button" variant="outlined">
-            <Link to="/user">
-              <ArrowBack fontSize="inherit" />
-              KEMBALI
-            </Link>
-          </Button>
-          <div className="button-group">
-            {/* <Button
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-4 margin-auto">
+          <div className="row flex-column align-items-center text-center">
+            <img
+              className="profile-image rounded-circle"
+              src={profile}
+              width="160px"
+              height="160px"
+              alt="profile"
+            />
+            <h5 className="mt-20">
+              <strong>
+                {users?.first_name} {users?.last_name}
+              </strong>
+            </h5>
+            <span className="font-grey">{users?.username}</span>
+            <span className="font-grey mt-10">{users?.group?.name}</span>
+          </div>
+        </div>
+        <div className="col-8">
+          <div className="button-area">
+            <div className="button-left">
+              <Button size="small" className="back-button" variant="outlined">
+                <Link to="/user">
+                  <ArrowBack fontSize="inherit" />
+                  KEMBALI
+                </Link>
+              </Button>
+            </div>
+            <div className="button-right">
+              {/* <Button
               size="small"
               className="buttons"
               variant="contained"
@@ -67,15 +78,15 @@ const AdminDetail = () => {
             >
               Akses Fitur
             </Button> */}
-            <Button
-              size="small"
-              className="edit-button"
-              variant="contained"
-              color="secondary"
-            >
-              <Link to={`/edit-admin/${id}`}>Edit</Link>
-            </Button>
-            {/* <Button
+              <Button
+                size="small"
+                className="edit-button"
+                variant="contained"
+                color="secondary"
+              >
+                <Link to={`/edit-admin/${id}`}>Edit</Link>
+              </Button>
+              {/* <Button
               size="small"
               className="delete-button"
               variant="contained"
@@ -84,47 +95,46 @@ const AdminDetail = () => {
               <Delete fontSize="small" />
               Hapus
             </Button> */}
+            </div>
+          </div>
+          <div className="content-detail-admin">
+            <List
+              component="nav"
+              className="detail-admin"
+              aria-label="mailbox folders"
+            >
+              <ListItem button divider>
+                <ListItemText primary={title.displayname} />
+                {users?.display_name}
+              </ListItem>
+              <ListItem button divider>
+                <ListItemText primary={title.firstname} />
+                {users?.first_name}
+              </ListItem>
+              <ListItem button divider>
+                <ListItemText primary={title.lastname} />
+                {users?.last_name}
+              </ListItem>
+              <ListItem button divider>
+                <ListItemText primary={title.email} />
+                {users?.email}
+              </ListItem>
+              <ListItem button divider>
+                <ListItemText primary={title.username} />
+                {users?.username}
+              </ListItem>
+              <ListItem button divider>
+                <ListItemText primary={title.status} />
+                <AdminStatus status={users?.active} />
+              </ListItem>
+            </List>
+          </div>
+          <div>
+            <ModalAdmin open={open} onClose={handleClose} />
           </div>
         </div>
-        <div className="content-detail-admin">
-          <List
-            component="nav"
-            className="detail-admin"
-            aria-label="mailbox folders"
-          >
-            <ListItem button>
-              <ListItemText primary={title.displayname} />
-              <p>{users?.display_name}</p>
-            </ListItem>
-            <Divider />
-            <ListItem button divider>
-              <ListItemText primary={title.firstname} />
-              <p>{users?.first_name}</p>
-            </ListItem>
-            <ListItem button divider>
-              <ListItemText primary={title.lastname} />
-              <p>{users?.last_name}</p>
-            </ListItem>
-            <ListItem button divider>
-              <ListItemText primary={title.email} />
-              <p>{users?.email}</p>
-            </ListItem>
-            <ListItem button divider>
-              <ListItemText primary={title.username} />
-              <p>{users?.username}</p>
-            </ListItem>
-            <ListItem button divider>
-              <ListItemText primary={title.status} />
-              <AdminStatus status={users?.active} />
-            </ListItem>
-            <Divider light />
-          </List>
-        </div>
-        <div>
-          <ModalAdmin open={open} onClose={handleClose} />
-        </div>
       </div>
-    </>
+    </div>
   )
 }
 

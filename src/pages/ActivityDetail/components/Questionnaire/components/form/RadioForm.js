@@ -37,6 +37,7 @@ export default function RadioForm(props) {
     GET_QUESTIONNAIRE_ANSWER_STRING_VALUE,
   } = functions
   const { id } = props
+
   return (
     <>
       <Grid item xs={12} sm={8}>
