@@ -319,6 +319,23 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
               <div className="container-gambar-detail">
                 <img alt="logo" src={uploadedImage} className="img-fluid" />
               </div>
+              <form onSubmit={submitForm}>
+                <input
+                  className="button-kegiatan mt-20"
+                  type="file"
+                  name="logo"
+                  id="logo"
+                  ref={ref}
+                  onChange={onImageChange}
+                />
+                <Button
+                  className="button-kegiatan primary-button mt-10"
+                  variant="contained"
+                  type="submit"
+                >
+                  Upload Gambar
+                </Button>
+              </form>
               <div>
                 <br />
                 <Paper style={{ maxHeight: 300, overflow: "auto" }}>
@@ -397,23 +414,6 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
                     Sukses mengunggah gambar.
                   </Alert>
                 )}
-                <form onSubmit={submitForm}>
-                  <input
-                    className="button-kegiatan"
-                    type="file"
-                    name="logo"
-                    id="logo"
-                    ref={ref}
-                    onChange={onImageChange}
-                  />
-                  <Button
-                    className="button-kegiatan primary-button"
-                    variant="contained"
-                    type="submit"
-                  >
-                    Upload Gambar
-                  </Button>
-                </form>
               </div>
               <div className="detail-activity">
                 <div className="input-form">
