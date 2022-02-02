@@ -200,7 +200,6 @@ const CategoryTable = () => {
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
-            sx={{ marginBottom: 0 }}
           />
         </Box>
       )}
