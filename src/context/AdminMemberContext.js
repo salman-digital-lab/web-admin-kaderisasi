@@ -25,7 +25,6 @@ const AdminMemberProvider = (props) => {
   const getMembers = async (params) => {
     setMembers({})
     let paramsQuery = "?"
-    console.log(params)
     Object.keys(params).forEach((x, i) => {
       if (i === Object.keys(params).length - 1) {
         paramsQuery += `${x}=${params[x].toString()}`
