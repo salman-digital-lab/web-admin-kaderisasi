@@ -179,7 +179,7 @@ const CategoryTable = () => {
                             sx={{
                               backgroundColor: "#FF5576",
                             }}
-                            onClick={() => handleDeleteCategory(row.value)}
+                            onClick={() => handleDeleteCategory(row.id)}
                           >
                             <Delete fontSize="small" />
                             Hapus

@@ -1,8 +1,8 @@
 import React from "react"
 import "../../assets/scss/MainUniversities.scss"
 import { UniversitasProvider } from "../../context/AdminUniversitasContext"
-import UniversitiesFillter from "./components/universities-fillter"
-import UniversitiesTable from "./components/universities-table"
+import UniversitiesFillter from "./components/UniversitiesFillter"
+import UniversitiesTable from "./components/UniversitiesTable"
 /* eslint-disable */
 const MainUniversities = () => {
   return (
