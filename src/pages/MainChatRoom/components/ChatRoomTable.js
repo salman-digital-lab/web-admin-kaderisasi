@@ -164,7 +164,7 @@ const ChatRoomTable = () => {
                       <TableCell className="table-cell">
                         <div className="text-ellipsis width-100">
                           <Link to={`/member/${row.member_id}`}>
-                            {row.problem_owner_name}
+                            {row.name}
                           </Link>
                         </div>
                         {row.gender === "F" ? (
