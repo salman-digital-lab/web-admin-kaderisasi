@@ -1,8 +1,5 @@
 import React, { useState, useContext, useEffect } from "react"
 import { Button } from "@material-ui/core"
-import { EditorState, convertToRaw, ContentState } from "draft-js"
-import draftToHtml from "draftjs-to-html"
-import htmlToDraft from "html-to-draftjs"
 import moment from "moment"
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css"
 import { useParams } from "react-router-dom"
@@ -16,13 +13,8 @@ const FormKegiatan = () => {
   const { id } = useParams()
   const { activityForm, categoryList, openAlert, setOpenAlert, functions } =
     useContext(AdminActivityContext)
-  const { getActivityCategory, getActivityDetail, editActivity } = functions
-  const stateEdit = EditorState.createEmpty()
-  const [editorState, setEditorState] = useState(stateEdit)
-  const [stateCanBeEdited, setStateCanBeEdited] = useState(false)
+  const { getActivityCategory, getActivityDetail } = functions
   const [open, setOpen] = useState(false)
-  const [formData, setFormData] = useState({})
-  const [check, setCheck] = useState(true)
 
   const handleOpen = () => {
     setOpen(true)
@@ -30,14 +22,6 @@ const FormKegiatan = () => {
 
   const handleClose = () => {
     setOpen(false)
-  }
-
-  const handleEdit = () => {
-    setStateCanBeEdited(!stateCanBeEdited)
-  }
-
-  const handleForm = (value, type) => {
-    setFormData({ ...formData, [type]: value })
   }
 
   useEffect(() => {

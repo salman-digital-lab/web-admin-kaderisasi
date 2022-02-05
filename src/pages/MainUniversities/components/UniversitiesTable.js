@@ -58,8 +58,8 @@ const UniversitiesTable = () => {
       params.page = 1
       setPage(0)
       params = { ...params, ...filterUniversities }
-      if (params.search === "") {
-        delete params.search
+      if (params.name === "") {
+        delete params.name
         delete params.filter
       }
       if (Object.keys(params).length > 1) {

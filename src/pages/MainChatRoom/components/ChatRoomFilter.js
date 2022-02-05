@@ -10,7 +10,7 @@ const ChatRoomFilter = () => {
     if (event.key === "Enter") {
       setFilterStudentCare({
         ...filterStudentCare,
-        search: event.target.value,
+        name: event.target.value,
         filter: true,
       })
     }

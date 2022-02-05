@@ -88,8 +88,8 @@ const ChatRoomTable = () => {
       params.page = 1
       setPage(0)
       params = { ...params, ...filterStudentCare }
-      if (params.search === "") {
-        delete params.search
+      if (params.name === "") {
+        delete params.name
         delete params.filter
       }
       if (params.gender === "") {

@@ -7,7 +7,7 @@ const AdminChatRoomProvider = (props) => {
   const [filterStudentCare, setFilterStudentCare] = useState({
     filter: false,
     gender: "",
-    search: "",
+    name: "",
   })
   const [studentCare, setStudentCare] = useState({})
   const [listCounselors, setCounselors] = useState([])

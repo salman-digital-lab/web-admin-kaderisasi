@@ -52,7 +52,7 @@ export const UniversitasProvider = (props) => {
 
   const [filterUniversities, setFilterUniversities] = React.useState({
     filter: false,
-    search: "",
+    name: "",
   })
 
   const getUniversities = async (params) => {

@@ -23,7 +23,7 @@ const UniversitiesFillter = () => {
     if (event.key === "Enter") {
       setFilterUniversities({
         ...filterUniversities,
-        search: event.target.value,
+        name: event.target.value,
         filter: true,
       })
     }
