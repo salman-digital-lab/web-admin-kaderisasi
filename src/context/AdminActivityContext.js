@@ -357,14 +357,17 @@ const AdminActivityProvider = (props) => {
     @params
     id: integer
   
-    Delete activity category where id = params.id
+    Change status activity category where id = params.id
   */
-  const deleteActivityCategory = (id) => {
+  const changeStatusActivityCategory = (id, page, perPage) => {
     let result = null
     axios
-      .delete(process.env.REACT_APP_BASE_URL + `/v1/activity-category/${id}`)
+      .put(
+        process.env.REACT_APP_BASE_URL +
+          `/v1/activity-category/${id}/set-active`
+      )
       .then((res) => {
-        getActivityCategory({ page: 1, perPage: 5 })
+        getActivityCategory({ page, perPage })
         result = res
         return result
       })
@@ -432,7 +435,7 @@ const AdminActivityProvider = (props) => {
     getActivityCategoryDetail,
     addActivityCategory,
     editActivityCategory,
-    deleteActivityCategory,
+    changeStatusActivityCategory,
     getAllUniversities,
     getAllFormTemplate,
     exportActivityParticipants,

@@ -83,10 +83,16 @@ const PendaftarTable = () => {
   } = useContext(AdminActivityContext)
   const { getActivityParticipants, exportActivityParticipants } = functions
 
-  if (listParticipants.length < 1 && status) {
-    getActivityParticipants(id, params)
-    setStatus(false)
-  }
+  useEffect(() => {
+    params = {
+      page: 1,
+      perPage: 5,
+    }
+    if (listParticipants.length < 1 && status) {
+      getActivityParticipants(id, params)
+      setStatus(false)
+    }
+  }, [])
 
   useEffect(() => {
     if (filterParticipantsActivity.filter) {

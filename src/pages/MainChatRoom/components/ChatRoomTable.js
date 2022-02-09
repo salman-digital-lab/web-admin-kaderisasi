@@ -80,6 +80,10 @@ const ChatRoomTable = () => {
   const { getStudentCare } = functions
 
   useEffect(() => {
+    params = {
+      page: 1,
+      perPage: 5,
+    }
     getStudentCare(params)
   }, [])
 

@@ -40,6 +40,10 @@ const UniversitiesTable = () => {
   const { getUniversities, headCells, useStyles, deleteUniversity } = functions
 
   useEffect(() => {
+    params = {
+      page: 1,
+      perPage: 5,
+    }
     getUniversities(params)
   }, [])
 

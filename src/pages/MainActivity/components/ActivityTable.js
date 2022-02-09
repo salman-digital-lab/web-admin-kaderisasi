@@ -76,10 +76,16 @@ const KegiatanTable = () => {
   } = useContext(AdminActivityContext)
   const { getActivity } = functions
 
-  if (listActivity.length < 1 && status) {
-    getActivity(params)
-    setStatus(false)
-  }
+  useEffect(() => {
+    params = {
+      page: 1,
+      perPage: 5,
+    }
+    if (listActivity.length < 1 && status) {
+      getActivity(params)
+      setStatus(false)
+    }
+  }, [])
 
   useEffect(() => {
     if (filterActivity.filter) {

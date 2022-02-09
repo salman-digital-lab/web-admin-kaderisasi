@@ -12,7 +12,7 @@ import {
   Box,
   Stack,
 } from "@mui/material"
-import { Delete, Edit } from "@material-ui/icons"
+import { Edit } from "@material-ui/icons"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 import {
   EnhancedTableHead,
@@ -20,12 +20,12 @@ import {
   getComparator,
 } from "../../../components/table-design"
 import { KategoriModal } from "./kategori-modal"
-import { ConfirmationModal } from "./confirmation-modal"
 import LoadingAnimation from "../../../components/loading-animation"
 
 const headCells = [
   { id: "no", numeric: true, label: "No." },
   { id: "name", numeric: false, label: "Nama Kategori" },
+  { id: "status", numeric: false, label: "Status" },
   { id: "action", numeric: true, label: "Action" },
 ]
 
@@ -62,37 +62,27 @@ const CategoryTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [dataEdit, setDataEdit] = useState({})
   const [open, setOpen] = useState(false)
-  const [deleteCategory, setDeleteCategory] = useState(false)
-  const [deleteId, setDeleteId] = useState(-1)
-
-  const handleCloseDelete = () => {
-    setDeleteCategory(false)
-  }
 
   const handleClose = () => {
     setOpen(false)
   }
 
   const { categoryList, functions } = useContext(AdminActivityContext)
-  const { getActivityCategory, deleteActivityCategory } = functions
-  if (!categoryList.status) {
-    getActivityCategory(params)
-  }
+  const { getActivityCategory, changeStatusActivityCategory } = functions
+
+  useEffect(() => {
+    params = {
+      page: 1,
+      perPage: 5,
+    }
+    if (!categoryList.status) {
+      getActivityCategory(params)
+    }
+  }, [])
 
   const handleEditCategory = (id, name) => {
     setDataEdit({ id, name })
     setOpen(true)
-  }
-
-  const handleDeleteCategory = (id) => {
-    setDeleteId(id)
-    setDeleteCategory(true)
-  }
-
-  const categoryDelete = () => {
-    deleteActivityCategory(deleteId)
-    setPage(0)
-    handleCloseDelete()
   }
 
   const handleRequestSort = (event, property) => {
@@ -159,6 +149,28 @@ const CategoryTable = () => {
                       </TableCell>
                       <TableCell>{row.name}</TableCell>
                       <TableCell>
+                        <label className="switch switch-flat">
+                          <input
+                            className="switch-input"
+                            type="checkbox"
+                            checked={row.is_active}
+                            onChange={() =>
+                              changeStatusActivityCategory(
+                                row.id,
+                                page + 1,
+                                rowsPerPage
+                              )
+                            }
+                          />
+                          <span
+                            className="switch-label"
+                            data-on="On"
+                            data-off="Off"
+                          ></span>
+                          <span className="switch-handle"></span>
+                        </label>
+                      </TableCell>
+                      <TableCell>
                         <Stack direction="row" spacing={2}>
                           <Button
                             size="small"
@@ -172,18 +184,6 @@ const CategoryTable = () => {
                             <Edit fontSize="small" />
                             Edit
                           </Button>
-                          <Button
-                            size="small"
-                            variant="contained"
-                            disableElevation
-                            sx={{
-                              backgroundColor: "#FF5576",
-                            }}
-                            onClick={() => handleDeleteCategory(row.id)}
-                          >
-                            <Delete fontSize="small" />
-                            Hapus
-                          </Button>
                         </Stack>
                       </TableCell>
                     </TableRow>
@@ -193,9 +193,9 @@ const CategoryTable = () => {
             </Table>
           </TableContainer>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[5, 10, 25, 50]}
             component="div"
-            count={categoryList?.data?.total}
+            count={categoryList?.data?.total ? categoryList?.data?.total : 0}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -204,12 +204,6 @@ const CategoryTable = () => {
         </Box>
       )}
       <KategoriModal open={open} onClose={handleClose} data={dataEdit} />
-      <ConfirmationModal
-        open={deleteCategory}
-        onClose={handleCloseDelete}
-        title={"Hapus Kategori Kegiatan"}
-        onSubmit={() => categoryDelete()}
-      />
     </div>
   )
 }
