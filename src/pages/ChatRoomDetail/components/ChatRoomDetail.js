@@ -107,7 +107,8 @@ const AdminDetail = () => {
     setPayload({ ...payload, [type]: value })
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault()
     setStateCanBeEdited(!stateCanBeEdited)
     editStudentCare(id, payload)
     getStudentCareDetail(id)
@@ -115,7 +116,7 @@ const AdminDetail = () => {
 
   return (
     <>
-      <div className="chat-room-detail">
+      <form onSubmit={handleSubmit} className="chat-room-detail">
         <div className="nav-chat-room-detail">
           <Button size="small" className="back-button" variant="outlined">
             <Link to="/chat-room">
@@ -162,7 +163,7 @@ const AdminDetail = () => {
                   className="button-top-tambah-kegiatan"
                   variant="contained"
                   color="primary"
-                  onClick={handleSubmit}
+                  type="submit"
                 >
                   Simpan
                 </Button>
@@ -486,6 +487,7 @@ const AdminDetail = () => {
             </>
           )}
         </div>
+
         <div>
           <ConfirmationModal
             open={isOpen}
@@ -494,7 +496,7 @@ const AdminDetail = () => {
             onSubmit={() => studentCareDelete()}
           />
         </div>
-      </div>
+      </form>
     </>
   )
 }

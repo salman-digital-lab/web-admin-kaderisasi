@@ -8,7 +8,7 @@ const AdminActivityProvider = (props) => {
   const [state, setState] = useState(null)
   const [filterActivity, setFilterActivity] = useState({
     filter: false,
-    category_id: -1,
+    category_id: "",
     minimum_roles_id: -1,
     search: "",
   })

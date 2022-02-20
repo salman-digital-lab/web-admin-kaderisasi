@@ -126,10 +126,11 @@ const KegiatanFilter = () => {
               </RadioGroup>
             </FormControl>
             <FormControl className="select-dropdown mt-10">
-              <InputLabel id="demo-mutiple-name-label">Kategori</InputLabel>
+              <InputLabel id="category-id-label">Kategori</InputLabel>
               {categoryList?.status === "SUCCESS" && (
                 <Select
                   value={filterActivity.category_id}
+                  labelId="category-id-label"
                   onChange={(e) => handleCategoryChange(e.target.value)}
                   input={<Input />}
                   MenuProps={MenuProps}
