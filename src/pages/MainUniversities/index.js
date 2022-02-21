@@ -8,12 +8,12 @@ const MainUniversities = () => {
   return (
     <UniversitasProvider>
       <div className="kegiatan-list">
-        <div className="flex-container">
-          <div className="flex-left">
-            <UniversitiesTable />
-          </div>
-          <div className="flex-right">
+        <div className="container">
+          <div className="flex-item">
             <UniversitiesFillter />
+          </div>
+          <div className="flex-item">
+            <UniversitiesTable />
           </div>
         </div>
       </div>

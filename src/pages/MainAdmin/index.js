@@ -7,12 +7,12 @@ import AdminActivityProvider from "../../context/AdminActivityContext"
 const AdminSalman = () => (
   <AdminActivityProvider>
     <div className="userlist">
-      <div className="flex-container">
-        <div className="flex-left">
-          <AdminTable />
-        </div>
-        <div className="flex-right">
+      <div className="container">
+        <div className="flex-item">
           <AdminFilter />
+        </div>
+        <div className="flex-item">
+          <AdminTable />
         </div>
       </div>
     </div>

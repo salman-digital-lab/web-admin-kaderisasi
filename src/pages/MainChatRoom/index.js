@@ -7,12 +7,12 @@ import AdminChatRoomProvider from "../../context/AdminChatRoomContext"
 const ChatRoom = () => (
   <AdminChatRoomProvider>
     <div className="userlist">
-      <div className="flex-container">
-        <div className="flex-left">
-          <ChatRoomTable />
-        </div>
-        <div className="flex-right">
+      <div className="container">
+        <div className="flex-item">
           <ChatRoomFilter />
+        </div>
+        <div className="flex-item">
+          <ChatRoomTable />
         </div>
       </div>
     </div>
