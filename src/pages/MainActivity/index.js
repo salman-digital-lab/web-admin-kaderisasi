@@ -6,14 +6,12 @@ import AdminActivityProvider from "../../context/AdminActivityContext"
 
 const KegiatanDanAktivis = () => (
   <AdminActivityProvider>
-    <div className="kegiatan-list">
-      <div className="flex-container">
-        <div className="flex-left">
-          <KegiatanTable />
-        </div>
-        <div className="flex-right">
-          <KegiatanFilter />
-        </div>
+    <div className="container">
+      <div className="flex-item">
+        <KegiatanFilter />
+      </div>
+      <div className="flex-item">
+        <KegiatanTable />
       </div>
     </div>
   </AdminActivityProvider>
