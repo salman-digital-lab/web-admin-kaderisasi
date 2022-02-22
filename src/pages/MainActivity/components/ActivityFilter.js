@@ -15,6 +15,8 @@ import {
   Input,
 } from "@material-ui/core"
 import { useTheme } from "@material-ui/core/styles"
+import useMediaQuery from "@mui/material/useMediaQuery"
+import { Add } from "@material-ui/icons"
 import StyledRadio from "../../../components/radio-button"
 import { KegiatanModal } from "./ActivityModal"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
@@ -23,6 +25,7 @@ import { MenuProps, getStyles } from "../../../components/select"
 
 const KegiatanFilter = () => {
   const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
   const { filterActivity, setFilterActivity, categoryList, functions } =
     useContext(AdminActivityContext)
   const { getActivityCategory } = functions
@@ -62,7 +65,7 @@ const KegiatanFilter = () => {
 
   return (
     <>
-      <Card>
+      {/* <Card>
         <CardContent className="filter-content">
           <Box pl={5} pr={5}>
             <Button
@@ -75,17 +78,37 @@ const KegiatanFilter = () => {
           </Box>
         </CardContent>
       </Card>
-      <br />
+      <br /> */}
       <Card>
         <CardContent className="filter-content">
           <Box pl={5} pr={5}>
-            <TextField
-              className="input-register"
-              label="Cari Kegiatan"
-              fullWidth
-              size="small"
-              onKeyDown={handleKeyDown}
-            />
+            <Box className="filter-block">
+              <TextField
+                className="filter-item input-register"
+                label="Cari Kegiatan"
+                fullWidth
+                size="small"
+                onKeyDown={handleKeyDown}
+              />
+              {isMobile ? (
+                <Button
+                  variant="contained"
+                  className="btn-tambah-kegiatan primary-button"
+                  onClick={handleOpen}
+                >
+                  <Add />
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  className="btn-tambah-kegiatan primary-button"
+                  startIcon={<Add />}
+                  onClick={handleOpen}
+                >
+                  Tambah Kegiatan
+                </Button>
+              )}
+            </Box>
             <FormControl component="fieldset" className="radio-button jenkel">
               <FormLabel component="legend">Min. Jenjang</FormLabel>
               <RadioGroup
