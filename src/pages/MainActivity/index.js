@@ -7,6 +7,11 @@ import AdminActivityProvider from "../../context/AdminActivityContext"
 const KegiatanDanAktivis = () => (
   <AdminActivityProvider>
     <div className="container">
+      <h1
+        style={{ color: "#25223C", fontWeight: "bold", marginBottom: "30px" }}
+      >
+        Data Kegiatan
+      </h1>
       <div className="flex-item">
         <KegiatanFilter />
       </div>

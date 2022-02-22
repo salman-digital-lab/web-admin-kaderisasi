@@ -11,7 +11,7 @@ const CategorySetting = () => {
       <h1
         style={{ color: "#25223C", fontWeight: "bold", marginBottom: "30px" }}
       >
-        Kegiatan dan Aktivitas
+        Kategori Kegiatan
       </h1>
       <Stack direction="column" spacing={4}>
         <CategoryFilter />
