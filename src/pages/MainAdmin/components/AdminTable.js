@@ -68,6 +68,10 @@ const AdminTable = () => {
   const { getUsers } = functions
 
   useEffect(() => {
+    params = {
+      page: 1,
+      perPage: 5,
+    }
     getUsers(params)
   }, [])
 

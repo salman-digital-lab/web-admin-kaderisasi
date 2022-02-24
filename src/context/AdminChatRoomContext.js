@@ -7,9 +7,7 @@ const AdminChatRoomProvider = (props) => {
   const [filterStudentCare, setFilterStudentCare] = useState({
     filter: false,
     gender: "",
-    ssc: -1,
-    lmd: -1,
-    search_query: "",
+    name: "",
   })
   const [studentCare, setStudentCare] = useState({})
   const [listCounselors, setCounselors] = useState([])
@@ -17,23 +15,22 @@ const AdminChatRoomProvider = (props) => {
   const [studentCareResp, setStudentCareResp] = useState({})
   const [loading, setLoading] = useState(false)
 
-
   /*
     Get all Counselor
   */
-    const getCounselors = async () => {
-      setLoading(true)
-      axios
-        .get(process.env.REACT_APP_BASE_URL + `/v1/student-care/counselors`)
-        .then((res) => {
-          let result = res.data.data
-          setCounselors(result)
-          setLoading(false)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
+  const getCounselors = async () => {
+    setLoading(true)
+    axios
+      .get(process.env.REACT_APP_BASE_URL + `/v1/student-care/counselors`)
+      .then((res) => {
+        let result = res.data.data
+        setCounselors(result)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   /*
     Get all Members

@@ -80,6 +80,10 @@ const ChatRoomTable = () => {
   const { getStudentCare } = functions
 
   useEffect(() => {
+    params = {
+      page: 1,
+      perPage: 5,
+    }
     getStudentCare(params)
   }, [])
 
@@ -88,8 +92,8 @@ const ChatRoomTable = () => {
       params.page = 1
       setPage(0)
       params = { ...params, ...filterStudentCare }
-      if (params.search === "") {
-        delete params.search
+      if (params.name === "") {
+        delete params.name
         delete params.filter
       }
       if (params.gender === "") {
@@ -164,7 +168,7 @@ const ChatRoomTable = () => {
                       <TableCell className="table-cell">
                         <div className="text-ellipsis width-100">
                           <Link to={`/member/${row.member_id}`}>
-                            {row.problem_owner_name}
+                            {row.member?.name}
                           </Link>
                         </div>
                         {row.gender === "F" ? (

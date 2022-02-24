@@ -1,5 +1,5 @@
 import React from "react"
-import { Button, Modal, Fade, Backdrop } from "@material-ui/core"
+import { Button, Modal, Fade, Backdrop, Stack, Typography } from "@mui/material"
 import "../../../assets/scss/AddActivity.scss"
 import styled from "./styled"
 /* eslint-disable */
@@ -23,38 +23,37 @@ export const ConfirmationModal = ({
       BackdropProps={{
         timeout: 500,
       }}
-      
-      
     >
       <Fade in={open}>
         <div className={classes.paper}>
-          <div className="modal-header text-center">
-            <h2>{title}</h2>
-          </div>
-          <div className="form-flex">
-            <div>
-              <p>{message}</p>
-              <div className="button-bottom">
-                <Button
-                  onClick={onClose}
-                  className="button-bottoms-kegiatan"
-                  variant="contained"
-                  color="secondary"
-                >
-                  Batal
-                </Button>
-                <Button
-                  onClick={onSubmit}
-                  className="button-bottoms-kegiatan"
-                  variant="contained"
-                  color="primary"
-                  disabled={isSubmitting}
-                >
-                  Ya, Saya Yakin!
-                </Button>
-              </div>
-            </div>
-          </div>
+          <Stack
+            direction="column"
+            spacing={3}
+            padding={3}
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+          >
+            <Typography variant="h5">{title}</Typography>
+            <Stack
+              direction="row"
+              spacing={2}
+              display="flex"
+              justifyContent="center"
+            >
+              <Button onClick={onClose} variant="outlined">
+                Batal
+              </Button>
+              <Button
+                onClick={onSubmit}
+                variant="contained"
+                color="primary"
+                disabled={isSubmitting}
+              >
+                Ya, Saya Yakin!
+              </Button>
+            </Stack>
+          </Stack>
         </div>
       </Fade>
     </Modal>

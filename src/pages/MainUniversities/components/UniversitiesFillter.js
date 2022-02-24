@@ -1,9 +1,8 @@
-import React, { useState } from "react"
-import { Card, CardContent, Box, Button } from "@material-ui/core"
-import { Link } from "react-router-dom"
-import { UniversitiesModal } from "./universities-modal"
+import React, { useState, useContext } from "react"
+import { Card, CardContent, TextField, Box, Button } from "@material-ui/core"
+import { UniversitiesModal } from "./UniversitiesModal"
 import "../../../assets/scss/AddActivity.scss"
-// import { UniversitasContext } from "../../../context/AdminUniversitasContext"
+import { UniversitasContext } from "../../../context/AdminUniversitasContext"
 
 const UniversitiesFillter = () => {
   const [open, setOpen] = useState(false)
@@ -15,6 +14,19 @@ const UniversitiesFillter = () => {
   const handleAddUniversity = () => {
     setDataEdit({})
     setOpen(true)
+  }
+
+  const { filterUniversities, setFilterUniversities } =
+    useContext(UniversitasContext)
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      setFilterUniversities({
+        ...filterUniversities,
+        name: event.target.value,
+        filter: true,
+      })
+    }
   }
   return (
     <>
@@ -32,20 +44,19 @@ const UniversitiesFillter = () => {
         </CardContent>
       </Card>
       <br />
-      {/* <Card>
+      <Card>
         <CardContent className="filter-content">
           <Box pl={5} pr={5}>
             <TextField
-              id="filled-basic"
+              className="input-register"
+              fullWidth
               size="small"
               label="Cari Universitas"
-              variant="outlined"
-              className="filter-input"
               onKeyDown={handleKeyDown}
             />
           </Box>
         </CardContent>
-      </Card> */}
+      </Card>
       <UniversitiesModal open={open} onClose={handleClose} data={dataEdit} />
     </>
   )

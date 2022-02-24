@@ -70,10 +70,16 @@ const MemberTable = () => {
     useContext(AdminMemberContext)
   const { getMembers } = functions
 
-  if (listMembers.length < 1 && status) {
-    getMembers(params)
-    setStatus(false)
-  }
+  useEffect(() => {
+    params = {
+      page: 1,
+      page_size: 5,
+    }
+    if (listMembers.length < 1 && status) {
+      getMembers(params)
+      setStatus(false)
+    }
+  }, [])
 
   useEffect(() => {
     if (filterMember.filter) {

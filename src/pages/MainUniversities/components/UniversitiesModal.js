@@ -10,15 +10,15 @@ import {
 } from "@mui/material"
 import "../../../assets/scss/AddActivity.scss"
 import styled from "./styled"
-import { AdminActivityContext } from "../../../context/AdminActivityContext"
+import { UniversitasContext } from "../../../context/AdminUniversitasContext"
 /* eslint-disable */
-export const KategoriModal = ({ open, onClose, data }) => {
+export const UniversitiesModal = ({ open, onClose, data }) => {
   const classes = styled()
   const [state, setState] = useState({
     name: "",
   })
-  const { functions } = useContext(AdminActivityContext)
-  const { addActivityCategory, editActivityCategory } = functions
+  const { functions } = useContext(UniversitasContext)
+  const { addUniversity, editUniversity } = functions
 
   const handleForm = (value, type) => {
     setState({ ...state, [type]: value })
@@ -27,8 +27,8 @@ export const KategoriModal = ({ open, onClose, data }) => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     data.id
-      ? await editActivityCategory(data.id, { name: state.name })
-      : await addActivityCategory({ name: state.name })
+      ? await editUniversity(data.id, { name: state.name })
+      : await addUniversity({ name: state.name })
     setState({ name: "" })
     onClose()
   }
@@ -56,10 +56,10 @@ export const KategoriModal = ({ open, onClose, data }) => {
               alignItems="center"
             >
               <Typography variant="h5">
-                {data?.id ? "Edit Kategori" : "Tambah Kategori"}
+                {data?.id ? "Edit Universitas" : "Tambah Universitas"}
               </Typography>
               <TextField
-                label="Nama Kategori"
+                label="Nama Universitas"
                 required
                 defaultValue={data.id ? data.name : state.name}
                 onChange={(event) => handleForm(event.target.value, "name")}
@@ -88,5 +88,53 @@ export const KategoriModal = ({ open, onClose, data }) => {
         </div>
       </Fade>
     </Modal>
+    // <Modal
+    //   className={classes.modal}
+    //   open={open}
+    //   onClose={onClose}
+    //   closeAfterTransition
+    //   BackdropComponent={Backdrop}
+    //   BackdropProps={{
+    //     timeout: 500,
+    //   }}
+
+    // >
+    //   <Fade in={open}>
+    //     <div className={classes.paper}>
+    //       <div className="form-flex">
+    //         <div>
+    //           <div className="detail-activity">
+    //             <div className="input-form">
+    //               Nama Universitas
+    //               <br />
+    //               <TextField
+    //                 className="form-modal"
+    //                 defaultValue={data.id ? data.name : state.name}
+    //                 onChange={(event) => handleForm(event.target.value, "name")}
+    //               />
+    //             </div>
+    //           </div>
+    //           <div className="button-bottom">
+    //             <Button
+    //               onClick={onClose}
+    //               className="button-bottoms-kegiatan"
+    //               variant="contained"
+    //               color="secondary"
+    //             >
+    //               Batal
+    //             </Button>
+    //             <Button
+    //               onClick={handleSubmit}
+    //               className="button-bottoms-kegiatan primary-button"
+    //               variant="contained"
+    //             >
+    //               Simpan
+    //             </Button>
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </Fade>
+    // </Modal>
   )
 }

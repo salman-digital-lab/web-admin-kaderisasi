@@ -9,7 +9,7 @@ import EditMemberModal from "../../../components/modals/edit-member-modal"
 import AlertToast from "../../../components/alert"
 import { AdminMemberContext } from "../../../context/AdminMemberContext"
 import { ConfirmationModal } from "./confirmation-modal"
-import profile from "../profile.png"
+import profile from "../../../assets/images/profile.png"
 
 const MemberDetail = () => {
   const { id } = useParams()
@@ -262,19 +262,19 @@ const MemberDetail = () => {
           <div className="row">
             <div className="col-12 d-flex flex-column py-5 px-15">
               <span>Kelurahan</span>{" "}
-              <span className="font-grey">{data?.regency_name}</span>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-12 d-flex flex-column py-5 px-15">
-              <span>Kecamatan</span>{" "}
               <span className="font-grey">{data?.village_name}</span>
             </div>
           </div>
           <div className="row">
             <div className="col-12 d-flex flex-column py-5 px-15">
-              <span>Kota/Kabupaten</span>{" "}
+              <span>Kecamatan</span>{" "}
               <span className="font-grey">{data?.district_name}</span>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12 d-flex flex-column py-5 px-15">
+              <span>Kota/Kabupaten</span>{" "}
+              <span className="font-grey">{data?.regency_name}</span>
             </div>
           </div>
           <div className="row">
@@ -289,8 +289,6 @@ const MemberDetail = () => {
               <h5 className="font-grey">
                 <strong>Keanggotaan</strong>
               </h5>
-              <span>Tahun Mendaftar</span>{" "}
-              <span className="font-grey">{data?.intake_year}</span>
             </div>
           </div>
           <div className="row">

@@ -10,7 +10,6 @@ import {
   MenuItem,
   Input,
   TextareaAutosize,
-  Chip,
 } from "@material-ui/core"
 import { useTheme } from "@material-ui/core/styles"
 import DateFnsUtils from "@date-io/date-fns"
@@ -20,7 +19,15 @@ import {
 } from "@material-ui/pickers"
 import moment from "moment"
 import { AdminMemberContext } from "../../context/AdminMemberContext"
+import { AdminRegionContext } from "../../context/AdminRegionContext"
 import { MenuProps, getStyles } from "../select"
+import {
+  SelectUniversity,
+  SelectProvince,
+  SelectRegency,
+  SelectDistrict,
+  SelectVillage,
+} from "../selector"
 import styled from "./styled"
 /* eslint-disable */
 
@@ -57,12 +64,64 @@ const EditMemberModal = ({ open, onClose, data }) => {
   const theme = useTheme()
   const [payload, setPayload] = useState({ ...data })
   const { id } = useParams()
-  const { updateMemberResp, functions } = useContext(AdminMemberContext)
+  const { functions } = useContext(AdminMemberContext)
   const { updateMemberById } = functions
+
+  const { functions: regionFunctions } = useContext(AdminRegionContext)
+  const { getRegencies, getDistricts, getVillages } = regionFunctions
+
   const handleBirthDate = (date) => {
     setPayload({
       ...payload,
       date_of_birthday: moment(date).format("YYYY-MM-DD"),
+    })
+  }
+
+  const handleUniversity = (university_id) => {
+    setPayload({
+      ...payload,
+      university_id,
+    })
+  }
+
+  const handleProvince = (province_id) => {
+    setPayload({
+      ...payload,
+      province_id,
+      regency_name: "",
+      district_name: "",
+      village_name: "",
+    })
+    getRegencies(province_id)
+  }
+
+  const handleRegency = (value) => {
+    console.log(value)
+    setPayload({
+      ...payload,
+      regency_id: value?.id,
+      regency_name: value?.name,
+      district_name: "",
+      village_name: "",
+    })
+    getDistricts(value?.id)
+  }
+
+  const handleDistrict = (value) => {
+    setPayload({
+      ...payload,
+      district_id: value?.id,
+      district_name: value?.name,
+      village_name: "",
+    })
+    getVillages(value?.id)
+  }
+
+  const handleVillage = (value) => {
+    setPayload({
+      ...payload,
+      village_id: value?.id,
+      village_name: value?.name,
     })
   }
 
@@ -78,10 +137,13 @@ const EditMemberModal = ({ open, onClose, data }) => {
     delete payload.regency_name
     delete payload.village_name
     delete payload.komprof
-    delete payload.intake_year
     delete payload.student_id
     delete payload.university
     delete payload.role_name
+    delete payload.file_image
+    if (!payload.university_id) {
+      delete payload.university_id
+    }
     updateMemberById(id, payload)
     onClose()
   }
@@ -232,6 +294,7 @@ const EditMemberModal = ({ open, onClose, data }) => {
                     fullWidth
                     size="small"
                     defaultValue={payload?.email}
+                    type="email"
                     onChange={(e) =>
                       setPayload({ ...payload, email: e.target.value })
                     }
@@ -272,47 +335,55 @@ const EditMemberModal = ({ open, onClose, data }) => {
                   <h5 className="font-grey">
                     <strong>Data Perguruan Tinggi</strong>
                   </h5>
-                  <span>Perguruan Tinggi</span>{" "}
-                  <span className="font-grey">{payload?.university}</span>
+                  <SelectUniversity
+                    data={{
+                      id: payload?.university_id,
+                      name: payload?.university,
+                    }}
+                    handleSelect={handleUniversity}
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
-                  {/* <TextField
+                  <TextField
                     className="input-register"
                     label="Fakultas"
                     fullWidth
                     size="small"
                     defaultValue={payload?.faculty}
-                  /> */}
-                  <span>Fakultas</span>{" "}
-                  <span className="font-grey">{payload?.faculty}</span>
+                    onChange={(e) =>
+                      setPayload({ ...payload, faculty: e.target.value })
+                    }
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
-                  {/* <TextField
+                  <TextField
                     className="input-register"
                     label="Jurusan"
                     fullWidth
                     size="small"
                     defaultValue={payload?.major}
-                  /> */}
-                  <span>Jurusan</span>{" "}
-                  <span className="font-grey">{payload?.major}</span>
+                    onChange={(e) =>
+                      setPayload({ ...payload, major: e.target.value })
+                    }
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
-                  {/* <TextField
+                  <TextField
                     className="input-register"
                     label="Angkatan"
                     fullWidth
                     size="small"
                     defaultValue={payload?.intake_year}
-                  /> */}
-                  <span>Angkatan</span>{" "}
-                  <span className="font-grey">{payload?.intake_year}</span>
+                    onChange={(e) =>
+                      setPayload({ ...payload, intake_year: e.target.value })
+                    }
+                  />
                 </div>
               </div>
             </div>
@@ -323,54 +394,49 @@ const EditMemberModal = ({ open, onClose, data }) => {
                   <h5 className="font-grey">
                     <strong>Alamat</strong>
                   </h5>
-                  {/* <TextField
-                    className="input-register"
-                    label="Provinsi"
-                    fullWidth
-                    size="small"
-                    defaultValue={payload?.province_name}
-                  /> */}
-                  <span>Provinsi</span>{" "}
-                  <span className="font-grey">{payload?.province_name}</span>
+                  <SelectProvince
+                    data={{
+                      id: payload?.province_id,
+                      name: payload?.province_name,
+                    }}
+                    handleSelect={handleProvince}
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
-                  {/* <TextField
-                    className="input-register"
-                    label="Kota/Kabupaten"
-                    fullWidth
-                    size="small"
-                    defaultValue={payload?.district_name}
-                  /> */}
-                  <span>Kota/Kabupaten</span>{" "}
-                  <span className="font-grey">{payload?.district_name}</span>
+                  <SelectRegency
+                    provinceId={payload?.province_id}
+                    data={{
+                      id: payload?.regency_id,
+                      name: payload?.regency_name,
+                    }}
+                    handleSelect={handleRegency}
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
-                  {/* <TextField
-                    className="input-register"
-                    label="Kecamatan"
-                    fullWidth
-                    size="small"
-                    defaultValue={payload?.village_name}
-                  /> */}
-                  <span>Kecamatan</span>{" "}
-                  <span className="font-grey">{payload?.village_name}</span>
+                  <SelectDistrict
+                    regencyId={payload?.regency_id}
+                    data={{
+                      id: payload?.district_id,
+                      name: payload?.district_name,
+                    }}
+                    handleSelect={handleDistrict}
+                  />
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
-                  {/* <TextField
-                    className="input-register"
-                    label="Kelurahan"
-                    fullWidth
-                    size="small"
-                    defaultValue={payload?.regency_name}
-                  /> */}
-                  <span>Kelurahan</span>{" "}
-                  <span className="font-grey">{payload?.regency_name}</span>
+                  <SelectVillage
+                    districtId={payload?.district_id}
+                    data={{
+                      id: payload?.village_id,
+                      name: payload?.village_name,
+                    }}
+                    handleSelect={handleVillage}
+                  />
                 </div>
               </div>
               <div className="row">
@@ -410,30 +476,49 @@ const EditMemberModal = ({ open, onClose, data }) => {
                   <h5 className="font-grey">
                     <strong>Keanggotaan</strong>
                   </h5>
-                  <span>Tahun Mendaftar</span>{" "}
-                  <span className="font-grey">{payload?.intake_year}</span>
                 </div>
               </div>
               <div className="row">
                 <div className="col-12 d-flex flex-column py-5 px-15">
                   <span>Ikut Serta Kegiatan</span>{" "}
-                  <span>
-                    {data.ssc ? (
-                      <Chip label={`SSC~${data.ssc}`} size="small" />
-                    ) : (
-                      ""
-                    )}
-                    {data.lmd ? (
-                      <Chip label={`LMD~${data.lmd}`} size="small" />
-                    ) : (
-                      ""
-                    )}
-                    {data.spectra ? (
-                      <Chip label={`SPC~${data.spectra}`} size="small" />
-                    ) : (
-                      ""
-                    )}
-                  </span>
+                  <div className="row">
+                    <div className="col-4 d-flex flex-column py-5 px-15">
+                      <TextField
+                        className="input-register"
+                        label="SSC"
+                        fullWidth
+                        size="small"
+                        defaultValue={payload?.ssc}
+                        onChange={(e) =>
+                          setPayload({ ...payload, ssc: e.target.value })
+                        }
+                      />
+                    </div>
+                    <div className="col-4 d-flex flex-column py-5 px-15">
+                      <TextField
+                        className="input-register"
+                        label="LMD"
+                        fullWidth
+                        size="small"
+                        defaultValue={payload?.lmd}
+                        onChange={(e) =>
+                          setPayload({ ...payload, lmd: e.target.value })
+                        }
+                      />
+                    </div>
+                    <div className="col-4 d-flex flex-column py-5 px-15">
+                      <TextField
+                        className="input-register"
+                        label="SPC"
+                        fullWidth
+                        size="small"
+                        defaultValue={payload?.spectra}
+                        onChange={(e) =>
+                          setPayload({ ...payload, spectra: e.target.value })
+                        }
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

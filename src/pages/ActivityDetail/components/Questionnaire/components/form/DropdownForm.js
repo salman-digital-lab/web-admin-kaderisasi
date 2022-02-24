@@ -25,7 +25,7 @@ const componentStyle = {
   },
 }
 
-export default function DropdownForm(props) {
+export default function DropdownForm({ id }) {
   const { functions } = React.useContext(AdminQuestionnaireContext)
   const {
     SET_QUESTIONNAIRE_FORM_QUESTION,
@@ -36,7 +36,7 @@ export default function DropdownForm(props) {
     GET_QUESTIONNAIRE_FORM_QUESTION,
     GET_QUESTIONNAIRE_ANSWER_STRING_VALUE,
   } = functions
-  const { id } = props
+
   return (
     <>
       <Grid item xs={12} sm={8}>

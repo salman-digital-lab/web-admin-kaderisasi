@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useState, useEffect } from "react"
 import {
   Table,
   TableBody,
@@ -18,8 +18,8 @@ import {
 import { UniversitasContext } from "../../../context/AdminUniversitasContext"
 import AlertToast from "../../../components/alert"
 import LoadingAnimation from "../../../components/loading-animation"
-import { UniversitiesModal } from "./universities-modal"
-import { ConfirmationModal } from "./confirmation-modal"
+import { UniversitiesModal } from "./UniversitiesModal"
+import { ConfirmationModal } from "./ConfirmationModal"
 /* eslint-disable */
 
 let params = {
@@ -28,12 +28,24 @@ let params = {
 }
 
 const UniversitiesTable = () => {
-  const { universitiesState, openAlert, setOpenAlert, functions } =
-    useContext(UniversitasContext)
+  const {
+    universitiesState,
+    openAlert,
+    setOpenAlert,
+    filterUniversities,
+    setFilterUniversities,
+    loading,
+    functions,
+  } = useContext(UniversitasContext)
   const { getUniversities, headCells, useStyles, deleteUniversity } = functions
-  if (!universitiesState.status) {
+
+  useEffect(() => {
+    params = {
+      page: 1,
+      perPage: 5,
+    }
     getUniversities(params)
-  }
+  }, [])
 
   const classes = useStyles()
   const [order, setOrder] = useState("desc")
@@ -44,6 +56,23 @@ const UniversitiesTable = () => {
   const [dataEdit, setDataEdit] = useState({})
   const [isDelete, setIsDelete] = useState(false)
   const [deleteId, setDeleteId] = useState(-1)
+
+  useEffect(() => {
+    if (filterUniversities.filter) {
+      params.page = 1
+      setPage(0)
+      params = { ...params, ...filterUniversities }
+      if (params.name === "") {
+        delete params.name
+        delete params.filter
+      }
+      if (Object.keys(params).length > 1) {
+        delete params.filter
+        getUniversities(params)
+      }
+      setFilterUniversities({ ...filterUniversities, filter: false })
+    }
+  }, [filterUniversities, setFilterUniversities, getUniversities])
 
   const handleCloseDelete = () => {
     setIsDelete(false)
@@ -95,7 +124,7 @@ const UniversitiesTable = () => {
         Daftar Universitas
       </h1>
       <Paper>
-        {!universitiesState.status ? (
+        {loading ? (
           <div className="loading-table">
             <LoadingAnimation table />
           </div>
@@ -112,12 +141,13 @@ const UniversitiesTable = () => {
                   order={order}
                   orderBy={orderBy}
                   onRequestSort={handleRequestSort}
-                  rowCount={universitiesState?.data?.total}
                   headCells={headCells}
                 />
                 <TableBody>
                   {stableSort(
-                    universitiesState?.data?.data,
+                    universitiesState?.data?.data
+                      ? universitiesState?.data?.data
+                      : [],
                     getComparator(order, orderBy)
                   ).map((row, index) => {
                     return (
