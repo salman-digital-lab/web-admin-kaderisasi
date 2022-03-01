@@ -420,7 +420,7 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
                   </Alert>
                 )}
               </div>
-              <div className="detail-activity">
+              <div className="detail-activity ml-10 mr-10">
                 <div className="input-form">
                   <TextField
                     className="form-modal"
@@ -442,11 +442,13 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
                     value={categoryId}
                     onChange={handleCategoryChange}
                   >
-                    {categoryList?.data?.data?.map((category) => (
-                      <MenuItem key={category} value={category.id}>
-                        {category.name}
-                      </MenuItem>
-                    ))}
+                    {categoryList?.data?.data
+                      ?.filter(({ id }) => id != -1)
+                      .map((category) => (
+                        <MenuItem key={category} value={category.id}>
+                          {category.name}
+                        </MenuItem>
+                      ))}
                   </Select>
                 )}
               </div>

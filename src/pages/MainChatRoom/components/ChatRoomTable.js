@@ -168,7 +168,7 @@ const ChatRoomTable = () => {
                             {row.member?.name}
                           </Link>
                         </div>
-                        {row.gender === "F" ? (
+                        {row.member?.gender === "F" ? (
                           <span className="icon-text">
                             <Female fontSize="small" /> Wanita
                           </span>

@@ -92,7 +92,7 @@ const KegiatanTable = () => {
       params.page = 1
       setPage(0)
       params = { ...params, ...filterActivity }
-      if (params.category_id === -1) {
+      if (params.category_id === "" || params.category_id === -1) {
         delete params.category_id
         delete params.filter
       }

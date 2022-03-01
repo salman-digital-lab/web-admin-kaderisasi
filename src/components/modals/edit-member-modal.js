@@ -294,6 +294,7 @@ const EditMemberModal = ({ open, onClose, data }) => {
                     fullWidth
                     size="small"
                     defaultValue={payload?.email}
+                    type="email"
                     onChange={(e) =>
                       setPayload({ ...payload, email: e.target.value })
                     }

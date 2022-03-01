@@ -70,28 +70,28 @@ justify-content: space-between;
     color: #0d6efd;
     background-color: transparent;
     box-shadow: none;
-  
+
     &:hover {
-      color:#0d6efd;
+      color: #0d6efd;
       text-decoration: underline;
       background-color: transparent;
       border-color: transparent;
       box-shadow: none;
     }
-  
+
     &:focus,
     &.focus {
       text-decoration: none;
       border-color: transparent;
       box-shadow: none;
     }
-  
+
     &:disabled,
     &.disabled {
       color: black;
       pointer-events: none;
     }
-  
+
     // No need for an active state here
   }
   &.cancel-button {
@@ -109,7 +109,7 @@ justify-content: space-between;
     }
   }
   &.primary-button {
-    background-color: #1F99CC;
+    background-color: #1f99cc;
     color: white;
     &:hover {
       background-color: #2186b1;
@@ -123,7 +123,7 @@ justify-content: space-between;
   margin: 15px;
   justify-content: end;
   .button-bottoms-kegiatan {
-    margin: 5px;    
+    margin: 5px;
   }
 }
 
@@ -151,7 +151,6 @@ justify-content: space-between;
 
 .detail-activity {
   display: flex;
-  margin: 10px;
 
   .input-form {
     margin: 10px;

@@ -75,7 +75,8 @@ const Card = (props) => {
     }
   }, [users])
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault()
     if (!payload?.display_name) {
       setError({ ...error, display_name: true })
       return
@@ -165,7 +166,11 @@ const Card = (props) => {
           </Link>
         </Button>
       </div>
-      <form className="form-register-admin" noValidate autoComplete="off">
+      <form
+        className="form-register-admin"
+        autoComplete="off"
+        onSubmit={handleSubmit}
+      >
         <TextField
           className="input-register"
           required
@@ -215,6 +220,7 @@ const Card = (props) => {
           placeholder="Email"
           defaultValue={payload?.email}
           onChange={(event) => handleForm(event.target.value, "email")}
+          type="email"
         />
         <TextField
           className="input-register"
@@ -259,7 +265,7 @@ const Card = (props) => {
         <Button
           variant="contained"
           className="btn-register primary-button"
-          onClick={() => handleSubmit()}
+          type="submit"
         >
           {id ? "Edit Admin Account" : "Register Admin Account"}
         </Button>
