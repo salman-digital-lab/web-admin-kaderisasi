@@ -9,7 +9,9 @@ import { Grid } from "@material-ui/core"
 
 const Dashboard = () => (
   <AdminDashboardProvider>
-    <h1 style={{ color: "#999999" }}>Dashboard</h1>
+    <h1 style={{ color: "#25223C", fontWeight: "bold", marginBottom: "30px" }}>
+      Dashboard
+    </h1>
     <Card />
     <div className="container-card">
       <Grid container spacing={4}>

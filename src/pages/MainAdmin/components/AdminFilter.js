@@ -1,9 +1,15 @@
 import React, { useContext } from "react"
-import { Card, CardContent, TextField, Box, Button } from "@material-ui/core"
 import { Link } from "react-router-dom"
+import { Card, CardContent, TextField, Box, Button } from "@material-ui/core"
+import { useTheme } from "@material-ui/core/styles"
+import useMediaQuery from "@mui/material/useMediaQuery"
+import { Add } from "@material-ui/icons"
+import "../../../assets/scss/AddActivity.scss"
 import { AdminContext } from "../../../context/AdminContext"
 
 const AdminFilter = () => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
   const { filterUser, setFilterUser } = useContext(AdminContext)
 
   const handleKeyDown = (event) => {
@@ -29,29 +35,42 @@ const AdminFilter = () => {
       <Card>
         <CardContent className="filter-content">
           <Box pl={5} pr={5}>
-            <Link to="/register-admin">
-              <Button
-                variant="contained"
-                className="btn-tambah-kegiatan primary-button"
-              >
-                TAMBAH ADMIN
-              </Button>
-            </Link>
+            <Box className="filter-block">
+              <TextField
+                className="input-register"
+                label="Cari Admin"
+                fullWidth
+                size="small"
+                onKeyDown={handleKeyDown}
+              />
+              <Link to="/register-admin">
+                {isMobile ? (
+                  <Button
+                    variant="contained"
+                    className="btn-tambah-kegiatan primary-button"
+                  >
+                    <Add />
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    className="btn-tambah-kegiatan primary-button"
+                    startIcon={<Add />}
+                  >
+                    Admin
+                  </Button>
+                )}
+              </Link>
+            </Box>
           </Box>
         </CardContent>
       </Card>
-      <br />
+      {/*<br />
       <Card>
         <CardContent className="filter-content">
           <Box pl={5} pr={5}>
-            <TextField
-              className="input-register"
-              label="Cari Admin"
-              fullWidth
-              size="small"
-              onKeyDown={handleKeyDown}
-            />
-            {/* <FormControl component="fieldset" className="radio-button activity">
+           
+             <FormControl component="fieldset" className="radio-button activity">
             <FormLabel component="legend">Aktivitas</FormLabel>
             <RadioGroup
               defaultValue="all"
@@ -83,8 +102,8 @@ const AdminFilter = () => {
                 label="SPC"
               />
             </RadioGroup>
-          </FormControl> */}
-            {/* <FormControl component="fieldset" className="radio-button jenkel">
+          </FormControl> 
+             <FormControl component="fieldset" className="radio-button jenkel">
               <FormLabel component="legend">Jenis Kelamin</FormLabel>
               <RadioGroup
                 defaultValue=""
@@ -110,10 +129,10 @@ const AdminFilter = () => {
                   label="Wanita"
                 />
               </RadioGroup>
-            </FormControl> */}
+            </FormControl> 
           </Box>
         </CardContent>
-      </Card>
+      </Card> */}
     </>
   )
 }

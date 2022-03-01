@@ -117,9 +117,6 @@ const AdminTable = () => {
 
   return (
     <div className="tableuser">
-      <h1 className="headline" style={{ color: "#999999" }}>
-        Admin
-      </h1>
       <Paper>
         {loading ? (
           <div className="loading-table">
