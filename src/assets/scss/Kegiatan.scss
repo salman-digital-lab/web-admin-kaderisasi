@@ -3,7 +3,9 @@
 }
 .MuiButton-contained.btn-tambah-kegiatan {
   width: 100%;
+  max-width: fit-content;
   height: 45px;
+  text-transform: none;
   // background-color: #28a745;
   // &:hover{
   //     background-color: #218838;
@@ -19,35 +21,58 @@
   }
 }
 .MuiFormControl-root.select-dropdown {
-  width: 100%;
+  // width: 100%;
+  max-width: fit-content;
+  margin: 30px 50px 0 0;
 }
 
-.flex-container {
+.container{
   display: flex;
-  flex-direction: row;
-  .tableactivity {
-    margin: auto;
-    width: 91%;
-    .table-cell {
-      word-wrap: break-word;
-      &.middle-cell {
-        text-align: center;
-      }
-    }
-  }
-}
-
-.filter-content {
   flex-direction: column;
-  display: flex;
-  .filter-input {
-    width: 100%;
-    height: 50px;
-  }
-  .filter-button {
-    width: 100%;
-  }
+  justify-content: center;
+  // align-items: center;
 }
+
+.flex-item{
+  margin-bottom: 30px;
+}
+
+// .flex-container {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-around;
+//   background-color: #157af6;
+//   .flex-right {
+//    background-color: coral;
+//   }
+//   .flex-left {
+//     background-color: seagreen;
+//     margin-bottom: 20px;
+//   }
+  
+//   .tableactivity {
+//     margin: auto;
+//     width: 100%;
+//     .table-cell {
+//       word-wrap: break-word;
+//       &.middle-cell {
+//         text-align: center;
+//       }
+//     }
+//   }
+// }
+
+// .filter-content {
+//   flex-direction: column;
+//   display: flex;
+//   .filter-input {
+//     width: 100%;
+//     height: 50px;
+//   }
+//   .filter-button {
+//     width: 100%;
+//   }
+// }
 
 @media (max-width: 800px) {
   .flex-container {

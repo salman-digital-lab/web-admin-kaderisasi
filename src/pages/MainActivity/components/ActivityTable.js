@@ -132,9 +132,6 @@ const KegiatanTable = () => {
   }
   return (
     <div className="tableactivity">
-      <h1 className="headline" style={{ color: "#999999" }}>
-        Kegiatan dan Aktivitas
-      </h1>
       <Paper>
         {!activity.status ? (
           <div className="loading-table">

@@ -120,9 +120,6 @@ const UniversitiesTable = () => {
 
   return (
     <div className="tableuser">
-      <h1 className="headline" style={{ color: "#999999" }}>
-        Daftar Universitas
-      </h1>
       <Paper>
         {loading ? (
           <div className="loading-table">

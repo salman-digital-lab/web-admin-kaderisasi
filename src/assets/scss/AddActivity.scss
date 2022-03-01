@@ -13,6 +13,46 @@
   }
 }
 
+.filter-block{
+display: flex;
+flex: 4;
+justify-content: space-between;
+
+  .input-register{
+    flex: 3;
+    margin-right: 20px;
+    max-width:  50%;
+  }
+
+  .btn-tambah-kegiatan{
+    flex: 1;
+    font-size: small;
+  }
+}
+
+
+@media (max-width: 800px){
+  .filter-block{
+    position: relative;
+
+    .input-register{
+      max-width:  100%;
+      margin: 0 50px 0 0;
+    }
+  
+    .btn-tambah-kegiatan{
+      position: absolute;
+      left: 210px;
+      top: 3px;
+    }
+  }
+}
+
+.select-block{
+  display: flex;
+  justify-content: flex-start;
+}
+
 .container-button-kegiatan {
   display: flex;
   flex-direction: column;

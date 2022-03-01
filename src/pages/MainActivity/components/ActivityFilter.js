@@ -15,6 +15,8 @@ import {
   Input,
 } from "@material-ui/core"
 import { useTheme } from "@material-ui/core/styles"
+import useMediaQuery from "@mui/material/useMediaQuery"
+import { Add } from "@material-ui/icons"
 import StyledRadio from "../../../components/radio-button"
 import { KegiatanModal } from "./ActivityModal"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
@@ -23,6 +25,7 @@ import { MenuProps, getStyles } from "../../../components/select"
 
 const KegiatanFilter = () => {
   const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
   const { filterActivity, setFilterActivity, categoryList, functions } =
     useContext(AdminActivityContext)
   const { getActivityCategory } = functions
@@ -65,93 +68,79 @@ const KegiatanFilter = () => {
       <Card>
         <CardContent className="filter-content">
           <Box pl={5} pr={5}>
-            <Button
-              variant="contained"
-              className="btn-tambah-kegiatan primary-button"
-              onClick={handleOpen}
-            >
-              TAMBAH KEGIATAN
-            </Button>
-          </Box>
-        </CardContent>
-      </Card>
-      <br />
-      <Card>
-        <CardContent className="filter-content">
-          <Box pl={5} pr={5}>
-            <TextField
-              className="input-register"
-              label="Cari Kegiatan"
-              fullWidth
-              size="small"
-              onKeyDown={handleKeyDown}
-            />
-            <FormControl component="fieldset" className="radio-button jenkel">
-              <FormLabel component="legend">Min. Jenjang</FormLabel>
-              <RadioGroup
-                value={filterActivity.minimum_roles_id}
-                aria-label="activity"
-                name="customized-radios"
-              >
-                <FormControlLabel
-                  value={-1}
-                  control={<StyledRadio />}
-                  onChange={(e) => handleChangeRole(e.target.value)}
-                  label="Semua"
-                />
-                <FormControlLabel
-                  value={4}
-                  control={<StyledRadio />}
-                  onChange={(e) => handleChangeRole(e.target.value)}
-                  label="Jamaah"
-                />
-                <FormControlLabel
-                  value={5}
-                  control={<StyledRadio />}
-                  onChange={(e) => handleChangeRole(e.target.value)}
-                  label="Aktivis"
-                />
-                <FormControlLabel
-                  value={6}
-                  control={<StyledRadio />}
-                  onChange={(e) => handleChangeRole(e.target.value)}
-                  label="Kader"
-                />
-                <FormControlLabel
-                  value={7}
-                  control={<StyledRadio />}
-                  onChange={(e) => handleChangeRole(e.target.value)}
-                  label="Kader Lanjut"
-                />
-              </RadioGroup>
-            </FormControl>
-            <FormControl className="select-dropdown mt-10">
-              <InputLabel id="category-id-label">Kategori</InputLabel>
-              {categoryList?.status === "SUCCESS" && (
-                <Select
-                  value={filterActivity.category_id}
-                  labelId="category-id-label"
-                  onChange={(e) => handleCategoryChange(e.target.value)}
-                  input={<Input />}
-                  MenuProps={MenuProps}
+            <Box className="filter-block">
+              <TextField
+                className="filter-item input-register"
+                label="Cari Kegiatan"
+                fullWidth
+                size="small"
+                onKeyDown={handleKeyDown}
+              />
+              {isMobile ? (
+                <Button
+                  variant="contained"
+                  className="btn-tambah-kegiatan primary-button"
+                  onClick={handleOpen}
                 >
-                  {categoryList?.data?.data?.map((category) => (
-                    <MenuItem
-                      key={`${category.id}`}
-                      value={category.id}
-                      label={category.name}
-                      style={getStyles(
-                        category,
-                        categoryList?.data?.data,
-                        theme
-                      )}
-                    >
-                      {category.name}
-                    </MenuItem>
-                  ))}
-                </Select>
+                  <Add />
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  className="btn-tambah-kegiatan primary-button"
+                  startIcon={<Add />}
+                  onClick={handleOpen}
+                >
+                  Kegiatan
+                </Button>
               )}
-            </FormControl>
+            </Box>
+            <Box className="select-block">
+              <FormControl className="select-dropdown">
+                <InputLabel id="demo-mutiple-name-label">Jenjang</InputLabel>
+                <Select
+                  labelId="min-jenjang-select-label"
+                  id="min-jenjang-select"
+                  value={filterActivity.minimum_roles_id}
+                  label="Min. Jenjang"
+                  autoWidth
+                  onChange={(e) => handleChangeRole(e.target.value)}
+                >
+                  <MenuItem value={-1}>Semua</MenuItem>
+                  <MenuItem value={4}>Jamaah</MenuItem>
+                  <MenuItem value={5}>Aktivis</MenuItem>
+                  <MenuItem value={6}>Kader</MenuItem>
+                  <MenuItem value={7}>Kader Lanjut</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl className="select-dropdown">
+                <InputLabel id="demo-mutiple-name-label">Kategori</InputLabel>
+                {categoryList?.status === "SUCCESS" && (
+                  <Select
+                    value={filterActivity.category_id}
+                    onChange={(e) => handleCategoryChange(e.target.value)}
+                    input={<Input />}
+                    autoWidth
+                    MenuProps={MenuProps}
+                  >
+                    {categoryList?.data?.data?.map((category) => (
+                      <MenuItem
+                        key={`${category.id}`}
+                        value={category.id}
+                        label={category.name}
+                        style={getStyles(
+                          category,
+                          categoryList?.data?.data,
+                          theme
+                        )}
+                      >
+                        {category.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              </FormControl>
+            </Box>
           </Box>
         </CardContent>
       </Card>
