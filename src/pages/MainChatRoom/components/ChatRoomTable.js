@@ -129,9 +129,6 @@ const ChatRoomTable = () => {
 
   return (
     <div className="tableuser">
-      <h1 className="headline" style={{ color: "#999999" }}>
-        Ruang Curhat
-      </h1>
       <Paper>
         {loading ? (
           <div className="loading-table">

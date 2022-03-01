@@ -27,6 +27,7 @@ justify-content: space-between;
   .btn-tambah-kegiatan{
     flex: 1;
     max-width: 15%;
+    font-size: small;
   }
 }
 
@@ -43,7 +44,7 @@ justify-content: space-between;
     .btn-tambah-kegiatan{
       position: absolute;
       left: 210px;
-      bottom: 7px;
+      top: 3px;
     }
   }
 }

@@ -91,7 +91,7 @@ const KegiatanFilter = () => {
                   startIcon={<Add />}
                   onClick={handleOpen}
                 >
-                  Tambah Kegiatan
+                  Kegiatan
                 </Button>
               )}
             </Box>
