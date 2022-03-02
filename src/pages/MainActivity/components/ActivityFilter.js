@@ -67,7 +67,7 @@ const KegiatanFilter = () => {
     <>
       <Card>
         <CardContent className="filter-content">
-          <Box pl={5} pr={5}>
+          <Box>
             <Box className="filter-block">
               <TextField
                 className="filter-item input-register"

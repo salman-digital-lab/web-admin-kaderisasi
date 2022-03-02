@@ -33,7 +33,7 @@ justify-content: space-between;
 
 @media (max-width: 800px){
   .filter-block{
-    position: relative;
+    justify-content: space-between;
 
     .input-register{
       max-width:  100%;
@@ -41,9 +41,9 @@ justify-content: space-between;
     }
   
     .btn-tambah-kegiatan{
-      position: absolute;
-      left: 210px;
-      top: 3px;
+      // position: absolute;
+      // left: 210px;
+      // top: 3px;
     }
   }
 }

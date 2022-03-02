@@ -150,9 +150,6 @@ const PendaftarTable = () => {
 
   return (
     <div className="tableactivity">
-      <h1 className="headline" style={{ color: "#999999" }}>
-        Pendaftar Kegiatan
-      </h1>
       <Paper>
         {!activityParticipants.status ? (
           <div className="loading-table">
