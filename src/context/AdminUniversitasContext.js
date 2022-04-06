@@ -48,27 +48,28 @@ export const UniversitasProvider = (props) => {
   const [universitiesState, setUniversitiesState] = useState({
     tmp: null,
   })
+  const [loading, setLoading] = useState(false)
 
-  const [filterActivity, setFilterActivity] = React.useState({
+  const [filterUniversities, setFilterUniversities] = React.useState({
     filter: false,
-    category_id: -1,
-    minimum_roles_id: -1,
-    search: "",
+    name: "",
   })
 
   const getUniversities = async (params) => {
+    setLoading(true)
     let paramsQuery = "?"
-    if (params) {
-      Object.keys(params).map((x, i) => {
-        i === Object.keys(params).length - 1
-          ? (paramsQuery += x + "=" + params[x].toString())
-          : (paramsQuery += x + "=" + params[x].toString() + "&")
-      })
-    }
+    Object.keys(params).forEach((x, i) => {
+      if (i === Object.keys(params).length - 1) {
+        paramsQuery += `${x}=${params[x].toString()}`
+      } else {
+        paramsQuery += `${x}=${params[x].toString()}&`
+      }
+    })
     await axios
       .get(process.env.REACT_APP_BASE_URL + `/v1/universities` + paramsQuery)
       .then((res) => {
         setUniversitiesState(res.data)
+        setLoading(false)
       })
       .catch((err) => {
         console.log(err)
@@ -198,10 +199,11 @@ export const UniversitasProvider = (props) => {
         setRows,
         universitiesState,
         setUniversitiesState,
-        filterActivity,
-        setFilterActivity,
+        filterUniversities,
+        setFilterUniversities,
         openAlert,
         setOpenAlert,
+        loading,
         functions,
       }}
     >

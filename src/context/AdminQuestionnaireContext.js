@@ -106,7 +106,7 @@ export default function AdminQuestionnaireProvider({ children }) {
     const { form } = state
     form[id].data[index] = {
       label: value,
-      value: value.toLowerCase().split(" ").join("_"),
+      value: value.toLowerCase(),
     }
     setState({ ...state, form })
   }

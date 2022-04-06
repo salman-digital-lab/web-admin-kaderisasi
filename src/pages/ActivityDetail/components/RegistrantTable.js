@@ -83,10 +83,16 @@ const PendaftarTable = () => {
   } = useContext(AdminActivityContext)
   const { getActivityParticipants, exportActivityParticipants } = functions
 
-  if (listParticipants.length < 1 && status) {
-    getActivityParticipants(id, params)
-    setStatus(false)
-  }
+  useEffect(() => {
+    params = {
+      page: 1,
+      perPage: 5,
+    }
+    if (listParticipants.length < 1 && status) {
+      getActivityParticipants(id, params)
+      setStatus(false)
+    }
+  }, [])
 
   useEffect(() => {
     if (filterParticipantsActivity.filter) {
@@ -144,9 +150,6 @@ const PendaftarTable = () => {
 
   return (
     <div className="tableactivity">
-      <h1 className="headline" style={{ color: "#999999" }}>
-        Pendaftar Kegiatan
-      </h1>
       <Paper>
         {!activityParticipants.status ? (
           <div className="loading-table">

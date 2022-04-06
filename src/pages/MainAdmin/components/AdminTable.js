@@ -68,6 +68,10 @@ const AdminTable = () => {
   const { getUsers } = functions
 
   useEffect(() => {
+    params = {
+      page: 1,
+      perPage: 5,
+    }
     getUsers(params)
   }, [])
 
@@ -113,9 +117,6 @@ const AdminTable = () => {
 
   return (
     <div className="tableuser">
-      <h1 className="headline" style={{ color: "#999999" }}>
-        Admin
-      </h1>
       <Paper>
         {loading ? (
           <div className="loading-table">

@@ -72,10 +72,16 @@ const KegiatanTable = () => {
   } = useContext(AdminActivityContext)
   const { getActivity } = functions
 
-  if (listActivity.length < 1 && status) {
-    getActivity(params)
-    setStatus(false)
-  }
+  useEffect(() => {
+    params = {
+      page: 1,
+      perPage: 5,
+    }
+    if (listActivity.length < 1 && status) {
+      getActivity(params)
+      setStatus(false)
+    }
+  }, [])
 
   useEffect(() => {
     if (filterActivity.filter) {
@@ -83,7 +89,7 @@ const KegiatanTable = () => {
       setPage(0)
       // eslint-disable-next-line
       params = { ...params, ...filterActivity }
-      if (params.category_id === -1) {
+      if (params.category_id === "" || params.category_id === -1) {
         delete params.category_id
         delete params.filter
       }

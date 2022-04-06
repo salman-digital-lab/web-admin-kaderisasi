@@ -13,6 +13,46 @@
   }
 }
 
+.filter-block{
+display: flex;
+flex: 4;
+justify-content: space-between;
+
+  .input-register{
+    flex: 3;
+    margin-right: 20px;
+    max-width:  50%;
+  }
+
+  .btn-tambah-kegiatan{
+    flex: 1;
+    font-size: small;
+  }
+}
+
+
+@media (max-width: 800px){
+  .filter-block{
+    justify-content: space-between;
+
+    .input-register{
+      max-width:  100%;
+      margin: 0 50px 0 0;
+    }
+  
+    .btn-tambah-kegiatan{
+      // position: absolute;
+      // left: 210px;
+      // top: 3px;
+    }
+  }
+}
+
+.select-block{
+  display: flex;
+  justify-content: flex-start;
+}
+
 .container-button-kegiatan {
   display: flex;
   flex-direction: column;
@@ -30,28 +70,28 @@
     color: #0d6efd;
     background-color: transparent;
     box-shadow: none;
-  
+
     &:hover {
-      color:#0d6efd;
+      color: #0d6efd;
       text-decoration: underline;
       background-color: transparent;
       border-color: transparent;
       box-shadow: none;
     }
-  
+
     &:focus,
     &.focus {
       text-decoration: none;
       border-color: transparent;
       box-shadow: none;
     }
-  
+
     &:disabled,
     &.disabled {
       color: black;
       pointer-events: none;
     }
-  
+
     // No need for an active state here
   }
   &.cancel-button {
@@ -69,7 +109,7 @@
     }
   }
   &.primary-button {
-    background-color: #1F99CC;
+    background-color: #1f99cc;
     color: white;
     &:hover {
       background-color: #2186b1;
@@ -83,7 +123,7 @@
   margin: 15px;
   justify-content: end;
   .button-bottoms-kegiatan {
-    margin: 5px;    
+    margin: 5px;
   }
 }
 
@@ -111,7 +151,6 @@
 
 .detail-activity {
   display: flex;
-  margin: 10px;
 
   .input-form {
     margin: 10px;

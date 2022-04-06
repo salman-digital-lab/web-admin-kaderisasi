@@ -70,10 +70,16 @@ const MemberTable = () => {
     useContext(AdminMemberContext)
   const { getMembers } = functions
 
-  if (listMembers.length < 1 && status) {
-    getMembers(params)
-    setStatus(false)
-  }
+  useEffect(() => {
+    params = {
+      page: 1,
+      page_size: 5,
+    }
+    if (listMembers.length < 1 && status) {
+      getMembers(params)
+      setStatus(false)
+    }
+  }, [])
 
   useEffect(() => {
     if (filterMember.filter) {
@@ -129,9 +135,6 @@ const MemberTable = () => {
 
   return (
     <div className="tableuser">
-      <h1 className="headline" style={{ color: "#999999" }}>
-        Member
-      </h1>
       <Paper>
         {!members.status ? (
           <div className="loading-table">

@@ -1,5 +1,6 @@
 import React, { useState } from "react"
-import { Card, CardContent, Box, Button } from "@material-ui/core"
+import { Box, Button } from "@mui/material"
+import { Add } from "@material-ui/icons"
 import { KategoriModal } from "./kategori-modal"
 import "../../../assets/scss/AddActivity.scss"
 
@@ -16,19 +17,19 @@ const UniversitiesFillter = () => {
   }
   return (
     <>
-      <Card>
-        <CardContent className="filter-content">
-          <Box pl={5} pr={5}>
-            <Button
-              className="btn-tambah-kegiatan primary-button"
-              variant="contained"
-              onClick={() => handleAddCategory()}
-            >
-              TAMBAH KATEGORI
-            </Button>
-          </Box>
-        </CardContent>
-      </Card>
+      <Box component="span">
+        <Button
+          variant="contained"
+          className="btn-tambah-kegiatan primary-button"
+          size="large"
+          disableElevation
+          startIcon={<Add />}
+          onClick={() => handleAddCategory()}
+          sx={{ backgroundColor: "#1F99CC" }}
+        >
+          Kategori
+        </Button>
+      </Box>
       <KategoriModal open={open} onClose={handleClose} data={dataEdit} />
     </>
   )

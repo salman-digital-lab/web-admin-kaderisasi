@@ -8,10 +8,11 @@ import {
   TableContainer,
   TablePagination,
   TableRow,
-  Paper,
   Button,
-} from "@material-ui/core"
-import { Delete, Edit } from "@material-ui/icons"
+  Box,
+  Stack,
+} from "@mui/material"
+import { Edit } from "@material-ui/icons"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 import {
   EnhancedTableHead,
@@ -19,22 +20,18 @@ import {
   getComparator,
 } from "../../../components/table-design"
 import { KategoriModal } from "./kategori-modal"
-import { ConfirmationModal } from "./confirmation-modal"
 import LoadingAnimation from "../../../components/loading-animation"
 
 const headCells = [
   { id: "no", numeric: true, label: "No." },
   { id: "name", numeric: false, label: "Nama Kategori" },
+  { id: "status", numeric: false, label: "Status" },
   { id: "action", numeric: true, label: "Action" },
 ]
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-  },
-  paper: {
-    width: "100%",
-    marginBottom: theme.spacing(2),
   },
   table: {
     minWidth: 750,
@@ -65,37 +62,27 @@ const CategoryTable = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5)
   const [dataEdit, setDataEdit] = useState({})
   const [open, setOpen] = useState(false)
-  const [deleteCategory, setDeleteCategory] = useState(false)
-  const [deleteId, setDeleteId] = useState(-1)
-
-  const handleCloseDelete = () => {
-    setDeleteCategory(false)
-  }
 
   const handleClose = () => {
     setOpen(false)
   }
 
   const { categoryList, functions } = useContext(AdminActivityContext)
-  const { getActivityCategory, deleteActivityCategory } = functions
-  if (!categoryList.status) {
-    getActivityCategory(params)
-  }
+  const { getActivityCategory, changeStatusActivityCategory } = functions
+
+  useEffect(() => {
+    params = {
+      page: 1,
+      perPage: 5,
+    }
+    if (!categoryList.status) {
+      getActivityCategory(params)
+    }
+  }, [])
 
   const handleEditCategory = (id, name) => {
     setDataEdit({ id, name })
     setOpen(true)
-  }
-
-  const handleDeleteCategory = (id) => {
-    setDeleteId(id)
-    setDeleteCategory(true)
-  }
-
-  const categoryDelete = () => {
-    deleteActivityCategory(deleteId)
-    setPage(0)
-    handleCloseDelete()
   }
 
   const handleRequestSort = (event, property) => {
@@ -120,90 +107,103 @@ const CategoryTable = () => {
 
   return (
     <div className="tableuser">
-      <h1 className="headline" style={{ color: "#999999" }}>
-        Pengaturan Kategori Kegiatan
-      </h1>
-      <Paper>
-        {!categoryList.status ? (
-          <div className="loading-table">
-            <LoadingAnimation table />
-          </div>
-        ) : (
-          <>
-            <TableContainer>
-              <Table
-                aria-labelledby="tableTitle"
-                size={"medium"}
-                aria-label="enhanced table"
-              >
-                <EnhancedTableHead
-                  classes={classes}
-                  order={order}
-                  orderBy={orderBy}
-                  onRequestSort={handleRequestSort}
-                  rowCount={categoryList?.data?.total}
-                  headCells={headCells}
-                />
-                <TableBody>
-                  {stableSort(
-                    categoryList?.data?.data?.filter(({ id }) => id !== -1),
-                    getComparator(order, orderBy)
-                  ).map((row, index) => {
-                    return (
-                      <TableRow hover tabIndex={-1} key={row.id}>
-                        <TableCell
-                          component="th"
-                          scope="row"
-                          className="table-cell"
-                        >
-                          {index + 1 + rowsPerPage * page}
-                        </TableCell>
-                        <TableCell className="table-cell">{row.name}</TableCell>
-                        <TableCell className="table-cell">
+      {!categoryList.status ? (
+        <div className="loading-table">
+          <LoadingAnimation table />
+        </div>
+      ) : (
+        <Box
+          component="div"
+          sx={{
+            borderRadius: "0.75em",
+            width: "auto",
+            overflowX: "auto",
+            backgroundColor: "#fff",
+            padding: "2em",
+            marginBottom: "2em",
+          }}
+        >
+          <TableContainer>
+            <Table
+              aria-labelledby="tableTitle"
+              size={"medium"}
+              aria-label="enhanced table"
+            >
+              <EnhancedTableHead
+                classes={classes}
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+                rowCount={categoryList?.data?.total}
+                headCells={headCells}
+              />
+              <TableBody>
+                {stableSort(
+                  categoryList?.data?.data?.filter(({ id }) => id !== -1),
+                  getComparator(order, orderBy)
+                ).map((row, index) => {
+                  return (
+                    <TableRow hover tabIndex={-1} key={row.id}>
+                      <TableCell component="th" scope="row">
+                        {index + 1 + rowsPerPage * page}
+                      </TableCell>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell>
+                        <label className="switch switch-flat">
+                          <input
+                            className="switch-input"
+                            type="checkbox"
+                            checked={row.is_active}
+                            onChange={() =>
+                              changeStatusActivityCategory(
+                                row.id,
+                                page + 1,
+                                rowsPerPage
+                              )
+                            }
+                          />
+                          <span
+                            className="switch-label"
+                            data-on="On"
+                            data-off="Off"
+                          ></span>
+                          <span className="switch-handle"></span>
+                        </label>
+                      </TableCell>
+                      <TableCell>
+                        <Stack direction="row" spacing={2}>
                           <Button
-                            color="secondary"
                             size="small"
-                            className="edit-button"
                             variant="contained"
+                            disableElevation
+                            sx={{
+                              backgroundColor: "#FF7B40",
+                            }}
                             onClick={() => handleEditCategory(row.id, row.name)}
                           >
                             <Edit fontSize="small" />
+                            Edit
                           </Button>
-                          {/* <Button
-                          color="secondary"
-                          size="small"
-                          className="delete-button"
-                          variant="contained"
-                          onClick={() => handleDeleteCategory(row.value)}
-                        >
-                          <Delete fontSize="small" />
-                        </Button> */}
-                        </TableCell>
-                      </TableRow>
-                    )
-                  })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={categoryList?.data?.total}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </>
-        )}
-      </Paper>
+                        </Stack>
+                      </TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25, 50]}
+            component="div"
+            count={categoryList?.data?.total ? categoryList?.data?.total : 0}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Box>
+      )}
       <KategoriModal open={open} onClose={handleClose} data={dataEdit} />
-      <ConfirmationModal
-        open={deleteCategory}
-        onClose={handleCloseDelete}
-        title={"Hapus Kategori Kegiatan"}
-        onSubmit={() => categoryDelete()}
-      />
     </div>
   )
 }

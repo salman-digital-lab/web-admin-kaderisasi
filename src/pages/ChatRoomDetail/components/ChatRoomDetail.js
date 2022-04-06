@@ -20,9 +20,7 @@ import { useParams, Link } from "react-router-dom"
 import moment from "moment"
 import { useTheme } from "@material-ui/core/styles"
 import Alert from "@material-ui/lab/Alert"
-import ModalAdmin from "./AdminModal"
 import { AdminChatRoomContext } from "../../../context/AdminChatRoomContext"
-import { AdminContext } from "../../../context/AdminContext"
 import { StudentCareStatus } from "../../../components/statuses"
 import { ConfirmationModal } from "./confirmation-modal"
 import { MenuProps, getStyles } from "../../../components/select"
@@ -97,14 +95,11 @@ const AdminDetail = () => {
   //   getUsers({})
   // }, [])
 
-  const [open, setOpen] = useState(false)
   const studentCareDelete = () => {
     deleteStudentCare(id)
     setIsOpen(false)
   }
-  const handleClose = () => {
-    setOpen(false)
-  }
+
   const handleEdit = () => {
     setStateCanBeEdited(!stateCanBeEdited)
   }
@@ -112,7 +107,8 @@ const AdminDetail = () => {
     setPayload({ ...payload, [type]: value })
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = (event) => {
+    event.preventDefault()
     setStateCanBeEdited(!stateCanBeEdited)
     editStudentCare(id, payload)
     getStudentCareDetail(id)
@@ -120,7 +116,7 @@ const AdminDetail = () => {
 
   return (
     <>
-      <div className="chat-room-detail">
+      <form onSubmit={handleSubmit} className="chat-room-detail">
         <div className="nav-chat-room-detail">
           <Button size="small" className="back-button" variant="outlined">
             <Link to="/chat-room">
@@ -167,7 +163,7 @@ const AdminDetail = () => {
                   className="button-top-tambah-kegiatan"
                   variant="contained"
                   color="primary"
-                  onClick={handleSubmit}
+                  type="submit"
                 >
                   Simpan
                 </Button>
@@ -491,8 +487,8 @@ const AdminDetail = () => {
             </>
           )}
         </div>
+
         <div>
-          <ModalAdmin open={open} onClose={handleClose} />
           <ConfirmationModal
             open={isOpen}
             onClose={() => setIsOpen(false)}
@@ -500,7 +496,7 @@ const AdminDetail = () => {
             onSubmit={() => studentCareDelete()}
           />
         </div>
-      </div>
+      </form>
     </>
   )
 }

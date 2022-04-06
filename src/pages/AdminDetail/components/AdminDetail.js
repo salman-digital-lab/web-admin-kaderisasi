@@ -1,12 +1,5 @@
 import React, { useState, useContext, useEffect } from "react"
-import {
-  Button,
-  Divider,
-  List,
-  ListItem,
-  ListItemText,
-  IconButton,
-} from "@material-ui/core"
+import { Button, List, ListItem, ListItemText } from "@material-ui/core"
 import { ArrowBack } from "@material-ui/icons"
 import { useParams, Link } from "react-router-dom"
 import ModalAdmin from "./AdminModal"
@@ -84,7 +77,9 @@ const AdminDetail = () => {
                 variant="contained"
                 color="secondary"
               >
-                <Link to={`/edit-admin/${id}`}>Edit</Link>
+                <Link className="text-white" to={`/edit-admin/${id}`}>
+                  Edit
+                </Link>
               </Button>
               {/* <Button
               size="small"

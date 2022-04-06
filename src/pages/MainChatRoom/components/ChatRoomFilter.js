@@ -3,21 +3,22 @@ import { Card, CardContent, TextField, Box } from "@material-ui/core"
 import { AdminChatRoomContext } from "../../../context/AdminChatRoomContext"
 
 const ChatRoomFilter = () => {
-  const { filterUser, setFilterUser } = useContext(AdminChatRoomContext)
+  const { filterStudentCare, setFilterStudentCare } =
+    useContext(AdminChatRoomContext)
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      setFilterUser({
-        ...filterUser,
-        search: event.target.value,
+      setFilterStudentCare({
+        ...filterStudentCare,
+        name: event.target.value,
         filter: true,
       })
     }
   }
 
   // const handleChangeGender = (s) => {
-  //   setFilterUser({
-  //     ...filterUser,
+  //   setFilterStudentCare({
+  //     ...filterStudentCare,
   //     gender: s,
   //     filter: true,
   //   })
