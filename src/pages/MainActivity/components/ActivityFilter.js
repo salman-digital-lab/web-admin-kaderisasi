@@ -10,7 +10,6 @@ import {
   Divider,
   Stack,
   Grid,
-  useMediaQuery,
 } from "@mui/material"
 import { useTheme } from "@material-ui/core/styles"
 import { KegiatanModal } from "./ActivityModal"
@@ -21,7 +20,6 @@ import AddIcon from "@material-ui/icons/Add"
 
 const KegiatanFilter = () => {
   const theme = useTheme()
-  // const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
   const { filterActivity, setFilterActivity, categoryList, functions } =
     useContext(AdminActivityContext)
   const { getActivityCategory } = functions

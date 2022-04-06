@@ -81,6 +81,7 @@ const KegiatanTable = () => {
       getActivity(params)
       setStatus(false)
     }
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
