@@ -125,7 +125,11 @@ const KegiatanFilter = () => {
                   <Select
                     labelId="select-kategori"
                     label="Kategori"
-                    value={filterActivity.category_id}
+                    value={
+                      filterActivity?.category_id ?? null
+                        ? filterActivity.category_id
+                        : -1
+                    }
                     onChange={(e) => handleCategoryChange(e.target.value)}
                     MenuProps={MenuProps}
                   >
