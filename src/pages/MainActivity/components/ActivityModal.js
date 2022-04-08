@@ -3,16 +3,14 @@ import {
   Button,
   Modal,
   Fade,
-  Backdrop,
   Select,
   TextField,
   MenuItem,
   Checkbox,
-  FormHelperText,
   Input,
   InputLabel,
   FormControl,
-} from "@material-ui/core"
+} from "@mui/material"
 import moment from "moment"
 import DateFnsUtils from "@date-io/date-fns"
 import PropTypes from "prop-types"
@@ -23,7 +21,6 @@ import {
 import { useForm, Controller } from "react-hook-form"
 import { EditorState } from "draft-js"
 import RichEditor, {
-  getPlainText,
   getContentString,
 } from "../../../components/rich-text-editor"
 import "../../../assets/scss/AddActivity.scss"
@@ -89,7 +86,7 @@ export const KegiatanModal = ({ open, onClose }) => {
     status: "CLOSED",
   })
   const { categoryList, functions } = useContext(AdminActivityContext)
-  const { getActivityCategory, addActivity } = functions
+  const { addActivity } = functions
   const [errors, setErrors] = useState(initialErrors)
   const stateEdit = EditorState.createEmpty()
   const [editorState, setEditorState] = useState(stateEdit)
@@ -132,11 +129,13 @@ export const KegiatanModal = ({ open, onClose }) => {
       formActivityValidity,
     }))
   }
-  useEffect(() => {
-    getActivityCategory()
-  }, [])
+  // useEffect(() => {
+  //   getActivityCategory()
+  //   // eslint-disable-next-line
+  // }, [])
   useEffect(() => {
     validateDates()
+    // eslint-disable-next-line
   }, [state])
 
   const handleForm = (value, type) => {
@@ -164,10 +163,6 @@ export const KegiatanModal = ({ open, onClose }) => {
       open={open}
       onClose={onClose}
       closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 500,
-      }}
     >
       <Fade in={open}>
         <div className={classes.paper}>
@@ -200,9 +195,9 @@ export const KegiatanModal = ({ open, onClose }) => {
                     />
                   </div>
                 </div>
-                <FormControl className="select-dropdown pr-20 ml-10">
-                  {categoryList?.status === "SUCCESS" && (
-                    <>
+                <div className="detail-activity">
+                  <FormControl className="input-form" fullWidth>
+                    {categoryList?.status === "SUCCESS" && (
                       <Controller
                         name="category_id"
                         control={control}
@@ -225,7 +220,7 @@ export const KegiatanModal = ({ open, onClose }) => {
                               input={<Input />}
                             >
                               {categoryList?.data?.data
-                                ?.filter(({ id }) => id != -1)
+                                ?.filter(({ id }) => id !== -1)
                                 .map((category) => (
                                   <MenuItem
                                     key={category.id}
@@ -236,17 +231,15 @@ export const KegiatanModal = ({ open, onClose }) => {
                                 ))}
                             </Select>
                             {/* {!!(value === -1) && (
-                              <FormHelperText>This is required!</FormHelperText>
-                            )} */}
+         <FormHelperText>This is required!</FormHelperText>
+       )} */}
                           </>
                         )}
                       />
-                    </>
-                  )}
-                </FormControl>
-                <FormControl className="select-dropdown pr-20 ml-10">
-                  {categoryList?.status === "SUCCESS" && (
-                    <>
+                    )}
+                  </FormControl>
+                  <FormControl className="input-form" fullWidth>
+                    {categoryList?.status === "SUCCESS" && (
                       <Controller
                         name="minimum_role_id"
                         control={control}
@@ -276,9 +269,9 @@ export const KegiatanModal = ({ open, onClose }) => {
                           </>
                         )}
                       />
-                    </>
-                  )}
-                </FormControl>
+                    )}
+                  </FormControl>
+                </div>
                 <div className="detail-activity">
                   <DatePickerCustom
                     title="Tanggal Mulai Kegiatan"

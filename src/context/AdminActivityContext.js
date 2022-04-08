@@ -278,7 +278,7 @@ const AdminActivityProvider = (props) => {
       .then((res) => {
         res.data.data.data.unshift({
           id: -1,
-          name: "-- Pilih Kategori Kegiatan --",
+          name: "Semua",
         })
         setCategoryList(res.data)
       })
