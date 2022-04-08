@@ -3,23 +3,20 @@ import "../../assets/scss/Kegiatan.scss"
 import KegiatanFilter from "./components/ActivityFilter"
 import KegiatanTable from "./components/ActivityTable"
 import AdminActivityProvider from "../../context/AdminActivityContext"
+import { Stack } from "@mui/material"
 
-const KegiatanDanAktivis = () => (
-  <AdminActivityProvider>
-    <div className="container">
+export default function KegiatanDanAktivitas() {
+  return (
+    <AdminActivityProvider>
       <h1
         style={{ color: "#25223C", fontWeight: "bold", marginBottom: "30px" }}
       >
-        Data Kegiatan
+        Kegiatan dan Aktivitas
       </h1>
-      <div className="flex-item">
+      <Stack direction="column" spacing={4}>
         <KegiatanFilter />
-      </div>
-      <div className="flex-item">
         <KegiatanTable />
-      </div>
-    </div>
-  </AdminActivityProvider>
-)
-
-export default KegiatanDanAktivis
+      </Stack>
+    </AdminActivityProvider>
+  )
+}

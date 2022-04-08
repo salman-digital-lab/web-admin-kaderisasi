@@ -1,36 +1,31 @@
 import React, { useState, useContext, useEffect } from "react"
 import {
-  Card,
-  CardContent,
-  FormControlLabel,
   TextField,
   Box,
   FormControl,
   InputLabel,
-  FormLabel,
-  RadioGroup,
   Button,
   Select,
   MenuItem,
-  Input,
-} from "@material-ui/core"
+  Divider,
+  Stack,
+  Grid,
+} from "@mui/material"
 import { useTheme } from "@material-ui/core/styles"
-import useMediaQuery from "@mui/material/useMediaQuery"
-import { Add } from "@material-ui/icons"
-import StyledRadio from "../../../components/radio-button"
 import { KegiatanModal } from "./ActivityModal"
 import { AdminActivityContext } from "../../../context/AdminActivityContext"
 import "../../../assets/scss/AddActivity.scss"
 import { MenuProps, getStyles } from "../../../components/select"
+import AddIcon from "@material-ui/icons/Add"
 
 const KegiatanFilter = () => {
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
   const { filterActivity, setFilterActivity, categoryList, functions } =
     useContext(AdminActivityContext)
   const { getActivityCategory } = functions
   useEffect(() => {
     getActivityCategory()
+    // eslint-disable-next-line
   }, [])
   const [open, setOpen] = useState(false)
 
@@ -65,45 +60,54 @@ const KegiatanFilter = () => {
 
   return (
     <>
-      <Card>
-        <CardContent className="filter-content">
-          <Box>
-            <Box className="filter-block">
+      <Box
+        sx={{ backgroundColor: "#fff", borderRadius: "0.75em", padding: "2em" }}
+      >
+        <Stack direction="column" spacing={3}>
+          <Grid container display="flex" flexDirection="row-reverse">
+            <Grid
+              item
+              xs={12}
+              md={6}
+              display="flex"
+              justifyContent="flex-end"
+              paddingY={1}
+            >
+              <Button
+                startIcon={<AddIcon />}
+                size="large"
+                variant="contained"
+                onClick={handleOpen}
+                style={{ backgroundColor: "#1F99CC", color: "#fff" }}
+                disableElevation
+              >
+                Tambah Kegiatan
+              </Button>
+            </Grid>
+            <Grid item xs={12} md={6} paddingY={1}>
               <TextField
-                className="filter-item input-register"
+                id="filled-basic"
+                size="large"
                 label="Cari Kegiatan"
-                fullWidth
-                size="small"
+                variant="outlined"
+                className="filter-input"
                 onKeyDown={handleKeyDown}
+                fullWidth
               />
-              {isMobile ? (
-                <Button
-                  variant="contained"
-                  className="btn-tambah-kegiatan primary-button"
-                  onClick={handleOpen}
-                >
-                  <Add />
-                </Button>
-              ) : (
-                <Button
-                  variant="contained"
-                  className="btn-tambah-kegiatan primary-button"
-                  startIcon={<Add />}
-                  onClick={handleOpen}
-                >
-                  Kegiatan
-                </Button>
-              )}
-            </Box>
-            <Box className="select-block">
-              <FormControl className="select-dropdown">
-                <InputLabel id="demo-mutiple-name-label">Jenjang</InputLabel>
+            </Grid>
+          </Grid>
+          <Divider
+            orientation="vertical"
+            sx={{ height: "5px", backgroundColor: "#1F99CC" }}
+          />
+          <Box>
+            <Stack direction="row" spacing={3}>
+              <FormControl size="small" sx={{ width: "15em" }}>
+                <InputLabel id="select-min-jenjang">Min. Jenjang</InputLabel>
                 <Select
-                  labelId="min-jenjang-select-label"
-                  id="min-jenjang-select"
-                  value={filterActivity.minimum_roles_id}
+                  labelId="select-min-jenjang"
                   label="Min. Jenjang"
-                  autoWidth
+                  defaultValue={-1}
                   onChange={(e) => handleChangeRole(e.target.value)}
                 >
                   <MenuItem value={-1}>Semua</MenuItem>
@@ -113,14 +117,18 @@ const KegiatanFilter = () => {
                   <MenuItem value={7}>Kader Lanjut</MenuItem>
                 </Select>
               </FormControl>
-              <FormControl className="select-dropdown">
-                <InputLabel id="demo-mutiple-name-label">Kategori</InputLabel>
+              <FormControl size="small" sx={{ width: "15em" }}>
+                <InputLabel id="select-kategori">Kategori</InputLabel>
                 {categoryList?.status === "SUCCESS" && (
                   <Select
-                    value={filterActivity.category_id}
+                    labelId="select-kategori"
+                    label="Kategori"
+                    value={
+                      filterActivity?.category_id ?? null
+                        ? filterActivity.category_id
+                        : -1
+                    }
                     onChange={(e) => handleCategoryChange(e.target.value)}
-                    input={<Input />}
-                    autoWidth
                     MenuProps={MenuProps}
                   >
                     {categoryList?.data?.data?.map((category) => (
@@ -140,10 +148,49 @@ const KegiatanFilter = () => {
                   </Select>
                 )}
               </FormControl>
-            </Box>
+            </Stack>
+            {/* <FormControl component="fieldset" className="radio-button jenkel">
+                <FormLabel component="legend">Min. Jenjang</FormLabel>
+                <RadioGroup
+                  value={filterActivity.minimum_roles_id}
+                  aria-label="activity"
+                  name="customized-radios"
+                >
+                  <FormControlLabel
+                    value={-1}
+                    control={<StyledRadio />}
+                    onChange={(e) => handleChangeRole(e.target.value)}
+                    label="Semua"
+                  />
+                  <FormControlLabel
+                    value={4}
+                    control={<StyledRadio />}
+                    onChange={(e) => handleChangeRole(e.target.value)}
+                    label="Jamaah"
+                  />
+                  <FormControlLabel
+                    value={5}
+                    control={<StyledRadio />}
+                    onChange={(e) => handleChangeRole(e.target.value)}
+                    label="Aktivis"
+                  />
+                  <FormControlLabel
+                    value={6}
+                    control={<StyledRadio />}
+                    onChange={(e) => handleChangeRole(e.target.value)}
+                    label="Kader"
+                  />
+                  <FormControlLabel
+                    value={7}
+                    control={<StyledRadio />}
+                    onChange={(e) => handleChangeRole(e.target.value)}
+                    label="Kader Lanjut"
+                  />
+                </RadioGroup>
+              </FormControl> */}
           </Box>
-        </CardContent>
-      </Card>
+        </Stack>
+      </Box>
       <KegiatanModal open={open} onClose={handleClose} />
     </>
   )
