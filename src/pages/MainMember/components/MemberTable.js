@@ -135,9 +135,6 @@ const MemberTable = () => {
 
   return (
     <div className="tableuser">
-      <h1 className="headline" style={{ color: "#999999" }}>
-        Member
-      </h1>
       <Paper>
         {!members.status ? (
           <div className="loading-table">

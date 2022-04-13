@@ -7,8 +7,8 @@ import {
   TableContainer,
   TablePagination,
   TableRow,
-  Paper,
-} from "@material-ui/core"
+  Box,
+} from "@mui/material"
 import { Link } from "react-router-dom"
 import {
   EnhancedTableHead,
@@ -33,10 +33,6 @@ const headCells = [
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
-  },
-  paper: {
-    width: "100%",
-    marginBottom: theme.spacing(2),
   },
   table: {
     minWidth: 750,
@@ -85,12 +81,14 @@ const KegiatanTable = () => {
       getActivity(params)
       setStatus(false)
     }
+    // eslint-disable-next-line
   }, [])
 
   useEffect(() => {
     if (filterActivity.filter) {
       params.page = 1
       setPage(0)
+      // eslint-disable-next-line
       params = { ...params, ...filterActivity }
       if (params.category_id === "" || params.category_id === -1) {
         delete params.category_id
@@ -131,85 +129,78 @@ const KegiatanTable = () => {
     getActivity(params)
   }
   return (
-    <div className="tableactivity">
-      <h1 className="headline" style={{ color: "#999999" }}>
-        Kegiatan dan Aktivitas
-      </h1>
-      <Paper>
-        {!activity.status ? (
-          <div className="loading-table">
-            <LoadingAnimation table />
-          </div>
-        ) : (
-          <>
-            <TableContainer>
-              <Table
-                aria-labelledby="tableTitle"
-                size="medium"
-                aria-label="enhanced table"
-              >
-                <EnhancedTableHead
-                  classes={classes}
-                  order={order}
-                  orderBy={orderBy}
-                  onRequestSort={handleRequestSort}
-                  headCells={headCells}
-                />
+    <>
+      {!activity.status ? (
+        <div className="loading-table">
+          <LoadingAnimation table />
+        </div>
+      ) : (
+        <Box
+          component="div"
+          sx={{
+            borderRadius: "0.75em",
+            width: "auto",
+            overflowX: "auto",
+            backgroundColor: "#fff",
+            padding: "2em",
+            marginBottom: "2em",
+          }}
+        >
+          <TableContainer>
+            <Table aria-labelledby="tableTitle" aria-label="enhanced table">
+              <EnhancedTableHead
+                classes={classes}
+                order={order}
+                orderBy={orderBy}
+                onRequestSort={handleRequestSort}
+                headCells={headCells}
+              />
 
-                <TableBody>
-                  {stableSort(listActivity, getComparator(order, orderBy)).map(
-                    (row, index) => (
-                      <TableRow hover tabIndex={-1} key={row.id}>
-                        <TableCell
-                          component="th"
-                          scope="row"
-                          className="table-cell middle-cell"
-                        >
-                          {index + 1 + rowsPerPage * page}
-                        </TableCell>
-                        <TableCell className="table-cell">
-                          <div className="text-ellipsis width-250">
-                            <Link to={`/activity/${row.id}`}>{row.judul}</Link>
-                          </div>
-                        </TableCell>
-                        <TableCell className="table-cell">
-                          Start : {row.startDate} <br />
-                          End : {row.endDate}
-                        </TableCell>
-                        <TableCell className="table-cell">
-                          {row.jenjang}
-                        </TableCell>
-                        <TableCell className="table-cell">
-                          {row.kategori}
-                        </TableCell>
-                        <TableCell className="table-cell">
-                          <RegisterStatus status={row.register} />
-                        </TableCell>
-                        <TableCell className="table-cell">
-                          <PublishStatus status={row.publish} />
-                        </TableCell>
-                        <TableCell className="table-cell">
-                          <Link to={`/activity/${row.id}`}>View</Link>
-                        </TableCell>
-                      </TableRow>
-                    )
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, 50]}
-              component="div"
-              count={activity?.data?.total ? activity?.data?.total : 0}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </>
-        )}
-      </Paper>
-    </div>
+              <TableBody>
+                {stableSort(listActivity, getComparator(order, orderBy)).map(
+                  (row, index) => (
+                    <TableRow hover tabIndex={-1} key={row.id}>
+                      <TableCell component="th" scope="row">
+                        {index + 1 + rowsPerPage * page}
+                      </TableCell>
+                      <TableCell>
+                        <div className="text-ellipsis width-250">
+                          <Link to={`/activity/${row.id}`}>{row.judul}</Link>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        Start : {row.startDate} <br />
+                        End : {row.endDate}
+                      </TableCell>
+                      <TableCell>{row.jenjang}</TableCell>
+                      <TableCell>{row.kategori}</TableCell>
+                      <TableCell>
+                        <RegisterStatus status={row.register} />
+                      </TableCell>
+                      <TableCell>
+                        <PublishStatus status={row.publish} />
+                      </TableCell>
+                      <TableCell>
+                        <Link to={`/activity/${row.id}`}>View</Link>
+                      </TableCell>
+                    </TableRow>
+                  )
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25, 50]}
+            component="div"
+            count={activity?.data?.total ? activity?.data?.total : 0}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Box>
+      )}
+    </>
   )
 }
 

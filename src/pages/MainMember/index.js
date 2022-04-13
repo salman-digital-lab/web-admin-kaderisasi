@@ -7,12 +7,17 @@ import AdminMemberProvider from "../../context/AdminMemberContext"
 const MemberSalman = () => (
   <AdminMemberProvider>
     <div className="userlist">
-      <div className="flex-container">
-        <div className="flex-left">
-          <MemberTable />
-        </div>
-        <div className="flex-right">
+      <div className="container">
+        <h1
+          style={{ color: "#25223C", fontWeight: "bold", marginBottom: "30px" }}
+        >
+          Admin
+        </h1>
+        <div className="flex-item">
           <MemberFilter />
+        </div>
+        <div className="flex-item">
+          <MemberTable />
         </div>
       </div>
     </div>
