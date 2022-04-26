@@ -182,7 +182,7 @@ const PendaftarTable = () => {
                     listParticipants,
                     getComparator(order, orderBy)
                   ).map((row, index) => (
-                    <TableRow hover tabIndex={-1} key={row.id}>
+                    <TableRow hover tabIndex={-1} key={row.member_id}>
                       <TableCell
                         component="th"
                         scope="row"
