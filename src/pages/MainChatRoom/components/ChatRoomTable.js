@@ -26,6 +26,7 @@ const headCells = [
   { id: "user", numeric: false, label: "User" },
   { id: "problem_owner", numeric: false, label: "Pemilik Masalah" },
   { id: "problem_category", numeric: false, label: "Kategori" },
+  { id: "counselor_gender", numeric: false, label: "Preferensi" },
   { id: "counselor", numeric: false, label: "Pendengar" },
   { id: "status", numeric: false, label: "Status" },
   { id: "technical_handling", numeric: false, label: "Penanganan" },
@@ -185,7 +186,12 @@ const ChatRoomTable = () => {
                         {row.problem_category}
                       </TableCell>
                       <TableCell className="table-cell">
-                        {row.counselor?.display_name}
+                        {row.counselor_gender}
+                      </TableCell>
+                      <TableCell className="table-cell">
+                        {row.counselor === null
+                          ? "Belum ada"
+                          : row.counselor.display_name}
                       </TableCell>
                       <TableCell className="table-cell">
                         {row.technical_handling}
