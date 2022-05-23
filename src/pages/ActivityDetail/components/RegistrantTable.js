@@ -192,9 +192,7 @@ const PendaftarTable = () => {
                       </TableCell>
                       <TableCell className="table-cell">
                         <div className="text-ellipsis width-100">
-                          <Link to={`/member/${row.member_id}`}>
-                            {row.name}
-                          </Link>
+                          <Link to={`/member/${row.id}`}>{row.name}</Link>
                         </div>
                         <div>
                           {row.gender === "F" ? (
