@@ -182,7 +182,7 @@ const PendaftarTable = () => {
                     listParticipants,
                     getComparator(order, orderBy)
                   ).map((row, index) => (
-                    <TableRow hover tabIndex={-1} key={row.member_id}>
+                    <TableRow hover tabIndex={-1} key={row.id}>
                       <TableCell
                         component="th"
                         scope="row"
@@ -192,7 +192,7 @@ const PendaftarTable = () => {
                       </TableCell>
                       <TableCell className="table-cell">
                         <div className="text-ellipsis width-100">
-                          <Link to={`/member/${row.id}`}>{row.name}</Link>
+                          <Link to={`/member/${row.member_id}`}>{row.name}</Link>
                         </div>
                         <div>
                           {row.gender === "F" ? (
