@@ -51,8 +51,8 @@ const AdminActivityProvider = (props) => {
             list.push({
               id: x.id,
               judul: x.name,
-              startDate: x.begin_date,
-              endDate: x.end_date,
+              startDate: x.register_begin_date,
+              endDate: x.register_end_date,
               jenjang: x.minimumRole?.name,
               kategori: x.activityCategory ? x.activityCategory.name : null,
               register: x.status.toLowerCase(),
