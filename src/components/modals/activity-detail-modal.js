@@ -238,21 +238,9 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
   }
 
   const showBanner = (banner_url) => {
-    const canvas = document.createElement("canvas")
-    canvas.width = 1056
-    canvas.height = 816
-    const imgTemp = document.createElement("img")
-    imgTemp.setAttribute("src", banner_url)
-    imgTemp.setAttribute("alt", "logo")
-    imgTemp.setAttribute("className", "img-fluid")
-    imgTemp.setAttribute("crossOrigin", "Anonymous")
-    const ctx = canvas.getContext("2d")
-    imgTemp.onload = async function () {
-      ctx.drawImage(imgTemp, 0, 0, canvas.width, canvas.height)
-      const url = canvas.toDataURL("image/png")
-      setUploadImage(url)
-    }
+    setUploadImage(banner_url)
   }
+  
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       const file = URL.createObjectURL(event.target.files[0])
@@ -316,7 +304,7 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
           <div className="form-flex">
             <div className="left-form">
               <div className="container-gambar-detail">
-                <img alt="logo" src={uploadedImage} className="img-fluid" />
+                <img alt="logo" src={uploadedImage} id="img" className="img-fluid" />
               </div>
               <form onSubmit={submitForm}>
                 <div className="row mt-20">
