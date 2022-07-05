@@ -51,17 +51,17 @@ export const AdminDashboardProvider = (props) => {
     },
     {
       icon: <EqualizerIcon fontSize="large" />,
-      color: "#1C6C7D",
-      title: "Jumlah Aktivis",
-      text: "Aktivis",
-      value: valueMapping.aktivis,
-    },
-    {
-      icon: <EqualizerIcon fontSize="large" />,
       color: "#73C5D0",
       title: "Jumlah Jamaah",
       text: "Jamaah",
       value: valueMapping.jamaah,
+    },
+    {
+      icon: <EqualizerIcon fontSize="large" />,
+      color: "#1C6C7D",
+      title: "Jumlah Aktivis",
+      text: "Aktivis",
+      value: valueMapping.aktivis,
     },
     {
       icon: <EqualizerIcon fontSize="large" />,
