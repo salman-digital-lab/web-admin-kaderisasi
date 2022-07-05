@@ -51,13 +51,6 @@ export const AdminDashboardProvider = (props) => {
     },
     {
       icon: <EqualizerIcon fontSize="large" />,
-      color: "#1C6C7D",
-      title: "Jumlah Aktivis",
-      text: "Aktivis",
-      value: valueMapping.aktivis,
-    },
-    {
-      icon: <EqualizerIcon fontSize="large" />,
       color: "#73C5D0",
       title: "Jumlah Jamaah",
       text: "Jamaah",
@@ -65,9 +58,16 @@ export const AdminDashboardProvider = (props) => {
     },
     {
       icon: <EqualizerIcon fontSize="large" />,
+      color: "#1C6C7D",
+      title: "Jumlah Aktivis",
+      text: "Aktivis",
+      value: valueMapping.aktivis,
+    },
+    {
+      icon: <EqualizerIcon fontSize="large" />,
       color: "#FFA72E",
-      title: "Jumlah Member",
-      text: "Member",
+      title: "Jumlah Kader",
+      text: "Kader",
       value: valueMapping.kader,
     },
   ]
@@ -98,7 +98,7 @@ export const AdminDashboardProvider = (props) => {
             tmp.jamaah = e.jumlah
           } else if (e.name === "Kader") {
             tmp.kader = e.jumlah
-          } else if (e.name === "jumlah_member") {
+          } else if (e.name === "Akun") {
             tmp.jumlah = e.value
           }
         })
