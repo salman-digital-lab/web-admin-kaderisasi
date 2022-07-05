@@ -66,8 +66,8 @@ export const AdminDashboardProvider = (props) => {
     {
       icon: <EqualizerIcon fontSize="large" />,
       color: "#FFA72E",
-      title: "Jumlah Member",
-      text: "Member",
+      title: "Jumlah Kader",
+      text: "Kader",
       value: valueMapping.kader,
     },
   ]
