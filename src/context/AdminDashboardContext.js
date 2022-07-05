@@ -98,7 +98,7 @@ export const AdminDashboardProvider = (props) => {
             tmp.jamaah = e.jumlah
           } else if (e.name === "Kader") {
             tmp.kader = e.jumlah
-          } else if (e.name === "jumlah_member") {
+          } else if (e.name === "Akun") {
             tmp.jumlah = e.value
           }
         })
