@@ -452,6 +452,7 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
                   <MenuItem value={5}>Aktivis</MenuItem>
                   <MenuItem value={6}>Kader</MenuItem>
                   <MenuItem value={7}>Kader Lanjut</MenuItem>
+                  <MenuItem value={50}>Alumni</MenuItem>
                 </Select>
               </div>
               <div className="detail-activity">

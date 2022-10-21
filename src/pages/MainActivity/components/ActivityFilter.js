@@ -115,6 +115,7 @@ const KegiatanFilter = () => {
                   <MenuItem value={5}>Aktivis</MenuItem>
                   <MenuItem value={6}>Kader</MenuItem>
                   <MenuItem value={7}>Kader Lanjut</MenuItem>
+                  <MenuItem value={50}>Alumni</MenuItem>
                 </Select>
               </FormControl>
               <FormControl size="small" sx={{ width: "15em" }}>
