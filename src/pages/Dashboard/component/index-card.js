@@ -20,7 +20,7 @@ const Card = () => {
       style={{ display: "flex", marginBottom: "30px" }}
     >
       {data.map((e) => (
-        <Grid item xs={12} md={6} lg={3} key={`${e.value}_${e.title}`}>
+        <Grid item xs={12} md={6} lg={4} key={`${e.value}_${e.title}`}>
           <CardDashboard
             color={e.color}
             icon={e.icon}
