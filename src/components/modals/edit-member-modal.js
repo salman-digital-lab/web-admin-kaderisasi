@@ -205,6 +205,8 @@ const EditMemberModal = ({ open, onClose, data }) => {
                       { label: "Jamaah", value: 4 },
                       { label: "Aktivis", value: 5 },
                       { label: "Kader", value: 6 },
+                      { label: "Kader Lanjut", value: 7 },
+                      { label: "Alumni", value: 50 },
                     ].map((jenjang) => (
                       <MenuItem
                         key={`${jenjang.value}`}
