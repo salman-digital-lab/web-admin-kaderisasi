@@ -113,7 +113,9 @@ const KegiatanFilter = () => {
                   <MenuItem value={-1}>Semua</MenuItem>
                   <MenuItem value={4}>Jamaah</MenuItem>
                   <MenuItem value={5}>Aktivis</MenuItem>
+                  <MenuItem value={5}>Aktivis KK</MenuItem>
                   <MenuItem value={6}>Kader</MenuItem>
+                  <MenuItem value={6}>Kader Inventra</MenuItem>
                   <MenuItem value={7}>Kader Lanjut</MenuItem>
                   <MenuItem value={50}>Alumni</MenuItem>
                 </Select>

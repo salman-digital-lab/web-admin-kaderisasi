@@ -231,8 +231,46 @@ export const KegiatanModal = ({ open, onClose }) => {
                                 ))}
                             </Select>
                             {/* {!!(value === -1) && (
-         <FormHelperText>This is required!</FormHelperText>
-       )} */}
+                      <FormHelperText>This is required!</FormHelperText>
+                    )} */}
+                          </>
+                        )}
+                      />
+                    )}
+                  </FormControl>
+                </div>
+                <div className="detail-activity">
+                  <FormControl className="input-form" fullWidth>
+                    {categoryList?.status === "SUCCESS" && (
+                      <Controller
+                        name="minimum_role_id"
+                        control={control}
+                        defaultValue={state.minimum_role_id}
+                        render={({
+                          field: { onChange, value, name },
+                          fieldState: { error },
+                        }) => (
+                          <>
+                            <InputLabel id="level-id-label">
+                              -- Pilih Jenjang Maksimum --
+                            </InputLabel>
+                            <Select
+                              className="select-input-form"
+                              value={value ? value : ""}
+                              labelId="level-id-label"
+                              required
+                              onChange={onChange}
+                              name={name}
+                              input={<Input />}
+                            >
+                              <MenuItem value={4}>Jamaah</MenuItem>
+                              <MenuItem value={5}>Aktivis</MenuItem>
+                              <MenuItem value={5}>Aktivis KK</MenuItem>
+                              <MenuItem value={6}>Kader</MenuItem>
+                              <MenuItem value={6}>Kader Inventra</MenuItem>
+                              <MenuItem value={7}>Kader Lanjut</MenuItem>
+                              <MenuItem value={50}>Alumni</MenuItem>
+                            </Select>
                           </>
                         )}
                       />
@@ -250,7 +288,7 @@ export const KegiatanModal = ({ open, onClose }) => {
                         }) => (
                           <>
                             <InputLabel id="level-id-label">
-                              -- Pilih Minimum Jenjang --
+                              -- Pilih Jenjang Minimum --
                             </InputLabel>
                             <Select
                               className="select-input-form"
@@ -263,7 +301,9 @@ export const KegiatanModal = ({ open, onClose }) => {
                             >
                               <MenuItem value={4}>Jamaah</MenuItem>
                               <MenuItem value={5}>Aktivis</MenuItem>
+                              <MenuItem value={5}>Aktivis KK</MenuItem>
                               <MenuItem value={6}>Kader</MenuItem>
+                              <MenuItem value={6}>Kader Inventra</MenuItem>
                               <MenuItem value={7}>Kader Lanjut</MenuItem>
                               <MenuItem value={50}>Alumni</MenuItem>
                             </Select>

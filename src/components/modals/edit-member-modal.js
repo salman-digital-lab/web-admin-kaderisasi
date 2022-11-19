@@ -204,7 +204,9 @@ const EditMemberModal = ({ open, onClose, data }) => {
                     {[
                       { label: "Jamaah", value: 4 },
                       { label: "Aktivis", value: 5 },
+                      { label: "Aktivis KK", value: 8 },
                       { label: "Kader", value: 6 },
+                      { label: "Kader Inventra", value: 9 },
                       { label: "Kader Lanjut", value: 7 },
                       { label: "Alumni", value: 50 },
                     ].map((jenjang) => (

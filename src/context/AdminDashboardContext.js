@@ -12,6 +12,10 @@ export const AdminDashboardProvider = (props) => {
     aktivis: 0,
     kader: 0,
     status: null,
+    kaderLanjutan: "-",
+    alumni: "-",
+    aktivisKK: "-",
+    kaderInventra: "-",
   })
   const [AktivisState, setAktivisState] = useState()
   const [KampusState, setKampusState] = useState()
@@ -70,6 +74,34 @@ export const AdminDashboardProvider = (props) => {
       text: "Kader",
       value: valueMapping.kader,
     },
+    {
+      icon: <EqualizerIcon fontSize="large" />,
+      color: "#FFA72E",
+      title: "Jumlah Kader Lanjutan",
+      text: "Kader Lanjutan",
+      value: valueMapping.kaderLanjutan,
+    },
+    {
+      icon: <EqualizerIcon fontSize="large" />,
+      color: "#FFA72E",
+      title: "Jumlah Alumni",
+      text: "Alumni",
+      value: valueMapping.alumni,
+    },
+    {
+      icon: <EqualizerIcon fontSize="large" />,
+      color: "#FFA72E",
+      title: "Jumlah Aktivis-KK",
+      text: "Kader",
+      value: valueMapping.aktivisKK,
+    },
+    {
+      icon: <EqualizerIcon fontSize="large" />,
+      color: "#FFA72E",
+      title: "Jumlah Kader-Inventra",
+      text: "Kader",
+      value: valueMapping.kaderInventra,
+    },
   ]
 
   const colors = [
@@ -84,11 +116,16 @@ export const AdminDashboardProvider = (props) => {
       .get(process.env.REACT_APP_BASE_URL + "/v1/dashboard/get/all/member")
       .then((res) => {
         const data = res.data.data
+        console.log(data)
         const tmp = {
           jumlah: 0,
           aktivis: 0,
           jamaah: 0,
           kader: 0,
+          kaderLanjutan: "-",
+          alumni: "-",
+          aktivisKK: "-",
+          kaderInventra: "-",
         }
 
         data.forEach((e) => {
@@ -110,6 +147,10 @@ export const AdminDashboardProvider = (props) => {
           aktivis: tmp.aktivis,
           kader: tmp.kader,
           status: "success",
+          kaderLanjutan: tmp.kaderLanjutan,
+          alumni: tmp.alumni,
+          aktivisKK: tmp.aktivisKK,
+          kaderInventra: tmp.kaderInventra,
         })
       })
       .catch((err) => {
