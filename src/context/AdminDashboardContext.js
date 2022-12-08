@@ -11,7 +11,7 @@ export const AdminDashboardProvider = (props) => {
     jamaah: 0,
     aktivis: 0,
     kader: 0,
-    kader_lanjut :0,
+    kader_lanjut: 0,
     alumni: 0,
     status: null,
   })
@@ -105,23 +105,23 @@ export const AdminDashboardProvider = (props) => {
           aktivis: 0,
           jamaah: 0,
           kader: 0,
-          kader_lanjut:0,
-          alumni:0
+          kader_lanjut: 0,
+          alumni: 0,
         }
 
         data.forEach((e) => {
           if (e.name === "Aktivis") {
-            tmp.aktivis = e.jumlah
+            tmp.aktivis = e.total
           } else if (e.name === "Jamaah") {
-            tmp.jamaah = e.jumlah
+            tmp.jamaah = e.total
           } else if (e.name === "Kader") {
-            tmp.kader = e.jumlah
+            tmp.kader = e.total
           } else if (e.name === "Akun") {
-            tmp.jumlah = e.value
+            tmp.jumlah = e.total
           } else if (e.name === "Kader-lanjutan") {
-            tmp.kader_lanjut = e.jumlah
+            tmp.kader_lanjut = e.total
           } else if (e.name === "Alumni") {
-            tmp.alumni = e.jumlah
+            tmp.alumni = e.total
           }
         })
 
