@@ -11,6 +11,8 @@ export const AdminDashboardProvider = (props) => {
     jamaah: 0,
     aktivis: 0,
     kader: 0,
+    kader_lanjut :0,
+    alumni: 0,
     status: null,
   })
   const [AktivisState, setAktivisState] = useState()
@@ -70,6 +72,20 @@ export const AdminDashboardProvider = (props) => {
       text: "Kader",
       value: valueMapping.kader,
     },
+    {
+      icon: <EqualizerIcon fontSize="large" />,
+      color: "#FFA72E",
+      title: "Kader Lanjut",
+      text: "Kader",
+      value: valueMapping.kader_lanjut,
+    },
+    {
+      icon: <EqualizerIcon fontSize="large" />,
+      color: "#FFA72E",
+      title: "Alumni",
+      text: "Alumni",
+      value: valueMapping.alumni,
+    },
   ]
 
   const colors = [
@@ -89,6 +105,8 @@ export const AdminDashboardProvider = (props) => {
           aktivis: 0,
           jamaah: 0,
           kader: 0,
+          kader_lanjut:0,
+          alumni:0
         }
 
         data.forEach((e) => {
@@ -100,6 +118,10 @@ export const AdminDashboardProvider = (props) => {
             tmp.kader = e.jumlah
           } else if (e.name === "Akun") {
             tmp.jumlah = e.value
+          } else if (e.name === "Kader-lanjutan") {
+            tmp.kader_lanjut = e.jumlah
+          } else if (e.name === "Alumni") {
+            tmp.alumni = e.jumlah
           }
         })
 
@@ -109,6 +131,8 @@ export const AdminDashboardProvider = (props) => {
           jamaah: tmp.jamaah,
           aktivis: tmp.aktivis,
           kader: tmp.kader,
+          kader_lanjut: tmp.kader_lanjut,
+          alumni: tmp.alumni,
           status: "success",
         })
       })
