@@ -82,12 +82,14 @@ export const DatePickerCustom = ({
 const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
   const ref = useRef()
   const classes = styled()
-  const { activityBanner, functions } = useContext(AdminActivityContext)
+  const { activityBanner, functions, memberRoles, setMemberRoles } =
+    useContext(AdminActivityContext)
   const {
     editActivity,
     getActivityBannerById,
     uploadImageBanner,
     deleteBannerById,
+    getAllMemberRoles,
   } = functions
   const [rows, setRows] = useState(activityBanner)
   const [uploadedImage, setUploadImage] = useState(BaseImage)
@@ -165,6 +167,7 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
 
   useEffect(() => {
     getActivityBannerById(id)
+    getAllMemberRoles()
   }, [])
 
   useEffect(() => {
@@ -240,7 +243,7 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
   const showBanner = (banner_url) => {
     setUploadImage(banner_url)
   }
-  
+
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       const file = URL.createObjectURL(event.target.files[0])
@@ -304,7 +307,12 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
           <div className="form-flex">
             <div className="left-form">
               <div className="container-gambar-detail">
-                <img alt="logo" src={uploadedImage} id="img" className="img-fluid" />
+                <img
+                  alt="logo"
+                  src={uploadedImage}
+                  id="img"
+                  className="img-fluid"
+                />
               </div>
               <form onSubmit={submitForm}>
                 <div className="row mt-20">
@@ -448,11 +456,9 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
                   value={jenjang}
                   onChange={handleJenjangChange}
                 >
-                  <MenuItem value={4}>Jamaah</MenuItem>
-                  <MenuItem value={5}>Aktivis</MenuItem>
-                  <MenuItem value={6}>Kader</MenuItem>
-                  <MenuItem value={7}>Kader Lanjut</MenuItem>
-                  <MenuItem value={50}>Alumni</MenuItem>
+                   {memberRoles.map((roles) => (
+                    <MenuItem value={roles.id}>{roles.name}</MenuItem>
+                  ))}
                 </Select>
               </div>
               <div className="detail-activity">

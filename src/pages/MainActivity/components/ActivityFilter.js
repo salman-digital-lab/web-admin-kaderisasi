@@ -20,11 +20,18 @@ import AddIcon from "@material-ui/icons/Add"
 
 const KegiatanFilter = () => {
   const theme = useTheme()
-  const { filterActivity, setFilterActivity, categoryList, functions } =
-    useContext(AdminActivityContext)
-  const { getActivityCategory } = functions
+  const {
+    filterActivity,
+    setFilterActivity,
+    categoryList,
+    memberRoles,
+    setMemberRoles,
+    functions,
+  } = useContext(AdminActivityContext)
+  const { getActivityCategory, getAllMemberRoles } = functions
   useEffect(() => {
     getActivityCategory()
+    getAllMemberRoles()
     // eslint-disable-next-line
   }, [])
   const [open, setOpen] = useState(false)
@@ -111,11 +118,9 @@ const KegiatanFilter = () => {
                   onChange={(e) => handleChangeRole(e.target.value)}
                 >
                   <MenuItem value={-1}>Semua</MenuItem>
-                  <MenuItem value={4}>Jamaah</MenuItem>
-                  <MenuItem value={5}>Aktivis</MenuItem>
-                  <MenuItem value={6}>Kader</MenuItem>
-                  <MenuItem value={7}>Kader Lanjut</MenuItem>
-                  <MenuItem value={50}>Alumni</MenuItem>
+                  {memberRoles.map((roles) => (
+                    <MenuItem value={roles.id}>{roles.name}</MenuItem>
+                  ))}
                 </Select>
               </FormControl>
               <FormControl size="small" sx={{ width: "15em" }}>

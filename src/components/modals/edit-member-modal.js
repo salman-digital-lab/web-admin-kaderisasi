@@ -20,6 +20,7 @@ import {
 import moment from "moment"
 import { AdminMemberContext } from "../../context/AdminMemberContext"
 import { AdminRegionContext } from "../../context/AdminRegionContext"
+import { AdminActivityContext } from "../../context/AdminActivityContext"
 import { MenuProps, getStyles } from "../select"
 import {
   SelectUniversity,
@@ -64,8 +65,8 @@ const EditMemberModal = ({ open, onClose, data }) => {
   const theme = useTheme()
   const [payload, setPayload] = useState({ ...data })
   const { id } = useParams()
-  const { functions } = useContext(AdminMemberContext)
-  const { updateMemberById } = functions
+  const { functions, memberRoles } = useContext(AdminMemberContext)
+  const { updateMemberById, getAllMemberRoles } = functions
 
   const { functions: regionFunctions } = useContext(AdminRegionContext)
   const { getRegencies, getDistricts, getVillages } = regionFunctions
@@ -148,6 +149,10 @@ const EditMemberModal = ({ open, onClose, data }) => {
     onClose()
   }
 
+  useEffect(() => {
+    getAllMemberRoles()
+  }, [])
+
   return (
     <Modal
       className={classes.modal}
@@ -201,17 +206,11 @@ const EditMemberModal = ({ open, onClose, data }) => {
                     input={<Input />}
                     MenuProps={MenuProps}
                   >
-                    {[
-                      { label: "Jamaah", value: 4 },
-                      { label: "Aktivis", value: 5 },
-                      { label: "Kader", value: 6 },
-                      { label: "Kader Lanjut", value: 7 },
-                      { label: "Alumni", value: 50 },
-                    ].map((jenjang) => (
+                    {memberRoles.map((jenjang) => (
                       <MenuItem
-                        key={`${jenjang.value}`}
-                        value={jenjang.value}
-                        label={jenjang.label}
+                        key={jenjang.id}
+                        value={jenjang.id}
+                        label={jenjang.name}
                         style={getStyles(
                           jenjang,
                           [
@@ -222,7 +221,7 @@ const EditMemberModal = ({ open, onClose, data }) => {
                           theme
                         )}
                       >
-                        {jenjang.label}
+                        {jenjang.name}
                       </MenuItem>
                     ))}
                   </Select>

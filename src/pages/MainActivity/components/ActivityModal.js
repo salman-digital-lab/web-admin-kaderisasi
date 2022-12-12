@@ -85,8 +85,9 @@ export const KegiatanModal = ({ open, onClose }) => {
     is_published: "0",
     status: "CLOSED",
   })
-  const { categoryList, functions } = useContext(AdminActivityContext)
-  const { addActivity } = functions
+  const { categoryList, functions, memberRoles } =
+    useContext(AdminActivityContext)
+  const { addActivity, getAllMemberRoles } = functions
   const [errors, setErrors] = useState(initialErrors)
   const stateEdit = EditorState.createEmpty()
   const [editorState, setEditorState] = useState(stateEdit)
@@ -129,10 +130,10 @@ export const KegiatanModal = ({ open, onClose }) => {
       formActivityValidity,
     }))
   }
-  // useEffect(() => {
-  //   getActivityCategory()
-  //   // eslint-disable-next-line
-  // }, [])
+  useEffect(() => {
+    getAllMemberRoles()
+    // eslint-disable-next-line
+  }, [])
   useEffect(() => {
     validateDates()
     // eslint-disable-next-line
@@ -261,11 +262,11 @@ export const KegiatanModal = ({ open, onClose }) => {
                               name={name}
                               input={<Input />}
                             >
-                              <MenuItem value={4}>Jamaah</MenuItem>
-                              <MenuItem value={5}>Aktivis</MenuItem>
-                              <MenuItem value={6}>Kader</MenuItem>
-                              <MenuItem value={7}>Kader Lanjut</MenuItem>
-                              <MenuItem value={50}>Alumni</MenuItem>
+                              {memberRoles.map((roles) => (
+                                <MenuItem value={roles.id}>
+                                  {roles.name}
+                                </MenuItem>
+                              ))}
                             </Select>
                           </>
                         )}

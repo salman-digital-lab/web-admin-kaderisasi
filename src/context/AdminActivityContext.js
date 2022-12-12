@@ -27,6 +27,26 @@ const AdminActivityProvider = (props) => {
   const [universityList, setUniversityList] = useState([])
   const [registrantQuestionnaire, setRegistrantQuestionnaire] = useState(null)
   const [openAlert, setOpenAlert] = useState(false)
+  const [memberRoles, setMemberRoles] = useState([])
+
+  /*
+    Get all member roles
+  */
+  
+    const getAllMemberRoles = () => {
+      axios
+        .get(
+          process.env.REACT_APP_BASE_URL +
+            `/v1/member-roles`
+        )
+        .then((res) => {
+          setMemberRoles(res.data.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  
 
   /*
     Get all activity
@@ -440,6 +460,7 @@ const AdminActivityProvider = (props) => {
     getAllFormTemplate,
     exportActivityParticipants,
     getRegistrantQuestionnaire,
+    getAllMemberRoles
   }
 
   return (
@@ -459,6 +480,8 @@ const AdminActivityProvider = (props) => {
         setRegistrantQuestionnaire,
         filterParticipantsActivity,
         setFilterParticipantsActivity,
+        memberRoles,
+        setMemberRoles,
         categoryList,
         universityList,
         formTemplateList,
