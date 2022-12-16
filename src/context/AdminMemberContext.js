@@ -18,6 +18,27 @@ const AdminMemberProvider = (props) => {
   const [memberActivities, setMemberActivities] = useState(null)
   const [blockMemberResp, setBlockMemberResp] = useState({})
   const [updateMemberResp, setUpdateMemberResp] = useState({})
+  const [memberRoles, setMemberRoles] = useState([])
+
+
+  /*
+    Get all member roles
+  */
+  
+    const getAllMemberRoles = () => {
+      axios
+        .get(
+          process.env.REACT_APP_BASE_URL +
+            `/v1/member-roles`
+        )
+        .then((res) => {
+          setMemberRoles(res.data.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+
 
   /*
     Get all Members
@@ -156,6 +177,7 @@ const AdminMemberProvider = (props) => {
     getMemberActivities,
     blockMemberById,
     unblockMemberById,
+    getAllMemberRoles,
     updateMemberById,
   }
 
@@ -173,6 +195,7 @@ const AdminMemberProvider = (props) => {
         blockMemberResp,
         updateMemberResp,
         setUpdateMemberResp,
+        memberRoles,
         functions,
       }}
     >
