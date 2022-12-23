@@ -9,7 +9,7 @@ export const SelectUniversity = ({ data, handleSelect }) => {
   const [options, setOptions] = useState([])
   let params = {
     page: 1,
-    perPage: 600,
+    perPage: 10000,
   }
   const { universitiesState, functions } = useContext(UniversitasContext)
   const { getUniversities } = functions
