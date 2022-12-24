@@ -22,7 +22,7 @@ import { AdminActivityContext } from "../../../context/AdminActivityContext"
 const headCells = [
   { id: "no", numeric: true, label: "No." },
   { id: "judul", numeric: false, label: "Judul Aktivitas/Kegiatan" },
-  { id: "tgl_pendaftaran", numeric: false, label: "Tanggal Pendaftaran" },
+  { id: "startDate", numeric: false, label: "Tanggal Pendaftaran" },
   { id: "jenjang", numeric: false, label: "Min. Jenjang" },
   { id: "kategori", numeric: false, label: "Kategori" },
   { id: "register", numeric: false, label: "Register" },
@@ -110,8 +110,8 @@ const KegiatanTable = () => {
   }, [filterActivity, setFilterActivity, getActivity])
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "desc"
-    setOrder(isAsc ? "desc" : "desc")
+    const isAsc = orderBy === property && order === "asc"
+    setOrder(isAsc ? "desc" : "asc")
     setOrderBy(property)
   }
 

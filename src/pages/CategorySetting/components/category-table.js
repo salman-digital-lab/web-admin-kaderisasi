@@ -86,8 +86,8 @@ const CategoryTable = () => {
   }
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "desc"
-    setOrder(isAsc ? "desc" : "desc")
+    const isAsc = orderBy === property && order === "asc"
+    setOrder(isAsc ? "desc" : "asc")
     setOrderBy(property)
   }
 

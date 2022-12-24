@@ -35,7 +35,7 @@ export const UniversitasProvider = (props) => {
 
   const headCells = [
     { id: "no", numeric: true, label: "No." },
-    { id: "universitas", numeric: false, label: "Universitas" },
+    { id: "name", numeric: false, label: "Universitas" },
     { id: "action", numeric: false, label: "Action" },
   ]
 
