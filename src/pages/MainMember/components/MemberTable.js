@@ -25,8 +25,8 @@ const headCells = [
   { id: "name", numeric: false, label: "Nama Jamaah" },
   { id: "email", numeric: false, label: "Email" },
   { id: "phone", numeric: false, label: "Phone/WA" },
-  { id: "univ", numeric: false, label: "Perguruan Tinggi/Univ" },
-  { id: "jengjang", numeric: false, label: "Jenjang" },
+  { id: "university", numeric: false, label: "Perguruan Tinggi/Univ" },
+  { id: "role_name", numeric: false, label: "Jenjang" },
   { id: "activity", numeric: false, label: "SSC, LMD & SPC" },
   { id: "view", numeric: false, label: "Action" },
 ]
@@ -61,7 +61,7 @@ let params = {
 
 const MemberTable = () => {
   const classes = useStyles()
-  const [order, setOrder] = useState("desc")
+  const [order, setOrder] = useState("asc")
   const [orderBy, setOrderBy] = useState("created_at")
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(5)
@@ -114,8 +114,8 @@ const MemberTable = () => {
   }, [filterMember, setFilterMember, getMembers])
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "desc"
-    setOrder(isAsc ? "desc" : "desc")
+    const isAsc = orderBy === property && order === "asc"
+    setOrder(isAsc ? "desc" : "asc")
     setOrderBy(property)
   }
 
