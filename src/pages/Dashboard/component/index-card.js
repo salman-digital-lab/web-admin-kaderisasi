@@ -17,7 +17,12 @@ const Card = () => {
     <Grid
       container
       spacing={4}
-      style={{ display: "flex", marginBottom: "30px" }}
+      style={{
+        display: "flex",
+        marginBottom: "30px",
+        justifyContent: "center",
+        flexWrap: "wrap",
+      }}
     >
       {data.map((e) => (
         <Grid item xs={12} md={6} lg={3} key={`${e.value}_${e.title}`}>

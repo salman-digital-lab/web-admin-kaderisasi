@@ -11,6 +11,9 @@ export const AdminDashboardProvider = (props) => {
     jamaah: 0,
     aktivis: 0,
     kader: 0,
+    ssc: 0,
+    lmd: 0,
+    spectra: 0,
     status: null,
   })
   const [AktivisState, setAktivisState] = useState()
@@ -70,6 +73,27 @@ export const AdminDashboardProvider = (props) => {
       text: "Kader",
       value: valueMapping.kader,
     },
+    {
+      icon: <EqualizerIcon fontSize="large" />,
+      color: "#FFA72E",
+      title: "Jumlah SSC",
+      text: "SSC",
+      value: valueMapping.ssc,
+    },
+    {
+      icon: <EqualizerIcon fontSize="large" />,
+      color: "#FFA72E",
+      title: "Jumlah LMD",
+      text: "LMD",
+      value: valueMapping.lmd,
+    },
+    {
+      icon: <EqualizerIcon fontSize="large" />,
+      color: "#FFA72E",
+      title: "Jumlah Spectra",
+      text: "Spectra",
+      value: valueMapping.spectra,
+    }
   ]
 
   const colors = [
