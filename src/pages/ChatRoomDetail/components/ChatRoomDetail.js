@@ -24,9 +24,11 @@ import { AdminChatRoomContext } from "../../../context/AdminChatRoomContext"
 import { StudentCareStatus } from "../../../components/statuses"
 import { ConfirmationModal } from "./confirmation-modal"
 import { MenuProps, getStyles } from "../../../components/select"
+import styled from "./styled"
 
 const AdminDetail = () => {
   const { id } = useParams()
+  const classes = styled()
   const theme = useTheme()
   const [isOpen, setIsOpen] = useState(false)
   const [stateCanBeEdited, setStateCanBeEdited] = useState(false)
@@ -59,6 +61,7 @@ const AdminDetail = () => {
     { value: "Belum Ditangani", label: "Belum Ditangani" },
     { value: "Sedang Ditangani", label: "Sedang Ditangani" },
     { value: "Sudah Ditangani", label: "Sudah Ditangani" },
+    { value: "Akan Ditangani", label: "Akan Ditangani" },
   ])
 
   const [payload, setPayload] = useState({})
@@ -88,12 +91,6 @@ const AdminDetail = () => {
   useEffect(() => {
     getCounselors()
   }, [])
-
-  // const { listUsers, functions: funcAdmin } = useContext(AdminContext)
-  // const { getUsers } = funcAdmin
-  // useEffect(() => {
-  //   getUsers({})
-  // }, [])
 
   const studentCareDelete = () => {
     deleteStudentCare(id)
@@ -238,7 +235,7 @@ const AdminDetail = () => {
                 </ListItem>
                 <ListItem button divider>
                   {stateCanBeEdited ? (
-                    <FormControl className="select-dropdown">
+                    <FormControl className={classes.EditFormControl}>
                       <InputLabel id="demo-mutiple-name-label">
                         Metode Penanganan
                       </InputLabel>
@@ -275,7 +272,7 @@ const AdminDetail = () => {
                 </ListItem>
                 <ListItem button divider>
                   {stateCanBeEdited ? (
-                    <FormControl className="select-dropdown">
+                    <FormControl className={classes.EditFormControl}>
                       <InputLabel id="demo-mutiple-name-label">
                         Pemilik Masalah
                       </InputLabel>
@@ -325,7 +322,7 @@ const AdminDetail = () => {
               >
                 <ListItem button divider>
                   {stateCanBeEdited ? (
-                    <FormControl className="select-dropdown">
+                    <FormControl className={classes.EditFormControl}>
                       <InputLabel id="demo-mutiple-name-label">
                         Nama Pendengar
                       </InputLabel>
@@ -360,7 +357,7 @@ const AdminDetail = () => {
                 </ListItem>
                 <ListItem button divider>
                   {stateCanBeEdited ? (
-                    <FormControl className="select-dropdown">
+                    <FormControl className={classes.EditFormControl}>
                       <InputLabel id="demo-mutiple-name-label">
                         Preferensi Pendengar
                       </InputLabel>
@@ -397,7 +394,7 @@ const AdminDetail = () => {
                 </ListItem>
                 <ListItem button divider>
                   {stateCanBeEdited ? (
-                    <FormControl className="select-dropdown">
+                    <FormControl className={classes.EditFormControl}>
                       <InputLabel id="demo-mutiple-name-label">
                         Status Penanganan
                       </InputLabel>
