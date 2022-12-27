@@ -19,11 +19,12 @@ const MemberFilter = () => {
   const { filterMember, setFilterMember } = useContext(AdminMemberContext)
 
   const handleKeyDown = (event) => {
-    if (event.key === "Enter" || event.target.type === "submit") {
+    event.preventDefault()
+    if (event.key === "Enter") {
+      console.log("ok")
       let data = { ...filterMember, filter: true }
       if (event.target.name === "search_query") {
         data.search_query = event.target.value
-        event.preventDefault()
       }
       if (event.target.name === "SSC") {
         data.ssc = event.target.value
@@ -50,25 +51,21 @@ const MemberFilter = () => {
     <Card>
       <CardContent className="filter-content">
         <Box pl={5} pr={5}>
-          <form onSubmit={handleKeyDown}>
-            <div style={{ display: "flex" }}>
-              <TextField
-                className="input-register"
-                label="Cari Member"
-                fullWidth
-                size="small"
-                name="search_query"
-                onKeyDown={handleKeyDown}
-              />
-              <IconButton
-                style={{ marginLeft: "auto" }}
-                type="submit"
-                aria-label="search"
-              >
-                <Search />
-              </IconButton>
-            </div>
-          </form>
+          <TextField
+            className="input-register"
+            label="Cari Member"
+            fullWidth
+            size="small"
+            name="search_query"
+            onKeyDown={handleKeyDown}
+            InputProps={{
+              endAdornment: (
+                <IconButton>
+                  <Search />
+                </IconButton>
+              ),
+            }}
+          />
           <FormControl component="fieldset" className="radio-button jenkel">
             <FormLabel component="legend">Jenis Kelamin</FormLabel>
             <RadioGroup
