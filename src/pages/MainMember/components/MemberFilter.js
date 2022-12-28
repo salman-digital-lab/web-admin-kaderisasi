@@ -111,6 +111,7 @@ const MemberFilter = () => {
                 size="small"
                 name="SSC"
                 onKeyDown={handleKeyDown}
+                onChange={handleChange}
               />
             </div>
             <div className="col-4">
@@ -121,6 +122,7 @@ const MemberFilter = () => {
                 size="small"
                 name="LMD"
                 onKeyDown={handleKeyDown}
+                onChange={handleChange}
               />
             </div>
             <div className="col-4">
@@ -131,6 +133,7 @@ const MemberFilter = () => {
                 size="small"
                 name="spectra"
                 onKeyDown={handleKeyDown}
+                onChange={handleChange}
               />
             </div>
           </div>
