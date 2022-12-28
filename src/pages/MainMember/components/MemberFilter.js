@@ -18,10 +18,25 @@ import { Search } from "@mui/icons-material"
 const MemberFilter = () => {
   const { filterMember, setFilterMember } = useContext(AdminMemberContext)
 
+  const handleChange = (event) => {
+    let data = { ...filterMember, filter: true }
+    if (event.target.name === "search_query") {
+      data.search_query = event.target.value
+    }
+    if (event.target.name === "SSC") {
+      data.ssc = event.target.value
+    }
+    if (event.target.name === "LMD") {
+      data.lmd = event.target.value
+    }
+    if (event.target.name === "spectra") {
+      data.spectra = event.target.value
+    }
+    setFilterMember(data)
+  }
+
   const handleKeyDown = (event) => {
-    event.preventDefault()
     if (event.key === "Enter") {
-      console.log("ok")
       let data = { ...filterMember, filter: true }
       if (event.target.name === "search_query") {
         data.search_query = event.target.value
@@ -58,13 +73,7 @@ const MemberFilter = () => {
             size="small"
             name="search_query"
             onKeyDown={handleKeyDown}
-            InputProps={{
-              endAdornment: (
-                <IconButton>
-                  <Search />
-                </IconButton>
-              ),
-            }}
+            onChange={handleChange}
           />
           <FormControl component="fieldset" className="radio-button jenkel">
             <FormLabel component="legend">Jenis Kelamin</FormLabel>
