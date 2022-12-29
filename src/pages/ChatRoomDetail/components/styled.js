@@ -39,5 +39,8 @@ const styled = makeStyles((theme) => ({
     paddingLeft: 0,
     paddingRight: 0,
   },
+  EditFormControl: {
+    width: "100%",
+  },
 }))
 export default styled
