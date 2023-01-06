@@ -82,6 +82,7 @@ export const KegiatanModal = ({ open, onClose }) => {
     register_end_date: moment().format("YYYY-MM-DD"),
     category_id: "",
     minimum_role_id: "",
+    maximum_role_id: "",
     is_published: "0",
     status: "CLOSED",
   })
@@ -239,6 +240,8 @@ export const KegiatanModal = ({ open, onClose }) => {
                       />
                     )}
                   </FormControl>
+                </div>
+                <div className="detail-activity">
                   <FormControl className="input-form" fullWidth>
                     {categoryList?.status === "SUCCESS" && (
                       <Controller
@@ -250,13 +253,47 @@ export const KegiatanModal = ({ open, onClose }) => {
                           fieldState: { error },
                         }) => (
                           <>
-                            <InputLabel id="level-id-label">
-                              -- Pilih Minimum Jenjang --
+                            <InputLabel id="min-level-id-label">
+                              -- Pilih Jenjang Minimum --
                             </InputLabel>
                             <Select
                               className="select-input-form"
                               value={value ? value : ""}
-                              labelId="level-id-label"
+                              labelId="min-level-id-label"
+                              required
+                              onChange={onChange}
+                              name={name}
+                              input={<Input />}
+                            >
+                              {memberRoles.map((roles) => (
+                                <MenuItem value={roles.id}>
+                                  {roles.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </>
+                        )}
+                      />
+                    )}
+                  </FormControl>
+                  <FormControl className="input-form" fullWidth>
+                    {categoryList?.status === "SUCCESS" && (
+                      <Controller
+                        name="maximum_role_id"
+                        control={control}
+                        defaultValue={state.maximum_role_id}
+                        render={({
+                          field: { onChange, value, name },
+                          fieldState: { error },
+                        }) => (
+                          <>
+                            <InputLabel id="max-level-id-label">
+                              -- Pilih Jenjang Maksimum --
+                            </InputLabel>
+                            <Select
+                              className="select-input-form"
+                              value={value ? value : ""}
+                              labelId="max-level-id-label"
                               required
                               onChange={onChange}
                               name={name}
