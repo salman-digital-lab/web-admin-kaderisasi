@@ -26,9 +26,9 @@ import RegistrantQuestionnaireModal from "../../../components/modals/registrant-
 const headCells = [
   { id: "no", numeric: true, label: "No." },
   { id: "name", numeric: false, label: "Nama Lengkap" },
-  { id: "jenjang", numeric: false, label: "Jenjang" },
+  { id: "role_name", numeric: false, label: "Jenjang" },
   { id: "email", numeric: false, label: "Email & Whatsapp" },
-  { id: "univ", numeric: false, label: "Perguruan Tinggi" },
+  { id: "university_name", numeric: false, label: "Perguruan Tinggi" },
   { id: "status", numeric: false, label: "Status Pendaftaran" },
   { id: "view", numeric: false, label: "Action" },
 ]
@@ -129,8 +129,8 @@ const PendaftarTable = () => {
   }
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "desc"
-    setOrder(isAsc ? "desc" : "desc")
+    const isAsc = orderBy === property && order === "asc"
+    setOrder(isAsc ? "desc" : "asc")
     setOrderBy(property)
   }
 

@@ -8,12 +8,32 @@ import {
   FormLabel,
   RadioGroup,
   FormControlLabel,
+  Button,
 } from "@material-ui/core"
 import { AdminMemberContext } from "../../../context/AdminMemberContext"
 import StyledRadio from "../../../components/radio-button"
+import { IconButton } from "@mui/material"
+import { Search } from "@mui/icons-material"
 
 const MemberFilter = () => {
   const { filterMember, setFilterMember } = useContext(AdminMemberContext)
+
+  const handleChange = (event) => {
+    let data = { ...filterMember, filter: true }
+    if (event.target.name === "search_query") {
+      data.search_query = event.target.value
+    }
+    if (event.target.name === "SSC") {
+      data.ssc = event.target.value
+    }
+    if (event.target.name === "LMD") {
+      data.lmd = event.target.value
+    }
+    if (event.target.name === "spectra") {
+      data.spectra = event.target.value
+    }
+    setFilterMember(data)
+  }
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -53,6 +73,7 @@ const MemberFilter = () => {
             size="small"
             name="search_query"
             onKeyDown={handleKeyDown}
+            onChange={handleChange}
           />
           <FormControl component="fieldset" className="radio-button jenkel">
             <FormLabel component="legend">Jenis Kelamin</FormLabel>
@@ -90,6 +111,7 @@ const MemberFilter = () => {
                 size="small"
                 name="SSC"
                 onKeyDown={handleKeyDown}
+                onChange={handleChange}
               />
             </div>
             <div className="col-4">
@@ -100,6 +122,7 @@ const MemberFilter = () => {
                 size="small"
                 name="LMD"
                 onKeyDown={handleKeyDown}
+                onChange={handleChange}
               />
             </div>
             <div className="col-4">
@@ -110,6 +133,7 @@ const MemberFilter = () => {
                 size="small"
                 name="spectra"
                 onKeyDown={handleKeyDown}
+                onChange={handleChange}
               />
             </div>
           </div>

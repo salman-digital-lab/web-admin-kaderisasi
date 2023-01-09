@@ -21,7 +21,7 @@ import { AdminStatus } from "../../../components/statuses"
 
 const headCells = [
   { id: "no", numeric: true, label: "No." },
-  { id: "name", numeric: false, label: "Nama Jamaah" },
+  { id: "display_name", numeric: false, label: "Nama Jamaah" },
   { id: "email", numeric: false, label: "Email" },
   { id: "username", numeric: false, label: "Username" },
   { id: "status", numeric: false, label: "Status" },
@@ -96,8 +96,8 @@ const AdminTable = () => {
   }, [filterUser, setFilterUser, getUsers])
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "desc"
-    setOrder(isAsc ? "desc" : "desc")
+    const isAsc = orderBy === property && order === "asc"
+    setOrder(isAsc ? "desc" : "asc")
     setOrderBy(property)
   }
 
