@@ -21,7 +21,10 @@ const AdminChatRoomProvider = (props) => {
   const getCounselors = async () => {
     setLoading(true)
     axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/student-care/counselors`)
+      .get(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
+          `/v1/student-care/counselors`
+      )
       .then((res) => {
         let result = res.data.data
         setCounselors(result)

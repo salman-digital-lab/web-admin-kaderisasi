@@ -1,140 +1,53 @@
 import React, { useState } from "react"
 import EqualizerIcon from "@material-ui/icons/Equalizer"
-import PeopleOutlineIcon from "@material-ui/icons/PeopleOutline"
 import axios from "axios"
 
 export const AdminDashboardContext = React.createContext()
 /* eslint-disable */
 export const AdminDashboardProvider = (props) => {
-  const [valueMapping, setValueMapping] = useState({
-    jumlah_member: 0,
-    jamaah: 0,
-    aktivis: 0,
-    kader: 0,
-    kader_lanjut: 0,
-    alumni: 0,
-    status: null,
-  })
-  const [AktivisState, setAktivisState] = useState()
-  const [KampusState, setKampusState] = useState()
-  const [JoinState, setJoinState] = useState()
+  const [cardData, setCardData] = useState([])
 
-  const [barData, setBarData] = useState({
+  const [aktivisBar, setAktivisBar] = useState({
     labels: [],
     datasets: [],
     status: null,
   })
 
-  const [AktivisBar, setAktivisBar] = useState({
+  const [kampusBar, setKampusBar] = useState({
     labels: [],
     datasets: [],
     status: null,
   })
 
-  const [KampusBar, setKampusBar] = useState({
+  const [joinBar, setJoinBar] = useState({
     labels: [],
     datasets: [],
     status: null,
   })
 
-  const [JoinBar, setJoinBar] = useState({
-    labels: [],
-    datasets: [],
-    status: null,
-  })
-
-  const CardData = [
-    {
-      icon: <PeopleOutlineIcon fontSize="large" />,
-      color: "#61B15A",
-      title: "Jumlah Akun",
-      text: "Akun",
-      value: valueMapping.jumlah_member,
-    },
-    {
-      icon: <EqualizerIcon fontSize="large" />,
-      color: "#73C5D0",
-      title: "Jumlah Jamaah",
-      text: "Jamaah",
-      value: valueMapping.jamaah,
-    },
-    {
-      icon: <EqualizerIcon fontSize="large" />,
-      color: "#1C6C7D",
-      title: "Jumlah Aktivis",
-      text: "Aktivis",
-      value: valueMapping.aktivis,
-    },
-    {
-      icon: <EqualizerIcon fontSize="large" />,
-      color: "#FFA72E",
-      title: "Jumlah Kader",
-      text: "Kader",
-      value: valueMapping.kader,
-    },
-    {
-      icon: <EqualizerIcon fontSize="large" />,
-      color: "#FFA72E",
-      title: "Kader Lanjut",
-      text: "Kader",
-      value: valueMapping.kader_lanjut,
-    },
-    {
-      icon: <EqualizerIcon fontSize="large" />,
-      color: "#FFA72E",
-      title: "Alumni",
-      text: "Alumni",
-      value: valueMapping.alumni,
-    },
-  ]
-
-  const colors = [
-    "rgba(28, 108, 125, 1)",
-    "rgba(115, 197, 208, 1)",
-    "rgba(255, 167, 46, 1)",
-  ]
+  const colors = ["#61B15A", "#73C5D0", "#1C6C7D", "#FFA72E", "#FFD700"]
   const jenis_gender = ["Pria", "Wanita"] // add as many colors as there will be areas (maximum)
 
   const GetAllMember = () => {
     axios
-      .get(process.env.REACT_APP_BASE_URL + "/v1/dashboard/get/all/member")
+      .get(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
+          "/v1/dashboard/get/all/member"
+      )
       .then((res) => {
-        const data = res.data.data
-        const tmp = {
-          jumlah: 0,
-          aktivis: 0,
-          jamaah: 0,
-          kader: 0,
-          kader_lanjut: 0,
-          alumni: 0,
+        if (res.data.status.toLowerCase() !== "success") {
+          return
         }
+        const data = res.data.data
 
-        data.forEach((e) => {
-          if (e.name === "Aktivis") {
-            tmp.aktivis = e.total
-          } else if (e.name === "Jamaah") {
-            tmp.jamaah = e.total
-          } else if (e.name === "Kader") {
-            tmp.kader = e.total
-          } else if (e.name === "Akun") {
-            tmp.jumlah = e.total
-          } else if (e.name === "Kader-lanjutan") {
-            tmp.kader_lanjut = e.total
-          } else if (e.name === "Alumni") {
-            tmp.alumni = e.total
-          }
-        })
+        const tempCardData = data.map((e) => ({
+          icon: <EqualizerIcon fontSize="large" />,
+          color: "#61B15A",
+          title: `Jumlah ${e.name}`,
+          value: e.total,
+        }))
 
-        setValueMapping({
-          ...valueMapping,
-          jumlah_member: tmp.jumlah,
-          jamaah: tmp.jamaah,
-          aktivis: tmp.aktivis,
-          kader: tmp.kader,
-          kader_lanjut: tmp.kader_lanjut,
-          alumni: tmp.alumni,
-          status: "success",
-        })
+        setCardData(tempCardData)
       })
       .catch((err) => {
         console.log(err)
@@ -143,11 +56,43 @@ export const AdminDashboardProvider = (props) => {
 
   const GetAktivis = () => {
     axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/dashboard/get/all/provinces`)
+      .get(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
+          `/v1/dashboard/get/all/provinces`
+      )
       .then((res) => {
-        const result = res.data.data
+        const data = res.data.data
 
-        setAktivisState(result)
+        const labels = new Set()
+        const roles = new Set()
+
+        const tempBarData = {}
+        const tempBarDataset = []
+
+        data.forEach((e) => {
+          labels.add(e.nama_provinsi)
+          roles.add(e.jenis_member)
+          tempBarData[e.jenis_member] =
+            tempBarData[e.jenis_member] || Array.from(labels).map(() => 0)
+          const labelIndex = [...labels].indexOf(e.nama_provinsi)
+          tempBarData[e.jenis_member][labelIndex] = e.jumlah_member
+        })
+
+        Array.from(roles).forEach((role, i) => {
+          tempBarDataset.push({
+            label: role,
+            data: tempBarData[role],
+            fill: false,
+            backgroundColor: colors[i],
+            borderColor: colors[i],
+          })
+        })
+
+        setAktivisBar({
+          labels: [...labels],
+          datasets: tempBarDataset,
+          status: res.data.status,
+        })
       })
       .catch((error) => {
         console.log(error)
@@ -157,12 +102,42 @@ export const AdminDashboardProvider = (props) => {
   const GetKampus = () => {
     axios
       .get(
-        process.env.REACT_APP_BASE_URL + "/v1/dashboard/get/all/universities"
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
+          "/v1/dashboard/get/all/universities"
       )
       .then((res) => {
-        const result = res.data.data
+        const data = res.data.data
 
-        setKampusState(result)
+        const labels = new Set()
+        const roles = new Set()
+
+        const tempBarData = {}
+        const tempBarDataset = []
+
+        data.forEach((e) => {
+          labels.add(e.nama_universitas)
+          roles.add(e.jenis_member)
+          tempBarData[e.jenis_member] =
+            tempBarData[e.jenis_member] || Array.from(labels).map(() => 0)
+          const labelIndex = [...labels].indexOf(e.nama_universitas)
+          tempBarData[e.jenis_member][labelIndex] = e.jumlah_member
+        })
+
+        Array.from(roles).forEach((role, i) => {
+          tempBarDataset.push({
+            label: role,
+            data: tempBarData[role],
+            fill: false,
+            backgroundColor: colors[i],
+            borderColor: colors[i],
+          })
+        })
+
+        setKampusBar({
+          labels: [...labels],
+          datasets: tempBarDataset,
+          status: res.data.status,
+        })
       })
       .catch((error) => {
         console.log(error)
@@ -171,10 +146,43 @@ export const AdminDashboardProvider = (props) => {
 
   const GetJoin = () => {
     axios
-      .get(process.env.REACT_APP_BASE_URL + "/v1/dashboard/get/all/years")
+      .get(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
+          "/v1/dashboard/get/all/years"
+      )
       .then((res) => {
-        let result = res.data.data
-        setJoinState(result)
+        const data = res.data.data
+
+        const labels = new Set()
+        const roles = new Set()
+
+        const tempBarData = {}
+        const tempBarDataset = []
+
+        data.forEach((e) => {
+          labels.add(e.tahun)
+          roles.add(e.jenis_member)
+          tempBarData[e.jenis_member] =
+            tempBarData[e.jenis_member] || Array.from(labels).map(() => 0)
+          const labelIndex = [...labels].indexOf(e.tahun)
+          tempBarData[e.jenis_member][labelIndex] = e.jumlah_member
+        })
+
+        Array.from(roles).forEach((role, i) => {
+          tempBarDataset.push({
+            label: role,
+            data: tempBarData[role],
+            fill: false,
+            backgroundColor: colors[i],
+            borderColor: colors[i],
+          })
+        })
+
+        setJoinBar({
+          labels: [...labels],
+          datasets: tempBarDataset,
+          status: res.data.status,
+        })
       })
       .catch((error) => {
         console.log(error)
@@ -182,8 +190,6 @@ export const AdminDashboardProvider = (props) => {
   }
 
   const functions = {
-    barData,
-    CardData,
     colors,
     jenis_gender,
     GetAllMember,
@@ -195,22 +201,14 @@ export const AdminDashboardProvider = (props) => {
   return (
     <AdminDashboardContext.Provider
       value={{
-        valueMapping,
-        setValueMapping,
+        cardData,
+        setCardData,
         functions,
-        AktivisState,
-        setAktivisState,
-        KampusState,
-        setKampusState,
-        JoinState,
-        setJoinState,
-        barData,
-        setBarData,
-        AktivisBar,
+        aktivisBar,
         setAktivisBar,
-        KampusBar,
+        kampusBar,
         setKampusBar,
-        JoinBar,
+        joinBar,
         setJoinBar,
       }}
     >

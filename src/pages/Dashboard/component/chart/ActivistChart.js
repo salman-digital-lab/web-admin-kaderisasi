@@ -3,69 +3,18 @@ import { Bar } from "react-chartjs-2"
 import { AdminDashboardContext } from "../../../../context/AdminDashboardContext"
 
 export default function ActivistChart() {
-  const { AktivisState, functions, AktivisBar, setAktivisBar } = useContext(
-    AdminDashboardContext
-  )
-  const { colors, GetAktivis } = functions
-  // sort by value
-  if (AktivisState !== undefined) {
-    AktivisState.sort(function (a, b) {
-      return a.tahun - b.tahun
-    })
-  }
+  const { functions, aktivisBar } = useContext(AdminDashboardContext)
+  const { GetAktivis } = functions
 
   useEffect(() => {
-    setAktivisBar({
-      labels: [],
-      datasets: [],
-      status: null,
-    })
-    if (AktivisBar.status === null) {
-      GetAktivis()
-    }
-    // eslint-disable-next-line
+    GetAktivis()
   }, [])
 
-  if (AktivisState !== undefined) {
-    AktivisState.forEach(function (e) {
-      // create labels
-      let labelIndex = AktivisBar.labels.indexOf(e.nama_provinsi)
-      if (labelIndex === -1) {
-        labelIndex = AktivisBar.labels.length
-        AktivisBar.labels.push(e.nama_provinsi)
-        // dummy entries for each dataset for the label
-        AktivisBar.datasets.forEach(function (dataset) {
-          dataset.data.push(0)
-        })
-      }
-
-      // get the area dataset
-      var area = AktivisBar.datasets.filter(function (area) {
-        return area.label === e.jenis_member
-      })[0]
-      // otherwise create it
-      if (area === undefined) {
-        area = {
-          label: e.jenis_member,
-          data: AktivisBar.labels.map(function () {
-            return 0
-          }),
-          fill: false,
-          backgroundColor: colors[AktivisBar.datasets.length],
-          borderColor: colors[AktivisBar.datasets.length],
-        }
-        AktivisBar.datasets.push(area)
-      }
-
-      // set the value
-      area.data[labelIndex] = e.jumlah_permember
-    })
-  }
   return (
     <>
       <Bar
         id="chart"
-        data={AktivisBar}
+        data={aktivisBar}
         base={10}
         options={{
           layout: {
