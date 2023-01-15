@@ -5,9 +5,6 @@ import axios from "axios"
 export const AdminDashboardContext = React.createContext()
 /* eslint-disable */
 export const AdminDashboardProvider = (props) => {
-<<<<<<< HEAD
-  const [cardData, setCardData] = useState([])
-=======
   const [valueMapping, setValueMapping] = useState({
     jumlah_member: 0,
     jamaah: 0,
@@ -21,7 +18,6 @@ export const AdminDashboardProvider = (props) => {
   const [AktivisState, setAktivisState] = useState()
   const [KampusState, setKampusState] = useState()
   const [JoinState, setJoinState] = useState()
->>>>>>> card-ssc-lmd-spectra
 
   const [aktivisBar, setAktivisBar] = useState({
     labels: [],
@@ -36,15 +32,6 @@ export const AdminDashboardProvider = (props) => {
   })
 
   const [joinBar, setJoinBar] = useState({
-    labels: [],
-    datasets: [],
-    status: null,
-  })
-
-<<<<<<< HEAD
-  const colors = ["#61B15A", "#73C5D0", "#1C6C7D", "#FFA72E", "#FFD700"]
-=======
-  const [JoinBar, setJoinBar] = useState({
     labels: [],
     datasets: [],
     status: null,
@@ -99,7 +86,7 @@ export const AdminDashboardProvider = (props) => {
       title: "Jumlah Spectra",
       text: "Spectra",
       value: valueMapping.spectra,
-    }
+    },
   ]
 
   const colors = [
@@ -107,7 +94,6 @@ export const AdminDashboardProvider = (props) => {
     "rgba(115, 197, 208, 1)",
     "rgba(255, 167, 46, 1)",
   ]
->>>>>>> card-ssc-lmd-spectra
   const jenis_gender = ["Pria", "Wanita"] // add as many colors as there will be areas (maximum)
 
   const GetAllMember = () => {

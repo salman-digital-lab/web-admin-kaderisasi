@@ -11,12 +11,12 @@ const Card = () => {
   const sm = useMediaQuery(theme.breakpoints.between("sm", "md"))
   const md = useMediaQuery(theme.breakpoints.between("md", "lg"))
   const lg = useMediaQuery(theme.breakpoints.up("lg"))
-  const { valueMapping, functions } = useContext(AdminDashboardContext)
+  const { functions } = useContext(AdminDashboardContext)
   const { CardData, GetAllMember } = functions
   const data = [...CardData]
   useEffect(() => {
     GetAllMember()
-  }, [])
+  }, [GetAllMember])
 
   const getWidthValues = () => {
     return (xs && "50%") || (sm && "40%") || (md && "40%") || (lg && "25%")
