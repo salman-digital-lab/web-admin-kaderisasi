@@ -95,7 +95,8 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
   const [uploadedImage, setUploadImage] = useState(BaseImage)
   const [submitError, setSubmitError] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
-  const [jenjang, setJenjang] = useState(data.minimum_role_id)
+  const [minJenjang, setMinJenjang] = useState(data.minimum_role_id)
+  const [maxJenjang, setMaxJenjang] = useState(data.maximum_role_id)
   const [title, setTitle] = useState(data.name)
   const [categoryId, setCategoryId] = useState(data.category_id)
   const [isPublished, setIsPublished] = useState(
@@ -214,9 +215,14 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
     setActivityExpired(date)
   }
 
-  const handleJenjangChange = (event) => {
+  const handleMinJenjangChange = (event) => {
     handleForm(Number(event.target.value), "minimum_role_id")
-    setJenjang(event.target.value)
+    setMinJenjang(event.target.value)
+  }
+
+  const handleMaxJenjangChange = (event) => {
+    handleForm(Number(event.target.value), "maximum_role_id")
+    setMaxJenjang(event.target.value)
   }
 
   const handleCategoryChange = (event) => {
@@ -448,18 +454,45 @@ const DetailKegiatanModal = ({ open, onClose, data, categoryList }) => {
                   </Select>
                 )}
               </div>
-              <div className="select-form">
-                Jenjang Minimal
-                <br />
-                <Select
-                  className="select-input-form"
-                  value={jenjang}
-                  onChange={handleJenjangChange}
+              <div className="detail-activity mr-10 ml-10">
+                <div
+                  className="input-form"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    flexGrow: 1,
+                  }}
                 >
-                   {memberRoles.map((roles) => (
-                    <MenuItem value={roles.id}>{roles.name}</MenuItem>
-                  ))}
-                </Select>
+                  <p>Jenjang Minimum</p>
+                  <Select
+                    className="select-input-form"
+                    value={minJenjang}
+                    onChange={handleMinJenjangChange}
+                  >
+                    {memberRoles.map((roles) => (
+                      <MenuItem value={roles.id}>{roles.name}</MenuItem>
+                    ))}
+                  </Select>
+                </div>
+                <div
+                  className="input-form"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    flexGrow: 1,
+                  }}
+                >
+                  <p>Jenjang Maksimal</p>
+                  <Select
+                    className="select-input-form"
+                    value={maxJenjang}
+                    onChange={handleMaxJenjangChange}
+                  >
+                    {memberRoles.map((roles) => (
+                      <MenuItem value={roles.id}>{roles.name}</MenuItem>
+                    ))}
+                  </Select>
+                </div>
               </div>
               <div className="detail-activity">
                 <DatePickerCustom

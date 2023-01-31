@@ -35,7 +35,10 @@ export function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index])
   stabilizedThis.sort((a, b) => {
     const order = comparator(a[0], b[0])
-    if (order !== 0) return order
+    if (order !== 0) 
+    { 
+      return order
+    }
     return a[1] - b[1]
   })
   return stabilizedThis.map((el) => el[0])
@@ -59,7 +62,7 @@ export function EnhancedTableHead(props) {
             {headCell.id !== "no" && headCell.id !== "action" ? (
               <TableSortLabel
                 active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : "desc"}
+                direction={orderBy === headCell.id ? order : "asc"}
                 onClick={createSortHandler(headCell.id)}
               >
                 {headCell.label}
@@ -84,7 +87,7 @@ export function EnhancedTableHead(props) {
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   onRequestSort: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(["desc", "desc"]).isRequired,
+  order: PropTypes.oneOf(["asc", "desc"]).isRequired,
   orderBy: PropTypes.string.isRequired,
   headCells: PropTypes.array.isRequired,
 }

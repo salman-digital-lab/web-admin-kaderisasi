@@ -23,7 +23,8 @@ const headCells = [
   { id: "no", numeric: true, label: "No." },
   { id: "judul", numeric: false, label: "Judul Aktivitas/Kegiatan" },
   { id: "tgl_pendaftaran", numeric: false, label: "Tanggal Pendaftaran" },
-  { id: "jenjang", numeric: false, label: "Min. Jenjang" },
+  { id: "minJenjang", numeric: false, label: "Min. Jenjang" },
+  { id: "maxJenjang", numeric: false, label: "Max. Jenjang" },
   { id: "kategori", numeric: false, label: "Kategori" },
   { id: "register", numeric: false, label: "Register" },
   { id: "publish", numeric: false, label: "Publish" },
@@ -110,8 +111,8 @@ const KegiatanTable = () => {
   }, [filterActivity, setFilterActivity, getActivity])
 
   const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === "desc"
-    setOrder(isAsc ? "desc" : "desc")
+    const isAsc = orderBy === property && order === "asc"
+    setOrder(isAsc ? "desc" : "asc")
     setOrderBy(property)
   }
 
@@ -172,7 +173,8 @@ const KegiatanTable = () => {
                         Start : {row.startDate} <br />
                         End : {row.endDate}
                       </TableCell>
-                      <TableCell>{row.jenjang}</TableCell>
+                      <TableCell>{row.minJenjang}</TableCell>
+                      <TableCell>{row.maxJenjang}</TableCell>
                       <TableCell>{row.kategori}</TableCell>
                       <TableCell>
                         <RegisterStatus status={row.register} />

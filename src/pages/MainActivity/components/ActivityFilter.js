@@ -25,7 +25,6 @@ const KegiatanFilter = () => {
     setFilterActivity,
     categoryList,
     memberRoles,
-    setMemberRoles,
     functions,
   } = useContext(AdminActivityContext)
   const { getActivityCategory, getAllMemberRoles } = functions
@@ -57,10 +56,18 @@ const KegiatanFilter = () => {
     setFilterActivity({ ...filterActivity, category_id: s, filter: true })
   }
 
-  const handleChangeRole = (s) => {
+  const handleChangeMinRole = (s) => {
     setFilterActivity({
       ...filterActivity,
       minimum_roles_id: Number(s),
+      filter: true,
+    })
+  }
+
+  const handleChangeMaxRole = (s) => {
+    setFilterActivity({
+      ...filterActivity,
+      maximum_roles_id: Number(s),
       filter: true,
     })
   }
@@ -115,7 +122,21 @@ const KegiatanFilter = () => {
                   labelId="select-min-jenjang"
                   label="Min. Jenjang"
                   defaultValue={-1}
-                  onChange={(e) => handleChangeRole(e.target.value)}
+                  onChange={(e) => handleChangeMinRole(e.target.value)}
+                >
+                  <MenuItem value={-1}>Semua</MenuItem>
+                  {memberRoles.map((roles) => (
+                    <MenuItem value={roles.id}>{roles.name}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl size="small" sx={{ width: "15em" }}>
+                <InputLabel id="select-max-jenjang">Max. Jenjang</InputLabel>
+                <Select
+                  labelId="select-max-jenjang"
+                  label="Max. Jenjang"
+                  defaultValue={-1}
+                  onChange={(e) => handleChangeMaxRole(e.target.value)}
                 >
                   <MenuItem value={-1}>Semua</MenuItem>
                   {memberRoles.map((roles) => (

@@ -35,7 +35,7 @@ export const UniversitasProvider = (props) => {
 
   const headCells = [
     { id: "no", numeric: true, label: "No." },
-    { id: "universitas", numeric: false, label: "Universitas" },
+    { id: "name", numeric: false, label: "Universitas" },
     { id: "action", numeric: false, label: "Action" },
   ]
 
@@ -66,7 +66,11 @@ export const UniversitasProvider = (props) => {
       }
     })
     await axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/universities` + paramsQuery)
+      .get(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
+          `/v1/universities` +
+          paramsQuery
+      )
       .then((res) => {
         setUniversitiesState(res.data)
         setLoading(false)
@@ -85,7 +89,10 @@ export const UniversitasProvider = (props) => {
   const addUniversity = (formData) => {
     let result = null
     axios
-      .post(process.env.REACT_APP_BASE_URL + `/v1/universities`, formData)
+      .post(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL + `/v1/universities`,
+        formData
+      )
       .then((res) => {
         getUniversities({ page: 1, perPage: 5 })
         result = res
@@ -107,7 +114,10 @@ export const UniversitasProvider = (props) => {
   const editUniversity = (id, formData) => {
     let result = null
     axios
-      .put(process.env.REACT_APP_BASE_URL + `/v1/universities/${id}`, formData)
+      .put(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL + `/v1/universities/${id}`,
+        formData
+      )
       .then((res) => {
         getUniversities({ page: 1, perPage: 5 })
         result = res
@@ -128,7 +138,9 @@ export const UniversitasProvider = (props) => {
   const deleteUniversity = (id) => {
     let result = null
     axios
-      .delete(process.env.REACT_APP_BASE_URL + `/v1/universities/${id}`)
+      .delete(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL + `/v1/universities/${id}`
+      )
       .then((res) => {
         getUniversities({ page: 1, perPage: 5 })
         result = res
@@ -145,7 +157,10 @@ export const UniversitasProvider = (props) => {
       event.preventDefault()
 
       axios
-        .delete(process.env.REACT_APP_BASE_URL + `/v1/universities/${Id}`)
+        .delete(
+          process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
+            `/v1/universities/${Id}`
+        )
         .then((res) => {
           const dataBaru = rows.filter((e) => {
             return e.id !== Id

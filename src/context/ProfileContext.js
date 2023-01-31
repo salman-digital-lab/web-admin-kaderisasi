@@ -43,7 +43,9 @@ const ProfileProvider = (props) => {
     let result = null
 
     axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/users` + paramsQuery)
+      .get(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL + `/v1/users` + paramsQuery
+      )
       .then((res) => {
         result = res.data.data.data
         setListUsers(result)
@@ -64,7 +66,7 @@ const ProfileProvider = (props) => {
   const getUserDetail = async (id) => {
     setLoading(true)
     axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/users/${id}`)
+      .get(process.env.REACT_APP_ADMIN_BACKEND_BASE_URL + `/v1/users/${id}`)
       .then((res) => {
         const result = res.data.data
         setUsers(result)
@@ -84,7 +86,10 @@ const ProfileProvider = (props) => {
   */
   const addUser = (formData) => {
     axios
-      .post(process.env.REACT_APP_BASE_URL + `/v1/users`, formData)
+      .post(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL + `/v1/users`,
+        formData
+      )
       .then((res) => {
         const result = res.data.data
         window.location.href = `/user/${result.id}`
@@ -105,7 +110,10 @@ const ProfileProvider = (props) => {
     */
   const editUser = async (id, formData) => {
     axios
-      .put(process.env.REACT_APP_BASE_URL + `/v1/users/${id}`, formData)
+      .put(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL + `/v1/users/${id}`,
+        formData
+      )
       .then((res) => {
         const result = res.data
         SetIsSubmitSuccess(result.status)
@@ -124,7 +132,7 @@ const ProfileProvider = (props) => {
     */
   const deleteUser = (id) => {
     axios
-      .delete(process.env.REACT_APP_BASE_URL + `/v1/user/${id}`)
+      .delete(process.env.REACT_APP_ADMIN_BACKEND_BASE_URL + `/v1/user/${id}`)
       .then((res) => {
         const result = res.data
         SetIsSubmitSuccess(result.status)

@@ -62,7 +62,11 @@ const AdminActivityProvider = (props) => {
     let result = null
 
     axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/activity` + paramsQuery)
+      .get(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
+          `/v1/activity` +
+          paramsQuery
+      )
       .then((res) => {
         result = res.data.data.data
         const list = []
@@ -73,7 +77,8 @@ const AdminActivityProvider = (props) => {
               judul: x.name,
               startDate: x.register_begin_date,
               endDate: x.register_end_date,
-              jenjang: x.minimumRole?.name,
+              minJenjang: x.minimumRole?.name,
+              maxJenjang: x.maximumRole?.name,
               kategori: x.activityCategory ? x.activityCategory.name : null,
               register: x.status.toLowerCase(),
               publish: x.is_published ? "published" : "unpublished",
@@ -103,7 +108,7 @@ const AdminActivityProvider = (props) => {
 
     axios
       .get(
-        process.env.REACT_APP_BASE_URL +
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
           `/v1/activity/${activityId}/participant` +
           paramsQuery
       )
@@ -123,7 +128,7 @@ const AdminActivityProvider = (props) => {
   const exportActivityParticipants = async (activityId) => {
     axios
       .get(
-        process.env.REACT_APP_BASE_URL +
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
           `/v1/activity/${activityId}/participant/export`,
         {
           responseType: "blob",
@@ -146,7 +151,7 @@ const AdminActivityProvider = (props) => {
   const getRegistrantQuestionnaire = async (registrantId) => {
     axios
       .get(
-        process.env.REACT_APP_BASE_URL +
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
           `/v1/activity/participant/${registrantId}/questionnaire`
       )
       .then((res) => {
@@ -166,7 +171,7 @@ const AdminActivityProvider = (props) => {
   const getActivityDetail = (id) => {
     setActivityForm({})
     axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}`)
+      .get(process.env.REACT_APP_ADMIN_BACKEND_BASE_URL + `/v1/activity/${id}`)
       .then((res) => {
         const form = res.data.data
         setActivityForm(form)
@@ -185,7 +190,10 @@ const AdminActivityProvider = (props) => {
   */
   const addActivity = (formData) => {
     axios
-      .post(process.env.REACT_APP_BASE_URL + `/v1/activity`, formData)
+      .post(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL + `/v1/activity`,
+        formData
+      )
       .then((res) => {
         const form = res.data.data
         window.location.href = `/activity/${form[0].id}`
@@ -203,7 +211,10 @@ const AdminActivityProvider = (props) => {
   */
   const editActivity = (id, formData) => {
     axios
-      .put(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}`, formData)
+      .put(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL + `/v1/activity/${id}`,
+        formData
+      )
       .then((res) => {
         if (res.data.status === "SUCCESS") {
           const form = res.data.data
@@ -222,7 +233,10 @@ const AdminActivityProvider = (props) => {
   */
   const getActivityBannerById = async (id) => {
     await axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}/banner`)
+      .get(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
+          `/v1/activity/${id}/banner`
+      )
       .then((res) => {
         const banner = res.data.data
         setActivityBanner(banner)
@@ -241,7 +255,10 @@ const AdminActivityProvider = (props) => {
   */
   const uploadImageBanner = async (formData) => {
     await axios
-      .post(process.env.REACT_APP_BASE_URL + `/v1/activity/banner`, formData)
+      .post(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL + `/v1/activity/banner`,
+        formData
+      )
       .then((res) => {
         const response = res.data
         // console.log(response)
@@ -257,7 +274,10 @@ const AdminActivityProvider = (props) => {
   */
   const deleteBannerById = (id) => {
     axios
-      .delete(process.env.REACT_APP_BASE_URL + `/v1/activity/banner/${id}`)
+      .delete(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
+          `/v1/activity/banner/${id}`
+      )
       .then((res) => {
         setState(null)
       })
@@ -272,7 +292,9 @@ const AdminActivityProvider = (props) => {
   */
   const deleteActivity = (id) => {
     axios
-      .delete(process.env.REACT_APP_BASE_URL + `/v1/activity/${id}`)
+      .delete(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL + `/v1/activity/${id}`
+      )
       .then((res) => {
         setState(null)
       })
@@ -293,7 +315,9 @@ const AdminActivityProvider = (props) => {
     }
     axios
       .get(
-        process.env.REACT_APP_BASE_URL + `/v1/activity-category` + paramsQuery
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
+          `/v1/activity-category` +
+          paramsQuery
       )
       .then((res) => {
         res.data.data.data.unshift({
@@ -316,7 +340,10 @@ const AdminActivityProvider = (props) => {
   const getActivityCategoryDetail = (id) => {
     let result = null
     axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/activity-category/${id}`)
+      .get(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
+          `/v1/activity-category/${id}`
+      )
       .then((res) => {
         result = res.data
         return result
@@ -336,7 +363,10 @@ const AdminActivityProvider = (props) => {
   const addActivityCategory = (formData) => {
     let result = null
     axios
-      .post(process.env.REACT_APP_BASE_URL + `/v1/activity-category`, formData)
+      .post(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL + `/v1/activity-category`,
+        formData
+      )
       .then((res) => {
         getActivityCategory({ page: 1, perPage: 5 })
         result = res
@@ -359,7 +389,8 @@ const AdminActivityProvider = (props) => {
     let result = null
     axios
       .put(
-        process.env.REACT_APP_BASE_URL + `/v1/activity-category/${id}`,
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
+          `/v1/activity-category/${id}`,
         formData
       )
       .then((res) => {
@@ -383,7 +414,7 @@ const AdminActivityProvider = (props) => {
     let result = null
     axios
       .put(
-        process.env.REACT_APP_BASE_URL +
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
           `/v1/activity-category/${id}/set-active`
       )
       .then((res) => {
@@ -405,7 +436,7 @@ const AdminActivityProvider = (props) => {
     setUniversityList(universities)
     universities.push({ value: -1, label: "Loading..." })
     axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/universities`)
+      .get(process.env.REACT_APP_ADMIN_BACKEND_BASE_URL + `/v1/universities`)
       .then((res) => {
         const response = res.data.data
         universities.push({ value: -1, label: "Semua Universitas" })
@@ -427,7 +458,10 @@ const AdminActivityProvider = (props) => {
     setFormTemplateList(template)
     template.push({ value: -1, label: "Loading..." })
     axios
-      .get(process.env.REACT_APP_BASE_URL + `/v1/activity-form-template`)
+      .get(
+        process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
+          `/v1/activity-form-template`
+      )
       .then((res) => {
         const response = res.data.data
         template.push({ value: -1, label: "Pilih Template" })
