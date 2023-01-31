@@ -64,8 +64,16 @@ const FormKegiatan = () => {
                 </div>
                 <div className="row">
                   <div className="col-12 d-flex flex-column py-5 px-15">
-                    <strong>Minimum Jenjang</strong>{" "}
+                    <strong>Jenjang Minimum</strong>{" "}
                     <span>{activityForm[0]?.minimumRole?.name}</span>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12 d-flex flex-column py-5 px-15">
+                    <strong>Jenjang Maksimum</strong>{" "}
+                    <span>
+                      {activityForm[0]?.maximumRole?.name ?? "Tidak ada"}
+                    </span>
                   </div>
                 </div>
                 <div className="row">
