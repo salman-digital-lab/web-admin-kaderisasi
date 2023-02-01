@@ -4,11 +4,7 @@ import React from "react"
 export default function CardDashboard({ icon, title, value }) {
   return (
     <Box
-      style={{
-        backgroundColor: "#fff",
-        borderRadius: "0.5em",
-        padding: "1em",
-      }}
+      style={{ backgroundColor: "#fff", borderRadius: "0.5em", padding: "1em" }}
     >
       <Box
         component="span"

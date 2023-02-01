@@ -5,19 +5,7 @@ import axios from "axios"
 export const AdminDashboardContext = React.createContext()
 /* eslint-disable */
 export const AdminDashboardProvider = (props) => {
-  const [valueMapping, setValueMapping] = useState({
-    jumlah_member: 0,
-    jamaah: 0,
-    aktivis: 0,
-    kader: 0,
-    ssc: 0,
-    lmd: 0,
-    spectra: 0,
-    status: null,
-  })
-  const [AktivisState, setAktivisState] = useState()
-  const [KampusState, setKampusState] = useState()
-  const [JoinState, setJoinState] = useState()
+  const [cardData, setCardData] = useState([])
 
   const [aktivisBar, setAktivisBar] = useState({
     labels: [],
@@ -37,63 +25,7 @@ export const AdminDashboardProvider = (props) => {
     status: null,
   })
 
-  const CardData = [
-    {
-      icon: <PeopleOutlineIcon fontSize="large" />,
-      color: "#61B15A",
-      title: "Jumlah Akun",
-      text: "Akun",
-      value: valueMapping.jumlah_member,
-    },
-    {
-      icon: <EqualizerIcon fontSize="large" />,
-      color: "#73C5D0",
-      title: "Jumlah Jamaah",
-      text: "Jamaah",
-      value: valueMapping.jamaah,
-    },
-    {
-      icon: <EqualizerIcon fontSize="large" />,
-      color: "#1C6C7D",
-      title: "Jumlah Aktivis",
-      text: "Aktivis",
-      value: valueMapping.aktivis,
-    },
-    {
-      icon: <EqualizerIcon fontSize="large" />,
-      color: "#FFA72E",
-      title: "Jumlah Kader",
-      text: "Kader",
-      value: valueMapping.kader,
-    },
-    {
-      icon: <EqualizerIcon fontSize="large" />,
-      color: "#FFA72E",
-      title: "Jumlah SSC",
-      text: "SSC",
-      value: valueMapping.ssc,
-    },
-    {
-      icon: <EqualizerIcon fontSize="large" />,
-      color: "#FFA72E",
-      title: "Jumlah LMD",
-      text: "LMD",
-      value: valueMapping.lmd,
-    },
-    {
-      icon: <EqualizerIcon fontSize="large" />,
-      color: "#FFA72E",
-      title: "Jumlah Spectra",
-      text: "Spectra",
-      value: valueMapping.spectra,
-    },
-  ]
-
-  const colors = [
-    "rgba(28, 108, 125, 1)",
-    "rgba(115, 197, 208, 1)",
-    "rgba(255, 167, 46, 1)",
-  ]
+  const colors = ["#61B15A", "#73C5D0", "#1C6C7D", "#FFA72E", "#FFD700"]
   const jenis_gender = ["Pria", "Wanita"] // add as many colors as there will be areas (maximum)
 
   const GetAllMember = () => {
