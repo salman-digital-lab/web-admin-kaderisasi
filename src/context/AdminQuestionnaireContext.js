@@ -177,7 +177,7 @@ export default function AdminQuestionnaireProvider({ children }) {
 
     try {
       const response = await axios.put(
-        `${process.env.REACT_APP_BASE_URL}/v1/activity/${id}/questionnaire`,
+        `${process.env.REACT_APP_ADMIN_BACKEND_BASE_URL}/v1/activity/${id}/questionnaire`,
         payload
       )
       if (response.status === 200) {
@@ -204,7 +204,7 @@ export default function AdminQuestionnaireProvider({ children }) {
     try {
       setQuestionnaireLoading(true)
       const response = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/v1/activity/${id}/questionnaire`
+        `${process.env.REACT_APP_ADMIN_BACKEND_BASE_URL}/v1/activity/${id}/questionnaire`
       )
 
       if (response.status === 200) {
