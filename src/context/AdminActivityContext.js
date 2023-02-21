@@ -36,7 +36,7 @@ const AdminActivityProvider = (props) => {
     const getAllMemberRoles = () => {
       axios
         .get(
-          process.env.REACT_APP_BASE_URL +
+          process.env.REACT_APP_ADMIN_BACKEND_BASE_URL +
             `/v1/member-roles`
         )
         .then((res) => {

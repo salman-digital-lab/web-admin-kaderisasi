@@ -14,7 +14,7 @@ const AdminRegionProvider = (props) => {
   const getProvinces = async () => {
     setProvinces({})
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/v1/regions/provinces`)
+      .get(`${process.env.REACT_APP_ADMIN_BACKEND_BASE_URL}/v1/regions/provinces`)
       .then((res) => {
         setProvinces(res.data)
       })
@@ -29,7 +29,7 @@ const AdminRegionProvider = (props) => {
   const getRegencies = async (id) => {
     setRegencies({})
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/v1/regions/regencies/${id}`)
+      .get(`${process.env.REACT_APP_ADMIN_BACKEND_BASE_URL}/v1/regions/regencies/${id}`)
       .then((res) => {
         setRegencies(res.data)
       })
@@ -44,7 +44,7 @@ const AdminRegionProvider = (props) => {
   const getDistricts = async (id) => {
     setDistricts({})
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/v1/regions/districts/${id}`)
+      .get(`${process.env.REACT_APP_ADMIN_BACKEND_BASE_URL}/v1/regions/districts/${id}`)
       .then((res) => {
         setDistricts(res.data)
       })
@@ -59,7 +59,7 @@ const AdminRegionProvider = (props) => {
   const getVillages = async (id) => {
     setVillages({})
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/v1/regions/villages/${id}`)
+      .get(`${process.env.REACT_APP_ADMIN_BACKEND_BASE_URL}/v1/regions/villages/${id}`)
       .then((res) => {
         setVillages(res.data)
       })

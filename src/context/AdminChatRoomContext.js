@@ -51,7 +51,7 @@ const AdminChatRoomProvider = (props) => {
     let result = null
 
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/v1/student-care${paramsQuery}`)
+      .get(`${process.env.REACT_APP_ADMIN_BACKEND_BASE_URL}/v1/student-care${paramsQuery}`)
       .then((res) => {
         result = res.data.data
         setListStudentCare(result.data)
@@ -72,7 +72,7 @@ const AdminChatRoomProvider = (props) => {
   const getStudentCareDetail = async (id) => {
     setLoading(true)
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/v1/student-care/${id}`)
+      .get(`${process.env.REACT_APP_ADMIN_BACKEND_BASE_URL}/v1/student-care/${id}`)
       .then((res) => {
         const rp = res.data
         if (rp.status === "SUCCESS") {
@@ -97,7 +97,7 @@ const AdminChatRoomProvider = (props) => {
     setStudentCareResp({})
     setLoading(true)
     axios
-      .put(`${process.env.REACT_APP_BASE_URL}/v1/student-care/${id}`, formData)
+      .put(`${process.env.REACT_APP_ADMIN_BACKEND_BASE_URL}/v1/student-care/${id}`, formData)
       .then((res) => {
         const { data } = res
         setStudentCareResp(data)
@@ -117,7 +117,7 @@ const AdminChatRoomProvider = (props) => {
   const deleteStudentCare = (id) => {
     setStudentCareResp({})
     axios
-      .delete(`${process.env.REACT_APP_BASE_URL}/v1/student-care/${id}`)
+      .delete(`${process.env.REACT_APP_ADMIN_BACKEND_BASE_URL}/v1/student-care/${id}`)
       .then((res) => {
         const { data } = res
         setStudentCareResp(data)
