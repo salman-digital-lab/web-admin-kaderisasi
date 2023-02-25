@@ -1,8 +1,13 @@
 import React, { useContext } from "react"
-import { Card, CardContent, TextField, Box } from "@material-ui/core"
+import { Card, CardContent, TextField, Box, Button } from "@material-ui/core"
+import { useTheme } from "@material-ui/core/styles"
+import useMediaQuery from "@mui/material/useMediaQuery"
+import { ImportExport } from "@material-ui/icons"
 import { AdminChatRoomContext } from "../../../context/AdminChatRoomContext"
 
 const ChatRoomFilter = () => {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
   const { filterStudentCare, setFilterStudentCare } =
     useContext(AdminChatRoomContext)
 
@@ -28,74 +33,94 @@ const ChatRoomFilter = () => {
     <>
       <Card>
         <CardContent className="filter-content">
-          <Box pl={5} pr={5}>
-            <TextField
-              className="input-register"
-              fullWidth
-              size="small"
-              label="Cari Curhatan"
-              onKeyDown={handleKeyDown}
-            />
-            {/* <FormControl component="fieldset" className="radio-button activity">
-            <FormLabel component="legend">Aktivitas</FormLabel>
-            <RadioGroup
-              defaultValue="all"
-              aria-label="activity"
-              name="customized-radios"
-            >
-              <FormControlLabel
-                value="all"
-                control={<StyledRadio />}
-                onChange={(e) => filterByStatus(e.target.value)}
-                label="Semua"
+          <Box>
+            <Box className="filter-block">
+              <TextField
+                className="input-register"
+                fullWidth
+                size="small"
+                label="Cari Curhatan"
+                onKeyDown={handleKeyDown}
               />
-              <FormControlLabel
-                value="ssc"
-                control={<StyledRadio />}
-                onChange={(e) => filterByStatus(e.target.value)}
-                label="SSC"
-              />
-              <FormControlLabel
-                value="lmd"
-                control={<StyledRadio />}
-                onChange={(e) => filterByStatus(e.target.value)}
-                label="LMD"
-              />
-              <FormControlLabel
-                value="spc"
-                control={<StyledRadio />}
-                onChange={(e) => filterByStatus(e.target.value)}
-                label="SPC"
-              />
-            </RadioGroup>
-          </FormControl> */}
-            {/* <FormControl component="fieldset" className="radio-button jenkel">
-              <FormLabel component="legend">Jenis Kelamin</FormLabel>
+              {isMobile ? (
+                <Button
+                  variant="contained"
+                  className="btn-export-excel primary-button"
+                  // onClick={() => handleExportTable()}
+                >
+                  <ImportExport />
+                </Button>
+              ) : (
+                <Button
+                  className="btn-export-excel primary-button"
+                  variant="contained"
+                  startIcon={<ImportExport />}
+                  // onClick={() => handleExportTable()}
+                >
+                  Export Tabel
+                </Button>
+              )}
+              {/* <FormControl component="fieldset" className="radio-button activity">
+              <FormLabel component="legend">Aktivitas</FormLabel>
               <RadioGroup
-                defaultValue=""
+                defaultValue="all"
                 aria-label="activity"
                 name="customized-radios"
               >
                 <FormControlLabel
-                  value=""
+                  value="all"
                   control={<StyledRadio />}
-                  onChange={(e) => handleChangeGender(e.target.value)}
+                  onChange={(e) => filterByStatus(e.target.value)}
                   label="Semua"
                 />
                 <FormControlLabel
-                  value="M"
+                  value="ssc"
                   control={<StyledRadio />}
-                  onChange={(e) => handleChangeGender(e.target.value)}
-                  label="Pria"
+                  onChange={(e) => filterByStatus(e.target.value)}
+                  label="SSC"
                 />
                 <FormControlLabel
-                  value="F"
+                  value="lmd"
                   control={<StyledRadio />}
-                  onChange={(e) => handleChangeGender(e.target.value)}
-                  label="Wanita"
+                  onChange={(e) => filterByStatus(e.target.value)}
+                  label="LMD"
+                />
+                <FormControlLabel
+                  value="spc"
+                  control={<StyledRadio />}
+                  onChange={(e) => filterByStatus(e.target.value)}
+                  label="SPC"
                 />
               </RadioGroup>
             </FormControl> */}
+              {/* <FormControl component="fieldset" className="radio-button jenkel">
+                <FormLabel component="legend">Jenis Kelamin</FormLabel>
+                <RadioGroup
+                  defaultValue=""
+                  aria-label="activity"
+                  name="customized-radios"
+                >
+                  <FormControlLabel
+                    value=""
+                    control={<StyledRadio />}
+                    onChange={(e) => handleChangeGender(e.target.value)}
+                    label="Semua"
+                  />
+                  <FormControlLabel
+                    value="M"
+                    control={<StyledRadio />}
+                    onChange={(e) => handleChangeGender(e.target.value)}
+                    label="Pria"
+                  />
+                  <FormControlLabel
+                    value="F"
+                    control={<StyledRadio />}
+                    onChange={(e) => handleChangeGender(e.target.value)}
+                    label="Wanita"
+                  />
+                </RadioGroup>
+              </FormControl> */}
+            </Box>
           </Box>
         </CardContent>
       </Card>
