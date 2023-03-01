@@ -6,6 +6,7 @@ import { ImportExport } from "@material-ui/icons"
 import { AdminChatRoomContext } from "../../../context/AdminChatRoomContext"
 import moment from "moment"
 import DatePicker from "../../../components/date-picker"
+import { Stack } from "@mui/material"
 
 let date = new Date()
 let firstDay = new Date(date.getFullYear(), date.getMonth(), 1)
@@ -70,36 +71,55 @@ const ChatRoomFilter = () => {
                 onKeyDown={handleKeyDown}
               />
               {isMobile ? (
-                <Button
-                  variant="contained"
-                  className="btn-export-excel primary-button"
-                  onClick={() => handleExportTable(startDate, endDate)}
-                >
-                  <ImportExport />
-                </Button>
+                <Stack direction="row" spacing={3}>
+                  <Box ml={4} mt={1}>
+                    <Button
+                      variant="contained"
+                      className="btn-export-excel primary-button"
+                      onClick={() => handleExportTable(startDate, endDate)}
+                    >
+                      <ImportExport />
+                    </Button>
+                  </Box>
+                  <DatePicker
+                    value={startDate}
+                    onChange={handleInputStartDate}
+                    disableFuture
+                    label="Start Date"
+                  />
+                  <DatePicker
+                    value={endDate}
+                    onChange={handleInputEndDate}
+                    disablePast
+                    disableFuture
+                    label="End Date"
+                  />
+                </Stack>
               ) : (
-                <Button
-                  className="btn-export-excel primary-button"
-                  variant="contained"
-                  startIcon={<ImportExport />}
-                  onClick={() => handleExportTable(startDate, endDate)}
-                >
-                  Export Tabel
-                </Button>
+                <>
+                  <Button
+                    className="btn-export-excel primary-button"
+                    variant="contained"
+                    startIcon={<ImportExport />}
+                    onClick={() => handleExportTable(startDate, endDate)}
+                  >
+                    Export Tabel
+                  </Button>
+                  <DatePicker
+                    value={startDate}
+                    onChange={handleInputStartDate}
+                    disableFuture
+                    label="Start Date"
+                  />
+                  <DatePicker
+                    value={endDate}
+                    onChange={handleInputEndDate}
+                    disablePast
+                    disableFuture
+                    label="End Date"
+                  />
+                </>
               )}
-              <DatePicker
-                value={startDate}
-                onChange={handleInputStartDate}
-                disableFuture
-                label="Start Date"
-              />
-              <DatePicker
-                value={endDate}
-                onChange={handleInputEndDate}
-                disablePast
-                disableFuture
-                label="End Date"
-              />
               {/* <FormControl component="fieldset" className="radio-button activity">
               <FormLabel component="legend">Aktivitas</FormLabel>
               <RadioGroup
