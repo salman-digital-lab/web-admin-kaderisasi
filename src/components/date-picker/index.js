@@ -6,6 +6,7 @@ import {
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers"
 import { makeStyles } from "@material-ui/core"
+import { alpha } from "@material-ui/core/styles"
 
 const DatePicker = (props) => {
   const {
@@ -33,7 +34,7 @@ const DatePicker = (props) => {
       <KeyboardDatePicker
         autoOk
         variant="inline"
-        format="dd/MM/yyyy"
+        format="yyyy-MM-dd"
         name={name}
         value={value}
         onChange={onChange}

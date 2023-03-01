@@ -4,24 +4,25 @@ import { useTheme } from "@material-ui/core/styles"
 import useMediaQuery from "@mui/material/useMediaQuery"
 import { ImportExport } from "@material-ui/icons"
 import { AdminChatRoomContext } from "../../../context/AdminChatRoomContext"
-import DateFnsUtils from "@date-io/date-fns"
 import moment from "moment"
-import {
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from "@material-ui/pickers"
 import DatePicker from "../../../components/date-picker"
+
+let date = new Date()
+let firstDay = new Date(date.getFullYear(), date.getMonth(), 1)
+
+let params = {
+  time_start: firstDay,
+  time_end: date,
+}
 
 const ChatRoomFilter = () => {
   const theme = useTheme()
-  let date = new Date()
-  let firstDay = new Date(date.getFullYear(), date.getMonth(), 1)
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
   const [startDate, setStartDate] = useState(firstDay)
   const [endDate, setEndDate] = useState(date)
-  const [inputValue, setInputValue] = useState(moment().format("DD/MM/yyyy"))
-  const { filterStudentCare, setFilterStudentCare } =
+  const { filterStudentCare, setFilterStudentCare, functions } =
     useContext(AdminChatRoomContext)
+  const { exportDataTable } = functions
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
@@ -33,18 +34,19 @@ const ChatRoomFilter = () => {
     }
   }
 
-  const handleInputStartDate = (date, value) => {
+  const handleInputStartDate = (date) => {
     setStartDate(date)
-    setInputValue(value)
   }
 
-  const handleInputEndDate = (date, value) => {
+  const handleInputEndDate = (date) => {
     setEndDate(date)
-    setInputValue(value)
   }
 
   const handleExportTable = (start, end) => {
-    console.log("print", start, end)
+    console.log("print", moment(start).format("yyyy-MM-DD"), end)
+    params.time_start = moment(start).format("yyyy-MM-DD")
+    params.time_end = moment(end).format("yyyy-MM-DD")
+    exportDataTable(params)
   }
 
   // const handleChangeGender = (s) => {
