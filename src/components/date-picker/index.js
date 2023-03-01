@@ -6,7 +6,6 @@ import {
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers"
 import { makeStyles } from "@material-ui/core"
-import { alpha } from "@material-ui/core/styles"
 
 const DatePicker = (props) => {
   const {

@@ -11,10 +11,10 @@ let date = new Date()
 let firstDay = new Date(date.getFullYear(), date.getMonth(), 1)
 
 let params = {
-  time_start: firstDay,
-  time_end: date,
+  time_start: moment(firstDay).format("yyyy-MM-DD"),
+  time_end: moment(date).format("yyyy-MM-DD"),
 }
-
+console.log(firstDay, date)
 const ChatRoomFilter = () => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
@@ -43,7 +43,6 @@ const ChatRoomFilter = () => {
   }
 
   const handleExportTable = (start, end) => {
-    console.log("print", moment(start).format("yyyy-MM-DD"), end)
     params.time_start = moment(start).format("yyyy-MM-DD")
     params.time_end = moment(end).format("yyyy-MM-DD")
     exportDataTable(params)
