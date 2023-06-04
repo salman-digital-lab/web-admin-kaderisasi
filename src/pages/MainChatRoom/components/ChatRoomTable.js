@@ -23,6 +23,7 @@ import { StudentCareStatus } from "../../../components/statuses"
 
 const headCells = [
   { id: "no", numeric: true, label: "No." },
+  { id: "id", numeric: true, label: "ID" },
   { id: "user", numeric: false, label: "User" },
   { id: "problem_owner", numeric: false, label: "Pemilik Masalah" },
   { id: "problem_category", numeric: false, label: "Kategori" },
@@ -162,6 +163,13 @@ const ChatRoomTable = () => {
                         className="table-cell"
                       >
                         {index + 1 + rowsPerPage * page}
+                      </TableCell>
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        className="table-cell"
+                      >
+                        {row.id}
                       </TableCell>
                       <TableCell className="table-cell">
                         <div className="text-ellipsis width-100">
