@@ -12,6 +12,7 @@ import AdminCard from "../pages/AdminCard"
 import AdminSalmanDetail from "../pages/AdminDetail"
 import Profile from "../pages/Profile/index"
 import ChatRoomDetail from "../pages/ChatRoomDetail"
+import Komprof from "../pages/MainKomprof"
 
 const data = [
   {
@@ -58,6 +59,11 @@ const data = [
     url: "/chat-room/:id",
     modul: "student-care",
     component: ChatRoomDetail,
+  },
+  {
+    url: "/komprof",
+    modul: "members",
+    component: Komprof,
   },
   {
     url: "/settings",
