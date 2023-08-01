@@ -8,6 +8,7 @@ import { AddQuestionButton, FormSelector, SaveButton } from "./components"
 import AdminQuestionnaireProvider, {
   AdminQuestionnaireContext,
 } from "../../../../context/AdminQuestionnaireContext"
+import Information from "./components/Information"
 // eslint-disable-next-line
 const Alert = (props) => <MuiAlert elevation={6} variant="filled" {...props} />
 
@@ -50,6 +51,11 @@ const QuestionnaireForm = () => {
       {questionnaireLoading && <SkeletonLoading />}
       {!questionnaireLoading && (
         <>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={12}>
+              <Information />
+            </Grid>
+          </Grid>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
               <SaveButton />

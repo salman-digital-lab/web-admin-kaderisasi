@@ -5,6 +5,7 @@ import GroupIcon from "@material-ui/icons/Group"
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer"
 import SchoolIcon from "@material-ui/icons/School"
 import SettingsIcon from "@material-ui/icons/Settings"
+import WorkIcon from "@material-ui/icons/Work"
 
 const data = [
   {
@@ -58,6 +59,13 @@ const data = [
   },
   {
     id: 7,
+    name: "Data Komprof",
+    icon: <WorkIcon />,
+    url: "/komprof",
+    modul: "members",
+  },
+  {
+    id: 8,
     name: "Setting",
     icon: <SettingsIcon />,
     children: [
