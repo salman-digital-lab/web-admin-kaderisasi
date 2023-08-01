@@ -88,7 +88,7 @@ export const KomprofModal = ({ open, onClose, data }) => {
                   variant="contained"
                   disableElevation
                 >
-                  Tambahkan
+                  Simpan
                 </Button>
               </Stack>
             </Stack>
