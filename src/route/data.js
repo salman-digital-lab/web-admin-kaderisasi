@@ -12,6 +12,8 @@ import AdminCard from "../pages/AdminCard"
 import AdminSalmanDetail from "../pages/AdminDetail"
 import Profile from "../pages/Profile/index"
 import ChatRoomDetail from "../pages/ChatRoomDetail"
+import AlumniSalman from "../pages/MainAlumni"
+import AlumniSalmanDetail from "../pages/AlumniDetail"
 
 const data = [
   {
@@ -43,6 +45,16 @@ const data = [
     url: "/member/:id",
     modul: "members",
     component: MemberSalmanDetail,
+  },
+  {
+    url: "/alumni",
+    modul: "members",
+    component: AlumniSalman,
+  },
+  {
+    url: "/alumni/:id",
+    modul: "members",
+    component: AlumniSalmanDetail,
   },
   {
     url: "/universities",
