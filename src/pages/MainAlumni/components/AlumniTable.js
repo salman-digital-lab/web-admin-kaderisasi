@@ -31,6 +31,7 @@ const headCells = [
     numeric: false,
     label: "Nama Instansi Tempat Aktivitas / Bekerja",
   },
+  // { id: "contributions", numeric: false, label: "Kontribusi" },
   { id: "view", numeric: false, label: "Action" },
 ]
 
@@ -73,7 +74,7 @@ const AlumniTable = () => {
     useContext(AdminAlumniContext)
   const { getAlumni } = functions
 
-  console.log("alumniAja", alumni)
+  console.log("alumni", listAlumni)
 
   useEffect(() => {
     params = {
@@ -93,10 +94,6 @@ const AlumniTable = () => {
       params = { ...params, ...filterAlumni }
       if (params.search_query === "") {
         delete params.search_query
-        delete params.filter
-      }
-      if (params.gender === "") {
-        delete params.gender
         delete params.filter
       }
       if (Object.keys(params).length > 1) {
@@ -163,17 +160,6 @@ const AlumniTable = () => {
                           <div className="text-ellipsis width-100">
                             <Link to={`/alumni/${row.id}`}>{row.name}</Link>
                           </div>
-                          <div>
-                            {row.gender === "F" ? (
-                              <span className="icon-text">
-                                <Female fontSize="small" /> Wanita
-                              </span>
-                            ) : (
-                              <span className="icon-text">
-                                <Male fontSize="small" /> Pria{" "}
-                              </span>
-                            )}
-                          </div>
                         </TableCell>
                         <TableCell className="table-cell">
                           {row.email}
@@ -190,6 +176,11 @@ const AlumniTable = () => {
                         <TableCell className="table-cell">
                           {row.current_instance}
                         </TableCell>
+                        {/* {row.contributions.map((data) => (
+                          <TableCell className="table-cell">
+                            {data.join(", ")}
+                          </TableCell>
+                        ))} */}
                         <TableCell className="table-cell">
                           <Link to={`/alumni/${row.id}`}>View</Link>
                         </TableCell>

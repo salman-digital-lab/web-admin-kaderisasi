@@ -68,12 +68,14 @@ const getAlumni = async (params) => {
   /*
     Add Alumni
   */
-    const AddAlumni = (formData) => {
+    const addDataAlumni = (formData) => {
       let result = null
       axios
         .post(`${process.env.REACT_APP_ADMIN_BACKEND_BASE_URL}/v1/alumni`, formData)
         .then((res) => {
           getAlumni({ page: 1, perPage: 5 })
+          const { data } = res
+            console.log(data)
           result = res
           return result
         })
@@ -90,7 +92,7 @@ const getAlumni = async (params) => {
       update alumni where id = params.id
     */
       const updateAlumniById = (id, formData) => {
-        setUpdateMemberResp({})
+        setUpdateAlumniResp({})
         axios
           .put(`${process.env.REACT_APP_ADMIN_BACKEND_BASE_URL}/v1/alumni/${id}`, formData)
           .then((res) => {
@@ -131,7 +133,7 @@ const getAlumni = async (params) => {
         getAlumniDetail,
         updateAlumniById,
         deleteAlumniById,
-        AddAlumni,
+        addDataAlumni,
     } 
 
     return (

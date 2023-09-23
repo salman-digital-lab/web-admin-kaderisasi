@@ -2,13 +2,12 @@ import React, { useContext, useState, useEffect } from "react"
 import { useParams, Link } from "react-router-dom"
 import { ArrowBack, Delete } from "@material-ui/icons"
 import { Button, Chip } from "@material-ui/core"
-import moment from "moment"
 import LoadingAnimation from "../../../components/loading-animation"
-import EditMemberModal from "../../../components/modals/edit-member-modal"
 import AlertToast from "../../../components/alert"
 import profile from "../../../assets/images/profile.png"
 import { AdminAlumniContext } from "../../../context/AdminAlumniContext"
 import { ConfirmationModal } from "../../ChatRoomDetail/components/confirmation-modal"
+import AlumniModal from "../../../components/modals/alumni-modals"
 
 const AlumniDetail = () => {
   const { id } = useParams()
@@ -126,7 +125,7 @@ const AlumniDetail = () => {
               <h5 className="font-grey">
                 <strong>Informasi Tambahan</strong>
               </h5>
-              <span>Berapa Lama Bekerja</span>{" "}
+              <span>Lama Bekerja</span>{" "}
               <span className="font-grey">{data?.notes}</span>
             </div>
           </div>
@@ -169,33 +168,38 @@ const AlumniDetail = () => {
             <div className="col-12 d-flex flex-column py-5 px-15">
               <h5 className="font-grey">
                 <strong>Kontribusi</strong>
-                <span className="font-grey">{data?.contributions}</span>
               </h5>
+              {data?.contributions !== null && (
+                <div>
+                  {data?.contributions?.map((data) => (
+                    <li>
+                      <span className="font-grey">{data}</span>
+                    </li>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
+
           <div className="row">
             <div className="col-12 d-flex flex-column py-5 px-15">
               <span>Bersedia Mengikuti Program Sedekah</span>{" "}
-              {data.is_donor === "yes" ? "Ya" : "Tidak"}
+              {data.is_donor === 1 ? "Ya" : "Tidak"}
             </div>
             <div className="col-12 d-flex flex-column py-5 px-15">
               <span>Subscriber</span>
-              {data.is_subscriber === "yes" ? "Ya" : "Tidak"}
+              {data.is_subscriber === 1 ? "Ya" : "Tidak"}
             </div>
           </div>
         </div>
       </div>
-      {/* <EditMemberModal
-        open={open}
-        onClose={handleClose}
-        data={alumniForm?.member}
-      /> */}
-      {/* <AlertToast
+      <AlumniModal open={open} onClose={handleClose} data={alumniForm} />
+      <AlertToast
         isOpen={updateAlumniResp?.status === "SUCCESS"}
         status="success"
         message="Data alumni berhasil dirubah."
         onClose={() => setUpdateAlumniResp({})}
-      /> */}
+      />
       <ConfirmationModal
         open={confirm}
         onClose={() => setConfirm(false)}
