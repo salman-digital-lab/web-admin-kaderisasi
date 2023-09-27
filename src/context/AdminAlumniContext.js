@@ -6,15 +6,14 @@ const AdminAlumniProvider = (props) => {
 const [state, setState] = useState(null)
   const [filterAlumni, setFilterAlumni] = useState({
     filter: false,
-    gender: "",
     search_query: "",
   })
   const [alumni, setAlumni] = useState([])
   const [listAlumni, setListAlumni] = useState([])
+  const [dataAlumni, setDataAlumni] = useState({})
   const [alumniForm, setAlumniForm] = useState({})
-  const [alumniActivities, setAlumniActivities] = useState(null)
-  const [blockAlumniResp, setBlockAlumniResp] = useState({})
   const [updateAlumniResp, setUpdateAlumniResp] = useState({})
+  const [errMessage, setErrMessage] = useState()
   const [alumniRoles, setAlumniRoles] = useState([])
 
   /*
@@ -69,18 +68,17 @@ const getAlumni = async (params) => {
     Add Alumni
   */
     const addDataAlumni = (formData) => {
-      let result = null
       axios
         .post(`${process.env.REACT_APP_ADMIN_BACKEND_BASE_URL}/v1/alumni`, formData)
         .then((res) => {
-          getAlumni({ page: 1, perPage: 5 })
           const { data } = res
-            console.log(data)
-          result = res
-          return result
+          getAlumni({ page: 1, page_size: 5 })
+          setDataAlumni(data)
+          return dataAlumni
         })
         .catch((err) => {
           console.log(err)
+          setErrMessage(err.response.status)
           return false
         })
     }
@@ -103,6 +101,7 @@ const getAlumni = async (params) => {
           })
           .catch((err) => {
             console.log(err)
+            setErrMessage(err.response.status)
             return false
           })
       }
@@ -144,12 +143,14 @@ const getAlumni = async (params) => {
             alumni,
             listAlumni,
             alumniForm,
-            alumniActivities,
             filterAlumni,
             setFilterAlumni,
-            blockAlumniResp,
+            errMessage,
+            setErrMessage,
             updateAlumniResp,
             setUpdateAlumniResp,
+            dataAlumni,
+            setDataAlumni,
             alumniRoles,
             functions,
          }}

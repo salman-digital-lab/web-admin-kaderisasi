@@ -10,7 +10,6 @@ import {
   Paper,
 } from "@material-ui/core"
 import { Link } from "react-router-dom"
-import { Female, Male } from "@mui/icons-material"
 import {
   EnhancedTableHead,
   stableSort,
@@ -23,6 +22,7 @@ const headCells = [
   { id: "no", numeric: true, label: "No." },
   { id: "name", numeric: false, label: "Nama Lengkap dan Gelar" },
   { id: "email", numeric: false, label: "Email" },
+  { id: "full_address", numeric: false, label: "Alamat" },
   { id: "whatsapp_number", numeric: false, label: "Nomor Whatsapp" },
   { id: "bachelor_degree", numeric: false, label: "Riwayat Pendidikan S1" },
   { id: "occupation", numeric: false, label: "Aktivitas / Pekerjaan" },
@@ -31,7 +31,6 @@ const headCells = [
     numeric: false,
     label: "Nama Instansi Tempat Aktivitas / Bekerja",
   },
-  // { id: "contributions", numeric: false, label: "Kontribusi" },
   { id: "view", numeric: false, label: "Action" },
 ]
 
@@ -73,8 +72,6 @@ const AlumniTable = () => {
   const { listAlumni, alumni, filterAlumni, setFilterAlumni, functions } =
     useContext(AdminAlumniContext)
   const { getAlumni } = functions
-
-  console.log("alumni", listAlumni)
 
   useEffect(() => {
     params = {
@@ -148,7 +145,7 @@ const AlumniTable = () => {
                 <TableBody>
                   {stableSort(listAlumni, getComparator(order, orderBy)).map(
                     (row, index) => (
-                      <TableRow hover tabIndex={-1} key={row.name}>
+                      <TableRow hover tabIndex={-1} key={row.id}>
                         <TableCell
                           component="th"
                           scope="row"
@@ -165,6 +162,9 @@ const AlumniTable = () => {
                           {row.email}
                         </TableCell>
                         <TableCell className="table-cell">
+                          {row.full_address}
+                        </TableCell>
+                        <TableCell className="table-cell">
                           {row.whatsapp_number}
                         </TableCell>
                         <TableCell className="table-cell">
@@ -176,11 +176,6 @@ const AlumniTable = () => {
                         <TableCell className="table-cell">
                           {row.current_instance}
                         </TableCell>
-                        {/* {row.contributions.map((data) => (
-                          <TableCell className="table-cell">
-                            {data.join(", ")}
-                          </TableCell>
-                        ))} */}
                         <TableCell className="table-cell">
                           <Link to={`/alumni/${row.id}`}>View</Link>
                         </TableCell>

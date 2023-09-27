@@ -12,8 +12,14 @@ import AlumniModal from "../../../components/modals/alumni-modals"
 const AlumniDetail = () => {
   const { id } = useParams()
   const [status, setStatus] = useState(true)
-  const { alumniForm, updateAlumniResp, setUpdateAlumniResp, functions } =
-    useContext(AdminAlumniContext)
+  const {
+    alumniForm,
+    updateAlumniResp,
+    setUpdateAlumniResp,
+    errMessage,
+    setErrMessage,
+    functions,
+  } = useContext(AdminAlumniContext)
   const { getAlumniDetail, deleteAlumniById } = functions
   const [open, setOpen] = useState(false)
   const [confirm, setConfirm] = useState(false)
@@ -34,7 +40,6 @@ const AlumniDetail = () => {
   }
 
   const alumniDelete = () => {
-    console.log("id alumni", id)
     deleteAlumniById(id)
     setConfirm(false)
   }
@@ -98,8 +103,9 @@ const AlumniDetail = () => {
         <h5 className="mt-20">
           <strong>{data.name}</strong>
         </h5>
-        <span className="font-grey mt-10">{data.occupation}</span>
-        <span className="font-grey mt-10">{data.current_instance}</span>
+        <h5 className="font-grey mt-10">
+          {data.occupation} di {data.current_instance}
+        </h5>
       </div>
       <h3 className="mt-20">Detail Alumni</h3>
       <div className="row">
@@ -199,6 +205,12 @@ const AlumniDetail = () => {
         status="success"
         message="Data alumni berhasil dirubah."
         onClose={() => setUpdateAlumniResp({})}
+      />
+      <AlertToast
+        isOpen={errMessage === 500}
+        status="error"
+        message="Email Alumni sudah terdaftar di dalam sistem"
+        onClose={() => setErrMessage()}
       />
       <ConfirmationModal
         open={confirm}

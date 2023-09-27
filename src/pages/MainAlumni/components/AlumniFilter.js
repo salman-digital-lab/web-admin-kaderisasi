@@ -1,29 +1,25 @@
 import React, { useContext, useState } from "react"
-import {
-  Card,
-  CardContent,
-  TextField,
-  Box,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Button,
-  Grid,
-} from "@material-ui/core"
+import { Card, CardContent, TextField, Button, Grid } from "@material-ui/core"
 import StyledRadio from "../../../components/radio-button"
 import { IconButton, Stack } from "@mui/material"
 import { AddCircleOutline, Search } from "@mui/icons-material"
 import { AdminAlumniContext } from "../../../context/AdminAlumniContext"
 import AlumniModal from "../../../components/modals/alumni-modals"
+import AlertToast from "../../../components/alert"
 
 const AlumniFilter = () => {
-  const { filterAlumni, setFilterAlumni } = useContext(AdminAlumniContext)
+  const {
+    filterAlumni,
+    setFilterAlumni,
+    dataAlumni,
+    setDataAlumni,
+    errMessage,
+    setErrMessage,
+  } = useContext(AdminAlumniContext)
   const [open, setOpen] = useState(false)
-  const [dataAlumni, setDataAlumni] = useState({})
 
   const handleOpen = () => {
-    setDataAlumni({})
+    // setDataAlumni({})
     setOpen(true)
   }
 
@@ -58,7 +54,7 @@ const AlumniFilter = () => {
               container
               display="flex"
               direction="row-reverse"
-              spacing={6}
+              spacing={4}
               justifyContent="flex-end"
               paddingy={1}
             >
@@ -71,7 +67,7 @@ const AlumniFilter = () => {
                   style={{
                     backgroundColor: "#1F99CC",
                     color: "#fff",
-                    marginLeft: 20,
+                    marginLeft: "8vw",
                     marginTop: 4,
                   }}
                   disableElevation
@@ -95,6 +91,18 @@ const AlumniFilter = () => {
         </CardContent>
       </Card>
       <AlumniModal open={open} onClose={handleClose} data={dataAlumni} />
+      <AlertToast
+        isOpen={dataAlumni?.status === "SUCCESS"}
+        status="success"
+        message="Data alumni berhasil ditambahkan."
+        onClose={() => setDataAlumni({})}
+      />
+      <AlertToast
+        isOpen={errMessage === 400}
+        status="error"
+        message="Email Alumni sudah terdaftar di dalam sistem"
+        onClose={() => setErrMessage()}
+      />
     </>
   )
 }

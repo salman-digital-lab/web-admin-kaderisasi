@@ -51,9 +51,6 @@ const ContributionSalman = [
   'Fasilitator',
   'Mitra Program',
   'Lainnya',
-  'pembicara',
-  'web developer',
-  'mentor',
 ];
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -83,7 +80,6 @@ const AlumniModal = ({ open, onClose, data }) => {
   const { updateAlumniById, addDataAlumni } = functions
 
   useEffect(() => {
-    console.log("payload", payload.id)
     if (data) {
       setPayload({ ...data })
     }
