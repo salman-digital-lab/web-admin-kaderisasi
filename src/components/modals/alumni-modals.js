@@ -152,6 +152,7 @@ const AlumniModal = ({ open, onClose, data }) => {
                 <Grid item xs={12}>
                   <TextField
                     label="Email"
+                    type="email"
                     required
                     variant="outlined"
                     defaultValue={payload.id ? payload.email : state.name}
