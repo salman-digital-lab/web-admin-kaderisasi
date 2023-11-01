@@ -61,7 +61,7 @@ const AdminDetail = () => {
     { value: "Belum Ditangani", label: "Belum Ditangani" },
     { value: "Sedang Ditangani", label: "Sedang Ditangani" },
     { value: "Sudah Ditangani", label: "Sudah Ditangani" },
-    { value: "Akan Ditangani", label: "Akan Ditangani" },
+    { value: "Gagal Ditangani", label: "Gagal Ditangani" },
   ])
 
   const [payload, setPayload] = useState({})
