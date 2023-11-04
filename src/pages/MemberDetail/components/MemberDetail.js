@@ -28,6 +28,8 @@ const MemberDetail = () => {
   const { getMemberDetail, blockMemberById, unblockMemberById } = functions
   const [open, setOpen] = useState(false)
 
+  console.log("member", memberForm)
+
   let data = {}
   if (memberForm?.member?.id) {
     data = memberForm.member

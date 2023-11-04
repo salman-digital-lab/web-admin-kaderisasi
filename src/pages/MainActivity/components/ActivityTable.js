@@ -73,6 +73,8 @@ const KegiatanTable = () => {
   } = useContext(AdminActivityContext)
   const { getActivity } = functions
 
+  console.log("activity", listActivity)
+
   useEffect(() => {
     params = {
       page: 1,

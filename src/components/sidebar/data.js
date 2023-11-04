@@ -5,6 +5,7 @@ import GroupIcon from "@material-ui/icons/Group"
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer"
 import SchoolIcon from "@material-ui/icons/School"
 import SettingsIcon from "@material-ui/icons/Settings"
+import MenuBookIcon from "@material-ui/icons/MenuBook"
 
 const data = [
   {
@@ -40,6 +41,13 @@ const data = [
     name: "Aktivis & Jamaah",
     icon: <GroupIcon />,
     url: "/member",
+    modul: "members",
+  },
+  {
+    id: 4,
+    name: "Alumni",
+    icon: <MenuBookIcon />,
+    url: "/alumni",
     modul: "members",
   },
   {
