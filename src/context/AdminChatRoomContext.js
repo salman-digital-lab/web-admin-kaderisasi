@@ -1,5 +1,6 @@
 import React, { createContext, useState } from "react"
 import axios from "axios"
+import download from "downloadjs"
 /* eslint-disable */
 export const AdminChatRoomContext = createContext()
 const AdminChatRoomProvider = (props) => {
@@ -130,12 +131,50 @@ const AdminChatRoomProvider = (props) => {
       })
   }
 
+  /*
+      @params
+      time_start: date
+      time_end: date
+    
+      export data where time_start = params.time_start and time_end = params.time_end
+    */
+      const exportDataTable = (params) => {
+        setLoading(true)
+        let paramsQuery = "?"
+        Object.keys(params).forEach((x, i) => {
+          if (i === Object.keys(params).length - 1) {
+            paramsQuery += `${x}=${params[x].toString()}`
+          } else {
+            paramsQuery += `${x}=${params[x].toString()}&`
+          }
+        })
+        let result = null
+
+        axios
+          .get(`${process.env.REACT_APP_ADMIN_BACKEND_BASE_URL}/v1/student-care/export${paramsQuery}`,
+          {
+            responseType: 'arraybuffer',
+            headers: {'Content-Type': 'blob'},
+          })
+          .then((res) => {
+            const { data } = res
+            console.log('res', res)
+            download(data, `report${paramsQuery}.xlsx`);
+            setLoading(false)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+        
+      }
+
   const functions = {
     getCounselors,
     getStudentCare,
     getStudentCareDetail,
     editStudentCare,
     deleteStudentCare,
+    exportDataTable,
   }
 
   return (
